@@ -1,0 +1,315 @@
+openapi: 3.2.0
+info:
+  title: IROH Webhook service Webhook Result API
+  version: 1.0.107
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: IROH Webhook API
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-webhook/index.html
+  - type: raw
+    url: https://visibility.amp.cisco.com/iroh/iroh-webhook/swagger.json
+servers:
+- url: https://visibility.amp.cisco.com/
+security:
+- iroh: []
+- AuthorizationHeader: []
+- oauth2:
+  - telemetry
+  - integration
+  - private-intel
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - registry
+  - users
+  - investigation
+  - invite
+  - casebook
+  - orbital
+  - enrich
+  - oauth
+  - vault
+  - response
+  - notification
+  - global-intel:read
+  - webhook
+  - ao
+tags:
+- name: WebhookResult
+paths:
+  /iroh/iroh-webhook/webhook-result/{id}:
+    get:
+      x-no-doc: false
+      tags:
+      - WebhookResult
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/WebhookResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/WebhookResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/WebhookResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/WebhookResult'
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `webhook/result:read`
+
+
+        '
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Get a `WebhookResult`
+    delete:
+      x-no-doc: false
+      tags:
+      - WebhookResult
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `admin/webhook/result:write,webhook/result:write`
+
+
+        '
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Delete a `WebhookResult`
+      responses:
+        default:
+          description: ''
+  /iroh/iroh-webhook/webhook-result:
+    get:
+      x-no-doc: false
+      tags:
+      - WebhookResult
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WebhookResult'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WebhookResult'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WebhookResult'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WebhookResult'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WebhookResult'
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `webhook/result:read`
+
+
+        '
+      parameters:
+      - in: query
+        name: enabled
+        description: ''
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: entity_id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: event_id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: webhook_id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: user_id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: org_id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      summary: List `WebhookResult`s
+components:
+  schemas:
+    WebhookResult:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookResultErrors'
+        org_id:
+          description: the org id of the user owning this WebhookResult
+          type: string
+        event_id:
+          description: the event id which triggered the Webhook
+          type: string
+        auth_type:
+          description: the auth-type that was used calling the api url
+          type: string
+          enum:
+          - iroh-jwt
+        workflow:
+          description: the workflow fired by the Webhook
+          type: string
+        result:
+          description: the response from either the called API or the Workflow
+          type: string
+        id:
+          description: the ID of this WebhookResult
+          type: string
+        url:
+          description: the url fired by the Webhook
+          type: string
+        user_id:
+          description: the user id owning this WebhookResult
+          type: string
+        entity_id:
+          description: the entity id in the event which triggered the Webhook
+          type: string
+        webhook_id:
+          description: the Webhook id triggered by the event
+          type: string
+        visibility:
+          description: the visibility of this WebhookResult
+          type: string
+          enum:
+          - org
+          - user
+        created_at:
+          description: When this WebhookResult was created
+          type: string
+          format: date-time
+      additionalProperties: false
+      required:
+      - org_id
+      - event_id
+      - id
+      - user_id
+      - webhook_id
+      - visibility
+      - created_at
+    WebhookResultErrors:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - fatal
+          - warning
+          - error
+      additionalProperties: false
+      required:
+      - code
+      - message
+      - type
+  securitySchemes:
+    iroh:
+      type: apiKey
+      in: header
+      name: authorization
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            telemetry: collect application data for analytics
+            integration: Manage your modules
+            private-intel: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile: Get your profile information
+            inspect: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users: Manage users of your organisation
+            investigation: Perform threat analysis investigation
+            invite: Invite users into your organization
+            casebook: Access and modify your casebooks
+            orbital: Orbital Integration.
+            enrich: Query your configured modules for threat intelligence
+            oauth: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao: AO Integration.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

@@ -1,0 +1,2468 @@
+openapi: 3.2.0
+info:
+  title: CTIA Indicator API
+  version: 4178275a824512c2fd3a2acdb0e8277233919054 v2.71.0
+  license:
+    name: All Rights Reserved
+    url: ''
+  contact:
+    name: 'Cisco Security Business Group -- Advanced Threat '
+    url: http://github.com/threatgrid/ctia
+    email: cisco-intel-api-support@cisco.com
+  description: "A Threat Intelligence API service\n\n  This API provides a mechanism for making Judgements on the Disposition\n  of Observables, which are then distilled into a final Verdict.  A\n  Disposition is a statement regarding the malicious, or otherwise,\n  nature of an Observable.\n\n  The Judgements can be grouped into Indicators, which can be associated\n  with Campaigns, Actors and TTPs.  Feedback can be given on specific\n  Judgements, indicating agreement or disagreement, or clarification.\n\n  When an Observable with a malicious Verdict is seen, it can be recorded as\n  a Sighting, and the Relations that Observable had with other Observables can\n  be recorded as well.\n\n  We support a pre-defined set of Observable Types.  Each Observable Type has a\n  specific form of natural identifier, its ID, which is almost always\n  the default way it is represented when observed in the wild.\n\n  * Ipv4/IPv6  -- 192.168.1.1\n  * Domain/Hostname -- foo.com, www.bar.com\n  * SHA256  -- the sha256 checksum of a file, or other data blob\n  * MD5 -- the md5 checksum of a file, or other data blob\n  * SHA1 -- the sha1 checksum of a file, or other data blob\n  * URL -- A minimal form of the URL\n\n  The Verdict is derived from all of the Judgements on that Observable which\n  have not yet expired.  The highest priority Judgement becomes the\n  active verdict.  If there is more than one Judgement with that\n  priority, than Clean disposition has priority over all others, then\n  Malicious disposition, and so on down to Unknown.\n\n  <a href='/doc/README.md'>CTIA Documentation</a>"
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR (CTIA)
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://private.intel.amp.cisco.com/index.html
+  - type: raw
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: /
+security:
+- JWT: []
+- oauth2:
+  - private-intel
+  - private-intel:read
+  - private-intel:write
+  - casebook
+  - casebook:read
+  - casebook:write
+tags:
+- name: Indicator
+  description: Indicator operations
+paths:
+  /ctia/indicator:
+    post:
+      tags:
+      - Indicator
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Indicator'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Indicator'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Indicator'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Indicator'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Indicator'
+      parameters:
+      - in: query
+        name: wait_for
+        description: wait for entity to be available for search
+        required: false
+        schema:
+          type: boolean
+      summary: Adds a new Indicator
+      description: Requires capability create-indicator.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewIndicator'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewIndicator'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewIndicator'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewIndicator'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewIndicator'
+        description: a new Indicator
+        required: true
+  /ctia/indicator/{id}:
+    put:
+      tags:
+      - Indicator
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Indicator'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Indicator'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Indicator'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Indicator'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Indicator'
+      parameters:
+      - in: query
+        name: wait_for
+        description: wait for updated entity to be available for search
+        required: false
+        schema:
+          type: boolean
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Update an existing Indicator
+      description: Requires capability create-indicator.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewIndicator'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewIndicator'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewIndicator'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewIndicator'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewIndicator'
+        description: an updated Indicator
+        required: true
+    get:
+      tags:
+      - Indicator
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartialIndicator'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/PartialIndicator'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/PartialIndicator'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/PartialIndicator'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/PartialIndicator'
+      summary: Get one Indicator by ID
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - schema_version
+            - revision
+            - source
+            - title
+            - likely_impact
+            - indicator_type
+            - source_uri
+            - language
+            - id
+            - tlp
+            - timestamp
+            - confidence
+      description: Requires capability read-indicator.
+    delete:
+      tags:
+      - Indicator
+      responses:
+        '204':
+          description: ''
+      x-no-doc: false
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: wait_for
+        description: wait for deleted entity to no more be available for search
+        required: false
+        schema:
+          type: boolean
+      summary: Delete one Indicator
+      description: Requires capability delete-indicator.
+  /ctia/indicator/external_id/{external_id}:
+    get:
+      tags:
+      - Indicator
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIndicator'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIndicator'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIndicator'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIndicator'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIndicator'
+      parameters:
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - schema_version
+            - revision
+            - source
+            - title
+            - likely_impact
+            - indicator_type
+            - source_uri
+            - language
+            - id
+            - tlp
+            - timestamp
+            - confidence
+      - in: query
+        name: sort_by
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - schema_version
+          - revision
+          - source
+          - title
+          - likely_impact
+          - indicator_type
+          - source_uri
+          - language
+          - id
+          - tlp
+          - timestamp
+          - confidence
+      - in: path
+        name: external_id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: List Indicator by external id
+      description: Requires capability read-indicator.
+  /ctia/indicator/search:
+    get:
+      tags:
+      - Indicator
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIndicator'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIndicator'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIndicator'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIndicator'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIndicator'
+      summary: Search for Indicator entities using a ES query syntax and field filters
+      description: Requires capability search-indicator.
+      parameters:
+      - in: query
+        name: kill_chain_phases
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: sort_by
+        description: 'Sort result on fields.
+
+
+          The following fields are supported: confidence, id, indicator_type, language, likely_impact, revision, schema_version, source, source_uri, timestamp, title, tlp
+
+
+          Fields can be combined with '','' and sort order can be specified by '':asc'' and '':desc''. For example:
+
+
+          -  confidence       # sort by confidence ascending
+
+          -  confidence:desc  # sort by confidence descending
+
+          -  confidence,id:desc  # sort by confidence ascending, then id descending'
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: indicator_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - schema_version
+            - revision
+            - source
+            - title
+            - likely_impact
+            - indicator_type
+            - source_uri
+            - language
+            - id
+            - tlp
+            - timestamp
+            - confidence
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: tags
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: specification
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: producer
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: search_fields
+        description: '''fields'' key of Elasticsearch Fulltext Query.'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - id
+            - short_description
+            - title
+            - source
+            - description
+      - in: query
+        name: severity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+    delete:
+      tags:
+      - Indicator
+      description: Requires capabilities delete-indicator, search-indicator.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+            application/x-yaml:
+              schema:
+                type: integer
+                format: int64
+            application/edn:
+              schema:
+                type: integer
+                format: int64
+            application/transit+json:
+              schema:
+                type: integer
+                format: int64
+            application/transit+msgpack:
+              schema:
+                type: integer
+                format: int64
+      summary: Delete Indicator entities matching given Lucene/ES query string or/and field filters
+      parameters:
+      - in: query
+        name: kill_chain_phases
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: indicator_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: tags
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: specification
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: producer
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: REALLY_DELETE_ALL_THESE_ENTITIES
+        description: ' If you do not set this value or set it to false this route will perform a dry run. Set this value to true to perform the deletion. You MUST confirm you will fix the mess after the inevitable disaster that will occur after you perform that operation. DO NOT FORGET TO SET THAT TO FALSE AFTER EACH DELETION IF YOU INTEND TO USE THAT ROUTE MULTIPLE TIMES.'
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: severity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: wait_for
+        description: wait for matched entity to be deleted
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/indicator/search/count:
+    get:
+      tags:
+      - Indicator
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+            application/x-yaml:
+              schema:
+                type: integer
+                format: int64
+            application/edn:
+              schema:
+                type: integer
+                format: int64
+            application/transit+json:
+              schema:
+                type: integer
+                format: int64
+            application/transit+msgpack:
+              schema:
+                type: integer
+                format: int64
+      summary: Count Indicator matching a Lucene/ES query string and field filters
+      description: Requires capability search-indicator.
+      parameters:
+      - in: query
+        name: kill_chain_phases
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: indicator_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: tags
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: specification
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: producer
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: severity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/indicator/metric/histogram:
+    get:
+      tags:
+      - Indicator
+      description: Requires capability search-indicator.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Histogram for some Indicator field
+      parameters:
+      - in: query
+        name: kill_chain_phases
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: indicator_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: tags
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: specification
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: producer
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: granularity
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+      - in: query
+        name: from
+        description: Start date of the histogram. Filters the value of selected aggregated-on field.
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: severity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - timestamp
+          - valid_time.start_time
+          - valid_time.end_time
+      - in: query
+        name: agg-key
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: timezone
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - -05:00
+          - +02:00
+          - +01:00
+          - -09:00
+          - -01:00
+          - +03:00
+          - +08:00
+          - +04:00
+          - +00:00
+          - '+11:00'
+          - '-10:00'
+          - +05:00
+          - -03:00
+          - -04:00
+          - -02:00
+          - -07:00
+          - '-11:00'
+          - -06:00
+          - '+10:00'
+          - +09:00
+          - +07:00
+          - -08:00
+          - +06:00
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: End date of the histogram. Filters the value of selected aggregated-on field.
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/indicator/metric/topn:
+    get:
+      tags:
+      - Indicator
+      description: Requires capability search-indicator.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Topn for some Indicator field
+      parameters:
+      - in: query
+        name: kill_chain_phases
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: sort_order
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: indicator_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: tags
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: specification
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: producer
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: from
+        description: ''
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: severity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - indicator_type
+          - confidence
+          - tags
+          - producer
+          - likely_impact
+          - source
+          - severity
+      - in: query
+        name: agg-key
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/indicator/metric/cardinality:
+    get:
+      tags:
+      - Indicator
+      description: Requires capability search-indicator.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Cardinality for some Indicator field
+      parameters:
+      - in: query
+        name: kill_chain_phases
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: indicator_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: tags
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: specification
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: producer
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: severity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - indicator_type
+          - confidence
+          - tags
+          - producer
+          - likely_impact
+          - source
+          - severity
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/{observable_type}/{observable_value}/judgements/indicators:
+    get:
+      tags:
+      - Indicator
+      parameters:
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: sort_by
+        description: Sort result on a field
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+      - in: path
+        name: observable_type
+        description: Observable type names
+        required: true
+        example: acudid
+        schema:
+          type: string
+          enum:
+          - file_path
+          - mac_address
+          - trend_micro_id
+          - cybereason_id
+          - process_args
+          - s1_agent_id
+          - device
+          - hostname
+          - certificate_common_name
+          - serial_number
+          - meraki_network_id
+          - url
+          - jamf_management_id
+          - certificate_serial
+          - intune_id
+          - meraki_org_id
+          - cisco_cm_id
+          - registry_key
+          - process_path
+          - darktrace_id
+          - process_username
+          - cortex_agent_id
+          - orbital_node_id
+          - process_uid
+          - ngfw_name
+          - user
+          - certificate_issuer
+          - ipv6
+          - email
+          - cisco_uc_id
+          - cvm_id
+          - sha256
+          - crowdstrike_id
+          - google_cloud_id
+          - google_chromebook_id
+          - acudid
+          - sha1
+          - registry_name
+          - md5
+          - service_now_id
+          - ip
+          - domain
+          - email_subject
+          - imei
+          - ngfw_id
+          - amp_computer_guid
+          - ms_machine_id
+          - secure_access_id
+          - mutex
+          - processor_id
+          - swc_device_id
+          - registry_path
+          - odns_identity
+          - odns_identity_label
+          - cisco_mid
+          - process_name
+          - pki_serial
+          - meraki_node_sn
+          - email_messageid
+          - imsi
+          - user_agent
+          - process_hash
+          - file_name
+      - in: path
+        name: observable_value
+        description: ''
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/edn:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  type: string
+      summary: Returns the Indicator references associated with the specified observable based on Judgement relationships.
+      description: Requires capabilities list-judgements, list-relationships.
+  /ctia/{observable_type}/{observable_value}/sightings/indicators:
+    get:
+      tags:
+      - Indicator
+      parameters:
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: sort_by
+        description: Sort result on a field
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+      - in: path
+        name: observable_type
+        description: Observable type names
+        required: true
+        example: acudid
+        schema:
+          type: string
+          enum:
+          - file_path
+          - mac_address
+          - trend_micro_id
+          - cybereason_id
+          - process_args
+          - s1_agent_id
+          - device
+          - hostname
+          - certificate_common_name
+          - serial_number
+          - meraki_network_id
+          - url
+          - jamf_management_id
+          - certificate_serial
+          - intune_id
+          - meraki_org_id
+          - cisco_cm_id
+          - registry_key
+          - process_path
+          - darktrace_id
+          - process_username
+          - cortex_agent_id
+          - orbital_node_id
+          - process_uid
+          - ngfw_name
+          - user
+          - certificate_issuer
+          - ipv6
+          - email
+          - cisco_uc_id
+          - cvm_id
+          - sha256
+          - crowdstrike_id
+          - google_cloud_id
+          - google_chromebook_id
+          - acudid
+          - sha1
+          - registry_name
+          - md5
+          - service_now_id
+          - ip
+          - domain
+          - email_subject
+          - imei
+          - ngfw_id
+          - amp_computer_guid
+          - ms_machine_id
+          - secure_access_id
+          - mutex
+          - processor_id
+          - swc_device_id
+          - registry_path
+          - odns_identity
+          - odns_identity_label
+          - cisco_mid
+          - process_name
+          - pki_serial
+          - meraki_node_sn
+          - email_messageid
+          - imsi
+          - user_agent
+          - process_hash
+          - file_name
+      - in: path
+        name: observable_value
+        description: ''
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/edn:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  type: string
+      summary: Returns Indicator references associated with the specified observable based on Sighting relationships.
+      description: Requires capabilities list-relationships, list-sightings.
+components:
+  schemas:
+    CompositeIndicatorExpression:
+      example:
+        operator: and
+        indicator_ids:
+        - string
+      type: object
+      properties:
+        operator:
+          example: and
+          type: string
+          enum:
+          - not
+          - or
+          - and
+        indicator_ids:
+          example:
+          - string
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+      required:
+      - operator
+      - indicator_ids
+    KillChainPhase:
+      example:
+        kill_chain_name: string
+        phase_name: string
+      description: The kill-chain-phase represents a phase in a kill chain, which describes the various phases an attacker may undertake in order to achieve their objectives.
+      type: object
+      properties:
+        kill_chain_name:
+          example: string
+          description: The name of the kill chain.
+          type: string
+        phase_name:
+          example: string
+          description: The name of the phase in the kill chain.
+          type: string
+      additionalProperties: false
+      required:
+      - kill_chain_name
+      - phase_name
+    PartialIndicator:
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        tags:
+          example:
+          - string
+          description: Descriptors for this indicator.
+          type: array
+          items:
+            type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+        producer:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+        schema_version:
+          example: 1.3.30
+          description: CTIM schema version for this entity.
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: indicator
+          description: The fixed value indicator
+          type: string
+          enum:
+          - indicator
+        created:
+          type: string
+          format: date-time
+        test_mechanisms:
+          example:
+          - string
+          description: Test Mechanisms effective at identifying the cyber Observables specified in this cyber threat Indicator.
+          type: array
+          items:
+            type: string
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        composite_indicator_expression:
+          $ref: '#/components/schemas/CompositeIndicatorExpression'
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        likely_impact:
+          example: string
+          description: Likely potential impact within the relevant context if this Indicator were to occur.
+          type: string
+        indicator_type:
+          example:
+          - Anonymization
+          description: Specifies the type or types for this Indicator.
+          type: array
+          items:
+            type: string
+            enum:
+            - File Hash Watchlist
+            - Private Threat Feed
+            - IMEI Watchlist
+            - Malicious E-mail
+            - Exfiltration
+            - C2
+            - URL Watchlist
+            - IMSI Watchlist
+            - Malware Artifacts
+            - Domain Watchlist
+            - Anonymization
+            - Host Characteristics
+            - IP Watchlist
+            - Compromised PKI Certificate
+            - Login Name
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        severity:
+          example: Critical
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Critical
+          - Low
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        kill_chain_phases:
+          example:
+          - kill_chain_name: string
+            phase_name: string
+          description: Relevant kill chain phases indicated by this Indicator.
+          type: array
+          items:
+            $ref: '#/components/schemas/KillChainPhase'
+        client_id:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+        negate:
+          example: true
+          description: Specifies the absence of the pattern.
+          type: boolean
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: level of confidence held in the accuracy of this Indicator.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        specification:
+          example: anything
+          description: Simplified conditional branch
+        owner:
+          type: string
+      additionalProperties: false
+    ValidTime:
+      example:
+        start_time: '2016-01-01T01:01:01.000Z'
+        end_time: '2016-01-01T01:01:01.000Z'
+      description: Period of time when a cyber observation is valid.
+      type: object
+      properties:
+        start_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If not present, the valid time position of the indicator does not have an upper bound.
+          type: string
+          format: date-time
+        end_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
+          type: string
+          format: date-time
+      additionalProperties: false
+    MetricResultData:
+      type: object
+      additionalProperties: {}
+    Indicator:
+      example:
+        description: string
+        tags:
+        - string
+        valid_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        producer: string
+        schema_version: 1.3.30
+        revision: 10
+        type: indicator
+        test_mechanisms:
+        - string
+        source: string
+        external_ids:
+        - string
+        short_description: string
+        composite_indicator_expression:
+          operator: and
+          indicator_ids:
+          - string
+        title: string
+        likely_impact: string
+        indicator_type:
+        - Anonymization
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        source_uri: string
+        language: string
+        id: string
+        severity: Critical
+        tlp: green
+        kill_chain_phases:
+        - kill_chain_name: string
+          phase_name: string
+        negate: true
+        timestamp: '2016-01-01T01:01:01.000Z'
+        confidence: High
+        specification: anything
+      description: 'An indicator is a test, or a collection of judgements that define
+
+        criteria for identifying the activity, or presence of malware, or
+
+        other unwanted software.
+
+
+        We follow the
+
+        [STiX IndicatorType](http://stixproject.github.io/data-model/1.2/indicator/IndicatorType/)
+
+        closely, with the exception of not including observables within the
+
+        indicator, and preferring a _specification_ object encoded in JSON as
+
+        opposed to an opaque _implementation_ block.
+
+
+        Additional, you will want to either define judgements against
+
+        Observables that are linked to this indicator, with the ID in the
+
+        _indicators_ field of those Judgements, or you can provide a
+
+        _specification_ value.'
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        tags:
+          example:
+          - string
+          description: Descriptors for this indicator.
+          type: array
+          items:
+            type: string
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+        producer:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        type:
+          example: indicator
+          description: The fixed value indicator
+          type: string
+          enum:
+          - indicator
+        test_mechanisms:
+          example:
+          - string
+          description: Test Mechanisms effective at identifying the cyber Observables specified in this cyber threat Indicator.
+          type: array
+          items:
+            type: string
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        composite_indicator_expression:
+          $ref: '#/components/schemas/CompositeIndicatorExpression'
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        likely_impact:
+          example: string
+          description: Likely potential impact within the relevant context if this Indicator were to occur.
+          type: string
+        indicator_type:
+          example:
+          - Anonymization
+          description: Specifies the type or types for this Indicator.
+          type: array
+          items:
+            type: string
+            enum:
+            - File Hash Watchlist
+            - Private Threat Feed
+            - IMEI Watchlist
+            - Malicious E-mail
+            - Exfiltration
+            - C2
+            - URL Watchlist
+            - IMSI Watchlist
+            - Malware Artifacts
+            - Domain Watchlist
+            - Anonymization
+            - Host Characteristics
+            - IP Watchlist
+            - Compromised PKI Certificate
+            - Login Name
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        severity:
+          example: Critical
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Critical
+          - Low
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        kill_chain_phases:
+          example:
+          - kill_chain_name: string
+            phase_name: string
+          description: Relevant kill chain phases indicated by this Indicator.
+          type: array
+          items:
+            $ref: '#/components/schemas/KillChainPhase'
+        negate:
+          example: true
+          description: Specifies the absence of the pattern.
+          type: boolean
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: level of confidence held in the accuracy of this Indicator.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        specification:
+          example: anything
+          description: Simplified conditional branch
+      additionalProperties: false
+    MetricResult:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MetricResultData'
+        type:
+          type: string
+          enum:
+          - histogram
+          - topn
+          - avg
+          - cardinality
+        filters:
+          $ref: '#/components/schemas/MetricResultFilters'
+      additionalProperties: false
+      required:
+      - data
+      - type
+      - filters
+    ExternalReference:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
+      type: object
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: false
+      required:
+      - source_name
+    NewIndicator:
+      description: a new Indicator
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        tags:
+          example:
+          - string
+          description: Descriptors for this indicator.
+          type: array
+          items:
+            type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+        producer:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: indicator
+          description: The fixed value "indicator"
+          type: string
+          enum:
+          - indicator
+        created:
+          type: string
+          format: date-time
+        test_mechanisms:
+          example:
+          - string
+          description: Test Mechanisms effective at identifying the cyber Observables specified in this cyber threat Indicator.
+          type: array
+          items:
+            type: string
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        composite_indicator_expression:
+          $ref: '#/components/schemas/CompositeIndicatorExpression'
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        likely_impact:
+          example: string
+          description: Likely potential impact within the relevant context if this Indicator were to occur.
+          type: string
+        indicator_type:
+          example:
+          - Anonymization
+          description: Specifies the type or types for this Indicator.
+          type: array
+          items:
+            type: string
+            enum:
+            - File Hash Watchlist
+            - Private Threat Feed
+            - IMEI Watchlist
+            - Malicious E-mail
+            - Exfiltration
+            - C2
+            - URL Watchlist
+            - IMSI Watchlist
+            - Malware Artifacts
+            - Domain Watchlist
+            - Anonymization
+            - Host Characteristics
+            - IP Watchlist
+            - Compromised PKI Certificate
+            - Login Name
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          type: string
+        severity:
+          example: Critical
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Critical
+          - Low
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        kill_chain_phases:
+          example:
+          - kill_chain_name: string
+            phase_name: string
+          description: Relevant kill chain phases indicated by this Indicator.
+          type: array
+          items:
+            $ref: '#/components/schemas/KillChainPhase'
+        client_id:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+        negate:
+          example: true
+          description: Specifies the absence of the pattern.
+          type: boolean
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: level of confidence held in the accuracy of this Indicator.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        specification:
+          example: anything
+          description: Simplified conditional branch
+        owner:
+          type: string
+      additionalProperties: false
+      required:
+      - producer
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
+  securitySchemes:
+    JWT:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            private-intel: Private Intelligence Full Access
+            private-intel:read: Private Intelligence Read Access
+            private-intel:write: Private Intelligence Write Access
+            casebook: Casebook Full Access
+            casebook:read: Casebook Read Access
+            casebook:write: Casebook Write Access
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

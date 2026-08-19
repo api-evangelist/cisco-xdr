@@ -1,0 +1,2526 @@
+openapi: 3.2.0
+info:
+  title: CTIA COA API
+  version: 4178275a824512c2fd3a2acdb0e8277233919054 v2.71.0
+  license:
+    name: All Rights Reserved
+    url: ''
+  contact:
+    name: 'Cisco Security Business Group -- Advanced Threat '
+    url: http://github.com/threatgrid/ctia
+    email: cisco-intel-api-support@cisco.com
+  description: "A Threat Intelligence API service\n\n  This API provides a mechanism for making Judgements on the Disposition\n  of Observables, which are then distilled into a final Verdict.  A\n  Disposition is a statement regarding the malicious, or otherwise,\n  nature of an Observable.\n\n  The Judgements can be grouped into Indicators, which can be associated\n  with Campaigns, Actors and TTPs.  Feedback can be given on specific\n  Judgements, indicating agreement or disagreement, or clarification.\n\n  When an Observable with a malicious Verdict is seen, it can be recorded as\n  a Sighting, and the Relations that Observable had with other Observables can\n  be recorded as well.\n\n  We support a pre-defined set of Observable Types.  Each Observable Type has a\n  specific form of natural identifier, its ID, which is almost always\n  the default way it is represented when observed in the wild.\n\n  * Ipv4/IPv6  -- 192.168.1.1\n  * Domain/Hostname -- foo.com, www.bar.com\n  * SHA256  -- the sha256 checksum of a file, or other data blob\n  * MD5 -- the md5 checksum of a file, or other data blob\n  * SHA1 -- the sha1 checksum of a file, or other data blob\n  * URL -- A minimal form of the URL\n\n  The Verdict is derived from all of the Judgements on that Observable which\n  have not yet expired.  The highest priority Judgement becomes the\n  active verdict.  If there is more than one Judgement with that\n  priority, than Clean disposition has priority over all others, then\n  Malicious disposition, and so on down to Unknown.\n\n  <a href='/doc/README.md'>CTIA Documentation</a>"
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR (CTIA)
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://private.intel.amp.cisco.com/index.html
+  - type: raw
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: /
+security:
+- JWT: []
+- oauth2:
+  - private-intel
+  - private-intel:read
+  - private-intel:write
+  - casebook
+  - casebook:read
+  - casebook:write
+tags:
+- name: COA
+  description: COA operations
+paths:
+  /ctia/coa:
+    post:
+      tags:
+      - COA
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/COA'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/COA'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/COA'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/COA'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/COA'
+      parameters:
+      - in: query
+        name: wait_for
+        description: wait for entity to be available for search
+        required: false
+        schema:
+          type: boolean
+      summary: Adds a new Coa
+      description: Requires capability create-coa.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCOA'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewCOA'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewCOA'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewCOA'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewCOA'
+        description: a new Coa
+        required: true
+  /ctia/coa/{id}:
+    put:
+      tags:
+      - COA
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/COA'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/COA'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/COA'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/COA'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/COA'
+      parameters:
+      - in: query
+        name: wait_for
+        description: wait for updated entity to be available for search
+        required: false
+        schema:
+          type: boolean
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Update an existing Coa
+      description: Requires capability create-coa.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCOA'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewCOA'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewCOA'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewCOA'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewCOA'
+        description: an updated Coa
+        required: true
+    get:
+      tags:
+      - COA
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartialCOA'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/PartialCOA'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/PartialCOA'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/PartialCOA'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/PartialCOA'
+      summary: Get one Coa by ID
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - valid_time.start_time
+            - stage
+            - schema_version
+            - revision
+            - efficacy
+            - source
+            - valid_time.end_time
+            - title
+            - source_uri
+            - coa_type
+            - language
+            - id
+            - tlp
+            - cost
+            - timestamp
+            - structured_coa_type
+            - impact
+      description: Requires capability read-coa.
+    delete:
+      tags:
+      - COA
+      responses:
+        '204':
+          description: ''
+      x-no-doc: false
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: wait_for
+        description: wait for deleted entity to no more be available for search
+        required: false
+        schema:
+          type: boolean
+      summary: Delete one Coa
+      description: Requires capability delete-coa.
+  /ctia/coa/external_id/{external_id}:
+    get:
+      tags:
+      - COA
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCOA'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCOA'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCOA'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCOA'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCOA'
+      parameters:
+      - in: query
+        name: sort_by
+        description: Sort results on a field
+        required: false
+        schema:
+          type: string
+          enum:
+          - schema_version
+          - revision
+          - source
+          - title
+          - source_uri
+          - language
+          - id
+          - tlp
+          - timestamp
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - valid_time.start_time
+            - stage
+            - schema_version
+            - revision
+            - efficacy
+            - source
+            - valid_time.end_time
+            - title
+            - source_uri
+            - coa_type
+            - language
+            - id
+            - tlp
+            - cost
+            - timestamp
+            - structured_coa_type
+            - impact
+      - in: path
+        name: external_id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: List Coa by external id
+      description: Requires capability read-coa.
+  /ctia/coa/search:
+    get:
+      tags:
+      - COA
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCOA'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCOA'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCOA'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCOA'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCOA'
+      summary: Search for Coa entities using a ES query syntax and field filters
+      description: Requires capability search-coa.
+      parameters:
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: stage
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: sort_by
+        description: 'Sort result on fields.
+
+
+          The following fields are supported: coa_type, cost, efficacy, id, impact, language, revision, schema_version, source, source_uri, stage, structured_coa_type, timestamp, title, tlp, valid_time.end_time, valid_time.start_time
+
+
+          Fields can be combined with '','' and sort order can be specified by '':asc'' and '':desc''. For example:
+
+
+          -  coa_type       # sort by coa_type ascending
+
+          -  coa_type:desc  # sort by coa_type descending
+
+          -  coa_type,cost:desc  # sort by coa_type ascending, then cost descending'
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - valid_time.start_time
+            - stage
+            - schema_version
+            - revision
+            - efficacy
+            - source
+            - valid_time.end_time
+            - title
+            - source_uri
+            - coa_type
+            - language
+            - id
+            - tlp
+            - cost
+            - timestamp
+            - structured_coa_type
+            - impact
+      - in: query
+        name: cost
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: objective
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: efficacy
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_fields
+        description: '''fields'' key of Elasticsearch Fulltext Query.'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - id
+            - short_description
+            - title
+            - source
+            - description
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: structured_coa_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: impact
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: coa_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+    delete:
+      tags:
+      - COA
+      description: Requires capabilities delete-coa, search-coa.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+            application/x-yaml:
+              schema:
+                type: integer
+                format: int64
+            application/edn:
+              schema:
+                type: integer
+                format: int64
+            application/transit+json:
+              schema:
+                type: integer
+                format: int64
+            application/transit+msgpack:
+              schema:
+                type: integer
+                format: int64
+      summary: Delete Coa entities matching given Lucene/ES query string or/and field filters
+      parameters:
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: stage
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: cost
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: objective
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: efficacy
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: REALLY_DELETE_ALL_THESE_ENTITIES
+        description: ' If you do not set this value or set it to false this route will perform a dry run. Set this value to true to perform the deletion. You MUST confirm you will fix the mess after the inevitable disaster that will occur after you perform that operation. DO NOT FORGET TO SET THAT TO FALSE AFTER EACH DELETION IF YOU INTEND TO USE THAT ROUTE MULTIPLE TIMES.'
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: structured_coa_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: impact
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: wait_for
+        description: wait for matched entity to be deleted
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: coa_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/coa/search/count:
+    get:
+      tags:
+      - COA
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+            application/x-yaml:
+              schema:
+                type: integer
+                format: int64
+            application/edn:
+              schema:
+                type: integer
+                format: int64
+            application/transit+json:
+              schema:
+                type: integer
+                format: int64
+            application/transit+msgpack:
+              schema:
+                type: integer
+                format: int64
+      summary: Count Coa matching a Lucene/ES query string and field filters
+      description: Requires capability search-coa.
+      parameters:
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: stage
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: cost
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: objective
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: efficacy
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: structured_coa_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: impact
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: coa_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/coa/metric/histogram:
+    get:
+      tags:
+      - COA
+      description: Requires capability search-coa.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Histogram for some Coa field
+      parameters:
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: stage
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: cost
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: objective
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: efficacy
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: granularity
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+      - in: query
+        name: from
+        description: Start date of the histogram. Filters the value of selected aggregated-on field.
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: structured_coa_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - timestamp
+          - valid_time.start_time
+          - valid_time.end_time
+      - in: query
+        name: impact
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: agg-key
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: timezone
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - -05:00
+          - +02:00
+          - +01:00
+          - -09:00
+          - -01:00
+          - +03:00
+          - +08:00
+          - +04:00
+          - +00:00
+          - '+11:00'
+          - '-10:00'
+          - +05:00
+          - -03:00
+          - -04:00
+          - -02:00
+          - -07:00
+          - '-11:00'
+          - -06:00
+          - '+10:00'
+          - +09:00
+          - +07:00
+          - -08:00
+          - +06:00
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: coa_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: End date of the histogram. Filters the value of selected aggregated-on field.
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/coa/metric/topn:
+    get:
+      tags:
+      - COA
+      description: Requires capability search-coa.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Topn for some Coa field
+      parameters:
+      - in: query
+        name: sort_order
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: stage
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: cost
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: objective
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: efficacy
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: structured_coa_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - efficacy
+          - cost
+          - source
+          - coa_type
+      - in: query
+        name: impact
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: agg-key
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: coa_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/coa/metric/cardinality:
+    get:
+      tags:
+      - COA
+      description: Requires capability search-coa.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Cardinality for some Coa field
+      parameters:
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: stage
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: cost
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: objective
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: efficacy
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: structured_coa_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - efficacy
+          - cost
+          - source
+          - coa_type
+      - in: query
+        name: impact
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: coa_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+components:
+  schemas:
+    RelatedCOA:
+      example:
+        confidence: High
+        source: string
+        relationship: string
+        COA_id: string
+      type: object
+      properties:
+        confidence:
+          example: High
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        source:
+          example: string
+          type: string
+        relationship:
+          example: string
+          type: string
+        COA_id:
+          example: string
+          description: A URI leading to a COA.
+          type: string
+      additionalProperties: false
+      required:
+      - COA_id
+    ModifierType:
+      example:
+        response: acknowledge
+        method:
+        - acl
+        additional_properties:
+          context: string
+        time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        frequency: string
+        duration: '2016-01-01T01:01:01.000Z'
+        source: string
+        search: cve
+        option: string
+        id: string
+        location: internal
+        delay: '2016-01-01T01:01:01.000Z'
+        destination: copy-to
+      type: object
+      properties:
+        response:
+          example: acknowledge
+          type: string
+          enum:
+          - query
+          - status
+          - acknowledge
+          - command-ref
+        method:
+          example:
+          - acl
+          type: array
+          items:
+            type: string
+            enum:
+            - blackhole
+            - unauthenticated
+            - suspend
+            - graceful
+            - hibernate
+            - whitelist
+            - honeypot
+            - immediate
+            - spawn
+            - blacklist
+            - acl
+            - segmentation
+            - authenticated
+        additional_properties:
+          $ref: '#/components/schemas/AdditionalProperties'
+        time:
+          $ref: '#/components/schemas/ValidTime'
+        frequency:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+        duration:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Schema definition for all date or timestamp values.  Serialized as a string, the field should follow the rules of the [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+          type: string
+          format: date-time
+        source:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+        search:
+          example: cve
+          type: string
+          enum:
+          - vendor_bulletin
+          - patch
+          - signature
+          - cve
+        option:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+        id:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+        location:
+          example: internal
+          type: string
+          enum:
+          - internal
+          - perimeter
+        delay:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Schema definition for all date or timestamp values.  Serialized as a string, the field should follow the rules of the [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+          type: string
+          format: date-time
+        destination:
+          example: copy-to
+          type: string
+          enum:
+          - modify-to
+          - set-to
+          - copy-to
+          - move-to
+          - save-to
+          - restore-point
+          - report-to
+      additionalProperties: false
+    TargetType:
+      example:
+        type: acudid
+        specifiers: string
+      type: object
+      properties:
+        type:
+          example: acudid
+          type: string
+        specifiers:
+          example: string
+          description: Observable types that can be acted upon.
+          type: string
+      additionalProperties: false
+      required:
+      - type
+    ActionType:
+      example:
+        type: alert
+      type: object
+      properties:
+        type:
+          example: alert
+          type: string
+          enum:
+          - stop
+          - save
+          - delete
+          - remediate
+          - redirect
+          - alert
+          - query
+          - augment
+          - snapshot
+          - update
+          - allow
+          - scan
+          - investigate
+          - modify
+          - sync
+          - start
+          - pause
+          - deny
+          - substitute
+          - distill
+          - move
+          - restart
+          - other
+          - detonate
+          - response
+          - set
+          - notify
+          - report
+          - restore
+          - get
+          - throttle
+          - mitigate
+          - resume
+          - locate
+          - contain
+      additionalProperties: false
+      required:
+      - type
+    PartialCOA:
+      example:
+        description: string
+        valid_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        stage: Containment
+        schema_version: 1.3.30
+        revision: 10
+        efficacy: High
+        type: coa
+        related_COAs:
+        - confidence: High
+          source: string
+          relationship: string
+          COA_id: string
+        source: string
+        external_ids:
+        - string
+        short_description: string
+        title: string
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        source_uri: string
+        coa_type: Diplomatic Actions
+        language: string
+        id: string
+        tlp: green
+        objective:
+        - string
+        cost: High
+        timestamp: '2016-01-01T01:01:01.000Z'
+        open_c2_coa:
+          type: structured_coa
+          id: string
+          action:
+            type: alert
+          target:
+            type: acudid
+            specifiers: string
+          actuator:
+            type: endpoint
+            specifiers:
+            - string
+          modifiers:
+            response: acknowledge
+            method:
+            - acl
+            additional_properties:
+              context: string
+            time:
+              start_time: '2016-01-01T01:01:01.000Z'
+              end_time: '2016-01-01T01:01:01.000Z'
+            frequency: string
+            duration: '2016-01-01T01:01:01.000Z'
+            source: string
+            search: cve
+            option: string
+            id: string
+            location: internal
+            delay: '2016-01-01T01:01:01.000Z'
+            destination: copy-to
+        structured_coa_type: openc2
+        impact: string
+      description: Course of Action. A corrective or preventative action to be taken in response to a threat.
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+        stage:
+          example: Containment
+          description: Specifies what stage in the cyber threat management lifecycle this Course Of Action is relevant to.
+          type: string
+          enum:
+          - Identification
+          - Lessons Learned
+          - Remedy
+          - Preparation
+          - Containment
+          - Response
+          - Eradication
+          - Recovery
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        efficacy:
+          example: High
+          description: Effectiveness of this course of action in achieving its targeted objective.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: coa
+          type: string
+          enum:
+          - coa
+        created:
+          type: string
+          format: date-time
+        related_COAs:
+          example:
+          - confidence: High
+            source: string
+            relationship: string
+            COA_id: string
+          description: Identifies or characterizes relationships to one or more related courses of action.
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedCOA'
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        coa_type:
+          example: Diplomatic Actions
+          description: The type of this COA
+          type: string
+          enum:
+          - Diplomatic Actions
+          - Physical Access Restrictions
+          - Policy Actions
+          - Internal Blocking
+          - Playbook
+          - Redirection
+          - Phase
+          - Eradication
+          - Public Disclosure
+          - Monitoring
+          - Patching
+          - Logical Access Restrictions
+          - Redirection (Honey Pot)
+          - Rebuilding
+          - Perimeter Blocking
+          - Hardening
+          - Other
+          - Training
+          - Task
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        objective:
+          example:
+          - string
+          description: Characterizes the objective to provide guidance on how to mitigate a security incident that has been identified.
+          type: array
+          items:
+            type: string
+        cost:
+          example: High
+          description: Characterizes the estimated cost for applying this course of action.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        client_id:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        open_c2_coa:
+          $ref: '#/components/schemas/OpenC2COA'
+        structured_coa_type:
+          example: openc2
+          type: string
+          enum:
+          - openc2
+        impact:
+          example: string
+          description: Characterizes the estimated impact of applying this course of action.
+          type: string
+        owner:
+          type: string
+      additionalProperties: false
+    ValidTime:
+      example:
+        start_time: '2016-01-01T01:01:01.000Z'
+        end_time: '2016-01-01T01:01:01.000Z'
+      description: Period of time when a cyber observation is valid.
+      type: object
+      properties:
+        start_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If not present, the valid time position of the indicator does not have an upper bound.
+          type: string
+          format: date-time
+        end_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
+          type: string
+          format: date-time
+      additionalProperties: false
+    MetricResultData:
+      type: object
+      additionalProperties: {}
+    ActuatorType:
+      example:
+        type: endpoint
+        specifiers:
+        - string
+      type: object
+      properties:
+        type:
+          example: endpoint
+          type: string
+          enum:
+          - endpoint.sensor
+          - process.network-scanner
+          - network.switch
+          - network.security_manager
+          - process.vulnerability-scanner
+          - network.hub
+          - network.ids
+          - network.firewall
+          - process
+          - network.sense_making
+          - process.sandbox
+          - network.modem
+          - process.email-service
+          - process.dns-server
+          - network.vpn
+          - process.connection-scanner
+          - network.nic
+          - endpoint.printer
+          - network.gateway
+          - process.reputation-service
+          - process.remediation-service
+          - network
+          - process.virtualization-service
+          - network.ips
+          - endpoint.smart-meter
+          - endpoint.digital-telephone-handset
+          - endpoint.workstation
+          - endpoint.server
+          - network.wap
+          - endpoint.laptop
+          - process.aaa-server
+          - process.directory-service
+          - endpoint.pos-terminal
+          - network.bridge
+          - other
+          - process.file-scanner
+          - network.proxy
+          - endpoint
+          - process.location-service
+          - network.sensor
+          - endpoint.smart-phone
+          - network.hips
+          - process.anti-virus-scanner
+          - endpoint.tablet
+          - network.guard
+          - network.router
+        specifiers:
+          example:
+          - string
+          description: List of additional properties describing the actuator.
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+      required:
+      - type
+    COA:
+      example:
+        description: string
+        valid_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        stage: Containment
+        schema_version: 1.3.30
+        revision: 10
+        efficacy: High
+        type: coa
+        related_COAs:
+        - confidence: High
+          source: string
+          relationship: string
+          COA_id: string
+        source: string
+        external_ids:
+        - string
+        short_description: string
+        title: string
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        source_uri: string
+        coa_type: Diplomatic Actions
+        language: string
+        id: string
+        tlp: green
+        objective:
+        - string
+        cost: High
+        timestamp: '2016-01-01T01:01:01.000Z'
+        open_c2_coa:
+          type: structured_coa
+          id: string
+          action:
+            type: alert
+          target:
+            type: acudid
+            specifiers: string
+          actuator:
+            type: endpoint
+            specifiers:
+            - string
+          modifiers:
+            response: acknowledge
+            method:
+            - acl
+            additional_properties:
+              context: string
+            time:
+              start_time: '2016-01-01T01:01:01.000Z'
+              end_time: '2016-01-01T01:01:01.000Z'
+            frequency: string
+            duration: '2016-01-01T01:01:01.000Z'
+            source: string
+            search: cve
+            option: string
+            id: string
+            location: internal
+            delay: '2016-01-01T01:01:01.000Z'
+            destination: copy-to
+        structured_coa_type: openc2
+        impact: string
+      description: Course of Action. A corrective or preventative action to be taken in response to a threat.
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+        stage:
+          example: Containment
+          description: Specifies what stage in the cyber threat management lifecycle this Course Of Action is relevant to.
+          type: string
+          enum:
+          - Identification
+          - Lessons Learned
+          - Remedy
+          - Preparation
+          - Containment
+          - Response
+          - Eradication
+          - Recovery
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        efficacy:
+          example: High
+          description: Effectiveness of this course of action in achieving its targeted objective.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        type:
+          example: coa
+          type: string
+          enum:
+          - coa
+        related_COAs:
+          example:
+          - confidence: High
+            source: string
+            relationship: string
+            COA_id: string
+          description: Identifies or characterizes relationships to one or more related courses of action.
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedCOA'
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        coa_type:
+          example: Diplomatic Actions
+          description: The type of this COA
+          type: string
+          enum:
+          - Diplomatic Actions
+          - Physical Access Restrictions
+          - Policy Actions
+          - Internal Blocking
+          - Playbook
+          - Redirection
+          - Phase
+          - Eradication
+          - Public Disclosure
+          - Monitoring
+          - Patching
+          - Logical Access Restrictions
+          - Redirection (Honey Pot)
+          - Rebuilding
+          - Perimeter Blocking
+          - Hardening
+          - Other
+          - Training
+          - Task
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        objective:
+          example:
+          - string
+          description: Characterizes the objective to provide guidance on how to mitigate a security incident that has been identified.
+          type: array
+          items:
+            type: string
+        cost:
+          example: High
+          description: Characterizes the estimated cost for applying this course of action.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        open_c2_coa:
+          $ref: '#/components/schemas/OpenC2COA'
+        structured_coa_type:
+          example: openc2
+          type: string
+          enum:
+          - openc2
+        impact:
+          example: string
+          description: Characterizes the estimated impact of applying this course of action.
+          type: string
+      additionalProperties: false
+    MetricResult:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MetricResultData'
+        type:
+          type: string
+          enum:
+          - histogram
+          - topn
+          - avg
+          - cardinality
+        filters:
+          $ref: '#/components/schemas/MetricResultFilters'
+      additionalProperties: false
+      required:
+      - data
+      - type
+      - filters
+    ExternalReference:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
+      type: object
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: false
+      required:
+      - source_name
+    NewCOA:
+      description: a new Coa
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+        stage:
+          example: Containment
+          description: Specifies what stage in the cyber threat management lifecycle this Course Of Action is relevant to.
+          type: string
+          enum:
+          - Identification
+          - Lessons Learned
+          - Remedy
+          - Preparation
+          - Containment
+          - Response
+          - Eradication
+          - Recovery
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        efficacy:
+          example: High
+          description: Effectiveness of this course of action in achieving its targeted objective.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: coa
+          type: string
+          enum:
+          - coa
+        created:
+          type: string
+          format: date-time
+        related_COAs:
+          example:
+          - confidence: High
+            source: string
+            relationship: string
+            COA_id: string
+          description: Identifies or characterizes relationships to one or more related courses of action.
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedCOA'
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        coa_type:
+          example: Diplomatic Actions
+          description: The type of this COA
+          type: string
+          enum:
+          - Diplomatic Actions
+          - Physical Access Restrictions
+          - Policy Actions
+          - Internal Blocking
+          - Playbook
+          - Redirection
+          - Phase
+          - Eradication
+          - Public Disclosure
+          - Monitoring
+          - Patching
+          - Logical Access Restrictions
+          - Redirection (Honey Pot)
+          - Rebuilding
+          - Perimeter Blocking
+          - Hardening
+          - Other
+          - Training
+          - Task
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        objective:
+          example:
+          - string
+          description: Characterizes the objective to provide guidance on how to mitigate a security incident that has been identified.
+          type: array
+          items:
+            type: string
+        cost:
+          example: High
+          description: Characterizes the estimated cost for applying this course of action.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        client_id:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        open_c2_coa:
+          $ref: '#/components/schemas/OpenC2COA'
+        structured_coa_type:
+          example: openc2
+          type: string
+          enum:
+          - openc2
+        impact:
+          example: string
+          description: Characterizes the estimated impact of applying this course of action.
+          type: string
+        owner:
+          type: string
+      additionalProperties: false
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
+    OpenC2COA:
+      example:
+        type: structured_coa
+        id: string
+        action:
+          type: alert
+        target:
+          type: acudid
+          specifiers: string
+        actuator:
+          type: endpoint
+          specifiers:
+          - string
+        modifiers:
+          response: acknowledge
+          method:
+          - acl
+          additional_properties:
+            context: string
+          time:
+            start_time: '2016-01-01T01:01:01.000Z'
+            end_time: '2016-01-01T01:01:01.000Z'
+          frequency: string
+          duration: '2016-01-01T01:01:01.000Z'
+          source: string
+          search: cve
+          option: string
+          id: string
+          location: internal
+          delay: '2016-01-01T01:01:01.000Z'
+          destination: copy-to
+      type: object
+      properties:
+        type:
+          example: structured_coa
+          type: string
+          enum:
+          - structured_coa
+        id:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+        action:
+          $ref: '#/components/schemas/ActionType'
+        target:
+          $ref: '#/components/schemas/TargetType'
+        actuator:
+          $ref: '#/components/schemas/ActuatorType'
+        modifiers:
+          $ref: '#/components/schemas/ModifierType'
+      additionalProperties: false
+      required:
+      - type
+      - action
+    AdditionalProperties:
+      example:
+        context: string
+      type: object
+      properties:
+        context:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+      additionalProperties: false
+      required:
+      - context
+  securitySchemes:
+    JWT:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            private-intel: Private Intelligence Full Access
+            private-intel:read: Private Intelligence Read Access
+            private-intel:write: Private Intelligence Write Access
+            casebook: Casebook Full Access
+            casebook:read: Casebook Read Access
+            casebook:write: Casebook Write Access
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

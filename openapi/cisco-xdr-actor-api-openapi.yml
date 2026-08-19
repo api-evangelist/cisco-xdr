@@ -1,0 +1,2022 @@
+openapi: 3.2.0
+info:
+  title: CTIA Actor API
+  version: 4178275a824512c2fd3a2acdb0e8277233919054 v2.71.0
+  license:
+    name: All Rights Reserved
+    url: ''
+  contact:
+    name: 'Cisco Security Business Group -- Advanced Threat '
+    url: http://github.com/threatgrid/ctia
+    email: cisco-intel-api-support@cisco.com
+  description: "A Threat Intelligence API service\n\n  This API provides a mechanism for making Judgements on the Disposition\n  of Observables, which are then distilled into a final Verdict.  A\n  Disposition is a statement regarding the malicious, or otherwise,\n  nature of an Observable.\n\n  The Judgements can be grouped into Indicators, which can be associated\n  with Campaigns, Actors and TTPs.  Feedback can be given on specific\n  Judgements, indicating agreement or disagreement, or clarification.\n\n  When an Observable with a malicious Verdict is seen, it can be recorded as\n  a Sighting, and the Relations that Observable had with other Observables can\n  be recorded as well.\n\n  We support a pre-defined set of Observable Types.  Each Observable Type has a\n  specific form of natural identifier, its ID, which is almost always\n  the default way it is represented when observed in the wild.\n\n  * Ipv4/IPv6  -- 192.168.1.1\n  * Domain/Hostname -- foo.com, www.bar.com\n  * SHA256  -- the sha256 checksum of a file, or other data blob\n  * MD5 -- the md5 checksum of a file, or other data blob\n  * SHA1 -- the sha1 checksum of a file, or other data blob\n  * URL -- A minimal form of the URL\n\n  The Verdict is derived from all of the Judgements on that Observable which\n  have not yet expired.  The highest priority Judgement becomes the\n  active verdict.  If there is more than one Judgement with that\n  priority, than Clean disposition has priority over all others, then\n  Malicious disposition, and so on down to Unknown.\n\n  <a href='/doc/README.md'>CTIA Documentation</a>"
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR (CTIA)
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://private.intel.amp.cisco.com/index.html
+  - type: raw
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: /
+security:
+- JWT: []
+- oauth2:
+  - private-intel
+  - private-intel:read
+  - private-intel:write
+  - casebook
+  - casebook:read
+  - casebook:write
+tags:
+- name: Actor
+  description: Actor operations
+paths:
+  /ctia/actor:
+    post:
+      tags:
+      - Actor
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Actor'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Actor'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Actor'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Actor'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Actor'
+      parameters:
+      - in: query
+        name: wait_for
+        description: wait for entity to be available for search
+        required: false
+        schema:
+          type: boolean
+      summary: Adds a new Actor
+      description: Requires capability create-actor.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewActor'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewActor'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewActor'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewActor'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewActor'
+        description: a new Actor
+        required: true
+  /ctia/actor/{id}:
+    put:
+      tags:
+      - Actor
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Actor'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Actor'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Actor'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Actor'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Actor'
+      parameters:
+      - in: query
+        name: wait_for
+        description: wait for updated entity to be available for search
+        required: false
+        schema:
+          type: boolean
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Update an existing Actor
+      description: Requires capability create-actor.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewActor'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewActor'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewActor'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewActor'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewActor'
+        description: an updated Actor
+        required: true
+    get:
+      tags:
+      - Actor
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartialActor'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/PartialActor'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/PartialActor'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/PartialActor'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/PartialActor'
+      summary: Get one Actor by ID
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - motivation
+            - valid_time.start_time
+            - sophistication
+            - schema_version
+            - revision
+            - source
+            - valid_time.end_time
+            - title
+            - source_uri
+            - intended_effect
+            - language
+            - id
+            - tlp
+            - timestamp
+            - actor_types
+      description: Requires capability read-actor.
+    delete:
+      tags:
+      - Actor
+      responses:
+        '204':
+          description: ''
+      x-no-doc: false
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: wait_for
+        description: wait for deleted entity to no more be available for search
+        required: false
+        schema:
+          type: boolean
+      summary: Delete one Actor
+      description: Requires capability delete-actor.
+  /ctia/actor/external_id/{external_id}:
+    get:
+      tags:
+      - Actor
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialActor'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialActor'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialActor'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialActor'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialActor'
+      parameters:
+      - in: query
+        name: sort_by
+        description: Sort results on a field
+        required: false
+        schema:
+          type: string
+          enum:
+          - schema_version
+          - revision
+          - source
+          - title
+          - source_uri
+          - language
+          - id
+          - tlp
+          - timestamp
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - motivation
+            - valid_time.start_time
+            - sophistication
+            - schema_version
+            - revision
+            - source
+            - valid_time.end_time
+            - title
+            - source_uri
+            - intended_effect
+            - language
+            - id
+            - tlp
+            - timestamp
+            - actor_types
+      - in: path
+        name: external_id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: List Actor by external id
+      description: Requires capability read-actor.
+  /ctia/actor/search:
+    get:
+      tags:
+      - Actor
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialActor'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialActor'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialActor'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialActor'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialActor'
+      summary: Search for Actor entities using a ES query syntax and field filters
+      description: Requires capability search-actor.
+      parameters:
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: sort_by
+        description: 'Sort result on fields.
+
+
+          The following fields are supported: actor_types, id, intended_effect, language, motivation, revision, schema_version, sophistication, source, source_uri, timestamp, title, tlp, valid_time.end_time, valid_time.start_time
+
+
+          Fields can be combined with '','' and sort order can be specified by '':asc'' and '':desc''. For example:
+
+
+          -  actor_types       # sort by actor_types ascending
+
+          -  actor_types:desc  # sort by actor_types descending
+
+          -  actor_types,id:desc  # sort by actor_types ascending, then id descending'
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - motivation
+            - valid_time.start_time
+            - sophistication
+            - schema_version
+            - revision
+            - source
+            - valid_time.end_time
+            - title
+            - source_uri
+            - intended_effect
+            - language
+            - id
+            - tlp
+            - timestamp
+            - actor_types
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: motivation
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_fields
+        description: '''fields'' key of Elasticsearch Fulltext Query.'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - id
+            - short_description
+            - title
+            - source
+            - actor_types
+            - description
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: actor_types
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: sophistication
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+    delete:
+      tags:
+      - Actor
+      description: Requires capabilities delete-actor, search-actor.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+            application/x-yaml:
+              schema:
+                type: integer
+                format: int64
+            application/edn:
+              schema:
+                type: integer
+                format: int64
+            application/transit+json:
+              schema:
+                type: integer
+                format: int64
+            application/transit+msgpack:
+              schema:
+                type: integer
+                format: int64
+      summary: Delete Actor entities matching given Lucene/ES query string or/and field filters
+      parameters:
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: motivation
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: REALLY_DELETE_ALL_THESE_ENTITIES
+        description: ' If you do not set this value or set it to false this route will perform a dry run. Set this value to true to perform the deletion. You MUST confirm you will fix the mess after the inevitable disaster that will occur after you perform that operation. DO NOT FORGET TO SET THAT TO FALSE AFTER EACH DELETION IF YOU INTEND TO USE THAT ROUTE MULTIPLE TIMES.'
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: actor_types
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: sophistication
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: wait_for
+        description: wait for matched entity to be deleted
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/actor/search/count:
+    get:
+      tags:
+      - Actor
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+            application/x-yaml:
+              schema:
+                type: integer
+                format: int64
+            application/edn:
+              schema:
+                type: integer
+                format: int64
+            application/transit+json:
+              schema:
+                type: integer
+                format: int64
+            application/transit+msgpack:
+              schema:
+                type: integer
+                format: int64
+      summary: Count Actor matching a Lucene/ES query string and field filters
+      description: Requires capability search-actor.
+      parameters:
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: motivation
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: actor_types
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: sophistication
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/actor/metric/histogram:
+    get:
+      tags:
+      - Actor
+      description: Requires capability search-actor.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Histogram for some Actor field
+      parameters:
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: motivation
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: granularity
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+      - in: query
+        name: from
+        description: Start date of the histogram. Filters the value of selected aggregated-on field.
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: actor_types
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - timestamp
+          - valid_time.start_time
+          - valid_time.end_time
+      - in: query
+        name: sophistication
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: agg-key
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: timezone
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - -05:00
+          - +02:00
+          - +01:00
+          - -09:00
+          - -01:00
+          - +03:00
+          - +08:00
+          - +04:00
+          - +00:00
+          - '+11:00'
+          - '-10:00'
+          - +05:00
+          - -03:00
+          - -04:00
+          - -02:00
+          - -07:00
+          - '-11:00'
+          - -06:00
+          - '+10:00'
+          - +09:00
+          - +07:00
+          - -08:00
+          - +06:00
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: End date of the histogram. Filters the value of selected aggregated-on field.
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/actor/metric/topn:
+    get:
+      tags:
+      - Actor
+      description: Requires capability search-actor.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Topn for some Actor field
+      parameters:
+      - in: query
+        name: sort_order
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: motivation
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: actor_types
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - confidence
+          - sophistication
+          - source
+          - actor_types
+          - intended_effect
+          - motivation
+      - in: query
+        name: sophistication
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: agg-key
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/actor/metric/cardinality:
+    get:
+      tags:
+      - Actor
+      description: Requires capability search-actor.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Cardinality for some Actor field
+      parameters:
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: motivation
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: actor_types
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - confidence
+          - sophistication
+          - source
+          - actor_types
+          - intended_effect
+          - motivation
+      - in: query
+        name: sophistication
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+components:
+  schemas:
+    Actor:
+      example:
+        description: string
+        motivation: Ego
+        valid_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        identity:
+          description: string
+          related_identities:
+          - identity: string
+            confidence: High
+            information_source: string
+            relationship: string
+        sophistication: Aspirant
+        schema_version: 1.3.30
+        revision: 10
+        planning_and_operational_support: string
+        type: actor
+        source: string
+        external_ids:
+        - string
+        short_description: string
+        title: string
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        source_uri: string
+        intended_effect: Account Takeover
+        language: string
+        id: string
+        tlp: green
+        aliases:
+        - string
+        timestamp: '2016-01-01T01:01:01.000Z'
+        confidence: High
+        actor_types:
+        - Cyber Espionage Operations
+      description: Describes malicious actors or adversaries related to a cyber attack.
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        motivation:
+          example: Ego
+          description: The reason or purpose behind the malicious activity attributed to this Actor. By understanding a threat actor's motivation, analysts can better predict the attacker's behavior and anticipate future malicious actions.
+          type: string
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+        identity:
+          $ref: '#/components/schemas/Identity'
+        sophistication:
+          example: Aspirant
+          description: "Represents the level of expertise and skill that the threat actor has displayed in their malicious activities. Can help security analysts assess the potential impact of an attacker's TTPs and determine the potential attack surface. \n\nFor example, a threat actor with a low sophistication level may primarily rely on off-the-shelf malware and attack tools, while an attacker with high sophistication may use custom tools with advanced evasion techniques, zero-day exploits, and sophisticated methods for command and control of their malware. \n\nThe sophistication level of an attacker can also be inferred based on several factors such as the complexity of attacks, the attacker's knowledge of the targeted organization's systems, and the attacker's ability to remain undetected.\n\nIf an attacker shows a high level of sophistication in reconnaissances, social engineering, and phishing, then the attacker may have a good knowledge of the targeted organization and its employees. This means that the attacker may be more successful in infiltrating the organization's network and compromising its systems."
+          type: string
+          enum:
+          - Aspirant
+          - Innovator
+          - Practitioner
+          - Novice
+          - Expert
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        planning_and_operational_support:
+          example: string
+          description: "Provides information about the resources and capabilities of the attacker that could be used to assist in planning and operations related to the threat.\n\n It can be used to describe Infrastructure, Tools, Techniques, and Capabilities used by the threat actor."
+          type: string
+        type:
+          example: actor
+          type: string
+          enum:
+          - actor
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        intended_effect:
+          example: Account Takeover
+          description: "Represents the desired outcome or impact the threat actor is trying to achieve through their malicious activities. \n\n Helps security analysts to understand the attacker's goals beyond the immediate impact of the attack. By understanding the intended effect, analysts can draw connections between seemingly unrelated attacks and build a more complete understanding of an attacker's long-term goals and motivations."
+          type: string
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        aliases:
+          example:
+          - string
+          description: A list of other names that this Threat Actor is believed to use.
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: 'This field can help analysts decide how much trust they can put in the information provided by the threat intelligence sources.
+
+
+            For example, an Actor entity can have high confidence if the organization''s security researchers have been tracking it for a long time and have gathered a significant amount of intelligence about it through various sources, such as analysis of malware, network traffic, and human intelligence. In contrast, low confidence may indicate the organization has only seen limited or circumstantial evidence.'
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        actor_types:
+          example:
+          - Cyber Espionage Operations
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+    PartialActor:
+      example:
+        description: string
+        motivation: Ego
+        valid_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        identity:
+          description: string
+          related_identities:
+          - identity: string
+            confidence: High
+            information_source: string
+            relationship: string
+        sophistication: Aspirant
+        schema_version: 1.3.30
+        revision: 10
+        planning_and_operational_support: string
+        type: actor
+        source: string
+        external_ids:
+        - string
+        short_description: string
+        title: string
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        source_uri: string
+        intended_effect: Account Takeover
+        language: string
+        id: string
+        tlp: green
+        aliases:
+        - string
+        timestamp: '2016-01-01T01:01:01.000Z'
+        confidence: High
+        actor_types:
+        - Cyber Espionage Operations
+      description: Describes malicious actors or adversaries related to a cyber attack.
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        motivation:
+          example: Ego
+          description: The reason or purpose behind the malicious activity attributed to this Actor. By understanding a threat actor's motivation, analysts can better predict the attacker's behavior and anticipate future malicious actions.
+          type: string
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+        identity:
+          $ref: '#/components/schemas/Identity'
+        sophistication:
+          example: Aspirant
+          description: "Represents the level of expertise and skill that the threat actor has displayed in their malicious activities. Can help security analysts assess the potential impact of an attacker's TTPs and determine the potential attack surface. \n\nFor example, a threat actor with a low sophistication level may primarily rely on off-the-shelf malware and attack tools, while an attacker with high sophistication may use custom tools with advanced evasion techniques, zero-day exploits, and sophisticated methods for command and control of their malware. \n\nThe sophistication level of an attacker can also be inferred based on several factors such as the complexity of attacks, the attacker's knowledge of the targeted organization's systems, and the attacker's ability to remain undetected.\n\nIf an attacker shows a high level of sophistication in reconnaissances, social engineering, and phishing, then the attacker may have a good knowledge of the targeted organization and its employees. This means that the attacker may be more successful in infiltrating the organization's network and compromising its systems."
+          type: string
+          enum:
+          - Aspirant
+          - Innovator
+          - Practitioner
+          - Novice
+          - Expert
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        planning_and_operational_support:
+          example: string
+          description: "Provides information about the resources and capabilities of the attacker that could be used to assist in planning and operations related to the threat.\n\n It can be used to describe Infrastructure, Tools, Techniques, and Capabilities used by the threat actor."
+          type: string
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: actor
+          type: string
+          enum:
+          - actor
+        created:
+          type: string
+          format: date-time
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        intended_effect:
+          example: Account Takeover
+          description: "Represents the desired outcome or impact the threat actor is trying to achieve through their malicious activities. \n\n Helps security analysts to understand the attacker's goals beyond the immediate impact of the attack. By understanding the intended effect, analysts can draw connections between seemingly unrelated attacks and build a more complete understanding of an attacker's long-term goals and motivations."
+          type: string
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        client_id:
+          type: string
+        aliases:
+          example:
+          - string
+          description: A list of other names that this Threat Actor is believed to use.
+          type: array
+          items:
+            type: string
+        groups:
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: 'This field can help analysts decide how much trust they can put in the information provided by the threat intelligence sources.
+
+
+            For example, an Actor entity can have high confidence if the organization''s security researchers have been tracking it for a long time and have gathered a significant amount of intelligence about it through various sources, such as analysis of malware, network traffic, and human intelligence. In contrast, low confidence may indicate the organization has only seen limited or circumstantial evidence.'
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        owner:
+          type: string
+        actor_types:
+          example:
+          - Cyber Espionage Operations
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+    MetricResultData:
+      type: object
+      additionalProperties: {}
+    ValidTime:
+      example:
+        start_time: '2016-01-01T01:01:01.000Z'
+        end_time: '2016-01-01T01:01:01.000Z'
+      description: Period of time when a cyber observation is valid.
+      type: object
+      properties:
+        start_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If not present, the valid time position of the indicator does not have an upper bound.
+          type: string
+          format: date-time
+        end_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
+          type: string
+          format: date-time
+      additionalProperties: false
+    RelatedIdentity:
+      example:
+        identity: string
+        confidence: High
+        information_source: string
+        relationship: string
+      description: Describes a related Identity
+      type: object
+      properties:
+        identity:
+          example: string
+          description: The reference (URI) of the related Identity object.
+          type: string
+        confidence:
+          example: High
+          description: Specifies the level of confidence in the assertion of the relationship between the two objects.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        information_source:
+          example: string
+          description: Specifies the source of the information about the relationship between the two components.
+          type: string
+        relationship:
+          example: string
+          type: string
+      additionalProperties: false
+    Identity:
+      example:
+        description: string
+        related_identities:
+        - identity: string
+          confidence: High
+          information_source: string
+          relationship: string
+      description: Can contain information such as the name of the attacker, the group or organization they belong to, or any other identifier that can help in the attribution process.
+      type: object
+      properties:
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        related_identities:
+          example:
+          - identity: string
+            confidence: High
+            information_source: string
+            relationship: string
+          description: Identifies other entity Identities related to this Identity.
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedIdentity'
+      additionalProperties: false
+    MetricResult:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MetricResultData'
+        type:
+          type: string
+          enum:
+          - histogram
+          - topn
+          - avg
+          - cardinality
+        filters:
+          $ref: '#/components/schemas/MetricResultFilters'
+      additionalProperties: false
+      required:
+      - data
+      - type
+      - filters
+    ExternalReference:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
+      type: object
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: false
+      required:
+      - source_name
+    NewActor:
+      description: a new Actor
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        motivation:
+          example: Ego
+          description: The reason or purpose behind the malicious activity attributed to this Actor. By understanding a threat actor's motivation, analysts can better predict the attacker's behavior and anticipate future malicious actions.
+          type: string
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+        identity:
+          $ref: '#/components/schemas/Identity'
+        sophistication:
+          example: Aspirant
+          description: "Represents the level of expertise and skill that the threat actor has displayed in their malicious activities. Can help security analysts assess the potential impact of an attacker's TTPs and determine the potential attack surface. \n\nFor example, a threat actor with a low sophistication level may primarily rely on off-the-shelf malware and attack tools, while an attacker with high sophistication may use custom tools with advanced evasion techniques, zero-day exploits, and sophisticated methods for command and control of their malware. \n\nThe sophistication level of an attacker can also be inferred based on several factors such as the complexity of attacks, the attacker's knowledge of the targeted organization's systems, and the attacker's ability to remain undetected.\n\nIf an attacker shows a high level of sophistication in reconnaissances, social engineering, and phishing, then the attacker may have a good knowledge of the targeted organization and its employees. This means that the attacker may be more successful in infiltrating the organization's network and compromising its systems."
+          type: string
+          enum:
+          - Aspirant
+          - Innovator
+          - Practitioner
+          - Novice
+          - Expert
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        planning_and_operational_support:
+          example: string
+          description: "Provides information about the resources and capabilities of the attacker that could be used to assist in planning and operations related to the threat.\n\n It can be used to describe Infrastructure, Tools, Techniques, and Capabilities used by the threat actor."
+          type: string
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: actor
+          type: string
+          enum:
+          - actor
+        created:
+          type: string
+          format: date-time
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        intended_effect:
+          example: Account Takeover
+          description: "Represents the desired outcome or impact the threat actor is trying to achieve through their malicious activities. \n\n Helps security analysts to understand the attacker's goals beyond the immediate impact of the attack. By understanding the intended effect, analysts can draw connections between seemingly unrelated attacks and build a more complete understanding of an attacker's long-term goals and motivations."
+          type: string
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        client_id:
+          type: string
+        aliases:
+          example:
+          - string
+          description: A list of other names that this Threat Actor is believed to use.
+          type: array
+          items:
+            type: string
+        groups:
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: 'This field can help analysts decide how much trust they can put in the information provided by the threat intelligence sources.
+
+
+            For example, an Actor entity can have high confidence if the organization''s security researchers have been tracking it for a long time and have gathered a significant amount of intelligence about it through various sources, such as analysis of malware, network traffic, and human intelligence. In contrast, low confidence may indicate the organization has only seen limited or circumstantial evidence.'
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        owner:
+          type: string
+        actor_types:
+          example:
+          - Cyber Espionage Operations
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+      required:
+      - description
+      - source
+      - short_description
+      - title
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
+  securitySchemes:
+    JWT:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            private-intel: Private Intelligence Full Access
+            private-intel:read: Private Intelligence Read Access
+            private-intel:write: Private Intelligence Write Access
+            casebook: Casebook Full Access
+            casebook:read: Casebook Read Access
+            casebook:write: Casebook Write Access
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

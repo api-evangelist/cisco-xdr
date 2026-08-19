@@ -1,0 +1,133 @@
+openapi: 3.2.0
+info:
+  title: IROH-Auth INVITE API
+  version: 1.0.107
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: API Handling Logins
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-auth/index.html
+  - type: raw
+    url: https://visibility.amp.cisco.com/iroh/iroh-auth/swagger.json
+servers:
+- url: https://visibility.amp.cisco.com/
+security:
+- iroh: []
+- AuthorizationHeader: []
+- oauth2:
+  - telemetry
+  - integration
+  - private-intel
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - registry
+  - users
+  - investigation
+  - invite
+  - casebook
+  - orbital
+  - enrich
+  - oauth
+  - vault
+  - response
+  - notification
+  - global-intel:read
+  - webhook
+  - ao
+tags:
+- name: INVITE
+paths:
+  /iroh/iroh-auth/invite/confirm:
+    get:
+      x-no-doc: false
+      tags:
+      - INVITE
+      summary: Accept invitation
+      parameters:
+      - in: query
+        name: code
+        description: ''
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: ''
+  /iroh/iroh-auth/invite/prompt/{invite-id}:
+    get:
+      x-no-doc: false
+      tags:
+      - INVITE
+      summary: Prompt a User that has been invited
+      parameters:
+      - in: path
+        name: invite-id
+        description: ''
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: ''
+components:
+  securitySchemes:
+    iroh:
+      type: apiKey
+      in: header
+      name: authorization
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            telemetry: collect application data for analytics
+            integration: Manage your modules
+            private-intel: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile: Get your profile information
+            inspect: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users: Manage users of your organisation
+            investigation: Perform threat analysis investigation
+            invite: Invite users into your organization
+            casebook: Access and modify your casebooks
+            orbital: Orbital Integration.
+            enrich: Query your configured modules for threat intelligence
+            oauth: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao: AO Integration.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

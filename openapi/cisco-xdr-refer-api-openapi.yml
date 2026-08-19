@@ -1,0 +1,441 @@
+openapi: 3.2.0
+info:
+  title: IROH-INT Enrich Refer API
+  version: 1.0.107
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: 'IROH Integrations: configure and query Threat Response modules'
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-enrich/index.html
+  - type: raw
+    url: https://visibility.amp.cisco.com/iroh/iroh-enrich/swagger.json
+servers:
+- url: https://visibility.amp.cisco.com/
+security:
+- iroh: []
+- AuthorizationHeader: []
+- oauth2:
+  - telemetry
+  - integration
+  - private-intel
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - registry
+  - users
+  - investigation
+  - invite
+  - casebook
+  - orbital
+  - enrich
+  - oauth
+  - vault
+  - response
+  - notification
+  - global-intel:read
+  - webhook
+  - ao
+tags:
+- name: Refer
+  description: 'This set of routes allow to get relevant Reference links and quickly pivot pursuing your investigation on a specific product interface. '
+paths:
+  /iroh/iroh-enrich/refer/observables:
+    post:
+      x-no-doc: false
+      tags:
+      - Refer
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `enrich/observables/refer:read`
+
+
+        Get observable references'
+      responses:
+        '200':
+          description: A List of References
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopedRefs'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/EnvelopedRefs'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/EnvelopedRefs'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/EnvelopedRefs'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/EnvelopedRefs'
+        '401':
+          description: A `NormalizedError` including a `trace_id`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+        '500':
+          description: A `NormalizedError` including a `trace_id`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: An Observable list
+              example:
+              - type: domain
+                value: ilo.brenz.pl
+              - type: email
+                value: no-reply@internetbadguys.com
+              - type: sha256
+                value: 8fda14f91e27afec5c1b1f71d708775c9b6e2af31e8331bbf26751bc0583dc7e
+              type: array
+              items:
+                $ref: '#/components/schemas/Observable'
+          application/x-yaml:
+            schema:
+              description: An Observable list
+              example:
+              - type: domain
+                value: ilo.brenz.pl
+              - type: email
+                value: no-reply@internetbadguys.com
+              - type: sha256
+                value: 8fda14f91e27afec5c1b1f71d708775c9b6e2af31e8331bbf26751bc0583dc7e
+              type: array
+              items:
+                $ref: '#/components/schemas/Observable'
+          application/edn:
+            schema:
+              description: An Observable list
+              example:
+              - type: domain
+                value: ilo.brenz.pl
+              - type: email
+                value: no-reply@internetbadguys.com
+              - type: sha256
+                value: 8fda14f91e27afec5c1b1f71d708775c9b6e2af31e8331bbf26751bc0583dc7e
+              type: array
+              items:
+                $ref: '#/components/schemas/Observable'
+          application/transit+json:
+            schema:
+              description: An Observable list
+              example:
+              - type: domain
+                value: ilo.brenz.pl
+              - type: email
+                value: no-reply@internetbadguys.com
+              - type: sha256
+                value: 8fda14f91e27afec5c1b1f71d708775c9b6e2af31e8331bbf26751bc0583dc7e
+              type: array
+              items:
+                $ref: '#/components/schemas/Observable'
+          application/transit+msgpack:
+            schema:
+              description: An Observable list
+              example:
+              - type: domain
+                value: ilo.brenz.pl
+              - type: email
+                value: no-reply@internetbadguys.com
+              - type: sha256
+                value: 8fda14f91e27afec5c1b1f71d708775c9b6e2af31e8331bbf26751bc0583dc7e
+              type: array
+              items:
+                $ref: '#/components/schemas/Observable'
+        description: An Observable list
+        required: true
+components:
+  schemas:
+    Ref:
+      type: object
+      properties:
+        description:
+          type: string
+        module_instance_state:
+          type: string
+        module_type_id:
+          type: string
+        title:
+          type: string
+        module:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        id:
+          type: string
+        url:
+          type: string
+        module_instance_id:
+          type: string
+      additionalProperties: false
+      required:
+      - description
+      - module_type_id
+      - title
+      - module
+      - id
+      - url
+      - module_instance_id
+    EnvelopedRefs:
+      example:
+        data:
+        - module: Talos Intelligence
+          module_instance_id: 03ce55b5-225d-48ae-9654-c120654de377
+          module_type_id: 2460c99b-2f01-523b-a65d-30a3c6603245
+          id: ref-talos-search-domain-ilo.brenz.pl
+          title: Search for this domain
+          description: Lookup this domain on Talos Intelligence
+          categories:
+          - Talos Intelligence
+          - Search
+          url: https://www.talosintelligence.com/reputation_center/lookup?search=ilo.brenz.pl
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ref'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+      additionalProperties: false
+    NormalizedError-401:
+      example:
+        error: invalid_request
+        error_description: No JWT found in HTTP Authorization header
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_code:
+          type: string
+        error_uri:
+          type: string
+        trace_id:
+          type: string
+        schema.core.AnythingSchema@3c6f0b88: {}
+      additionalProperties: {}
+    Observable:
+      example:
+        value: 1.2.3.4
+        type: ip
+      description: A simple, atomic value which has a consistent identity, and is stable enough to be attributed an intent or nature.  This is the classic 'indicator' which might appear in a data feed of bad IPs, or bad Domains.  These do not exist as objects within the CTIA storage model, so you never create an observable.
+      type: object
+      properties:
+        value:
+          example: 1.2.3.4
+          description: The value of the observable.
+          type: string
+        type:
+          example: ip
+          description: The type of observable.
+          type: string
+          enum:
+          - file_path
+          - mac_address
+          - trend_micro_id
+          - cybereason_id
+          - process_args
+          - s1_agent_id
+          - device
+          - hostname
+          - certificate_common_name
+          - serial_number
+          - meraki_network_id
+          - url
+          - jamf_management_id
+          - certificate_serial
+          - intune_id
+          - meraki_org_id
+          - cisco_cm_id
+          - registry_key
+          - process_path
+          - darktrace_id
+          - process_username
+          - cortex_agent_id
+          - orbital_node_id
+          - process_uid
+          - ngfw_name
+          - user
+          - certificate_issuer
+          - ipv6
+          - email
+          - cisco_uc_id
+          - cvm_id
+          - sha256
+          - crowdstrike_id
+          - google_cloud_id
+          - google_chromebook_id
+          - acudid
+          - sha1
+          - registry_name
+          - md5
+          - service_now_id
+          - ip
+          - domain
+          - email_subject
+          - imei
+          - ngfw_id
+          - amp_computer_guid
+          - ms_machine_id
+          - secure_access_id
+          - mutex
+          - processor_id
+          - swc_device_id
+          - registry_path
+          - odns_identity
+          - odns_identity_label
+          - cisco_mid
+          - process_name
+          - pki_serial
+          - meraki_node_sn
+          - email_messageid
+          - imsi
+          - user_agent
+          - process_hash
+          - file_name
+      additionalProperties: false
+      required:
+      - value
+      - type
+    NormalizedError-500:
+      example:
+        error: unknown server error
+        error_description: An unknown error has occurred during the enrichment
+        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_code:
+          type: string
+        error_uri:
+          type: string
+        trace_id:
+          type: string
+        schema.core.AnythingSchema@3c6f0b88: {}
+      additionalProperties: {}
+    ErrorMessage:
+      type: object
+      properties:
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - fatal
+          - warning
+          - error
+        module:
+          type: string
+      additionalProperties: false
+      required:
+      - module_instance_id
+      - module_type_id
+      - code
+      - message
+      - type
+  securitySchemes:
+    iroh:
+      type: apiKey
+      in: header
+      name: authorization
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            telemetry: collect application data for analytics
+            integration: Manage your modules
+            private-intel: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile: Get your profile information
+            inspect: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users: Manage users of your organisation
+            investigation: Perform threat analysis investigation
+            invite: Invite users into your organization
+            casebook: Access and modify your casebooks
+            orbital: Orbital Integration.
+            enrich: Query your configured modules for threat intelligence
+            oauth: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao: AO Integration.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

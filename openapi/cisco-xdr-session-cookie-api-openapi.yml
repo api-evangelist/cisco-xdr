@@ -1,0 +1,215 @@
+openapi: 3.2.0
+info:
+  title: IROH-Auth Session Cookie API
+  version: 1.0.107
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: API Handling Logins
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-auth/index.html
+  - type: raw
+    url: https://visibility.amp.cisco.com/iroh/iroh-auth/swagger.json
+servers:
+- url: https://visibility.amp.cisco.com/
+security:
+- iroh: []
+- AuthorizationHeader: []
+- oauth2:
+  - telemetry
+  - integration
+  - private-intel
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - registry
+  - users
+  - investigation
+  - invite
+  - casebook
+  - orbital
+  - enrich
+  - oauth
+  - vault
+  - response
+  - notification
+  - global-intel:read
+  - webhook
+  - ao
+tags:
+- name: Session Cookie
+  description: Cookie-based session validation
+paths:
+  /iroh/iroh-auth/session/validate:
+    get:
+      x-no-doc: false
+      tags:
+      - Session Cookie
+      summary: Validate the current session
+      description: "Validates the iroh-session cookie and X-Tab-Id header. \nReturns session info if valid. \nRotates the session-id when the rotation interval is exceeded.\n\n**Links**:\n  - [Data Model](/iroh/doc/iroh-auth/#data-model)\n\n*Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*"
+      x-cors-credentials?: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionStatusResponse'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/SessionStatusResponse'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/SessionStatusResponse'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/SessionStatusResponse'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/SessionStatusResponse'
+  /iroh/iroh-auth/session/exchange:
+    post:
+      x-no-doc: false
+      tags:
+      - Session Cookie
+      summary: Exchange session cookie for a short-lived JWT access token
+      description: "Validates the iroh-session cookie and returns a fresh \nJWT access token for use in Authorization headers. \nThe JWT is short-lived (see expires_in in the response). \nNo refresh token is issued — the session cookie IS the \nrefresh mechanism.\n\n**Links**:\n  - [Data Model](/iroh/doc/iroh-auth/#data-model)\n\n*Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*"
+      x-cors-credentials?: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionTokenExchangeResponse'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/SessionTokenExchangeResponse'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/SessionTokenExchangeResponse'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/SessionTokenExchangeResponse'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/SessionTokenExchangeResponse'
+  /iroh/iroh-auth/session/logout:
+    post:
+      x-no-doc: false
+      tags:
+      - Session Cookie
+      summary: Invalidate the current session
+      description: 'Invalidates the server-side session and clears the cookie.
+
+
+        *Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*'
+      x-cors-credentials?: true
+      responses:
+        default:
+          description: ''
+components:
+  schemas:
+    SessionStatusResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        user-id:
+          type: string
+        org-id:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        needs-renewal:
+          type: boolean
+      additionalProperties: false
+      required:
+      - valid
+      - user-id
+      - org-id
+      - scopes
+      - needs-renewal
+    SessionTokenExchangeResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+          format: int64
+        token_type:
+          type: string
+          enum:
+          - bearer
+        scope:
+          type: string
+        needs_renewal:
+          type: boolean
+      additionalProperties: false
+      required:
+      - access_token
+      - expires_in
+      - token_type
+  securitySchemes:
+    iroh:
+      type: apiKey
+      in: header
+      name: authorization
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            telemetry: collect application data for analytics
+            integration: Manage your modules
+            private-intel: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile: Get your profile information
+            inspect: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users: Manage users of your organisation
+            investigation: Perform threat analysis investigation
+            invite: Invite users into your organization
+            casebook: Access and modify your casebooks
+            orbital: Orbital Integration.
+            enrich: Query your configured modules for threat intelligence
+            oauth: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao: AO Integration.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

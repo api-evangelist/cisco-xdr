@@ -1,0 +1,55 @@
+generated: '2026-08-19'
+method: searched
+source: https://developer.cisco.com/docs/cisco-xdr/ + https://docs.xdr.security.cisco.com/ + openapi/
+versioning:
+  scheme: mixed
+  current: 'docs API version 1.1; CTIA v2.71.0; IROH build 1.0.107; Conure conure-218-1; Automation v1 / v1.1 / v1.2'
+  docs: https://developer.cisco.com/docs/cisco-xdr/api-changelog/
+  detail: >-
+    Four families, four schemes. CTIA versions in info.version only. Conure versions in the path
+    (/v1, /v2). Automation runs three concurrent path majors (/v1, /v1.1, /v1.2) whose operation
+    coverage differs. IROH does not version its paths at all. The only runtime version signal is the
+    x-iroh-api-version / x-ctim-version response header pair.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  detail: >-
+    No API deprecation policy is published. developer.cisco.com/docs/cisco-xdr/deprecation/ and
+    /versioning/ both return 404. No operation in the 581 harvested operations carries
+    deprecated: true, and no RFC 8594 Sunset or Deprecation header is declared anywhere. Cisco's
+    corporate End-of-Life policy covers product SKUs (there is a published EoS/EoL notice for the
+    XDR Essentials/Advantage/Premier regional-uplift PIDs) but says nothing about API contracts.
+    Three live Automation majors with no stated removal date is the practical consequence.
+deprecated_operations: []
+status_page: https://status.tdr.cisco.com/
+status_page_detail: >-
+  Cisco XDR Service Status, named by Cisco's own help documentation at
+  docs.xdr.security.cisco.com/Content/Help-Resources/td_r-status-page.htm. Filters by service zone
+  and region and carries scheduled-maintenance notices. The page returns 200; its statuspage-style
+  /api/v2/components.json is bot-blocked (403) to anonymous clients. Note that
+  status.security.cisco.com is a DIFFERENT page — Security Cloud Control — whose eight components
+  do not include XDR.
+sla:
+  url: null
+  uptime_target: null
+  detail: No public uptime SLA is published for the Cisco XDR API.
+support:
+  url: https://developer.cisco.com/docs/cisco-xdr/developer-support/
+  community: https://community.cisco.com/t5/cisco-xdr/bd-p/developer-xdr
+  email: cisco-intel-api-support@cisco.com
+  detail: Support email taken verbatim from info.contact in the Conure specification.
+security_response:
+  psirt: mailto:psirt@cisco.com
+  policy: https://sec.cloudapps.cisco.com/security/center/resources/security_vulnerability_policy.html
+evidence:
+- url: https://developer.cisco.com/docs/cisco-xdr/api-changelog/
+  status: 200
+- url: https://developer.cisco.com/docs/cisco-xdr/deprecation/
+  status: 404
+- url: https://developer.cisco.com/docs/cisco-xdr/versioning/
+  status: 404
+- url: https://status.tdr.cisco.com/
+  status: 200
+- url: https://status.security.cisco.com/api/v2/components.json
+  status: 200

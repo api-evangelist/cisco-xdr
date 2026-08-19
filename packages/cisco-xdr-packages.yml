@@ -1,0 +1,61 @@
+generated: '2026-08-19'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org, and the CiscoDevNet / CiscoSecurity GitHub organizations, probed
+  2026-08-19
+note: >-
+  Cisco ships no current, registry-published client library for the Cisco XDR API. The only
+  first-party SDK on any public registry is the Python `threatresponse` module, published by Cisco
+  Security for Threat Response — the product IROH became when it was rebranded SecureX and then
+  Cisco XDR. Its last release is 0.15.0 from 2021-11-22, more than four years before this probe,
+  against a platform whose own service specs are at version 1.0.107 and whose CTIA API is at
+  v2.71.0. That is the abandonment signal: the SDK predates two rebrands of the API it wraps.
+packages:
+- language: python
+  registry: pypi
+  name: threatresponse
+  url: https://pypi.org/project/threatresponse/
+  install: pip install threatresponse
+  official: true
+  version: 0.15.0
+  published: '2021-11-22'
+  license: MIT
+  source_code: https://github.com/CiscoSecurity/tr-05-api-module
+  official_basis: >-
+    PyPI author is "Cisco Security" and home_page points at the CiscoSecurity GitHub organization.
+  note: >-
+    Wraps the IROH platform (inspect / enrich observe-deliberate-refer / response) under its former
+    Threat Response name. No release since 2021-11-22; not referenced from the current Cisco XDR
+    DevNet documentation.
+- language: typescript
+  registry: github
+  name: cisco-xdr-mcp
+  url: https://github.com/CiscoDevNet/xdr-mcp-community
+  install: git clone https://github.com/CiscoDevNet/xdr-mcp-community && npm install && npm run build
+  official: true
+  version: 2.0.0
+  published: null
+  license: Apache-2.0
+  official_basis: Published in the CiscoDevNet GitHub organization.
+  note: >-
+    Source-only MCP server, not an SDK. package.json declares name "cisco-xdr-mcp" version 2.0.0 but
+    the name is not on npm, so there is no registry release date to record — version read from
+    package.json, published recorded null. INSTALL.md documents a v2.1.0 change log entry the
+    package.json version has not caught up with. Repository last pushed 2026-05-27.
+absent:
+- registry: npm
+  name: cisco-xdr
+  status: unpublished
+  detail: >-
+    registry.npmjs.org/cisco-xdr answers 200 but the document is a tombstone — version 0.0.1 was
+    published and unpublished on 2023-10-04. Nothing is installable under that name.
+- registry: npm
+  name: cisco-xdr-mcp
+  status: 404
+- registry: pypi
+  names: [cisco-xdr, ciscoxdr, cisco-securex, securex-sdk, ctia-client, xdr-client]
+  status: 404
+counts:
+  official: 2
+  registry_published: 1
+  languages: [python, typescript]

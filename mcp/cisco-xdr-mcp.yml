@@ -1,0 +1,158 @@
+generated: '2026-08-19'
+method: searched
+status: published
+source: https://github.com/CiscoDevNet/xdr-mcp-community
+docs:
+- https://github.com/CiscoDevNet/xdr-mcp-community/blob/main/README.md
+- https://github.com/CiscoDevNet/xdr-mcp-community/blob/main/INSTALL.md
+- https://github.com/CiscoDevNet/xdr-mcp-community/blob/main/AGENTS.md
+deployment:
+  mode: local-stdio
+  endpoint: null
+  install: npm install && npm run build && npm start
+  package: https://github.com/CiscoDevNet/xdr-mcp-community
+  auth: oauth
+  verified: searched
+  note: >-
+    Cisco ships NO hosted/remote MCP endpoint for XDR. The server is source-only in the CiscoDevNet
+    GitHub organization — package.json declares name cisco-xdr-mcp v2.0.0 but registry.npmjs.org
+    returns 404 for that name, so there is not even an npx one-liner. A human must clone, npm install,
+    npm run build and run it over stdio (or build the shipped Dockerfile) before any agent can reach
+    Cisco XDR. Auth is OAuth 2.0 client-credentials via XDR_CLIENT_ID / XDR_CLIENT_PASSWORD env vars
+    against https://visibility.{region}.amp.cisco.com/iroh/oauth2/token.
+server:
+  name: cisco-xdr
+  transport: stdio
+  version: 2.1.0
+  license: Apache-2.0
+  language: TypeScript
+  repository: https://github.com/CiscoDevNet/xdr-mcp-community
+  repository_pushed_at: '2026-05-27'
+  sdk: '@modelcontextprotocol/sdk ^1.0.4'
+  regions: [us, eu, apjc]
+  env:
+  - name: XDR_CLIENT_ID
+    required: true
+  - name: XDR_CLIENT_PASSWORD
+    required: true
+  - name: XDR_REGION
+    required: false
+    default: us
+  - name: XDR_CONURE_BASE_URL
+    required: false
+tools_list_probe:
+  attempted: false
+  reason: >-
+    No hosted endpoint exists to POST tools/list to. The tool catalog below is transcribed verbatim
+    from the provider's own INSTALL.md tool tables, not guessed; input schemas would require running
+    the server locally with tenant credentials.
+tools:
+- name: xdr_inspect
+  category: inspect
+  description: Parse text to extract IOCs (IPs, domains, hashes, emails, etc.)
+- name: xdr_investigate
+  category: inspect
+  description: Full enrichment — sightings + verdicts + pivot links across all integrations
+- name: xdr_inspect_and_investigate
+  category: inspect
+  description: One-shot — extract IOCs from text, then investigate all in parallel
+- name: xdr_incidents_list
+  category: incidents
+  description: List incidents with filters (status, limit, offset)
+- name: xdr_incident_get
+  category: incidents
+  description: Get full incident details
+- name: xdr_incident_update
+  category: incidents
+  description: Update status, assignee, resolution (uses PATCH)
+- name: xdr_incident_worklog
+  category: incidents
+  description: Get worklog / audit trail
+- name: xdr_incident_worklog_add
+  category: incidents
+  description: Add note to worklog
+- name: xdr_incident_observables
+  category: incidents
+  description: List all observables in an incident
+- name: xdr_response_get_actions
+  category: response
+  description: Discover available actions (block, isolate, quarantine) for observables
+- name: xdr_response_trigger
+  category: response
+  description: Execute action (requires action_id, module_instance_id, module_type_id from get_actions)
+- name: xdr_casebook_list
+  category: casebooks
+  description: List casebooks
+- name: xdr_casebook_get
+  category: casebooks
+  description: Get casebook details
+- name: xdr_casebook_create
+  category: casebooks
+  description: Create new casebook
+- name: xdr_casebook_add_observables
+  category: casebooks
+  description: Add observables to casebook
+- name: xdr_intel_indicators
+  category: threat-intel
+  description: Search indicators (malware, campaign, MITRE)
+- name: xdr_intel_judgments
+  category: threat-intel
+  description: Get disposition for observable
+- name: xdr_intel_feeds
+  category: threat-intel
+  description: List private feeds
+- name: xdr_intel_sightings
+  category: threat-intel
+  description: Search sightings of observable in environment
+- name: xdr_workflow_list
+  category: automation
+  description: List workflows
+- name: xdr_workflow_get
+  category: automation
+  description: Get workflow definition
+- name: xdr_workflow_start
+  category: automation
+  description: Execute workflow
+- name: xdr_workflow_instance_list
+  category: automation
+  description: List workflow runs
+- name: xdr_workflow_instance_get
+  category: automation
+  description: Get instance details
+- name: xdr_workflow_instance_cancel
+  category: automation
+  description: Cancel running instance
+- name: xdr_integrations_list
+  category: admin
+  description: List integration modules (health, module_instance_id)
+- name: xdr_profile_get
+  category: admin
+  description: Get org profile and scopes
+resources:
+- uri: xdr://incidents/open
+  description: Open incidents (last 30 days)
+- uri: xdr://incidents/recent
+  description: Recent incidents, all statuses (last 7 days)
+- uri: xdr://profile
+  description: Organization profile and scopes
+- uri: xdr://integrations
+  description: Configured integration modules
+- uri: xdr://incident/{incident_id}
+  description: Full incident details by ID (resource template)
+prompts:
+- name: triage_open_incidents
+  arguments: [limit]
+- name: investigate_ioc
+  arguments: [type, value]
+- name: incident_drill_down
+  arguments: [incident_id]
+- name: threat_intel_investigation
+  arguments: [content]
+- name: daily_briefing
+  arguments: [days]
+- name: response_playbook
+  arguments: [incident_id]
+counts:
+  tools: 27
+  resources: 5
+  prompts: 6

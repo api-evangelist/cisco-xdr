@@ -1,0 +1,309 @@
+openapi: 3.2.0
+info:
+  title: IROH-Auth LOGIN API
+  version: 1.0.107
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: API Handling Logins
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-auth/index.html
+  - type: raw
+    url: https://visibility.amp.cisco.com/iroh/iroh-auth/swagger.json
+servers:
+- url: https://visibility.amp.cisco.com/
+security:
+- iroh: []
+- AuthorizationHeader: []
+- oauth2:
+  - telemetry
+  - integration
+  - private-intel
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - registry
+  - users
+  - investigation
+  - invite
+  - casebook
+  - orbital
+  - enrich
+  - oauth
+  - vault
+  - response
+  - notification
+  - global-intel:read
+  - webhook
+  - ao
+tags:
+- name: LOGIN
+paths:
+  /iroh/iroh-auth/login/{idp}/answer:
+    get:
+      x-no-doc: false
+      parameters:
+      - in: path
+        name: idp
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: error
+        description: ''
+        required: false
+        allowEmptyValue: true
+        schema:
+          type: string
+      - in: query
+        name: error_description
+        description: ''
+        required: false
+        allowEmptyValue: true
+        schema:
+          type: string
+      - in: query
+        name: expires_in
+        description: ''
+        required: false
+        allowEmptyValue: true
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: code
+        description: ''
+        required: false
+        allowEmptyValue: true
+        schema:
+          type: string
+      - in: query
+        name: state
+        description: ''
+        required: true
+        schema:
+          type: string
+      tags:
+      - LOGIN
+      summary: Answer from the user
+      x-cors-credentials?: true
+      description: '*Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*'
+      responses:
+        default:
+          description: ''
+  /iroh/iroh-auth/login/{idp}:
+    get:
+      x-no-doc: false
+      parameters:
+      - in: path
+        name: idp
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: show_tenant_selector
+        description: Force redirect to the Registration UI page.
+        required: false
+        allowEmptyValue: true
+        schema:
+          type: boolean
+      - in: query
+        name: tab_id
+        description: Tab identifier for session binding. tab-id is optional at session creation time but mandatory for validation if a hash was stored.
+        required: false
+        allowEmptyValue: true
+        schema:
+          type: string
+      - in: query
+        name: create_org
+        description: Registration UI enables the creation of Orgs
+        required: false
+        allowEmptyValue: true
+        schema:
+          type: boolean
+      - in: query
+        name: user_id
+        description: ''
+        required: false
+        allowEmptyValue: true
+        schema:
+          type: string
+      - in: query
+        name: org_id
+        description: ''
+        required: false
+        allowEmptyValue: true
+        schema:
+          type: string
+      - in: query
+        name: invite_id
+        description: ''
+        required: false
+        allowEmptyValue: true
+        schema:
+          type: string
+      - in: query
+        name: origin
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: use_session_cookie_auth
+        description: When true, use session cookie auth instead of iroh-code
+        required: false
+        allowEmptyValue: true
+        schema:
+          type: boolean
+      tags:
+      - LOGIN
+      summary: Login redirect
+      responses:
+        default:
+          description: ''
+  /iroh/iroh-auth/logins:
+    get:
+      x-no-doc: false
+      tags:
+      - LOGIN
+      summary: Login redirect
+      responses:
+        default:
+          description: ''
+  /iroh/iroh-auth/code:
+    post:
+      x-no-doc: false
+      tags:
+      - LOGIN
+      summary: Retrieve Access and Refresh Tokens from a `code`
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CodeBody'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/CodeBody'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/CodeBody'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/CodeBody'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/CodeBody'
+        required: true
+components:
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        token_type:
+          type: string
+          enum:
+          - bearer
+        expires_in:
+          type: integer
+          format: int64
+      additionalProperties: {}
+      required:
+      - access_token
+      - token_type
+    CodeBody:
+      type: object
+      properties:
+        code:
+          description: The code from the query parameter of the URL the user is redirected to after a successful login
+          type: string
+        access-token-lifetime-in-sec:
+          description: You can optionally reduce the lifetime of access tokens returned. This parameter will set the lifetime to your preferred choice but you will not be allowed to make the lifetime longer than the configured value. If you try to put a longer lifetime, it will silently returns the token with the configured lifetime.
+          type: integer
+          format: int64
+      additionalProperties: false
+      required:
+      - code
+  securitySchemes:
+    iroh:
+      type: apiKey
+      in: header
+      name: authorization
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            telemetry: collect application data for analytics
+            integration: Manage your modules
+            private-intel: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile: Get your profile information
+            inspect: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users: Manage users of your organisation
+            investigation: Perform threat analysis investigation
+            invite: Invite users into your organization
+            casebook: Access and modify your casebooks
+            orbital: Orbital Integration.
+            enrich: Query your configured modules for threat intelligence
+            oauth: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao: AO Integration.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

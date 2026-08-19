@@ -1,0 +1,1149 @@
+openapi: 3.2.0
+info:
+  title: IROH Int Web service Module Type Patch API
+  version: 1.0.107
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: IROH INT API
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/index.html
+  - type: raw
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+servers:
+- url: https://visibility.amp.cisco.com/
+security:
+- iroh: []
+- AuthorizationHeader: []
+- oauth2:
+  - telemetry
+  - integration
+  - private-intel
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - registry
+  - users
+  - investigation
+  - invite
+  - casebook
+  - orbital
+  - enrich
+  - oauth
+  - vault
+  - response
+  - notification
+  - global-intel:read
+  - webhook
+  - ao
+tags:
+- name: ModuleTypePatch
+  description: ModuleTypePatch Routes
+paths:
+  /iroh/iroh-int/module-type-patch:
+    get:
+      x-no-doc: false
+      tags:
+      - ModuleTypePatch
+      summary: Search all module-type-patches
+      parameters:
+      - in: query
+        name: sort_order
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: merged_at
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: sort_by
+        description: ''
+        required: false
+        x-oneOf:
+        - type: string
+        - type: number
+          format: double
+        - type: string
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: search_after
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: number
+              format: double
+            - type: string
+      - in: query
+        name: module_type_id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: user_id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: merged_by
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: offset
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: merge_status
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - merged
+          - rejected
+          - pending
+      - in: query
+        name: query
+        description: Full-Text search
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: client_id
+        description: ''
+        required: false
+        schema:
+          type: string
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-type-patch:read`
+
+
+        Search all module-type-patches'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleTypePatch'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleTypePatch'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleTypePatch'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleTypePatch'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleTypePatch'
+    post:
+      x-no-doc: false
+      tags:
+      - ModuleTypePatch
+      summary: Create a new module-type-patch
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-type-patch:write`
+
+
+        Create a new module-type-patch'
+      parameters:
+      - in: query
+        name: dry-run
+        description: ''
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewModuleTypePatch'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewModuleTypePatch'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewModuleTypePatch'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewModuleTypePatch'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewModuleTypePatch'
+        required: true
+  /iroh/iroh-int/module-type-patch/{id}:
+    get:
+      x-no-doc: false
+      tags:
+      - ModuleTypePatch
+      x-name: iroh-int.services.module-type-patch-web-service.routes/get-module-type-patch
+      summary: Retrieve a single module-type-patch
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-type-patch:read`
+
+
+        Retrieve a single module-type-patch'
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+    put:
+      x-no-doc: false
+      tags:
+      - ModuleTypePatch
+      summary: Update an existing module-type-patch
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-type-patch:write`
+
+
+        Update an existing module-type-patch'
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: dry-run
+        description: ''
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/ModuleTypePatch'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModuleTypePatch'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/ModuleTypePatch'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/ModuleTypePatch'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/ModuleTypePatch'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/ModuleTypePatch'
+        required: true
+    delete:
+      x-no-doc: false
+      tags:
+      - ModuleTypePatch
+      summary: Delete a module-type-patch
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-type-patch:write`
+
+
+        Delete a module-type-patch'
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: ''
+  /iroh/iroh-int/module-type-patch/{id}/action/preview:
+    get:
+      x-no-doc: false
+      tags:
+      - ModuleTypePatch
+      summary: Show how a given ModuleTypePatch's ModuleType would look if the ModuleTypePatch's patch was merged into it, without actually persisting the operation into the database
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-type-patch:read`
+
+
+        (str "Show how a given ModuleTypePatch''s ModuleType " "would look if the ModuleTypePatch''s patch was " "merged into it, without actually persisting " "the operation into the database")'
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleType'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ModuleType'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/ModuleType'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/ModuleType'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/ModuleType'
+components:
+  schemas:
+    ModuleTypePatchPatchAppLinkMetaMeta:
+      type: object
+      properties:
+        x_okta_bookmark_id:
+          type:
+          - string
+          - 'null'
+        x_query_params:
+          $ref: '#/components/schemas/ModuleTypePatchPatchAppLinkMetaMetaXQueryParams'
+      additionalProperties: false
+    ProductCategory:
+      type: object
+      properties:
+        id:
+          type: string
+          enum:
+          - siem
+          - threat-intel
+          - email-security
+          - ndr
+          - rf-security
+          - cloud-firewall
+          - itsm
+          - edr
+          - cloud-security
+          - firewall
+        description:
+          type: string
+      additionalProperties: false
+      required:
+      - id
+      - description
+    Capability:
+      type: object
+      properties:
+        id:
+          type: string
+          enum:
+          - detection_source
+          - device_insights
+          - respond
+          - observe
+          - assets
+          - incident/resolve
+          - notifications
+          - data_ingestion
+          - target_records
+          - health
+          - automate
+          - tiles
+          - refer
+          - threat_hunts
+          - deliberate
+        description:
+          type: string
+      additionalProperties: false
+      required:
+      - id
+      - description
+    ModuleTypePatchPatchAppLinkMeta:
+      type: object
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        logo:
+          type:
+          - string
+          - 'null'
+        meta:
+          $ref: '#/components/schemas/ModuleTypePatchPatchAppLinkMetaMeta'
+      additionalProperties: false
+    ModuleTypeExternalReference:
+      type: object
+      properties:
+        label:
+          description: If the reference is a link, the label
+          type: string
+        link:
+          description: If the reference is a link, the href
+          type: string
+        external_id:
+          description: If the reference is an external id, the id
+          type: string
+        class:
+          description: Class to distinguish external references
+          type: string
+      additionalProperties: false
+    NewModuleTypePatch:
+      type: object
+      properties:
+        module_type_id:
+          type: string
+        patch:
+          $ref: '#/components/schemas/NewModuleTypePatchPatch'
+      additionalProperties: false
+      required:
+      - module_type_id
+      - patch
+    ConfigurationSpecField:
+      type: object
+      properties:
+        group:
+          type: string
+        beta:
+          type: boolean
+        key:
+          type: string
+        type:
+          type: string
+          enum:
+          - remote
+          - password
+          - file
+          - string
+          - api_key
+          - integer
+          - device
+          - options
+          - boolean
+        strict-options:
+          type: boolean
+        label:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewModuleTypePatchPatchConfigurationSpecOptions'
+        default_value:
+          x-oneOf:
+          - type: string
+          - type: string
+          - type: string
+          - type: string
+          - type: string
+          - type: integer
+            format: int64
+          - type: string
+          - type: string
+          - type: boolean
+        tooltip:
+          type: string
+        required:
+          type: boolean
+        subtype:
+          type: string
+      additionalProperties: false
+      required:
+      - key
+      - type
+      - label
+    ModuleTypePatchPatchIntegration:
+      type: object
+      properties:
+        client_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          uniqueItems: true
+      additionalProperties: false
+    NewModuleTypePatchPatch:
+      type: object
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        properties:
+          $ref: '#/components/schemas/NewModuleTypePatchPatchProperties'
+        app_link:
+          type:
+          - string
+          - 'null'
+        product_categories:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProductCategory'
+        capabilities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Capability'
+        integration_id:
+          description: id of the integration this record belongs to
+          type:
+          - string
+          - 'null'
+        app_link_meta:
+          $ref: '#/components/schemas/NewModuleTypePatchPatchAppLinkMeta'
+        tips:
+          type:
+          - string
+          - 'null'
+        logo_dark:
+          type:
+          - string
+          - 'null'
+        logo:
+          type:
+          - string
+          - 'null'
+        org_id:
+          type: string
+        ocsf-product-uid:
+          type:
+          - string
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/NewModuleTypePatchPatchIntegration'
+        disable_automatic_health_check:
+          type:
+          - boolean
+          - 'null'
+        configuration_spec:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConfigurationSpecField'
+        short_description:
+          type:
+          - string
+          - 'null'
+        title:
+          type: string
+        external_references:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModuleTypeExternalReference'
+        max_nb_instances:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        parent_id:
+          type:
+          - string
+          - 'null'
+        record:
+          type:
+          - string
+          - 'null'
+        user_id:
+          type: string
+        client_id:
+          type: string
+        default_name:
+          type: string
+        flags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        visibility:
+          type: string
+          enum:
+          - global
+          - org
+        former_title:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    NewModuleTypePatchPatchConfigurationSpecOptions:
+      type: object
+      properties:
+        value:
+          type: string
+        label:
+          type: string
+      additionalProperties: false
+      required:
+      - value
+      - label
+    NewModuleTypeParamsAppLinkMetaMetaXQueryParams:
+      type: object
+      additionalProperties:
+        type: string
+    AppLinkMeta:
+      type: object
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        meta:
+          $ref: '#/components/schemas/NewModuleTypeParamsAppLinkMetaMeta'
+      additionalProperties: false
+      required:
+      - title
+      - url
+    ModuleTypePatchPatchAppLinkMetaMetaXQueryParams:
+      type: object
+      additionalProperties:
+        type:
+        - string
+        - 'null'
+    ModuleTypePatchPatch:
+      type: object
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        properties:
+          $ref: '#/components/schemas/ModuleTypePatchPatchProperties'
+        app_link:
+          type:
+          - string
+          - 'null'
+        product_categories:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProductCategory'
+        capabilities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Capability'
+        integration_id:
+          description: id of the integration this record belongs to
+          type:
+          - string
+          - 'null'
+        app_link_meta:
+          $ref: '#/components/schemas/ModuleTypePatchPatchAppLinkMeta'
+        tips:
+          type:
+          - string
+          - 'null'
+        logo_dark:
+          type:
+          - string
+          - 'null'
+        logo:
+          type:
+          - string
+          - 'null'
+        org_id:
+          type: string
+        ocsf-product-uid:
+          type:
+          - string
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/ModuleTypePatchPatchIntegration'
+        disable_automatic_health_check:
+          type:
+          - boolean
+          - 'null'
+        configuration_spec:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConfigurationSpecField'
+        short_description:
+          type:
+          - string
+          - 'null'
+        title:
+          type: string
+        external_references:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModuleTypeExternalReference'
+        max_nb_instances:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        parent_id:
+          type:
+          - string
+          - 'null'
+        record:
+          type:
+          - string
+          - 'null'
+        user_id:
+          type: string
+        client_id:
+          type: string
+        default_name:
+          type: string
+        flags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        visibility:
+          type: string
+          enum:
+          - global
+          - org
+        former_title:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    NewModuleTypePatchPatchProperties:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+          - $ref: '#/components/schemas/ModuleTypeProperties'
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+            - $ref: '#/components/schemas/ModuleTypeProperties'
+    ModuleType:
+      type: object
+      properties:
+        description:
+          type: string
+        properties:
+          $ref: '#/components/schemas/ModuleTypeProperties'
+        app_link:
+          type: string
+        product_categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCategory'
+        capabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Capability'
+        integration_id:
+          description: id of the integration this record belongs to
+          type: string
+        app_link_meta:
+          $ref: '#/components/schemas/AppLinkMeta'
+        tips:
+          type: string
+        logo_dark:
+          type: string
+        logo:
+          type: string
+        org_id:
+          type: string
+        ocsf-product-uid:
+          type: string
+        integration:
+          $ref: '#/components/schemas/Integration'
+        disable_automatic_health_check:
+          type: boolean
+        configuration_spec:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigurationSpecField'
+        short_description:
+          type: string
+        title:
+          type: string
+        external_references:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleTypeExternalReference'
+        updated_at:
+          type: string
+          format: date-time
+        max_nb_instances:
+          type: integer
+          format: int64
+        parent_id:
+          type: string
+        id:
+          type: string
+        record:
+          type: string
+        user_id:
+          type: string
+        client_id:
+          type: string
+        default_name:
+          type: string
+        flags:
+          type: array
+          items:
+            type: string
+        enabled:
+          type: boolean
+        visibility:
+          type: string
+          enum:
+          - global
+          - org
+        created_at:
+          type: string
+          format: date-time
+        former_title:
+          type: string
+      additionalProperties: false
+      required:
+      - org_id
+      - title
+      - id
+      - record
+      - user_id
+      - client_id
+      - default_name
+      - enabled
+      - visibility
+      - created_at
+    NewModuleTypePatchPatchAppLinkMetaMetaXQueryParams:
+      type: object
+      additionalProperties:
+        type:
+        - string
+        - 'null'
+    NewModuleTypeParamsAppLinkMetaMeta:
+      type: object
+      properties:
+        x_okta_bookmark_id:
+          type: string
+        x_query_params:
+          $ref: '#/components/schemas/NewModuleTypeParamsAppLinkMetaMetaXQueryParams'
+      additionalProperties: false
+    NewModuleTypePatchPatchAppLinkMetaMeta:
+      type: object
+      properties:
+        x_okta_bookmark_id:
+          type:
+          - string
+          - 'null'
+        x_query_params:
+          $ref: '#/components/schemas/NewModuleTypePatchPatchAppLinkMetaMetaXQueryParams'
+      additionalProperties: false
+    ModuleTypePatchPatchProperties:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+          - $ref: '#/components/schemas/ModuleTypeProperties'
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+            - $ref: '#/components/schemas/ModuleTypeProperties'
+    Integration:
+      type: object
+      properties:
+        client_ids:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+      additionalProperties: false
+    NewModuleTypePatchPatchIntegration:
+      type: object
+      properties:
+        client_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          uniqueItems: true
+      additionalProperties: false
+    NewModuleTypePatchPatchAppLinkMeta:
+      type: object
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        logo:
+          type:
+          - string
+          - 'null'
+        meta:
+          $ref: '#/components/schemas/NewModuleTypePatchPatchAppLinkMetaMeta'
+      additionalProperties: false
+    ModuleTypeProperties:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+          - $ref: '#/components/schemas/ModuleTypeProperties'
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+            - $ref: '#/components/schemas/ModuleTypeProperties'
+    ModuleTypePatch:
+      type: object
+      properties:
+        merge_status:
+          type: string
+          enum:
+          - merged
+          - rejected
+          - pending
+        patch:
+          $ref: '#/components/schemas/ModuleTypePatchPatch'
+        module_type_id:
+          type: string
+        org_id:
+          type: string
+        merged_at:
+          type: string
+          format: date-time
+        merge_message:
+          description: A message to help you create module type patch that will be approved, or understand why it was rejected.
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+        user_id:
+          type: string
+        client_id:
+          type: string
+        merged_by:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      additionalProperties: false
+      required:
+      - merge_status
+      - patch
+      - module_type_id
+      - org_id
+      - updated_at
+      - id
+      - user_id
+      - client_id
+      - created_at
+  securitySchemes:
+    iroh:
+      type: apiKey
+      in: header
+      name: authorization
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            telemetry: collect application data for analytics
+            integration: Manage your modules
+            private-intel: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile: Get your profile information
+            inspect: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users: Manage users of your organisation
+            investigation: Perform threat analysis investigation
+            invite: Invite users into your organization
+            casebook: Access and modify your casebooks
+            orbital: Orbital Integration.
+            enrich: Query your configured modules for threat intelligence
+            oauth: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao: AO Integration.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

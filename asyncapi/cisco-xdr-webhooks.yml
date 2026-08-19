@@ -1,0 +1,124 @@
+generated: '2026-08-19'
+method: derived
+source: openapi/_original/cisco-xdr-iroh-webhook-openapi.json + openapi/_original/cisco-xdr-iroh-event-openapi.json
+asyncapi_published: false
+note: Cisco XDR publishes no AsyncAPI document, but it does ship a real, fully specified webhook subscription
+  API — iroh-webhook, 8 operations — whose request schema enumerates every event type and record type
+  a subscriber can filter on. That enum IS the event catalogue, so it is captured here verbatim from the
+  provider spec rather than described in prose. A second event surface, iroh-event, lets a consumer read
+  and search the same events over HTTP; the OAuth server also advertises an "sse" scope, so a server-sent-events
+  channel exists, but no spec for it is published anonymously.
+management_api:
+  base: https://visibility.amp.cisco.com/iroh/iroh-webhook
+  operations:
+  - op: POST /iroh/iroh-webhook/webhook
+    summary: Create a Webhook
+    scope: webhook/management:write
+  - op: GET /iroh/iroh-webhook/webhook
+    summary: List Webhooks
+    scope: webhook/management:read
+  - op: GET /iroh/iroh-webhook/webhook/{id}
+    summary: Get a Webhook
+    scope: webhook/management:read
+  - op: PATCH /iroh/iroh-webhook/webhook/{id}
+    summary: Update a Webhook
+    scope: webhook/management:write
+  - op: DELETE /iroh/iroh-webhook/webhook/{id}
+    summary: Delete a Webhook
+    scope: admin/webhook/management:write,webhook/management:write
+  - op: GET /iroh/iroh-webhook/webhook-result
+    summary: List WebhookResults
+    scope: webhook/result:read
+  - op: GET /iroh/iroh-webhook/webhook-result/{id}
+    summary: Get a WebhookResult
+    scope: webhook/result:read
+  - op: DELETE /iroh/iroh-webhook/webhook-result/{id}
+    summary: Delete a WebhookResult
+    scope: admin/webhook/result:write,webhook/result:write
+  delivery_targets:
+  - type: workflow
+    meaning: trigger a Cisco XDR Automation (AO) workflow
+  - type: url
+    meaning: POST to a subscriber URL
+  event_sources:
+  - iroh-events
+  - ctia-events
+  auth_on_delivery: Configurable per webhook (NewWebhookParamsAuth); the subscriber declares the mechanism
+    Cisco uses when calling out.
+  delivery_receipts: WebhookResult records every delivery attempt and its errors, readable and deletable
+    through the same API.
+read_api:
+  base: https://visibility.amp.cisco.com/iroh/iroh-event
+  operations:
+  - op: GET /iroh/iroh-event/event/{id}
+    summary: Get an Event
+    scope: event:read
+  - op: POST /iroh/iroh-event/event/search
+    summary: Search for Events
+    scope: event:read
+  - op: GET /iroh/iroh-event/event/incident/{incident-id}
+    summary: Combines events from Private Intel and IROH using the IROH event format
+    scope: event:read
+  envelope:
+  - created_at
+  - data
+  - issuer
+  - id
+  - acknowledged_at
+  - emiter
+  - sign
+  note: Events are signed (sign) and carry an emitter, so a consumer can attribute and verify them.
+event_types:
+- auto/workflow/completed
+- auto/workflow/errored
+- auto/workflow/started
+- entitlements/updated
+- module-instance/created
+- module-instance/deleted
+- module-instance/reactivated
+- module-instance/restricted
+- module-instance/updated
+- notification-request/created
+- org/deleting
+- piam-entitlements/updated
+- private-intel/incident/asset-enrichment/succeeded
+- private-intel/incident/created
+- private-intel/incident/deleted
+- private-intel/incident/high-impact/created
+- private-intel/incident/last-activity-change
+- private-intel/incident/status-changed
+- private-intel/incident/updated
+- private-intel/note/created
+- private-intel/note/deleted
+- private-intel/note/updated
+- record-created
+- record-deleted
+- record-updated
+- scc-tenant/created
+- scc-tenant/updated
+- user/created
+- user/deleted
+- user/updated
+record_types:
+- actor
+- attack-pattern
+- campaign
+- casebook
+- coa
+- data-table
+- feedback
+- identity-assertion
+- incident
+- indicator
+- investigation
+- judgement
+- malware
+- relationship
+- sighting
+- vulnerability
+- weakness
+counts:
+  event_types: 30
+  record_types: 17
+  management_operations: 8
+  read_operations: 3

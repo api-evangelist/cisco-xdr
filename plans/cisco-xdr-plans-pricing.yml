@@ -1,0 +1,46 @@
+generated: '2026-08-19'
+method: searched
+source: https://www.cisco.com/site/us/en/products/security/xdr/index.html
+plan_count: 3
+published_prices: false
+note: >-
+  Cisco names three Cisco XDR license tiers publicly but publishes no list price for any of them,
+  and there is no self-serve checkout. Buying goes through a Cisco seller or partner, and the
+  developer surface has no plan of its own — API access is a property of the tenant licence, not a
+  separately priced product. Reseller catalogues quote figures; those are not Cisco-published and
+  are deliberately not recorded here. The API rate limit (8000 requests/hour per organization) is
+  the same across tiers as documented, so the tier changes what data exists to call, not how much
+  you may call it.
+plans:
+- name: Essentials
+  price: null
+  currency: null
+  period: per user per year
+  quota: null
+  detail: Full Cisco XDR feature set integrated across the Cisco Security portfolio.
+- name: Advantage
+  price: null
+  currency: null
+  period: per user per year
+  quota: null
+  detail: Essentials plus Cisco-curated integrations with selected third-party security tools.
+- name: Premier
+  price: null
+  currency: null
+  period: quote only
+  quota: null
+  detail: >-
+    Advantage delivered as a Cisco-managed service, with security validation through penetration
+    testing and selected Cisco Talos Incident Response services.
+api_access:
+  self_serve: false
+  free_tier: false
+  trial: 'Cisco offers a Cisco XDR free trial through the product site; API access requires a tenant.'
+  detail: >-
+    API Clients are created inside a licensed XDR tenant (Administration > API Clients). There is no
+    developer plan, no per-call pricing, and no public sandbox tenant — see sandbox/cisco-xdr-sandbox.yml.
+evidence:
+- url: https://www.cisco.com/site/us/en/products/security/xdr/index.html
+  status: 200
+- url: https://developer.cisco.com/docs/cisco-xdr/rate-limits/
+  status: 200

@@ -1,0 +1,45 @@
+generated: '2026-08-19'
+method: searched
+source: https://developer.cisco.com/docs/cisco-xdr/api-changelog/
+scheme: dated + semantic (docs-level API version, not per-service)
+current_version: '1.1'
+note: >-
+  Two changelogs exist and they are about different things. The API changelog at DevNet has exactly
+  two entries in three years and covers which API families are documented, not what changed inside
+  them. The product release notes at docs.xdr.security.cisco.com move roughly weekly (2.72 on
+  2026-08-19) but describe console features, not the contract. Neither one tells an API consumer
+  that CTIA is now v2.71.0 or that IROH is at build 1.0.107 — those versions are only visible in
+  the live x-iroh-version / x-iroh-api-version / x-ctim-version response headers.
+entries:
+- version: '1.1'
+  date: '2024-05-31'
+  breaking: false
+  additions:
+  - The Conure v2 (Incidents and Investigations) API is released and added to the docs.
+  - The Playbook v1 API is released and added to the docs.
+  highlights: Incident search and investigation management, plus incident-response playbook CRUD.
+- version: '1.0'
+  date: '2023-07-26'
+  breaking: false
+  additions:
+  - First release of the Cisco XDR APIs, documenting 13 API endpoints.
+  highlights: >-
+    Automation, Dashboard, Enrich, Global-Intel, Inspect, Invite, OAuth2, Incident Management,
+    Private Intelligence, Profile, Response and User.
+related:
+- kind: product release notes
+  url: https://docs.xdr.security.cisco.com/Content/release-notes.htm
+  current: '2.72'
+  date: '2026-08-19'
+  note: Console/product features; no dedicated API-changes section and no deprecation notices.
+- kind: previous product release notes
+  url: https://docs.xdr.security.cisco.com/Content/release-notes-previous.htm
+live_version_headers:
+  probed: '2026-08-19'
+  request: POST https://visibility.amp.cisco.com/iroh/iroh-inspect/inspect
+  http_status: 401
+  headers:
+    x-iroh-version: 57f9dd30618eb87b7908c687a1cfc4b13d66029e v2.71.0
+    x-iroh-api-version: 1.0.107
+    x-ctim-version: 1.3.30
+    x-jwt-version: v2.30-9c0cb6fc92dc2dafb697

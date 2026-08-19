@@ -1,0 +1,27 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Cisco XDR Incidents & Investigations (Conure v2)
+  version: 1.0.0
+x-generated: '2026-08-19'
+x-method: generated
+x-source: openapi/cisco-xdr-incidents-investigations-openapi.json
+extends: openapi/cisco-xdr-incidents-investigations-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-family: Conure v2
+    x-apievangelist-base-url: https://conure.us.security.cisco.com
+    x-apievangelist-regions:
+      us: https://conure.us.security.cisco.com
+      eu: https://conure.eu.security.cisco.com
+      apjc: https://conure.apjc.security.cisco.com
+    x-apievangelist-error-envelope: conure-message
+    x-apievangelist-rate-limit:
+      scope: organization
+      window: PT1H
+      limit: 8000
+      status: 429
+      headers: [X-Ratelimit-Org-Limit, X-Ratelimit-Org-Remaining, Retry-After]
+    x-apievangelist-note: >-
+      The document declares no host or basePath. The base URL above is the one Cisco names in its own
+      Cisco XDR documentation and in the CiscoDevNet MCP server INSTALL.md.

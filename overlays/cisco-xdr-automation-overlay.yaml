@@ -1,0 +1,35 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Cisco XDR Automation
+  version: 1.0.0
+x-generated: '2026-08-19'
+x-method: generated
+x-source: openapi/cisco-xdr-automation-openapi.json + https://developer.cisco.com/docs/cisco-xdr/rate-limits/
+extends: openapi/cisco-xdr-automation-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-family: Automation
+    x-apievangelist-base-url: https://automate.us.security.cisco.com/api
+    x-apievangelist-live-majors: [v1, v1.1, v1.2]
+    x-apievangelist-note: >-
+      Three path majors are live simultaneously with different operation coverage and no published
+      deprecation policy. Cisco's own MCP server lists this as known issue number one.
+    x-apievangelist-rate-limit:
+      default:
+        scope: organization
+        window: PT1H
+        limit: 8000
+      workflow_run:
+        scope: organization
+        window: PT1M
+        limit: 10
+        paths: ['/v1.1/workflows/start', '/v1.1/ui/workflows/start']
+      headers: [x-ratelimit-org-limit, x-ratelimit-org-remaining, Retry-After]
+- target: $.paths['/v1/workflows/start'].post
+  update:
+    x-agentic-access:
+      action_class: execute
+      consequence: side-effecting
+      idempotent: false
+      note: Starts a Cisco XDR automation workflow, which may itself perform containment actions.

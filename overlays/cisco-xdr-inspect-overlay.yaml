@@ -1,0 +1,24 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Cisco XDR Inspect
+  version: 1.0.0
+x-generated: '2026-08-19'
+x-method: generated
+x-source: openapi/cisco-xdr-inspect-api-openapi.yml
+extends: openapi/cisco-xdr-inspect-api-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-family: IROH platform
+    x-apievangelist-base-url: https://visibility.amp.cisco.com/iroh
+    x-apievangelist-error-envelope: iroh-normalized-error
+    x-apievangelist-note: >-
+      findObservables is the only operation in the entire IROH/CTIA/Conure surface that declares an
+      operationId. Recorded here so downstream tooling does not assume operationIds are available.
+- target: $.paths['/iroh/iroh-inspect/inspect'].post
+  update:
+    x-agentic-access:
+      action_class: read
+      consequence: none
+      idempotent: true
+      scope: inspect:read

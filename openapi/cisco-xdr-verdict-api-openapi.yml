@@ -1,0 +1,328 @@
+openapi: 3.2.0
+info:
+  title: CTIA Verdict API
+  version: 4178275a824512c2fd3a2acdb0e8277233919054 v2.71.0
+  license:
+    name: All Rights Reserved
+    url: ''
+  contact:
+    name: 'Cisco Security Business Group -- Advanced Threat '
+    url: http://github.com/threatgrid/ctia
+    email: cisco-intel-api-support@cisco.com
+  description: "A Threat Intelligence API service\n\n  This API provides a mechanism for making Judgements on the Disposition\n  of Observables, which are then distilled into a final Verdict.  A\n  Disposition is a statement regarding the malicious, or otherwise,\n  nature of an Observable.\n\n  The Judgements can be grouped into Indicators, which can be associated\n  with Campaigns, Actors and TTPs.  Feedback can be given on specific\n  Judgements, indicating agreement or disagreement, or clarification.\n\n  When an Observable with a malicious Verdict is seen, it can be recorded as\n  a Sighting, and the Relations that Observable had with other Observables can\n  be recorded as well.\n\n  We support a pre-defined set of Observable Types.  Each Observable Type has a\n  specific form of natural identifier, its ID, which is almost always\n  the default way it is represented when observed in the wild.\n\n  * Ipv4/IPv6  -- 192.168.1.1\n  * Domain/Hostname -- foo.com, www.bar.com\n  * SHA256  -- the sha256 checksum of a file, or other data blob\n  * MD5 -- the md5 checksum of a file, or other data blob\n  * SHA1 -- the sha1 checksum of a file, or other data blob\n  * URL -- A minimal form of the URL\n\n  The Verdict is derived from all of the Judgements on that Observable which\n  have not yet expired.  The highest priority Judgement becomes the\n  active verdict.  If there is more than one Judgement with that\n  priority, than Clean disposition has priority over all others, then\n  Malicious disposition, and so on down to Unknown.\n\n  <a href='/doc/README.md'>CTIA Documentation</a>"
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR (CTIA)
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://private.intel.amp.cisco.com/index.html
+  - type: raw
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: /
+security:
+- JWT: []
+- oauth2:
+  - private-intel
+  - private-intel:read
+  - private-intel:write
+  - casebook
+  - casebook:read
+  - casebook:write
+tags:
+- name: Verdict
+paths:
+  /ctia/{observable_type}/{observable_value}/verdict:
+    get:
+      tags:
+      - Verdict
+      parameters:
+      - in: path
+        name: observable_type
+        description: Observable type names
+        required: true
+        example: acudid
+        schema:
+          type: string
+          enum:
+          - file_path
+          - mac_address
+          - trend_micro_id
+          - cybereason_id
+          - process_args
+          - s1_agent_id
+          - device
+          - hostname
+          - certificate_common_name
+          - serial_number
+          - meraki_network_id
+          - url
+          - jamf_management_id
+          - certificate_serial
+          - intune_id
+          - meraki_org_id
+          - cisco_cm_id
+          - registry_key
+          - process_path
+          - darktrace_id
+          - process_username
+          - cortex_agent_id
+          - orbital_node_id
+          - process_uid
+          - ngfw_name
+          - user
+          - certificate_issuer
+          - ipv6
+          - email
+          - cisco_uc_id
+          - cvm_id
+          - sha256
+          - crowdstrike_id
+          - google_cloud_id
+          - google_chromebook_id
+          - acudid
+          - sha1
+          - registry_name
+          - md5
+          - service_now_id
+          - ip
+          - domain
+          - email_subject
+          - imei
+          - ngfw_id
+          - amp_computer_guid
+          - ms_machine_id
+          - secure_access_id
+          - mutex
+          - processor_id
+          - swc_device_id
+          - registry_path
+          - odns_identity
+          - odns_identity_label
+          - cisco_mid
+          - process_name
+          - pki_serial
+          - meraki_node_sn
+          - email_messageid
+          - imsi
+          - user_agent
+          - process_hash
+          - file_name
+      - in: path
+        name: observable_value
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verdict'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Verdict'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Verdict'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Verdict'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Verdict'
+      summary: Returns the current Verdict associated with the specified observable.
+      description: Requires capability read-verdict.
+components:
+  schemas:
+    Observable:
+      example:
+        value: 1.2.3.4
+        type: ip
+      description: An AssetMapping is a record that a specific Observable maps to an Asset for an indicated period of time.
+      type: object
+      properties:
+        value:
+          example: 1.2.3.4
+          description: The value of the observable.
+          type: string
+        type:
+          example: ip
+          description: The type of observable.
+          type: string
+          enum:
+          - file_path
+          - mac_address
+          - trend_micro_id
+          - cybereason_id
+          - process_args
+          - s1_agent_id
+          - device
+          - hostname
+          - certificate_common_name
+          - serial_number
+          - meraki_network_id
+          - url
+          - jamf_management_id
+          - certificate_serial
+          - intune_id
+          - meraki_org_id
+          - cisco_cm_id
+          - registry_key
+          - process_path
+          - darktrace_id
+          - process_username
+          - cortex_agent_id
+          - orbital_node_id
+          - process_uid
+          - ngfw_name
+          - user
+          - certificate_issuer
+          - ipv6
+          - email
+          - cisco_uc_id
+          - cvm_id
+          - sha256
+          - crowdstrike_id
+          - google_cloud_id
+          - google_chromebook_id
+          - acudid
+          - sha1
+          - registry_name
+          - md5
+          - service_now_id
+          - ip
+          - domain
+          - email_subject
+          - imei
+          - ngfw_id
+          - amp_computer_guid
+          - ms_machine_id
+          - secure_access_id
+          - mutex
+          - processor_id
+          - swc_device_id
+          - registry_path
+          - odns_identity
+          - odns_identity_label
+          - cisco_mid
+          - process_name
+          - pki_serial
+          - meraki_node_sn
+          - email_messageid
+          - imsi
+          - user_agent
+          - process_hash
+          - file_name
+      additionalProperties: false
+      required:
+      - value
+      - type
+    Verdict:
+      example:
+        type: verdict
+        disposition: 1
+        observable:
+          value: 1.2.3.4
+          type: ip
+        judgement_id: string
+        disposition_name: Clean
+        valid_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+      description: "A Verdict is chosen from all of the Judgements on that Observable which have not yet expired.  The highest priority Judgement becomes the active verdict.  If there is more than one Judgement with that priority, then Clean disposition has priority over all others, then Malicious disposition, and so on down to Unknown.\n\n The ID of a verdict is a a str of the form \"observable.type:observable.value\" for example, \"ip:1.1.1.1\""
+      type: object
+      properties:
+        type:
+          example: verdict
+          type: string
+          enum:
+          - verdict
+        disposition:
+          example: 1
+          description: Numeric verdict identifiers.
+          type: integer
+          format: int64
+          enum:
+          - 1
+          - 4
+          - 3
+          - 2
+          - 5
+        observable:
+          $ref: '#/components/schemas/Observable'
+        judgement_id:
+          example: string
+          description: A URI leading to a judgement.
+          type: string
+        disposition_name:
+          example: Clean
+          description: 'The disposition_name field is optional, but is intended to be shown to a user.  Applications must therefore remember the mapping of numbers to human words, as in: {1 "Clean", 2 "Malicious", 3 "Suspicious", 4 "Common", 5 "Unknown"}'
+          type: string
+          enum:
+          - Common
+          - Unknown
+          - Suspicious
+          - Malicious
+          - Clean
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+      additionalProperties: false
+    ValidTime:
+      example:
+        start_time: '2016-01-01T01:01:01.000Z'
+        end_time: '2016-01-01T01:01:01.000Z'
+      description: Period of time when a cyber observation is valid.
+      type: object
+      properties:
+        start_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If not present, the valid time position of the indicator does not have an upper bound.
+          type: string
+          format: date-time
+        end_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
+          type: string
+          format: date-time
+      additionalProperties: false
+  securitySchemes:
+    JWT:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            private-intel: Private Intelligence Full Access
+            private-intel:read: Private Intelligence Read Access
+            private-intel:write: Private Intelligence Write Access
+            casebook: Casebook Full Access
+            casebook:read: Casebook Read Access
+            casebook:write: Casebook Write Access
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

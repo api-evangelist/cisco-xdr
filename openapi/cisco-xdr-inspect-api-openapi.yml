@@ -1,0 +1,421 @@
+openapi: 3.2.0
+info:
+  title: Web Service Inspect API
+  version: 1.0.107
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: Extract Observables from text
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-inspect/index.html
+  - type: raw
+    url: https://visibility.amp.cisco.com/iroh/iroh-inspect/swagger.json
+servers:
+- url: https://visibility.amp.cisco.com/
+security:
+- iroh: []
+- AuthorizationHeader: []
+- oauth2:
+  - telemetry
+  - integration
+  - private-intel
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - registry
+  - users
+  - investigation
+  - invite
+  - casebook
+  - orbital
+  - enrich
+  - oauth
+  - vault
+  - response
+  - notification
+  - global-intel:read
+  - webhook
+  - ao
+tags:
+- name: Inspect
+  description: Inspect related routes
+paths:
+  /iroh/iroh-inspect/inspect:
+    post:
+      x-no-doc: false
+      tags:
+      - Inspect
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `inspect:read`
+
+
+        Detects and returns observables from plain text.'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Observable'
+                uniqueItems: true
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Observable'
+                uniqueItems: true
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Observable'
+                uniqueItems: true
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Observable'
+                uniqueItems: true
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Observable'
+                uniqueItems: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/400'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/400'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/400'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/401'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/401'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/401'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/401'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/403'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/403'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/403'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/403'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/500'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/500'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/500'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/500'
+      summary: Find Observables
+      operationId: findObservables
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StrContent'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/StrContent'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/StrContent'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/StrContent'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/StrContent'
+        required: true
+components:
+  schemas:
+    '400':
+      description: An object containing the offending parameters.
+      example:
+        content: missing-required-key
+      type: object
+      properties:
+        content:
+          type: string
+      additionalProperties: false
+      required:
+      - content
+    StrContent:
+      type: object
+      properties:
+        content:
+          description: Text to inspect for observables.
+          example: 1.2.3.4 foo bar xyz.com www.xyz.com
+          type: string
+      additionalProperties: false
+      required:
+      - content
+    '500':
+      description: The error string.
+      example:
+        error: unknown-exception
+        error_description: This exception has been logged for further inspection.
+        trace_id: 5755e17e-992f-4892-b2f6-db59b2bf480c
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        trace_id:
+          type: string
+      additionalProperties: false
+      required:
+      - error
+    '401':
+      description: An object describing the problem.
+      example:
+        error: invalid_request
+        error_description: No JWT found in HTTP Authorization header
+      type: object
+      properties:
+        error:
+          type: string
+        exception_message:
+          type: string
+        level:
+          type: string
+        token:
+          type: string
+        error_description:
+          type: string
+        trace_id:
+          type: string
+      additionalProperties: false
+      required:
+      - error
+    Observable:
+      example:
+        value: 1.2.3.4
+        type: ip
+      description: A simple, atomic value which has a consistent identity, and is stable enough to be attributed an intent or nature.  This is the classic 'indicator' which might appear in a data feed of bad IPs, or bad Domains.  These do not exist as objects within the CTIA storage model, so you never create an observable.
+      type: object
+      properties:
+        value:
+          example: 1.2.3.4
+          description: The value of the observable.
+          type: string
+        type:
+          example: ip
+          description: The type of observable.
+          type: string
+          enum:
+          - file_path
+          - mac_address
+          - trend_micro_id
+          - cybereason_id
+          - process_args
+          - s1_agent_id
+          - device
+          - hostname
+          - certificate_common_name
+          - serial_number
+          - meraki_network_id
+          - url
+          - jamf_management_id
+          - certificate_serial
+          - intune_id
+          - meraki_org_id
+          - cisco_cm_id
+          - registry_key
+          - process_path
+          - darktrace_id
+          - process_username
+          - cortex_agent_id
+          - orbital_node_id
+          - process_uid
+          - ngfw_name
+          - user
+          - certificate_issuer
+          - ipv6
+          - email
+          - cisco_uc_id
+          - cvm_id
+          - sha256
+          - crowdstrike_id
+          - google_cloud_id
+          - google_chromebook_id
+          - acudid
+          - sha1
+          - registry_name
+          - md5
+          - service_now_id
+          - ip
+          - domain
+          - email_subject
+          - imei
+          - ngfw_id
+          - amp_computer_guid
+          - ms_machine_id
+          - secure_access_id
+          - mutex
+          - processor_id
+          - swc_device_id
+          - registry_path
+          - odns_identity
+          - odns_identity_label
+          - cisco_mid
+          - process_name
+          - pki_serial
+          - meraki_node_sn
+          - email_messageid
+          - imsi
+          - user_agent
+          - process_hash
+          - file_name
+      additionalProperties: false
+      required:
+      - value
+      - type
+    '403':
+      description: An object describing the problem.
+      example:
+        missing-scopes:
+        - inspect:read
+        required-scopes:
+        - inspect:read
+        scopes: []
+        user-id: user1
+        org-id: org1
+        trace_id: ctx-43eb882f-75d6-41cf-817a-34bb3dbf71ab
+        error: missing_scope
+        error_description: You do not have the required credentials to access this route.
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        missing-scopes:
+          type: array
+          items:
+            type: string
+        required-scopes:
+          type: array
+          items:
+            type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        trace_id:
+          type: string
+        user-id:
+          type: string
+        org-id:
+          type: string
+      additionalProperties: false
+      required:
+      - error
+  securitySchemes:
+    iroh:
+      type: apiKey
+      in: header
+      name: authorization
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            telemetry: collect application data for analytics
+            integration: Manage your modules
+            private-intel: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile: Get your profile information
+            inspect: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users: Manage users of your organisation
+            investigation: Perform threat analysis investigation
+            invite: Invite users into your organization
+            casebook: Access and modify your casebooks
+            orbital: Orbital Integration.
+            enrich: Query your configured modules for threat intelligence
+            oauth: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao: AO Integration.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

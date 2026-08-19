@@ -1,0 +1,844 @@
+openapi: 3.2.0
+info:
+  title: IROH service Webhook API
+  version: 1.0.107
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: IROH Webhook API
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-webhook/index.html
+  - type: raw
+    url: https://visibility.amp.cisco.com/iroh/iroh-webhook/swagger.json
+servers:
+- url: https://visibility.amp.cisco.com/
+security:
+- iroh: []
+- AuthorizationHeader: []
+- oauth2:
+  - telemetry
+  - integration
+  - private-intel
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - registry
+  - users
+  - investigation
+  - invite
+  - casebook
+  - orbital
+  - enrich
+  - oauth
+  - vault
+  - response
+  - notification
+  - global-intel:read
+  - webhook
+  - ao
+tags:
+- name: Webhook
+  description: Webhook Routes
+paths:
+  /iroh/iroh-webhook/webhook/{id}:
+    get:
+      x-no-doc: false
+      tags:
+      - Webhook
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `webhook/management:read`
+
+
+        '
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Get a `Webhook`
+    patch:
+      x-no-doc: false
+      tags:
+      - Webhook
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `webhook/management:write`
+
+
+        '
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Update a `Webhook`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchWebhookParams'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/PatchWebhookParams'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/PatchWebhookParams'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/PatchWebhookParams'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/PatchWebhookParams'
+        required: true
+    delete:
+      x-no-doc: false
+      tags:
+      - Webhook
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `admin/webhook/management:write,webhook/management:write`
+
+
+        '
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Delete a `Webhook`
+      responses:
+        default:
+          description: ''
+  /iroh/iroh-webhook/webhook:
+    get:
+      x-no-doc: false
+      tags:
+      - Webhook
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Webhook'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Webhook'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Webhook'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Webhook'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Webhook'
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `webhook/management:read`
+
+
+        '
+      parameters:
+      - in: query
+        name: webhook_type
+        description: should the Webhook Trigger an API or an AO Workflow
+        required: false
+        schema:
+          type: string
+          enum:
+          - workflow
+          - url
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - iroh-events
+          - ctia-events
+      - in: query
+        name: enabled
+        description: ''
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: event_type_filter
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - private-intel/note/created
+            - record-created
+            - auto/workflow/completed
+            - private-intel/incident/created
+            - private-intel/incident/high-impact/created
+            - record-updated
+            - auto/workflow/errored
+            - private-intel/incident/deleted
+            - user/updated
+            - private-intel/note/deleted
+            - piam-entitlements/updated
+            - scc-tenant/created
+            - private-intel/incident/last-activity-change
+            - private-intel/incident/status-changed
+            - org/deleting
+            - private-intel/note/updated
+            - module-instance/restricted
+            - module-instance/reactivated
+            - notification-request/created
+            - private-intel/incident/asset-enrichment/succeeded
+            - entitlements/updated
+            - auto/workflow/started
+            - record-deleted
+            - private-intel/incident/updated
+            - user/deleted
+            - module-instance/updated
+            - module-instance/created
+            - user/created
+            - module-instance/deleted
+            - scc-tenant/updated
+      - in: query
+        name: record_type_filter
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - feedback
+            - investigation
+            - data-table
+            - relationship
+            - vulnerability
+            - judgement
+            - weakness
+            - coa
+            - attack-pattern
+            - incident
+            - indicator
+            - campaign
+            - sighting
+            - casebook
+            - identity-assertion
+            - malware
+            - actor
+      summary: List `Webhook`s
+    post:
+      x-no-doc: false
+      tags:
+      - Webhook
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `webhook/management:write`
+
+
+        '
+      summary: Create a `Webhook`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewWebhookParams'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewWebhookParams'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewWebhookParams'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewWebhookParams'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewWebhookParams'
+        required: true
+components:
+  schemas:
+    PatchWebhookParams:
+      type: object
+      properties:
+        integration_id:
+          description: id of the integration this record belongs to
+          type:
+          - string
+          - 'null'
+        webhook_type:
+          description: should the Webhook Trigger an API or an AO Workflow
+          type: string
+          enum:
+          - workflow
+          - url
+        name:
+          description: a Name describing the Webhook
+          type: string
+        source:
+          type: string
+          enum:
+          - iroh-events
+          - ctia-events
+        auth:
+          description: inform authentication mechanism to be used in webhook delivery
+          x-oneOf:
+          - $ref: '#/components/schemas/PatchWebhookParamsAuth'
+        event_filter_map:
+          $ref: '#/components/schemas/PatchWebhookParamsEventFilterMap'
+        workflow:
+          description: if the webhook triggers an AO workflow, the workflow tag
+          type:
+          - string
+          - 'null'
+        url:
+          description: if the webhook triggers an API, the target URL
+          type:
+          - string
+          - 'null'
+        record_type_filter:
+          description: trigger on these record types
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            enum:
+            - feedback
+            - investigation
+            - data-table
+            - relationship
+            - vulnerability
+            - judgement
+            - weakness
+            - coa
+            - attack-pattern
+            - incident
+            - indicator
+            - campaign
+            - sighting
+            - casebook
+            - identity-assertion
+            - malware
+            - actor
+          uniqueItems: true
+        event_type_filter:
+          description: trigger on these record lifecycle events
+          type: array
+          items:
+            type: string
+            enum:
+            - private-intel/note/created
+            - record-created
+            - auto/workflow/completed
+            - private-intel/incident/created
+            - private-intel/incident/high-impact/created
+            - record-updated
+            - auto/workflow/errored
+            - private-intel/incident/deleted
+            - user/updated
+            - private-intel/note/deleted
+            - piam-entitlements/updated
+            - scc-tenant/created
+            - private-intel/incident/last-activity-change
+            - private-intel/incident/status-changed
+            - org/deleting
+            - private-intel/note/updated
+            - module-instance/restricted
+            - module-instance/reactivated
+            - notification-request/created
+            - private-intel/incident/asset-enrichment/succeeded
+            - entitlements/updated
+            - auto/workflow/started
+            - record-deleted
+            - private-intel/incident/updated
+            - user/deleted
+            - module-instance/updated
+            - module-instance/created
+            - user/created
+            - module-instance/deleted
+            - scc-tenant/updated
+          uniqueItems: true
+        enabled:
+          description: Enable/Disable the Webhook
+          type:
+          - boolean
+          - 'null'
+        visibility:
+          type: string
+          enum:
+          - global
+          - org
+          - user
+      additionalProperties: false
+    NewWebhookParamsAuthConf:
+      type: object
+      properties:
+        client_id:
+          description: client-id of the client that will be used to generate JWT for the webhook creator to the webhook endpoint. This is mandatory for the `iroh-jwt` authentication type and ignored for other authentication types.
+          type: string
+      additionalProperties: false
+      required:
+      - client_id
+    WebhookAuth:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - iroh-jwt
+        conf:
+          $ref: '#/components/schemas/WebhookAuthConf'
+      additionalProperties: {}
+      required:
+      - type
+      - conf
+    PatchWebhookParamsAuthConf:
+      type: object
+      properties:
+        client_id:
+          description: client-id of the client that will be used to generate JWT for the webhook creator to the webhook endpoint. This is mandatory for the `iroh-jwt` authentication type and ignored for other authentication types.
+          type: string
+      additionalProperties: false
+      required:
+      - client_id
+    Webhook:
+      type: object
+      properties:
+        integration_id:
+          description: id of the integration this record belongs to
+          type: string
+        webhook_type:
+          description: should the Webhook Trigger an API or an AO Workflow
+          type: string
+          enum:
+          - workflow
+          - url
+        name:
+          description: a Name describing the Webhook
+          type: string
+        org_id:
+          description: the organization of the user who create the Webhook
+          type: string
+        source:
+          type: string
+          enum:
+          - iroh-events
+          - ctia-events
+        auth:
+          description: inform authentication mechanism to be used in webhook delivery
+          x-oneOf:
+          - $ref: '#/components/schemas/WebhookAuth'
+        event_filter_map:
+          $ref: '#/components/schemas/EventFilterMap'
+        updated_at:
+          type: string
+          format: date-time
+        workflow:
+          description: if the webhook triggers an AO workflow, the workflow tag
+          type: string
+        id:
+          type: string
+        url:
+          description: if the webhook triggers an API, the target URL
+          type: string
+        record_type_filter:
+          description: trigger on these record types
+          type: array
+          items:
+            type: string
+            enum:
+            - feedback
+            - investigation
+            - data-table
+            - relationship
+            - vulnerability
+            - judgement
+            - weakness
+            - coa
+            - attack-pattern
+            - incident
+            - indicator
+            - campaign
+            - sighting
+            - casebook
+            - identity-assertion
+            - malware
+            - actor
+          uniqueItems: true
+        user_id:
+          description: the id of the user who create the Webhook
+          type: string
+        client_id:
+          description: the OAuth2 client id used to create the Webhook
+          type: string
+        event_type_filter:
+          description: trigger on these record lifecycle events
+          type: array
+          items:
+            type: string
+            enum:
+            - private-intel/note/created
+            - record-created
+            - auto/workflow/completed
+            - private-intel/incident/created
+            - private-intel/incident/high-impact/created
+            - record-updated
+            - auto/workflow/errored
+            - private-intel/incident/deleted
+            - user/updated
+            - private-intel/note/deleted
+            - piam-entitlements/updated
+            - scc-tenant/created
+            - private-intel/incident/last-activity-change
+            - private-intel/incident/status-changed
+            - org/deleting
+            - private-intel/note/updated
+            - module-instance/restricted
+            - module-instance/reactivated
+            - notification-request/created
+            - private-intel/incident/asset-enrichment/succeeded
+            - entitlements/updated
+            - auto/workflow/started
+            - record-deleted
+            - private-intel/incident/updated
+            - user/deleted
+            - module-instance/updated
+            - module-instance/created
+            - user/created
+            - module-instance/deleted
+            - scc-tenant/updated
+          uniqueItems: true
+        enabled:
+          type: boolean
+        visibility:
+          type: string
+          enum:
+          - global
+          - org
+          - user
+        created_at:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - webhook_type
+      - name
+      - org_id
+      - source
+      - id
+      - user_id
+      - client_id
+      - event_type_filter
+      - enabled
+      - visibility
+      - created_at
+    EventFilterMap:
+      description: fields available in event.data
+      type: object
+      properties:
+        module_type_id:
+          type: string
+        module_instance_visibility:
+          type: string
+          enum:
+          - global
+          - org
+          - user
+      additionalProperties: {}
+    PatchWebhookParamsAuth:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - iroh-jwt
+        conf:
+          $ref: '#/components/schemas/PatchWebhookParamsAuthConf'
+      additionalProperties: false
+      required:
+      - type
+      - conf
+    WebhookAuthConf:
+      type: object
+      properties:
+        client_id:
+          description: client-id of the client that will be used to generate JWT for the webhook creator to the webhook endpoint. This is mandatory for the `iroh-jwt` authentication type and ignored for other authentication types.
+          type: string
+      additionalProperties: {}
+      required:
+      - client_id
+    NewWebhookParamsAuth:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - iroh-jwt
+        conf:
+          $ref: '#/components/schemas/NewWebhookParamsAuthConf'
+      additionalProperties: false
+      required:
+      - type
+      - conf
+    PatchWebhookParamsEventFilterMap:
+      type: object
+      properties:
+        module_type_id:
+          type:
+          - string
+          - 'null'
+        module_instance_visibility:
+          type:
+          - string
+          - 'null'
+          enum:
+          - global
+          - org
+          - user
+      additionalProperties: {}
+    NewWebhookParams:
+      type: object
+      properties:
+        integration_id:
+          description: id of the integration this record belongs to
+          type: string
+        webhook_type:
+          description: should the Webhook Trigger an API or an AO Workflow
+          type: string
+          enum:
+          - workflow
+          - url
+        name:
+          description: a Name describing the Webhook
+          type: string
+        source:
+          type: string
+          enum:
+          - iroh-events
+          - ctia-events
+        auth:
+          description: inform authentication mechanism to be used in webhook delivery
+          x-oneOf:
+          - $ref: '#/components/schemas/NewWebhookParamsAuth'
+        event_filter_map:
+          $ref: '#/components/schemas/EventFilterMap'
+        workflow:
+          description: if the webhook triggers an AO workflow, the workflow tag
+          type: string
+        url:
+          description: if the webhook triggers an API, the target URL
+          type: string
+        record_type_filter:
+          description: trigger on these record types
+          type: array
+          items:
+            type: string
+            enum:
+            - feedback
+            - investigation
+            - data-table
+            - relationship
+            - vulnerability
+            - judgement
+            - weakness
+            - coa
+            - attack-pattern
+            - incident
+            - indicator
+            - campaign
+            - sighting
+            - casebook
+            - identity-assertion
+            - malware
+            - actor
+          uniqueItems: true
+        event_type_filter:
+          description: trigger on these record lifecycle events
+          type: array
+          items:
+            type: string
+            enum:
+            - private-intel/note/created
+            - record-created
+            - auto/workflow/completed
+            - private-intel/incident/created
+            - private-intel/incident/high-impact/created
+            - record-updated
+            - auto/workflow/errored
+            - private-intel/incident/deleted
+            - user/updated
+            - private-intel/note/deleted
+            - piam-entitlements/updated
+            - scc-tenant/created
+            - private-intel/incident/last-activity-change
+            - private-intel/incident/status-changed
+            - org/deleting
+            - private-intel/note/updated
+            - module-instance/restricted
+            - module-instance/reactivated
+            - notification-request/created
+            - private-intel/incident/asset-enrichment/succeeded
+            - entitlements/updated
+            - auto/workflow/started
+            - record-deleted
+            - private-intel/incident/updated
+            - user/deleted
+            - module-instance/updated
+            - module-instance/created
+            - user/created
+            - module-instance/deleted
+            - scc-tenant/updated
+          uniqueItems: true
+        enabled:
+          description: Enable/Disable the Webhook
+          type: boolean
+        visibility:
+          type: string
+          enum:
+          - global
+          - org
+          - user
+      additionalProperties: false
+      required:
+      - webhook_type
+      - name
+      - source
+      - event_type_filter
+      - visibility
+  securitySchemes:
+    iroh:
+      type: apiKey
+      in: header
+      name: authorization
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            telemetry: collect application data for analytics
+            integration: Manage your modules
+            private-intel: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile: Get your profile information
+            inspect: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users: Manage users of your organisation
+            investigation: Perform threat analysis investigation
+            invite: Invite users into your organization
+            casebook: Access and modify your casebooks
+            orbital: Orbital Integration.
+            enrich: Query your configured modules for threat intelligence
+            oauth: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao: AO Integration.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

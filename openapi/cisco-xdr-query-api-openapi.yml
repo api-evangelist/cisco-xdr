@@ -1,0 +1,976 @@
+openapi: 3.2.0
+info:
+  title: IROH-INT Enrich Query API
+  version: 1.0.107
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: 'IROH Integrations: configure and query Threat Response modules'
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-enrich/index.html
+  - type: raw
+    url: https://visibility.amp.cisco.com/iroh/iroh-enrich/swagger.json
+servers:
+- url: https://visibility.amp.cisco.com/
+security:
+- iroh: []
+- AuthorizationHeader: []
+- oauth2:
+  - telemetry
+  - integration
+  - private-intel
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - registry
+  - users
+  - investigation
+  - invite
+  - casebook
+  - orbital
+  - enrich
+  - oauth
+  - vault
+  - response
+  - notification
+  - global-intel:read
+  - webhook
+  - ao
+tags:
+- name: Query
+  description: This set of routes allow to query for records related to observable events.Results are returned in OCSF format.
+paths:
+  /iroh/iroh-enrich/query/ocsf-sync:
+    post:
+      x-no-doc: false
+      tags:
+      - Query
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `enrich/query-ocsf:read`
+
+
+        This route queries all enabled modules supporting the query-ocsf protocol with the supplied query in order to retrieve related event data from all your integrations.'
+      parameters:
+      - in: query
+        name: mids
+        description: Use this parameter to query only some Modules passing their Ids
+        required: false
+        example:
+        - a78f09b4-16fa-4617-8bbf-f6044284ec0f
+        - 36716d80-2bd7-47fc-a179-cde2a0a8c5fe
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: flags
+        description: Use this parameter to use Modules which ModuleType flag matches with items provided as an argument.
+        required: false
+        example:
+        - cisco
+        - threat-intel
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: product_categories
+        description: Use this parameter to use Modules which ModuleType product_category matches with items provided as an argument.
+        required: false
+        example:
+        - cloud-firewall
+        - itsm
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: A `Bundle` including event data in OSCF format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopedQueryOCSFBundle'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/EnvelopedQueryOCSFBundle'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/EnvelopedQueryOCSFBundle'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/EnvelopedQueryOCSFBundle'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/EnvelopedQueryOCSFBundle'
+        '401':
+          description: A `NormalizedError` including a `trace_id`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+        '500':
+          description: A `NormalizedError` including a `trace_id`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+      summary: Get OCSF event data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OCSFQuery'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/OCSFQuery'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/OCSFQuery'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/OCSFQuery'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/OCSFQuery'
+        required: true
+  /iroh/iroh-enrich/query/ocsf:
+    post:
+      x-no-doc: false
+      tags:
+      - Query
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `enrich/query-ocsf:read`
+
+
+        This route enqueues a query for all enabled modules supporting the query-ocsf protocol with the supplied query in order to retrieve related event data from all your integrations. Results are written to an external file store'
+      parameters:
+      - in: query
+        name: mids
+        description: Use this parameter to query only some Modules passing their Ids
+        required: false
+        example:
+        - a78f09b4-16fa-4617-8bbf-f6044284ec0f
+        - 36716d80-2bd7-47fc-a179-cde2a0a8c5fe
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: flags
+        description: Use this parameter to use Modules which ModuleType flag matches with items provided as an argument.
+        required: false
+        example:
+        - cisco
+        - threat-intel
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: product_categories
+        description: Use this parameter to use Modules which ModuleType product_category matches with items provided as an argument.
+        required: false
+        example:
+        - cloud-firewall
+        - itsm
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Request identifier and details for the query request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response8148706'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Response8148706'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Response8148706'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Response8148706'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Response8148706'
+      summary: Retrieve OCSF event data asynchronously
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OCSFQuery'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/OCSFQuery'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/OCSFQuery'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/OCSFQuery'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/OCSFQuery'
+        required: true
+components:
+  schemas:
+    EnvelopedQueryOcsfBundleDataEventsCompliance:
+      example:
+        anything: anything
+      description: The compliance object provides context to compliance findings (e.g., a check against a specific regulatory or best practice framework such as CIS or NIST) and contains compliance related details.
+      type: object
+      additionalProperties:
+        example: anything
+    NormalizedError-500:
+      example:
+        error: unknown server error
+        error_description: An unknown error has occurred during the enrichment
+        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_code:
+          type: string
+        error_uri:
+          type: string
+        trace_id:
+          type: string
+        schema.core.AnythingSchema@3c6f0b88: {}
+      additionalProperties: {}
+    EnvelopedQueryOcsfBundleDataEventsMalware:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsFinding:
+      example:
+        anything: anything
+      description: Finding object provides details related to a finding generated by security tool
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsProcess:
+      example:
+        anything: anything
+      description: The process object.
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsDevice:
+      example:
+        anything: anything
+      description: An addressable device, computer system or host.
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsDispositions:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleData:
+      type: object
+      properties:
+        module:
+          type: string
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        start_time:
+          type: integer
+          format: int64
+        end_time:
+          type: integer
+          format: int64
+        count:
+          type: integer
+          format: int64
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEvents'
+      additionalProperties: false
+      required:
+      - module
+      - module_instance_id
+      - module_type_id
+      - start_time
+      - end_time
+      - count
+      - events
+    EnvelopedQueryOcsfBundleDataEventsCisCsc:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsActor:
+      example:
+        anything: anything
+      description: The actor object describes details about the user/role/process that was the source of the activity.
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsAttacks:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsAnalytic:
+      example:
+        anything: anything
+      description: The analytic technique used to create the finding or detection
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsMetadata:
+      example:
+        anything: anything
+      description: The metadata associated with the event.
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsResources:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsCloud:
+      example:
+        anything: anything
+      description: Describes details about the Cloud environment where the event was originally created or logged.
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsKillChain:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    OCSFQuery:
+      type: object
+      properties:
+        type_id:
+          type: integer
+          format: int64
+        limit:
+          type: integer
+          format: int64
+        value:
+          type: string
+        start_time:
+          type: string
+          format: date-time
+        field:
+          type: string
+        class_uid:
+          type: integer
+          format: int64
+        end_time:
+          type: string
+          format: date-time
+        caller_query_id:
+          type: string
+        version:
+          type: string
+      additionalProperties: false
+      required:
+      - type_id
+      - value
+      - class_uid
+      - version
+    EnvelopedQueryOcsfBundleDataEventsApi:
+      example:
+        anything: anything
+      description: Describes details about a typical API (Application Programming Interface) call.
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsActivities:
+      example:
+        anything: anything
+      description: Activities
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsObservables:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    ErrorMessage:
+      type: object
+      properties:
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - fatal
+          - warning
+          - error
+        module:
+          type: string
+      additionalProperties: false
+      required:
+      - module_instance_id
+      - module_type_id
+      - code
+      - message
+      - type
+    EnvelopedQueryOCSFBundle:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopedQueryOcsfBundleData'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+      additionalProperties: false
+    EnvelopedQueryOcsfBundleDataEventsVulnerabilities:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsUnmapped:
+      example:
+        anything: anything
+      description: The attributes that are not mapped to the event schema. The names and values of those attributes are specific to the event source.
+      type: object
+      additionalProperties:
+        example: anything
+    NormalizedError-401:
+      example:
+        error: invalid_request
+        error_description: No JWT found in HTTP Authorization header
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_code:
+          type: string
+        error_uri:
+          type: string
+        trace_id:
+          type: string
+        schema.core.AnythingSchema@3c6f0b88: {}
+      additionalProperties: {}
+    EnvelopedQueryOcsfBundleDataEvents:
+      example:
+        severity_id: 10
+        category_uid: 10
+        status_id: 10
+        data_sources:
+        - string
+        api:
+          anything: anything
+        unmapped:
+          anything: anything
+        class_name: string
+        type_uid: 10
+        start_time_dt: string
+        impact_score: 10
+        impact_id: 10
+        enrichments:
+        - anything: anything
+        nist:
+        - string
+        cloud:
+          anything: anything
+        time: 10
+        evidence: anything
+        process:
+          anything: anything
+        start_time: 10
+        risk_level: string
+        observables:
+        - anything: anything
+        risk_score: 10
+        time_dt: string
+        dispositions:
+        - anything: anything
+        duration: 10
+        state: string
+        class_uid: 10
+        kill_chain:
+        - anything: anything
+        disposition: string
+        end_time: 10
+        category_name: string
+        analytic:
+          anything: anything
+        activity_name: string
+        confidence_score: 10
+        timezone_offset: 10
+        status: string
+        count: 10
+        severity: string
+        cis_csc:
+        - anything: anything
+        status_detail: string
+        end_time_dt: string
+        device:
+          anything: anything
+        status_code: string
+        attacks:
+        - anything: anything
+        activities:
+          anything: anything
+        disposition_id: 10
+        finding:
+          anything: anything
+        raw_data: string
+        confidence: string
+        activity_id: 10
+        resources:
+        - anything: anything
+        type_name: string
+        confidence_id: 10
+        impact: string
+        metadata:
+          anything: anything
+        compliance:
+          anything: anything
+        message: string
+        vulnerabilities:
+        - anything: anything
+        malware:
+        - anything: anything
+        actor:
+          anything: anything
+        state_id: 10
+        risk_level_id: 10
+      description: Security Finding events describe findings, detections, anomalies, alerts and/or actions performed by security products
+      type: object
+      properties:
+        severity_id:
+          example: 10
+          description: <p>The normalized identifier of the event severity.</p>The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident. Smaller numerical values represent lower impact events, and larger numerical values represent higher impact events.
+          type: integer
+          format: int64
+        category_uid:
+          example: 10
+          description: The category unique identifier of the event.
+          type: integer
+          format: int64
+        status_id:
+          example: 10
+          description: The normalized identifier of the event status.
+          type: integer
+          format: int64
+        data_sources:
+          example:
+          - string
+          description: The data sources for the finding.
+          type: array
+          items:
+            type: string
+        api:
+          $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsApi'
+        unmapped:
+          $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsUnmapped'
+        class_name:
+          example: string
+          description: 'The event class name, as defined by class_uid value: <code>Cisco Security Finding</code>.'
+          type: string
+        type_uid:
+          example: 10
+          description: 'The event type ID. It identifies the event''s semantics and structure. The value is calculated by the logging system as: <code>class_uid * 100 + activity_id</code>.'
+          type: integer
+          format: int64
+        start_time_dt:
+          example: string
+          description: The start time of a time period, or the time of the least recent event included in the aggregate event.
+          type: string
+        impact_score:
+          example: 10
+          description: The impact of the finding, valid range 0-100.
+          type: integer
+          format: int64
+        impact_id:
+          example: 10
+          description: The normalized impact of the finding.
+          type: integer
+          format: int64
+        enrichments:
+          example:
+          - anything: anything
+          description: 'The additional information from an external data source, which is associated with the event. For example add location information for the IP address in the DNS answers:</p><code>[{"name": "answers.ip", "value": "92.24.47.250", "type": "location", "data": {"city": "Socotra", "continent": "Asia", "coordinates": [-25.4153, 17.0743], "country": "YE", "desc": "Yemen"}}]</code>'
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsEnrichments'
+        nist:
+          example:
+          - string
+          description: The NIST Cybersecurity Framework recommendations for managing the cybersecurity risk.
+          type: array
+          items:
+            type: string
+        cloud:
+          $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsCloud'
+        time:
+          example: 10
+          description: The normalized event occurrence time.
+          type: integer
+          format: int64
+        evidence:
+          example: anything
+          description: The data the finding exposes to the analyst.
+        process:
+          $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsProcess'
+        start_time:
+          example: 10
+          description: The start time of a time period, or the time of the least recent event included in the aggregate event.
+          type: integer
+          format: int64
+        risk_level:
+          example: string
+          description: The risk level, normalized to the caption of the risk_level_id value. In the case of 'Other', it is defined by the event source.
+          type: string
+        observables:
+          example:
+          - anything: anything
+          description: The observables associated with the event.
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsObservables'
+        risk_score:
+          example: 10
+          description: The risk score as reported by the event source.
+          type: integer
+          format: int64
+        time_dt:
+          example: string
+          description: The normalized event occurrence time.
+          type: string
+        dispositions:
+          example:
+          - anything: anything
+          description: A list of actions taken by the security product and their status code that represents the failure reason
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsDispositions'
+        duration:
+          example: 10
+          description: The event duration or aggregate time, the amount of time the event covers from <code>start_time</code> to <code>end_time</code> in milliseconds.
+          type: integer
+          format: int64
+        state:
+          example: string
+          description: The normalized state of a security finding.
+          type: string
+        class_uid:
+          example: 10
+          description: The unique identifier of a class. A Class describes the attributes available in an event.
+          type: integer
+          format: int64
+        kill_chain:
+          example:
+          - anything: anything
+          description: The <a target='_blank' href='https://www.lockheedmartin.com/en-us/capabilities/cyber/cyber-kill-chain.html'>Cyber Kill Chain®</a>.
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsKillChain'
+        disposition:
+          example: string
+          description: The event disposition name, normalized to the caption of the disposition_id value. In the case of 'Other', it is defined by the event source.
+          type: string
+        end_time:
+          example: 10
+          description: The end time of a time period, or the time of the most recent event included in the aggregate event.
+          type: integer
+          format: int64
+        category_name:
+          example: string
+          description: 'The event category name, as defined by category_uid value: <code>Findings</code>.'
+          type: string
+        analytic:
+          $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsAnalytic'
+        activity_name:
+          example: string
+          description: The event activity name, as defined by the activity_id.
+          type: string
+        confidence_score:
+          example: 10
+          description: The confidence score as reported by the event source.
+          type: integer
+          format: int64
+        timezone_offset:
+          example: 10
+          description: The number of minutes that the reported event <code>time</code> is ahead or behind UTC, in the range -1,080 to +1,080.
+          type: integer
+          format: int64
+        status:
+          example: string
+          description: The event status, normalized to the caption of the status_id value. In the case of 'Other', it is defined by the event source.
+          type: string
+        count:
+          example: 10
+          description: The number of times that events in the same logical group occurred during the event <strong>Start Time</strong> to <strong>End Time</strong> period.
+          type: integer
+          format: int64
+        severity:
+          example: string
+          description: The event severity, normalized to the caption of the severity_id value. In the case of 'Other', it is defined by the event source.
+          type: string
+        cis_csc:
+          example:
+          - anything: anything
+          description: The CIS Critical Security Controls is a list of top 20 actions and practices an organization’s security team can take on such that cyber attacks or malware, are minimized and prevented.
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsCisCsc'
+        status_detail:
+          example: string
+          description: The status details contains additional information about the event outcome.
+          type: string
+        end_time_dt:
+          example: string
+          description: The end time of a time period, or the time of the most recent event included in the aggregate event.
+          type: string
+        device:
+          $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsDevice'
+        status_code:
+          example: string
+          description: The event status code, as reported by the event source.<br /><br />For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g. 0x18.
+          type: string
+        attacks:
+          example:
+          - anything: anything
+          description: The attack object describes the technique and associated tactics as defined by <a target='_blank' href='https://attack.mitre.org/wiki/ATT&CK_Matrix'>ATT&CK Matrix<sup>TM</sup></a>.
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsAttacks'
+        activities:
+          $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsActivities'
+        disposition_id:
+          example: 10
+          description: When security issues, such as malware or policy violations, are detected and possibly corrected, then <code>disposition_id</code> describes one ore more successful actions taken by the security product
+          type: integer
+          format: int64
+        finding:
+          $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsFinding'
+        raw_data:
+          example: string
+          description: The event data as received from the event source.
+          type: string
+        confidence:
+          example: string
+          description: The confidence, normalized to the caption of the confidence_id value. In the case of 'Other', it is defined by the event source.
+          type: string
+        activity_id:
+          example: 10
+          description: The normalized identifier of the activity that triggered the event.
+          type: integer
+          format: int64
+        resources:
+          example:
+          - anything: anything
+          description: Describes details about resources that were affected by the activity/event.
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsResources'
+        type_name:
+          example: string
+          description: The event type name, as defined by the type_uid.
+          type: string
+        confidence_id:
+          example: 10
+          description: The normalized confidence refers to the accuracy of the rule that created the finding. A rule with a low confidence means that the finding scope is wide and may create finding reports that may not be malicious in nature.
+          type: integer
+          format: int64
+        impact:
+          example: string
+          description: The impact , normalized to the caption of the impact_id value. In the case of 'Other', it is defined by the event source.
+          type: string
+        metadata:
+          $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsMetadata'
+        compliance:
+          $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsCompliance'
+        message:
+          example: string
+          description: The description of the event, as defined by the event source.
+          type: string
+        vulnerabilities:
+          example:
+          - anything: anything
+          description: This object describes vulnerabilities reported in a security finding.
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsVulnerabilities'
+        malware:
+          example:
+          - anything: anything
+          description: The list of malware identified by a finding.
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsMalware'
+        actor:
+          $ref: '#/components/schemas/EnvelopedQueryOcsfBundleDataEventsActor'
+        state_id:
+          example: 10
+          description: The normalized state identifier of a security finding.
+          type: integer
+          format: int64
+        risk_level_id:
+          example: 10
+          description: The normalized risk level id.
+          type: integer
+          format: int64
+      additionalProperties: false
+      required:
+      - severity_id
+      - category_uid
+      - type_uid
+      - time
+      - class_uid
+      - disposition_id
+      - finding
+      - activity_id
+      - metadata
+      - state_id
+    EnvelopedQueryOcsfBundleDataEventsEnrichments:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    Response8148706:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        issuer:
+          type: string
+        id:
+          type: string
+        acknowledged_at:
+          type: string
+          format: date-time
+      additionalProperties: false
+      required:
+      - id
+  securitySchemes:
+    iroh:
+      type: apiKey
+      in: header
+      name: authorization
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            telemetry: collect application data for analytics
+            integration: Manage your modules
+            private-intel: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile: Get your profile information
+            inspect: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users: Manage users of your organisation
+            investigation: Perform threat analysis investigation
+            invite: Invite users into your organization
+            casebook: Access and modify your casebooks
+            orbital: Orbital Integration.
+            enrich: Query your configured modules for threat intelligence
+            oauth: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao: AO Integration.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

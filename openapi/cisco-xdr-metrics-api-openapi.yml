@@ -1,0 +1,68 @@
+openapi: 3.2.0
+info:
+  title: CTIA Metrics API
+  version: 4178275a824512c2fd3a2acdb0e8277233919054 v2.71.0
+  license:
+    name: All Rights Reserved
+    url: ''
+  contact:
+    name: 'Cisco Security Business Group -- Advanced Threat '
+    url: http://github.com/threatgrid/ctia
+    email: cisco-intel-api-support@cisco.com
+  description: "A Threat Intelligence API service\n\n  This API provides a mechanism for making Judgements on the Disposition\n  of Observables, which are then distilled into a final Verdict.  A\n  Disposition is a statement regarding the malicious, or otherwise,\n  nature of an Observable.\n\n  The Judgements can be grouped into Indicators, which can be associated\n  with Campaigns, Actors and TTPs.  Feedback can be given on specific\n  Judgements, indicating agreement or disagreement, or clarification.\n\n  When an Observable with a malicious Verdict is seen, it can be recorded as\n  a Sighting, and the Relations that Observable had with other Observables can\n  be recorded as well.\n\n  We support a pre-defined set of Observable Types.  Each Observable Type has a\n  specific form of natural identifier, its ID, which is almost always\n  the default way it is represented when observed in the wild.\n\n  * Ipv4/IPv6  -- 192.168.1.1\n  * Domain/Hostname -- foo.com, www.bar.com\n  * SHA256  -- the sha256 checksum of a file, or other data blob\n  * MD5 -- the md5 checksum of a file, or other data blob\n  * SHA1 -- the sha1 checksum of a file, or other data blob\n  * URL -- A minimal form of the URL\n\n  The Verdict is derived from all of the Judgements on that Observable which\n  have not yet expired.  The highest priority Judgement becomes the\n  active verdict.  If there is more than one Judgement with that\n  priority, than Clean disposition has priority over all others, then\n  Malicious disposition, and so on down to Unknown.\n\n  <a href='/doc/README.md'>CTIA Documentation</a>"
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR (CTIA)
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://private.intel.amp.cisco.com/index.html
+  - type: raw
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: /
+security:
+- JWT: []
+- oauth2:
+  - private-intel
+  - private-intel:read
+  - private-intel:write
+  - casebook
+  - casebook:read
+  - casebook:write
+tags:
+- name: Metrics
+paths:
+  /ctia/metrics:
+    get:
+      tags:
+      - Metrics
+      summary: Display Metrics
+      description: Requires capability developer.
+      responses:
+        default:
+          description: ''
+components:
+  securitySchemes:
+    JWT:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            private-intel: Private Intelligence Full Access
+            private-intel:read: Private Intelligence Read Access
+            private-intel:write: Private Intelligence Write Access
+            casebook: Casebook Full Access
+            casebook:read: Casebook Read Access
+            casebook:write: Casebook Write Access
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

@@ -1,0 +1,496 @@
+openapi: 3.2.0
+info:
+  title: IROH Int Web service Module Instance API
+  version: 1.0.107
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: IROH INT API
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/index.html
+  - type: raw
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+servers:
+- url: https://visibility.amp.cisco.com/
+security:
+- iroh: []
+- AuthorizationHeader: []
+- oauth2:
+  - telemetry
+  - integration
+  - private-intel
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - registry
+  - users
+  - investigation
+  - invite
+  - casebook
+  - orbital
+  - enrich
+  - oauth
+  - vault
+  - response
+  - notification
+  - global-intel:read
+  - webhook
+  - ao
+tags:
+- name: ModuleInstance
+  description: ModuleInstance Routes
+paths:
+  /iroh/iroh-int/module-instance/{id}:
+    get:
+      x-no-doc: false
+      tags:
+      - ModuleInstance
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-instance:read`
+
+
+        '
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Get a `ModuleInstance`
+    patch:
+      x-no-doc: false
+      tags:
+      - ModuleInstance
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-instance:write`
+
+
+        '
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Update a `ModuleInstance`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchModuleInstanceParams'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/PatchModuleInstanceParams'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/PatchModuleInstanceParams'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/PatchModuleInstanceParams'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/PatchModuleInstanceParams'
+        required: true
+    delete:
+      x-no-doc: false
+      tags:
+      - ModuleInstance
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-instance:write`
+
+
+        '
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Delete a `ModuleInstance`
+      responses:
+        default:
+          description: ''
+  /iroh/iroh-int/module-instance:
+    get:
+      x-no-doc: false
+      tags:
+      - ModuleInstance
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleInstanceResponse'
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-instance:read`
+
+
+        '
+      parameters:
+      - in: query
+        name: module_type_id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: enabled
+        description: ''
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: sort_by
+        description: Sort results on a field
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      summary: List `ModuleInstance`s
+    post:
+      x-no-doc: false
+      tags:
+      - ModuleInstance
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/ModuleInstanceResponse'
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-instance:write`
+
+
+        '
+      summary: Create a `ModuleInstance`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewModuleInstanceParams'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewModuleInstanceParams'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewModuleInstanceParams'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewModuleInstanceParams'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewModuleInstanceParams'
+        required: true
+components:
+  schemas:
+    PartialModuleInstanceSettings:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+        - $ref: '#/components/schemas/PartialModuleInstanceSettings'
+    ModuleInstanceExternalReference:
+      type: object
+      properties:
+        label:
+          type: string
+        link:
+          type: string
+        external_id:
+          type: string
+        class:
+          description: Class to distinguish external references
+          type: string
+      additionalProperties: false
+      required:
+      - label
+    NewModuleInstanceParams:
+      type: object
+      properties:
+        name:
+          type: string
+        module_type_id:
+          type: string
+        visibility:
+          type: string
+          enum:
+          - global
+          - org
+          - user
+        parent_id:
+          type: string
+        settings:
+          $ref: '#/components/schemas/ModuleInstanceSettings'
+        external_references:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleInstanceExternalReference'
+        enabled:
+          type: boolean
+      additionalProperties: false
+      required:
+      - name
+      - module_type_id
+      - visibility
+    PatchModuleInstanceParams:
+      type: object
+      properties:
+        name:
+          type: string
+        module_type_id:
+          type: string
+        parent_id:
+          type:
+          - string
+          - 'null'
+        external_references:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModuleInstanceExternalReference'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        settings:
+          $ref: '#/components/schemas/PartialModuleInstanceSettings'
+      additionalProperties: false
+    ModuleInstanceSettings:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+        - $ref: '#/components/schemas/ModuleInstanceSettings'
+    ModuleInstanceResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        module_type_id:
+          type: string
+        org_id:
+          type: string
+        settings:
+          $ref: '#/components/schemas/ModuleInstanceSettings'
+        external_references:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleInstanceExternalReference'
+        updated_at:
+          type: string
+          format: date-time
+        parent_id:
+          type: string
+        id:
+          type: string
+        user_id:
+          type: string
+        client_id:
+          type: string
+        enabled:
+          type: boolean
+        visibility:
+          type: string
+          enum:
+          - global
+          - org
+          - user
+        created_at:
+          type: string
+          format: date-time
+      additionalProperties: false
+      required:
+      - name
+      - module_type_id
+      - org_id
+      - id
+      - user_id
+      - enabled
+      - visibility
+      - created_at
+  securitySchemes:
+    iroh:
+      type: apiKey
+      in: header
+      name: authorization
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            telemetry: collect application data for analytics
+            integration: Manage your modules
+            private-intel: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile: Get your profile information
+            inspect: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users: Manage users of your organisation
+            investigation: Perform threat analysis investigation
+            invite: Invite users into your organization
+            casebook: Access and modify your casebooks
+            orbital: Orbital Integration.
+            enrich: Query your configured modules for threat intelligence
+            oauth: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao: AO Integration.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

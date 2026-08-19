@@ -1,0 +1,185 @@
+generated: '2026-08-19'
+method: derived
+source: openapi/ (CTIA entity specs, iroh-int, iroh-webhook, Conure v2)
+note: >-
+  The Cisco XDR data model is CTIM — the Cisco Threat Intel Model, versioned independently of the
+  API and exposed at runtime as the x-ctim-version response header (1.3.30 on 2026-08-19). CTIM is
+  STIX-informed: the entity names are the STIX vocabulary, but the relationships are Cisco's own and
+  are expressed through one reified Relationship entity rather than typed edges, which is why almost
+  every association below is many-to-many through Relationship rather than a foreign key.
+identity:
+  id_format: 'transit://<host>/<entity>/<entity>-<uuid> style CTIA long ids; every entity is also addressable by external_id'
+  external_id: 'Every CTIA entity accepts an external_id on create and is retrievable at /ctia/<entity>/external_id/{external_id} — the closest thing to a dedupe key the API offers.'
+entities:
+- name: Incident
+  domain: response
+  base: /ctia/incident
+  detail: >-
+    The centre of gravity. Also served, differently, by Conure v2 (/v2/incident) which is the
+    high-priority incident search surface with its own document shape.
+  operations: [create, read, update, patch, delete, search, count, link, status, metrics]
+- name: Casebook
+  domain: investigation
+  base: /ctia/casebook
+  operations: [create, read, update, patch, delete, search, add-observables, add-texts, add-bundle]
+- name: Indicator
+  domain: intelligence
+  base: /ctia/indicator
+- name: Judgement
+  domain: intelligence
+  base: /ctia/judgement
+  detail: A verdict (disposition) attached to a specific observable at a point in time.
+- name: Sighting
+  domain: intelligence
+  base: /ctia/sighting
+  detail: An observation of an observable in the customer's own environment.
+- name: Feed
+  domain: intelligence
+  base: /ctia/feed
+  detail: Publishable view over judgements/indicators; /ctia/feed/{id}/view and view.txt render it.
+- name: Actor
+  domain: intelligence
+  base: /ctia/actor
+- name: Campaign
+  domain: intelligence
+  base: /ctia/campaign
+- name: AttackPattern
+  domain: intelligence
+  base: /ctia/attack-pattern
+  detail: Carries kill_chain_phases; MITRE ATT&CK is filterable via kill_chain_phases.kill_chain_name.
+- name: Malware
+  domain: intelligence
+  base: /ctia/malware
+- name: Tool
+  domain: intelligence
+  base: /ctia/tool
+- name: COA
+  domain: response
+  base: /ctia/coa
+  detail: Course of Action.
+- name: Vulnerability
+  domain: intelligence
+  base: /ctia/vulnerability
+- name: TargetRecord
+  domain: intelligence
+  base: /ctia/target-record
+- name: Asset
+  domain: assets
+  base: /ctia/asset
+- name: AssetMapping
+  domain: assets
+  base: /ctia/asset-mapping
+  detail: Binds an Asset to an observable.
+- name: AssetProperties
+  domain: assets
+  base: /ctia/asset-properties
+- name: Relationship
+  domain: graph
+  base: /ctia/relationship
+  detail: The reified edge. Every entity-to-entity association in CTIM is a Relationship record.
+- name: Bundle
+  domain: transport
+  base: /ctia/bundle
+  detail: Import/export envelope carrying many entities at once.
+- name: Note
+  domain: investigation
+  base: /ctia/note
+  detail: Free-text annotation; how incident worklog entries are written.
+- name: Event
+  domain: events
+  base: /iroh/iroh-event/event
+  detail: Signed lifecycle event; see asyncapi/cisco-xdr-webhooks.yml.
+- name: Webhook
+  domain: events
+  base: /iroh/iroh-webhook/webhook
+- name: WebhookResult
+  domain: events
+  base: /iroh/iroh-webhook/webhook-result
+- name: ModuleType
+  domain: integrations
+  base: /iroh/iroh-int/module-type
+  detail: An available integration (Umbrella, Secure Endpoint, VirusTotal, ...).
+- name: ModuleInstance
+  domain: integrations
+  base: /iroh/iroh-int/module-instance
+  detail: A configured instance of a ModuleType in this tenant. Required to trigger any response action.
+- name: Workflow
+  domain: automation
+  base: /v1/workflows
+- name: WorkflowInstance
+  domain: automation
+  base: /v1/instances
+relationships:
+- from: Relationship
+  to: any CTIM entity
+  kind: belongs_to
+  via: source_ref / target_ref
+  note: The generic edge; all typed associations below are realised through it.
+- from: Judgement
+  to: Observable
+  kind: belongs_to
+  via: observable
+- from: Sighting
+  to: Observable
+  kind: belongs_to
+  via: observable
+- from: Incident
+  to: Sighting
+  kind: has_many
+  via: 'GET /ctia/{observable_type}/{observable_value}/sightings/incidents'
+- from: Indicator
+  to: Judgement
+  kind: has_many
+  via: 'GET /ctia/{observable_type}/{observable_value}/judgements/indicators'
+- from: Indicator
+  to: Sighting
+  kind: has_many
+  via: 'GET /ctia/{observable_type}/{observable_value}/sightings/indicators'
+- from: Casebook
+  to: Observable
+  kind: has_many
+  via: 'POST /ctia/casebook/{id}/observables'
+- from: Casebook
+  to: Bundle
+  kind: has_one
+  via: 'POST /ctia/casebook/{id}/bundle'
+- from: Incident
+  to: Note
+  kind: has_many
+  via: Note entity (worklog)
+- from: Incident
+  to: Asset
+  kind: has_many
+  via: 'GET /v1/incident/{incident-id}/assets (Conure v2)'
+- from: Incident
+  to: Event
+  kind: has_many
+  via: 'GET /iroh/iroh-event/event/incident/{incident-id}'
+- from: AssetMapping
+  to: Asset
+  kind: belongs_to
+  via: asset_ref
+- from: ModuleInstance
+  to: ModuleType
+  kind: belongs_to
+  via: module_type_id
+- from: WorkflowInstance
+  to: Workflow
+  kind: belongs_to
+  via: workflow_id
+- from: Webhook
+  to: ModuleInstance
+  kind: belongs_to
+  via: integration_id
+- from: WebhookResult
+  to: Webhook
+  kind: belongs_to
+  via: webhook id
+- from: Feed
+  to: Judgement
+  kind: has_many
+  via: feed view
+counts:
+  entities: 26
+  schema_definitions: 1176
+  ctim_version_observed: 1.3.30

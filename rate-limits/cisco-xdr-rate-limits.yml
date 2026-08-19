@@ -1,0 +1,52 @@
+generated: '2026-08-19'
+method: searched
+source: https://developer.cisco.com/docs/cisco-xdr/rate-limits/
+note: >-
+  Cisco XDR publishes a dedicated rate-limits page and — unusually — names the response headers, so
+  an agent can compute a backoff at runtime instead of guessing. None of the 52 harvested specs
+  declare these headers, so the docs page is the only machine-usable source.
+limit_count: 5
+limits:
+- scope: per-organization (all API Clients in one org share the quota)
+  window: rolling 60 minutes
+  limit: 8000
+  unit: requests
+  applies_to: all Cisco XDR APIs (default)
+- scope: per-organization
+  window: rolling 60 minutes
+  limit: 8000
+  unit: calls
+  applies_to: all Automation APIs except Workflow Run
+- scope: per-organization
+  window: 1 minute
+  limit: 10
+  unit: calls
+  applies_to: Workflow Run API (/v1.1/workflows/start and /v1.1/ui/workflows/start)
+- scope: per-organization
+  window: 1 minute / 1 day
+  limit: 10 per minute and 5000 per day
+  unit: events
+  applies_to: Event-based Automation Rules (Email, Webhook, Incident, Task)
+- scope: per-organization
+  window: 1 day
+  limit: 10000
+  unit: runs
+  applies_to: Schedule-based Automation Rules
+response:
+  status_on_exhaustion: 429
+  headers:
+  - name: X-Ratelimit-Org-Limit
+    meaning: the organization's ceiling for the window (e.g. 8000)
+  - name: X-Ratelimit-Org-Remaining
+    meaning: calls left in the window (0 at exhaustion)
+  - name: Retry-After
+    meaning: seconds to wait before retrying; documented example value "3172s"
+  body: '{"message": "Too many requests"} on Conure; IROH returns the NormalizedError envelope'
+observed:
+  probed: '2026-08-19'
+  request: POST https://visibility.amp.cisco.com/iroh/iroh-inspect/inspect (unauthenticated)
+  http_status: 401
+  rate_limit_headers_present: false
+  note: >-
+    No X-Ratelimit-* header is returned on an unauthenticated 401, so the counters could not be
+    observed anonymously. The documented headers are recorded on the provider's word.

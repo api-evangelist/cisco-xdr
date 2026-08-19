@@ -1,0 +1,1883 @@
+openapi: 3.2.0
+info:
+  title: CTIA Campaign API
+  version: 4178275a824512c2fd3a2acdb0e8277233919054 v2.71.0
+  license:
+    name: All Rights Reserved
+    url: ''
+  contact:
+    name: 'Cisco Security Business Group -- Advanced Threat '
+    url: http://github.com/threatgrid/ctia
+    email: cisco-intel-api-support@cisco.com
+  description: "A Threat Intelligence API service\n\n  This API provides a mechanism for making Judgements on the Disposition\n  of Observables, which are then distilled into a final Verdict.  A\n  Disposition is a statement regarding the malicious, or otherwise,\n  nature of an Observable.\n\n  The Judgements can be grouped into Indicators, which can be associated\n  with Campaigns, Actors and TTPs.  Feedback can be given on specific\n  Judgements, indicating agreement or disagreement, or clarification.\n\n  When an Observable with a malicious Verdict is seen, it can be recorded as\n  a Sighting, and the Relations that Observable had with other Observables can\n  be recorded as well.\n\n  We support a pre-defined set of Observable Types.  Each Observable Type has a\n  specific form of natural identifier, its ID, which is almost always\n  the default way it is represented when observed in the wild.\n\n  * Ipv4/IPv6  -- 192.168.1.1\n  * Domain/Hostname -- foo.com, www.bar.com\n  * SHA256  -- the sha256 checksum of a file, or other data blob\n  * MD5 -- the md5 checksum of a file, or other data blob\n  * SHA1 -- the sha1 checksum of a file, or other data blob\n  * URL -- A minimal form of the URL\n\n  The Verdict is derived from all of the Judgements on that Observable which\n  have not yet expired.  The highest priority Judgement becomes the\n  active verdict.  If there is more than one Judgement with that\n  priority, than Clean disposition has priority over all others, then\n  Malicious disposition, and so on down to Unknown.\n\n  <a href='/doc/README.md'>CTIA Documentation</a>"
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR (CTIA)
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://private.intel.amp.cisco.com/index.html
+  - type: raw
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: /
+security:
+- JWT: []
+- oauth2:
+  - private-intel
+  - private-intel:read
+  - private-intel:write
+  - casebook
+  - casebook:read
+  - casebook:write
+tags:
+- name: Campaign
+  description: Campaign operations
+paths:
+  /ctia/campaign:
+    post:
+      tags:
+      - Campaign
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+      parameters:
+      - in: query
+        name: wait_for
+        description: wait for entity to be available for search
+        required: false
+        schema:
+          type: boolean
+      summary: Adds a new Campaign
+      description: Requires capability create-campaign.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCampaign'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewCampaign'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewCampaign'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewCampaign'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewCampaign'
+        description: a new Campaign
+        required: true
+  /ctia/campaign/{id}:
+    put:
+      tags:
+      - Campaign
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+      parameters:
+      - in: query
+        name: wait_for
+        description: wait for updated entity to be available for search
+        required: false
+        schema:
+          type: boolean
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Update an existing Campaign
+      description: Requires capability create-campaign.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCampaign'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewCampaign'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewCampaign'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewCampaign'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewCampaign'
+        description: an updated Campaign
+        required: true
+    get:
+      tags:
+      - Campaign
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartialCampaign'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/PartialCampaign'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/PartialCampaign'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/PartialCampaign'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/PartialCampaign'
+      summary: Get one Campaign by ID
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - valid_time.start_time
+            - schema_version
+            - revision
+            - campaign_type
+            - source
+            - valid_time.end_time
+            - title
+            - source_uri
+            - status
+            - language
+            - id
+            - tlp
+            - timestamp
+            - confidence
+            - activity.date_time
+      description: Requires capability read-campaign.
+    delete:
+      tags:
+      - Campaign
+      responses:
+        '204':
+          description: ''
+      x-no-doc: false
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: wait_for
+        description: wait for deleted entity to no more be available for search
+        required: false
+        schema:
+          type: boolean
+      summary: Delete one Campaign
+      description: Requires capability delete-campaign.
+  /ctia/campaign/external_id/{external_id}:
+    get:
+      tags:
+      - Campaign
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCampaign'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCampaign'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCampaign'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCampaign'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCampaign'
+      parameters:
+      - in: query
+        name: sort_by
+        description: Sort results on a field
+        required: false
+        schema:
+          type: string
+          enum:
+          - schema_version
+          - revision
+          - source
+          - title
+          - source_uri
+          - language
+          - id
+          - tlp
+          - timestamp
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - valid_time.start_time
+            - schema_version
+            - revision
+            - campaign_type
+            - source
+            - valid_time.end_time
+            - title
+            - source_uri
+            - status
+            - language
+            - id
+            - tlp
+            - timestamp
+            - confidence
+            - activity.date_time
+      - in: path
+        name: external_id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: List Campaign by external id
+      description: Requires capability read-campaign.
+  /ctia/campaign/search:
+    get:
+      tags:
+      - Campaign
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCampaign'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCampaign'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCampaign'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCampaign'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialCampaign'
+      summary: Search for Campaign entities using a ES query syntax and field filters
+      description: Requires capability search-campaign.
+      parameters:
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: activity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: sort_by
+        description: 'Sort result on fields.
+
+
+          The following fields are supported: activity.date_time, campaign_type, confidence, id, language, revision, schema_version, source, source_uri, status, timestamp, title, tlp, valid_time.end_time, valid_time.start_time
+
+
+          Fields can be combined with '','' and sort order can be specified by '':asc'' and '':desc''. For example:
+
+
+          -  activity.date_time       # sort by activity.date_time ascending
+
+          -  activity.date_time:desc  # sort by activity.date_time descending
+
+          -  activity.date_time,campaign_type:desc  # sort by activity.date_time ascending, then campaign_type descending'
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: campaign_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - valid_time.start_time
+            - schema_version
+            - revision
+            - campaign_type
+            - source
+            - valid_time.end_time
+            - title
+            - source_uri
+            - status
+            - language
+            - id
+            - tlp
+            - timestamp
+            - confidence
+            - activity.date_time
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: search_fields
+        description: '''fields'' key of Elasticsearch Fulltext Query.'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - id
+            - short_description
+            - title
+            - source
+            - description
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+    delete:
+      tags:
+      - Campaign
+      description: Requires capabilities delete-campaign, search-campaign.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+            application/x-yaml:
+              schema:
+                type: integer
+                format: int64
+            application/edn:
+              schema:
+                type: integer
+                format: int64
+            application/transit+json:
+              schema:
+                type: integer
+                format: int64
+            application/transit+msgpack:
+              schema:
+                type: integer
+                format: int64
+      summary: Delete Campaign entities matching given Lucene/ES query string or/and field filters
+      parameters:
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: activity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: campaign_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: REALLY_DELETE_ALL_THESE_ENTITIES
+        description: ' If you do not set this value or set it to false this route will perform a dry run. Set this value to true to perform the deletion. You MUST confirm you will fix the mess after the inevitable disaster that will occur after you perform that operation. DO NOT FORGET TO SET THAT TO FALSE AFTER EACH DELETION IF YOU INTEND TO USE THAT ROUTE MULTIPLE TIMES.'
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: wait_for
+        description: wait for matched entity to be deleted
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/campaign/search/count:
+    get:
+      tags:
+      - Campaign
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+            application/x-yaml:
+              schema:
+                type: integer
+                format: int64
+            application/edn:
+              schema:
+                type: integer
+                format: int64
+            application/transit+json:
+              schema:
+                type: integer
+                format: int64
+            application/transit+msgpack:
+              schema:
+                type: integer
+                format: int64
+      summary: Count Campaign matching a Lucene/ES query string and field filters
+      description: Requires capability search-campaign.
+      parameters:
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: activity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: campaign_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/campaign/metric/histogram:
+    get:
+      tags:
+      - Campaign
+      description: Requires capability search-campaign.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Histogram for some Campaign field
+      parameters:
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: activity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: campaign_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: granularity
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+      - in: query
+        name: from
+        description: Start date of the histogram. Filters the value of selected aggregated-on field.
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - timestamp
+          - valid_time.start_time
+          - valid_time.end_time
+      - in: query
+        name: agg-key
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: timezone
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - -05:00
+          - +02:00
+          - +01:00
+          - -09:00
+          - -01:00
+          - +03:00
+          - +08:00
+          - +04:00
+          - +00:00
+          - '+11:00'
+          - '-10:00'
+          - +05:00
+          - -03:00
+          - -04:00
+          - -02:00
+          - -07:00
+          - '-11:00'
+          - -06:00
+          - '+10:00'
+          - +09:00
+          - +07:00
+          - -08:00
+          - +06:00
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: End date of the histogram. Filters the value of selected aggregated-on field.
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/campaign/metric/topn:
+    get:
+      tags:
+      - Campaign
+      description: Requires capability search-campaign.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Topn for some Campaign field
+      parameters:
+      - in: query
+        name: sort_order
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: activity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: campaign_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: from
+        description: ''
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - confidence
+          - campaign_type
+          - status
+          - source
+      - in: query
+        name: agg-key
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/campaign/metric/cardinality:
+    get:
+      tags:
+      - Campaign
+      description: Requires capability search-campaign.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Cardinality for some Campaign field
+      parameters:
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: activity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: campaign_type
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - confidence
+          - campaign_type
+          - status
+          - source
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+components:
+  schemas:
+    PartialCampaign:
+      example:
+        description: string
+        valid_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        schema_version: 1.3.30
+        revision: 10
+        type: campaign
+        campaign_type: string
+        source: string
+        external_ids:
+        - string
+        short_description: string
+        title: string
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        activity:
+        - date_time: '2016-01-01T01:01:01.000Z'
+          description: string
+        source_uri: string
+        intended_effect:
+        - Account Takeover
+        status: Future
+        language: string
+        id: string
+        tlp: green
+        timestamp: '2016-01-01T01:01:01.000Z'
+        confidence: High
+        names:
+        - string
+      description: Represents a campaign by an [actor](actor.md) pursing an intent.
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: campaign
+          type: string
+          enum:
+          - campaign
+        created:
+          type: string
+          format: date-time
+        campaign_type:
+          example: string
+          description: 'String value that describes the type of campaign. For example, a campaign type could be ''Ransomware'', ''Advanced Persistent Threat'', ''Business Email Compromise'', ''Phishing'', etc. '
+          type: string
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        activity:
+          example:
+          - date_time: '2016-01-01T01:01:01.000Z'
+            description: string
+          description: 'Used to capture specific activities or tactics associated with the campaign.
+
+            The ''activity'' field is an array of objects, and each element represents a specific activity and time associated with the campaign. Examples of activities may include malicious software delivery, command and control communication, network reconnaissance, data exfiltration, etc. By capturing these activities analysts can identify the specific tactics used by the threat actor(s) behind the campaign.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Activity'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        intended_effect:
+          example:
+          - Account Takeover
+          description: Characterizes the intended effect of this cyber threat campaign.
+          type: array
+          items:
+            type: string
+        status:
+          example: Future
+          description: "Indicates current Status of the Campaign. \n\nCan have one of the following values: \n\n- Ongoing: Indicates that the campaign is currently active and ongoing. For   example, a mass phishing campaign that is actively targeting users is   considered 'ongoing'.\n\n- Historic: Campaign has already occurred and is now in the past.\n\n- Future: This indicates that a campaign is planned or expected to occur in the   future. For example, a threat actor may announce their intention to launch a   specific cyberattack campaign at a future date."
+          type: string
+          enum:
+          - Historic
+          - Future
+          - Ongoing
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        client_id:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: Level of confidence held in the characterization of this Campaign.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        owner:
+          type: string
+        names:
+          example:
+          - string
+          description: Used to capture alternate names or aliases associated with the campaign. A cyberattack campaign may have multiple names or aliases depending on the group or actor(s) behind the attack, e.g., 'Wannacry' is also known as 'WannaCrypt', 'WCry', 'Wanna Decryptor', etc.
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+    NewCampaign:
+      description: a new Campaign
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: campaign
+          type: string
+          enum:
+          - campaign
+        created:
+          type: string
+          format: date-time
+        campaign_type:
+          example: string
+          description: 'String value that describes the type of campaign. For example, a campaign type could be ''Ransomware'', ''Advanced Persistent Threat'', ''Business Email Compromise'', ''Phishing'', etc. '
+          type: string
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        activity:
+          example:
+          - date_time: '2016-01-01T01:01:01.000Z'
+            description: string
+          description: 'Used to capture specific activities or tactics associated with the campaign.
+
+            The ''activity'' field is an array of objects, and each element represents a specific activity and time associated with the campaign. Examples of activities may include malicious software delivery, command and control communication, network reconnaissance, data exfiltration, etc. By capturing these activities analysts can identify the specific tactics used by the threat actor(s) behind the campaign.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Activity'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        intended_effect:
+          example:
+          - Account Takeover
+          description: Characterizes the intended effect of this cyber threat campaign.
+          type: array
+          items:
+            type: string
+        status:
+          example: Future
+          description: "Indicates current Status of the Campaign. \n\nCan have one of the following values: \n\n- Ongoing: Indicates that the campaign is currently active and ongoing. For   example, a mass phishing campaign that is actively targeting users is   considered 'ongoing'.\n\n- Historic: Campaign has already occurred and is now in the past.\n\n- Future: This indicates that a campaign is planned or expected to occur in the   future. For example, a threat actor may announce their intention to launch a   specific cyberattack campaign at a future date."
+          type: string
+          enum:
+          - Historic
+          - Future
+          - Ongoing
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        client_id:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: Level of confidence held in the characterization of this Campaign.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        owner:
+          type: string
+        names:
+          example:
+          - string
+          description: Used to capture alternate names or aliases associated with the campaign. A cyberattack campaign may have multiple names or aliases depending on the group or actor(s) behind the attack, e.g., 'Wannacry' is also known as 'WannaCrypt', 'WCry', 'Wanna Decryptor', etc.
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+      required:
+      - description
+      - campaign_type
+      - short_description
+      - title
+    ValidTime:
+      example:
+        start_time: '2016-01-01T01:01:01.000Z'
+        end_time: '2016-01-01T01:01:01.000Z'
+      description: Period of time when a cyber observation is valid.
+      type: object
+      properties:
+        start_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If not present, the valid time position of the indicator does not have an upper bound.
+          type: string
+          format: date-time
+        end_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
+          type: string
+          format: date-time
+      additionalProperties: false
+    MetricResultData:
+      type: object
+      additionalProperties: {}
+    Activity:
+      example:
+        date_time: '2016-01-01T01:01:01.000Z'
+        description: string
+      description: Captures the specific activities or tactics associated with the entity. Examples of activities may include malicious software delivery, command and control communication, network reconnaissance, data exfiltration, etc.
+      type: object
+      properties:
+        date_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Specifies the date and time at which the activity occured.
+          type: string
+          format: date-time
+        description:
+          example: string
+          description: A description of the activity.
+          type: string
+      additionalProperties: false
+      required:
+      - date_time
+      - description
+    MetricResult:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MetricResultData'
+        type:
+          type: string
+          enum:
+          - histogram
+          - topn
+          - avg
+          - cardinality
+        filters:
+          $ref: '#/components/schemas/MetricResultFilters'
+      additionalProperties: false
+      required:
+      - data
+      - type
+      - filters
+    ExternalReference:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
+      type: object
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: false
+      required:
+      - source_name
+    Campaign:
+      example:
+        description: string
+        valid_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        schema_version: 1.3.30
+        revision: 10
+        type: campaign
+        campaign_type: string
+        source: string
+        external_ids:
+        - string
+        short_description: string
+        title: string
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        activity:
+        - date_time: '2016-01-01T01:01:01.000Z'
+          description: string
+        source_uri: string
+        intended_effect:
+        - Account Takeover
+        status: Future
+        language: string
+        id: string
+        tlp: green
+        timestamp: '2016-01-01T01:01:01.000Z'
+        confidence: High
+        names:
+        - string
+      description: Represents a campaign by an [actor](actor.md) pursing an intent.
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        type:
+          example: campaign
+          type: string
+          enum:
+          - campaign
+        campaign_type:
+          example: string
+          description: 'String value that describes the type of campaign. For example, a campaign type could be ''Ransomware'', ''Advanced Persistent Threat'', ''Business Email Compromise'', ''Phishing'', etc. '
+          type: string
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        activity:
+          example:
+          - date_time: '2016-01-01T01:01:01.000Z'
+            description: string
+          description: 'Used to capture specific activities or tactics associated with the campaign.
+
+            The ''activity'' field is an array of objects, and each element represents a specific activity and time associated with the campaign. Examples of activities may include malicious software delivery, command and control communication, network reconnaissance, data exfiltration, etc. By capturing these activities analysts can identify the specific tactics used by the threat actor(s) behind the campaign.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Activity'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        intended_effect:
+          example:
+          - Account Takeover
+          description: Characterizes the intended effect of this cyber threat campaign.
+          type: array
+          items:
+            type: string
+        status:
+          example: Future
+          description: "Indicates current Status of the Campaign. \n\nCan have one of the following values: \n\n- Ongoing: Indicates that the campaign is currently active and ongoing. For   example, a mass phishing campaign that is actively targeting users is   considered 'ongoing'.\n\n- Historic: Campaign has already occurred and is now in the past.\n\n- Future: This indicates that a campaign is planned or expected to occur in the   future. For example, a threat actor may announce their intention to launch a   specific cyberattack campaign at a future date."
+          type: string
+          enum:
+          - Historic
+          - Future
+          - Ongoing
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: Level of confidence held in the characterization of this Campaign.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        names:
+          example:
+          - string
+          description: Used to capture alternate names or aliases associated with the campaign. A cyberattack campaign may have multiple names or aliases depending on the group or actor(s) behind the attack, e.g., 'Wannacry' is also known as 'WannaCrypt', 'WCry', 'Wanna Decryptor', etc.
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
+  securitySchemes:
+    JWT:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            private-intel: Private Intelligence Full Access
+            private-intel:read: Private Intelligence Read Access
+            private-intel:write: Private Intelligence Write Access
+            casebook: Casebook Full Access
+            casebook:read: Casebook Read Access
+            casebook:write: Casebook Write Access
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

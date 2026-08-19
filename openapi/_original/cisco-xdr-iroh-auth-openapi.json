@@ -1,0 +1,687 @@
+{
+  "schemes": [
+    "https"
+  ],
+  "tags": [
+    {
+      "name": "Login",
+      "description": "Login related routes"
+    },
+    {
+      "name": "Session Cookie",
+      "description": "Cookie-based session validation"
+    }
+  ],
+  "securityDefinitions": {
+    "iroh": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "authorization"
+    },
+    "AuthorizationHeader": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "authorization",
+      "description": "Ex: Bearer \\<token\\>"
+    },
+    "oauth2": {
+      "type": "oauth2",
+      "scopes": {
+        "telemetry": "collect application data for analytics",
+        "integration": "Manage your modules",
+        "private-intel": "Access Private Intelligence",
+        "admin": "Provide admin privileges",
+        "cognitive": "Cognitive Integration",
+        "profile": "Get your profile information",
+        "inspect": "Extract Observables and data from text",
+        "asset": "Access and modify your assets",
+        "event": "Read IROH Events",
+        "feedback": "Submit Customer Feedback",
+        "sse": "SSE Integration. Manage your Devices.",
+        "registry": "Manage registry entries",
+        "users": "Manage users of your organisation",
+        "investigation": "Perform threat analysis investigation",
+        "invite": "Invite users into your organization",
+        "casebook": "Access and modify your casebooks",
+        "orbital": "Orbital Integration.",
+        "enrich": "Query your configured modules for threat intelligence",
+        "oauth": "Manage OAuth2 Clients",
+        "vault": "Grants access to Module Vaults",
+        "response": "List and execute response actions using configured modules",
+        "notification": "Receive notifications from integrations",
+        "global-intel:read": "Access AMP Global Intelligence",
+        "webhook": "Manage your Webhooks",
+        "ao": "AO Integration."
+      },
+      "authorizationUrl": "https://visibility.amp.cisco.com/iroh/oauth2/authorize",
+      "tokenUrl": "https://visibility.amp.cisco.com/iroh/oauth2/token",
+      "flow": "accessCode"
+    }
+  },
+  "definitions": {
+    "CodeBody": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "The code from the query parameter of the URL the user is redirected to after a successful login",
+          "type": "string"
+        },
+        "access-token-lifetime-in-sec": {
+          "description": "You can optionally reduce the lifetime of access tokens returned. This parameter will set the lifetime to your preferred choice but you will not be allowed to make the lifetime longer than the configured value. If you try to put a longer lifetime, it will silently returns the token with the configured lifetime.",
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "code"
+      ]
+    },
+    "SessionStatusResponse": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "user-id": {
+          "type": "string"
+        },
+        "org-id": {
+          "type": "string"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "needs-renewal": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "valid",
+        "user-id",
+        "org-id",
+        "scopes",
+        "needs-renewal"
+      ]
+    },
+    "SessionTokenExchangeResponse": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string"
+        },
+        "expires_in": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "token_type": {
+          "type": "string",
+          "enum": [
+            "bearer"
+          ]
+        },
+        "scope": {
+          "type": "string"
+        },
+        "needs_renewal": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "access_token",
+        "expires_in",
+        "token_type"
+      ]
+    },
+    "TokenResponse": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string"
+        },
+        "refresh_token": {
+          "type": "string"
+        },
+        "token_type": {
+          "type": "string",
+          "enum": [
+            "bearer"
+          ]
+        },
+        "expires_in": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "additionalProperties": {},
+      "required": [
+        "access_token",
+        "token_type"
+      ]
+    }
+  },
+  "security": [
+    {
+      "iroh": []
+    },
+    {
+      "AuthorizationHeader": []
+    },
+    {
+      "oauth2": [
+        "telemetry",
+        "integration",
+        "private-intel",
+        "admin",
+        "cognitive",
+        "profile",
+        "inspect",
+        "asset",
+        "event",
+        "feedback",
+        "sse",
+        "registry",
+        "users",
+        "investigation",
+        "invite",
+        "casebook",
+        "orbital",
+        "enrich",
+        "oauth",
+        "vault",
+        "response",
+        "notification",
+        "global-intel:read",
+        "webhook",
+        "ao"
+      ]
+    }
+  ],
+  "produces": [
+    "application/json",
+    "application/x-yaml",
+    "application/edn",
+    "application/transit+json",
+    "application/transit+msgpack"
+  ],
+  "paths": {
+    "/iroh/iroh-auth/login": {
+      "get": {
+        "x-no-doc": false,
+        "summary": "Show the login page",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "redirect_after_login",
+            "description": "The URI to be redirected after login",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "origin",
+            "description": "The URI to be redirected after login (redirect_after_login has precedence)",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "selected_idps",
+            "description": "The ordered list of idp_ids",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "reset_session",
+            "description": "If true delete the session token from the localStorage",
+            "required": false,
+            "type": "boolean",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "use_session_cookie_auth",
+            "description": "When true, use session cookie auth instead of iroh-code",
+            "required": false,
+            "type": "boolean",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "tab_id",
+            "description": "Tab identifier for session binding. tab-id is optional at session creation time but mandatory for validation if a hash was stored.",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/iroh/iroh-auth/login/{idp}/answer": {
+      "get": {
+        "x-no-doc": false,
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idp",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "error",
+            "description": "",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "error_description",
+            "description": "",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "expires_in",
+            "description": "",
+            "required": false,
+            "type": "integer",
+            "format": "int64",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "code",
+            "description": "",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "state",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LOGIN"
+        ],
+        "summary": "Answer from the user",
+        "x-cors-credentials?": true,
+        "description": "*Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/iroh/iroh-auth/login/{idp}": {
+      "get": {
+        "x-no-doc": false,
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idp",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "show_tenant_selector",
+            "description": "Force redirect to the Registration UI page.",
+            "required": false,
+            "type": "boolean",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "tab_id",
+            "description": "Tab identifier for session binding. tab-id is optional at session creation time but mandatory for validation if a hash was stored.",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "create_org",
+            "description": "Registration UI enables the creation of Orgs",
+            "required": false,
+            "type": "boolean",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "user_id",
+            "description": "",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "org_id",
+            "description": "",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "invite_id",
+            "description": "",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "origin",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "use_session_cookie_auth",
+            "description": "When true, use session cookie auth instead of iroh-code",
+            "required": false,
+            "type": "boolean",
+            "allowEmptyValue": true
+          }
+        ],
+        "tags": [
+          "LOGIN"
+        ],
+        "summary": "Login redirect",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/iroh/iroh-auth/logout": {
+      "get": {
+        "x-no-doc": false,
+        "summary": "Log out of IROH-Auth, redirect to /login with the same parameters. Useful if you want to enforce user IdP selection.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "redirect_after_login",
+            "description": "The URI to be redirected after login",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "origin",
+            "description": "The URI to be redirected after login (redirect_after_login has precedence)",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          },
+          {
+            "in": "query",
+            "name": "selected_idps",
+            "description": "The ordered list of idp_ids",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "allowEmptyValue": true
+          }
+        ],
+        "x-cors-credentials?": true,
+        "description": "*Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/iroh/iroh-auth/invite/confirm": {
+      "get": {
+        "x-no-doc": false,
+        "tags": [
+          "INVITE"
+        ],
+        "summary": "Accept invitation",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "code",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/iroh/iroh-auth/invite/prompt/{invite-id}": {
+      "get": {
+        "x-no-doc": false,
+        "tags": [
+          "INVITE"
+        ],
+        "summary": "Prompt a User that has been invited",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "invite-id",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/iroh/iroh-auth/logins": {
+      "get": {
+        "x-no-doc": false,
+        "tags": [
+          "LOGIN"
+        ],
+        "summary": "Login redirect",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/iroh/iroh-auth/code": {
+      "post": {
+        "x-no-doc": false,
+        "tags": [
+          "LOGIN"
+        ],
+        "summary": "Retrieve Access and Refresh Tokens from a `code`",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "CodeBody",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CodeBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TokenResponse"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/iroh/iroh-auth/handle-org-access-request": {
+      "get": {
+        "x-no-doc": false,
+        "summary": "Given a code, proceed with the org access request approval process.",
+        "description": "The role is embedded in the encrypted code. The query param is accepted as a legacy fallback for in-flight links.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "code",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "role",
+            "description": "",
+            "required": false,
+            "type": "string",
+            "allowEmptyValue": true
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/iroh/iroh-auth/session/validate": {
+      "get": {
+        "x-no-doc": false,
+        "tags": [
+          "Session Cookie"
+        ],
+        "summary": "Validate the current session",
+        "description": "Validates the iroh-session cookie and X-Tab-Id header. \nReturns session info if valid. \nRotates the session-id when the rotation interval is exceeded.\n\n**Links**:\n  - [Data Model](/iroh/doc/iroh-auth/#data-model)\n\n*Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*",
+        "x-cors-credentials?": true,
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/SessionStatusResponse"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/iroh/iroh-auth/session/exchange": {
+      "post": {
+        "x-no-doc": false,
+        "tags": [
+          "Session Cookie"
+        ],
+        "summary": "Exchange session cookie for a short-lived JWT access token",
+        "description": "Validates the iroh-session cookie and returns a fresh \nJWT access token for use in Authorization headers. \nThe JWT is short-lived (see expires_in in the response). \nNo refresh token is issued \u2014 the session cookie IS the \nrefresh mechanism.\n\n**Links**:\n  - [Data Model](/iroh/doc/iroh-auth/#data-model)\n\n*Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*",
+        "x-cors-credentials?": true,
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/SessionTokenExchangeResponse"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/iroh/iroh-auth/session/logout": {
+      "post": {
+        "x-no-doc": false,
+        "tags": [
+          "Session Cookie"
+        ],
+        "summary": "Invalidate the current session",
+        "description": "Invalidates the server-side session and clears the cookie.\n\n*Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*",
+        "x-cors-credentials?": true,
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "consumes": [
+    "application/json",
+    "application/x-yaml",
+    "application/edn",
+    "application/transit+json",
+    "application/transit+msgpack"
+  ],
+  "host": "visibility.amp.cisco.com",
+  "info": {
+    "title": "IROH-Auth",
+    "version": "1.0.107",
+    "license": {
+      "name": "All Rights Reserved",
+      "url": "https://www.cisco.com"
+    },
+    "contact": {
+      "name": "Cisco Security Business Group -- Advanced Threat",
+      "email": "cisco-intel-api-support@cisco.com"
+    },
+    "description": "API Handling Logins",
+    "x-provenance": {
+      "method": "harvested",
+      "authored_by": "Cisco XDR",
+      "harvested_by": "API Evangelist",
+      "harvested_on": "2026-08-19",
+      "first_party": true,
+      "note": "Published by Cisco. Retrieved unmodified except for this x-provenance block.",
+      "provider_published": true
+    },
+    "x-evidence": [
+      {
+        "type": "source",
+        "url": "https://visibility.amp.cisco.com/iroh/iroh-auth/index.html"
+      },
+      {
+        "type": "raw",
+        "url": "https://visibility.amp.cisco.com/iroh/iroh-auth/swagger.json"
+      }
+    ]
+  },
+  "swagger": "2.0",
+  "basePath": "/"
+}

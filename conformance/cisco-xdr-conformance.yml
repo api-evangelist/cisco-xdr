@@ -1,0 +1,79 @@
+generated: '2026-08-19'
+method: derived
+source: openapi/ + well-known/cisco-xdr-oauth-authorization-server.json + well-known/cisco-xdr-openid-configuration.json
+standards:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    securityDefinitions declare oauth2 across all four families; RFC 8414 authorization-server
+    metadata served at visibility.amp.cisco.com/.well-known/oauth-authorization-server (HTTP 200).
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: '/.well-known/oauth-authorization-server returns 200 with issuer, authorization_endpoint, token_endpoint, jwks_uri, scopes_supported (32), grant_types_supported (4).'
+- id: rfc7636-pkce
+  conforms: true
+  evidence: 'code_challenge_methods_supported: [S256, plain]'
+- id: rfc8628-device-authorization-grant
+  conforms: true
+  evidence: 'device_authorization_endpoint published; grant_types_supported includes urn:ietf:params:oauth:grant-type:device_code.'
+- id: rfc8693-token-exchange
+  conforms: true
+  evidence: 'grant_types_supported includes urn:ietf:params:oauth:grant-type:token-exchange.'
+- id: oidc-discovery
+  conforms: partial
+  evidence: >-
+    /.well-known/openid-configuration returns 200 with issuer "IROH Auth", authorization_endpoint,
+    token_endpoint, jwks_uri, subject_types_supported [pairwise], id_token_signing_alg_values_supported
+    [RS256]. It omits userinfo_endpoint and response_modes_supported, and the issuer value is a name
+    rather than the required https URL, so it is OIDC-shaped rather than OIDC-conformant.
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: 'PGP-signed security.txt served at www.cisco.com/.well-known/security.txt with Contact, Policy, Encryption, CSAF and Expires.'
+- id: csaf
+  conforms: true
+  evidence: 'security.txt advertises a CSAF provider-metadata.json at www.cisco.com/.well-known/csaf/provider-metadata.json.'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'No application/problem+json in 581 operations; three separate vendor error envelopes instead. See errors/cisco-xdr-problem-types.yml.'
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: 'No Sunset or Deprecation header declared; no deprecation policy page (404).'
+- id: idempotency
+  conforms: false
+  evidence: 'No Idempotency-Key header anywhere, including on the response-action trigger. See conventions/cisco-xdr-conventions.yml.'
+- id: rate-limit-headers
+  conforms: partial
+  evidence: >-
+    Vendor headers X-Ratelimit-Org-Limit / X-Ratelimit-Org-Remaining plus a standard Retry-After are
+    documented at developer.cisco.com/docs/cisco-xdr/rate-limits/, but they are not the IETF
+    RateLimit-* draft names and are not declared in any spec.
+- id: openapi-3
+  conforms: partial
+  evidence: 'Only the Automation API is OpenAPI 3.0.1. The IROH, CTIA and Conure families publish Swagger 2.0.'
+- id: json-api
+  conforms: false
+  evidence: 'No JSON:API media type or envelope.'
+- id: fhir-r4
+  conforms: false
+- id: scim2
+  conforms: false
+- id: odata
+  conforms: false
+- id: stix-taxii
+  conforms: partial
+  evidence: >-
+    CTIA models the STIX vocabulary as first-class entities — Actor, Attack Pattern, Campaign, COA,
+    Indicator, Judgement, Malware, Relationship, Sighting, Tool, Incident — but serves them over a
+    Cisco-specific REST/GraphQL contract, not TAXII. Cisco's own CTIM (Cisco Threat Intel Model,
+    x-ctim-version 1.3.30) is the schema, STIX-informed rather than STIX-conformant.
+- id: ocsf
+  conforms: partial
+  evidence: >-
+    The Enrich Query API states its results are returned in OCSF format
+    ("Results are returned in OCSF format", cisco-xdr-query-api-openapi.yml).
+- id: mitre-attack
+  conforms: true
+  evidence: 'CTIA indicator search filters on kill_chain_phases.kill_chain_name; the MCP indicator tool documents MITRE search.'
+compliance_program:
+  published: true
+  detail: See security/cisco-xdr-trust-center.yml.

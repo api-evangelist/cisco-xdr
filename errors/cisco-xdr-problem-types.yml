@@ -1,0 +1,102 @@
+generated: '2026-08-19'
+method: derived
+source: openapi/ (52 harvested Cisco XDR specs) + provider docs
+format: vendor-json
+note: >-
+  Cisco XDR does NOT use RFC 9457 problem+json. It ships three different, mutually incompatible
+  error envelopes across the four API families — an agent that learns one will mis-parse the other
+  two. All three are plain application/json.
+envelopes:
+- id: iroh-normalized-error
+  used_by: IROH platform services (auth, enrich, inspect, response, int, event, feedback, webhook)
+  media_type: application/json
+  shape:
+    error: short machine token, e.g. invalid_request
+    error_description: human sentence
+    error_code: optional vendor code
+    error_uri: optional link
+    trace_id: correlation id echoed for support
+  schema_ref: openapi/_original/cisco-xdr-iroh-enrich-openapi.json#/definitions/NormalizedError-401
+  example:
+    error: invalid_request
+    error_description: No JWT found in HTTP Authorization header
+- id: conure-message
+  used_by: Conure v2 incidents and investigations API
+  media_type: application/json
+  shape:
+    message: fixed enum string per status
+    exception: optional exception class name (500 only)
+    data: optional detail payload (500 only)
+  schema_ref: openapi/cisco-xdr-incidents-investigations-openapi.json
+- id: iroh-module-error
+  used_by: Enrich / Response aggregate responses, per integration module
+  media_type: application/json
+  shape:
+    module_instance_id: which configured module failed
+    module_type_id: which integration type
+    module_instance_state: state at failure
+    code: vendor error code
+    message: human message
+    type: 'one of: fatal | warning | error'
+  schema_ref: openapi/_original/cisco-xdr-iroh-enrich-openapi.json#/definitions/ErrorMessage
+  note: >-
+    Partial failure is normal here — a 200 from observe/deliberate/refer can carry per-module errors
+    in the envelope while other modules succeeded. Agents MUST read the errors array on a 200.
+problems:
+- status: 400
+  title: Bad request
+  envelope: conure-message
+  count: 243
+- status: 401
+  title: Unauthorized
+  envelope: iroh-normalized-error
+  count: 132
+  remediation: Token expired (expires_in is typically 600s) or missing Bearer header. Re-run client-credentials against the IROH token endpoint.
+- status: 403
+  title: Forbidden
+  envelope: conure-message
+  count: 245
+  remediation: The API client was created without the scope the operation requires. See scopes/cisco-xdr-scopes.yml for the per-operation scope map.
+- status: 404
+  title: Not found
+  envelope: conure-message
+  count: 237
+- status: 405
+  title: Method not allowed
+  envelope: conure-message
+  count: 99
+- status: 406
+  title: Not acceptable
+  envelope: conure-message
+  count: 99
+  remediation: CTIA and Conure negotiate application/json, application/x-yaml, application/edn, application/transit+json and application/transit+msgpack. Send an Accept the service supports.
+- status: 409
+  title: Conflict
+  count: 25
+- status: 412
+  title: Precondition failed
+  count: 21
+- status: 422
+  title: Unprocessable entity
+  count: 4
+- status: 423
+  title: Locked
+  count: 11
+- status: 429
+  title: Too many requests
+  envelope: conure-message
+  count: 99
+  remediation: Back off and retry. No Retry-After or RateLimit-* header is declared in any harvested spec.
+- status: 500
+  title: Server error
+  envelope: iroh-normalized-error
+  count: 253
+  remediation: IROH 500s carry a trace_id — quote it to cisco-intel-api-support@cisco.com.
+- status: default
+  title: Unspecified status
+  envelope: conure-message
+  count: 118
+gaps:
+- No RFC 9457 application/problem+json anywhere in 581 operations.
+- No stable machine-readable error code registry is published; error_code is declared as a free string and never enumerated.
+- 429 carries no Retry-After and no RateLimit-* headers, so a client cannot compute a backoff from the response.

@@ -1,0 +1,35 @@
+generated: '2026-08-19'
+method: searched
+source: https://developer.cisco.com/docs/cisco-xdr/ + https://github.com/CiscoDevNet/xdr-mcp-community/blob/main/AGENTS.md
+sandbox_published: false
+test_credentials: none
+note: >-
+  Cisco XDR publishes no API sandbox, no test mode, and no fixture data. There is no test-vs-live
+  key prefix, no simulated observable, and no way to exercise a response action (block, isolate,
+  quarantine) without a licensed tenant and a real configured integration module. An API Client is
+  created inside a production XDR tenant under Administration > API Clients, and everything it does
+  is real. Combined with the absence of any idempotency key (see conventions/), that makes the
+  response-trigger surface the sharpest edge in this API: an agent's retry is a second real-world
+  containment action.
+leads:
+- name: Cisco DevNet Sandbox
+  url: https://devnetsandbox.cisco.com/DevNet
+  verified: false
+  http_status: 200
+  detail: >-
+    The provider's own AGENTS.md says "Visit https://devnetsandbox.cisco.com/DevNet to book a
+    related sandbox for testing." The catalog page is JS-rendered and no Cisco XDR sandbox
+    reservation could be confirmed anonymously, so this is recorded as an unverified lead, not as a
+    published sandbox.
+- name: Interactive API reference
+  url: https://developer.cisco.com/docs/cisco-xdr/
+  verified: true
+  http_status: 200
+  detail: >-
+    DevNet renders a try-it API console over the Cisco XDR specs, but it executes against the live
+    tenant with live credentials. It is a console, not a sandbox.
+evidence:
+- url: https://developer.cisco.com/docs/cisco-xdr/sandbox/
+  status: 404
+- url: https://devnetsandbox.cisco.com/DevNet
+  status: 200

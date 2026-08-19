@@ -1,0 +1,444 @@
+openapi: 3.2.0
+info:
+  title: IROH-INT Enrich Health API
+  version: 1.0.107
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: 'IROH Integrations: configure and query Threat Response modules'
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-enrich/index.html
+  - type: raw
+    url: https://visibility.amp.cisco.com/iroh/iroh-enrich/swagger.json
+servers:
+- url: https://visibility.amp.cisco.com/
+security:
+- iroh: []
+- AuthorizationHeader: []
+- oauth2:
+  - telemetry
+  - integration
+  - private-intel
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - registry
+  - users
+  - investigation
+  - invite
+  - casebook
+  - orbital
+  - enrich
+  - oauth
+  - vault
+  - response
+  - notification
+  - global-intel:read
+  - webhook
+  - ao
+tags:
+- name: Health
+  description: This set of routes allow to check the health of your integrations setup Verify if your modules are setup correctly and if your credentials are correct.
+paths:
+  /iroh/iroh-enrich/health:
+    post:
+      x-no-doc: false
+      tags:
+      - Health
+      summary: Health check all the modules
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/health:read`
+
+
+        Run a health check for all your configured modules'
+      responses:
+        '200':
+          description: A list of Health Status for each module
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopedHealth'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/EnvelopedHealth'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/EnvelopedHealth'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/EnvelopedHealth'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/EnvelopedHealth'
+        '401':
+          description: A `NormalizedError` including a `trace_id`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+        '500':
+          description: A `NormalizedError` including a `trace_id`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+  /iroh/iroh-enrich/health/{module_instance_id}:
+    post:
+      x-no-doc: false
+      tags:
+      - Health
+      summary: Health check one module
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/health:read`
+
+
+        Run a health check for a specific module'
+      parameters:
+      - in: path
+        name: module_instance_id
+        description: A `ModuleInstance` ID
+        required: true
+        example: 0407c063-cd4f-4f3a-a808-bf2ef8dc800f
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of Health Status for each module
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopedSingleHealth'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/EnvelopedSingleHealth'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/EnvelopedSingleHealth'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/EnvelopedSingleHealth'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/EnvelopedSingleHealth'
+        '401':
+          description: A `NormalizedError` including a `trace_id`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-401'
+        '500':
+          description: A `NormalizedError` including a `trace_id`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/NormalizedError-500'
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        module:
+          type: string
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        data:
+          $ref: '#/components/schemas/ModuleHealthStatus'
+      additionalProperties: false
+      required:
+      - module
+      - module_instance_id
+      - module_type_id
+      - data
+    EnvelopedHealthDataDataQuotasKeyword8148663:
+      type: object
+      properties:
+        description:
+          type: string
+        values:
+          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663Values'
+      additionalProperties: false
+      required:
+      - description
+      - values
+    EnvelopedHealthDataDataQuotasKeyword8148663Values:
+      type: object
+      properties:
+        bucket_unit:
+          type: string
+          enum:
+          - day
+          - hour
+          - week
+          - month
+          - minute
+        bucket_limit:
+          type: number
+          format: double
+        current_bucket_consumption:
+          type: number
+          format: double
+        current_bucket_start_time:
+          type: string
+          format: date-time
+        current_bucket_end_time:
+          type: string
+          format: date-time
+        current_bucket_limit_reached:
+          type: boolean
+        current_bucket_limit_reached_at:
+          type: string
+          format: date-time
+      additionalProperties: false
+    ModuleHealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - unknown
+          - ok
+          - error
+        quotas:
+          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotas'
+      additionalProperties: false
+      required:
+      - status
+    EnvelopedHealth:
+      example:
+        data:
+        - module: Talos Intelligence
+          module_instance_id: 03ce55b5-225d-48ae-9654-c120654de377
+          module_type_id: 2460c99b-2f01-523b-a65d-30a3c6603245
+          data:
+            status: ok
+        - module: Private Intelligence
+          module_instance_id: 0e0a3818-0ed0-403f-943a-aca1ad05b99c
+          module_type_id: 2c8b4134-c521-5be5-aaf8-af06e5e27cbb
+          data:
+            status: ok
+        - module: SecureX Global Threat Intelligence
+          module_instance_id: 60852826-5ba1-4e8e-b2d7-f827186c100b
+          module_type_id: 87563e81-ddc5-5f61-b4f8-dbe71252c922
+          data:
+            status: ok
+        - module: Sample Rate Limit Module
+          module_instance_id: 8ed82c5a-c0c0-447b-8f69-3e45eb404d79
+          module_type_id: 544e6371-9f0c-573e-a31c-d44f7ae65c92
+          data:
+            status: ok
+            quotas:
+              event_triggers:
+                description: No rate-limit mode in effect
+                values:
+                  bucket_unit: minute
+                  bucket_limit: 600
+                  current_bucket_consumption: 0
+                  current_bucket_start_time: '2023-02-09T18:07:00.135Z'
+                  current_bucket_end_time: '2023-02-09T18:08:00.135Z'
+        errors: []
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/HealthStatus'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+      additionalProperties: false
+    NormalizedError-500:
+      example:
+        error: unknown server error
+        error_description: An unknown error has occurred during the enrichment
+        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_code:
+          type: string
+        error_uri:
+          type: string
+        trace_id:
+          type: string
+        schema.core.AnythingSchema@3c6f0b88: {}
+      additionalProperties: {}
+    NormalizedError-401:
+      example:
+        error: invalid_request
+        error_description: No JWT found in HTTP Authorization header
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_code:
+          type: string
+        error_uri:
+          type: string
+        trace_id:
+          type: string
+        schema.core.AnythingSchema@3c6f0b88: {}
+      additionalProperties: {}
+    ErrorMessage:
+      type: object
+      properties:
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - fatal
+          - warning
+          - error
+        module:
+          type: string
+      additionalProperties: false
+      required:
+      - module_instance_id
+      - module_type_id
+      - code
+      - message
+      - type
+    EnvelopedHealthDataDataQuotas:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663'
+    EnvelopedSingleHealth:
+      example:
+        data:
+          module: SecureX Global Threat Intelligence
+          module_instance_id: 60852826-5ba1-4e8e-b2d7-f827186c100b
+          module_type_id: 87563e81-ddc5-5f61-b4f8-dbe71252c922
+          data:
+            status: ok
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/HealthStatus'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+      additionalProperties: false
+  securitySchemes:
+    iroh:
+      type: apiKey
+      in: header
+      name: authorization
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            telemetry: collect application data for analytics
+            integration: Manage your modules
+            private-intel: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile: Get your profile information
+            inspect: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users: Manage users of your organisation
+            investigation: Perform threat analysis investigation
+            invite: Invite users into your organization
+            casebook: Access and modify your casebooks
+            orbital: Orbital Integration.
+            enrich: Query your configured modules for threat intelligence
+            oauth: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao: AO Integration.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

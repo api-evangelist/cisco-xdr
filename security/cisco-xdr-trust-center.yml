@@ -1,0 +1,44 @@
+generated: '2026-08-19'
+method: searched
+source: https://trustportal.cisco.com/c/r/ctp/home.html
+trust_center:
+  url: https://trustportal.cisco.com/
+  name: Cisco Trust Portal
+  public: true
+  detail: >-
+    Self-service portal serving Cisco's public security, trust, data-protection and privacy
+    compliance documents per product, including ISO and SOC certifications, privacy data sheets,
+    GDPR mappings and penetration-test summaries. Documents are bundled into per-product "Trust
+    Packages"; Cisco XDR is one of the searchable products.
+  related:
+  - https://www.cisco.com/c/en/us/about/trust-center.html
+  - https://www.cisco.com/c/en/us/about/trust-center/data-privacy.html
+certifications:
+- name: ISO 27001
+  verified: page-text
+  source: https://trustportal.cisco.com/c/r/ctp/home.html
+- name: FedRAMP
+  verified: page-text
+  source: https://trustportal.cisco.com/c/r/ctp/home.html
+- name: GDPR
+  verified: page-text
+  source: https://trustportal.cisco.com/c/r/ctp/home.html
+- name: SOC 2
+  verified: portal-catalog
+  source: https://www.cisco.com/c/en/us/about/trust-center/trust-portal/getting-started.html
+  note: Named by Cisco's Trust Portal guide as part of every Trust Package; not read off an XDR-specific document.
+- name: BSI C5
+  verified: false
+  source: https://www.cisco.com/c/en/us/products/collateral/security/xdr/bsi-c5-attestation-aag.html
+  http_status: 403
+  note: >-
+    Cisco publishes an XDR-specific "Cisco XDR BSI C5 Attestation At a Glance". The collateral URL
+    returns 403 to an anonymous non-browser client, so the attestation itself was NOT read. Recorded
+    as a lead with its real status rather than asserted.
+evidence:
+- url: https://trustportal.cisco.com/c/r/ctp/home.html
+  status: 200
+- url: https://www.cisco.com/c/en/us/about/trust-center.html
+  status: 200
+- url: https://www.cisco.com/c/en/us/products/collateral/security/xdr/bsi-c5-attestation-aag.html
+  status: 403

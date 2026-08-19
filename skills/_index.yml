@@ -1,0 +1,26 @@
+generated: '2026-08-19'
+method: generated
+note: >-
+  Three packaged Agent Skills grounded in real Cisco XDR operations, plus the provider's own
+  AGENTS.md saved verbatim. Every path and scope named in these skills was read out of the harvested
+  specs in openapi/ — none is invented. The skills are split along the consequence boundary: read
+  and investigate are separate from contain, because Cisco XDR ships no idempotency key and no
+  sandbox, so a containment retry is a second real containment.
+skills:
+- file: cisco-xdr-investigate-observable.md
+  name: cisco-xdr-investigate-observable
+  method: generated
+  consequence: read-only
+- file: cisco-xdr-triage-incident.md
+  name: cisco-xdr-triage-incident
+  method: generated
+  consequence: reversible-write
+- file: cisco-xdr-respond-to-threat.md
+  name: cisco-xdr-respond-to-threat
+  method: generated
+  consequence: irreversible-side-effect
+- file: cisco-xdr-provider-agents.md
+  name: Cisco XDR MCP Server AGENTS.md
+  method: searched
+  source: https://github.com/CiscoDevNet/xdr-mcp-community/blob/main/AGENTS.md
+  note: Provider-published guidance for AI coding agents working on the MCP server repository. Saved verbatim.

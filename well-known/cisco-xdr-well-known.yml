@@ -1,0 +1,79 @@
+generated: '2026-08-19'
+method: probed
+source: live GET probes of /.well-known/* on every Cisco XDR API host
+note: >-
+  Cisco XDR's IROH platform host serves a real RFC 8414 OAuth authorization-server document and an
+  OIDC discovery document anonymously — both list the full 32-scope authorization surface. No
+  security.txt is served on the API hosts themselves; Cisco publishes one org-wide at
+  www.cisco.com/.well-known/security.txt (PGP-signed, PSIRT contact) and that is the document
+  captured here.
+hosts:
+- host: https://visibility.amp.cisco.com
+  role: IROH platform API (Cisco XDR Platform base URL, North America)
+- host: https://private.intel.amp.cisco.com
+  role: CTIA private intelligence API
+- host: https://conure.us.security.cisco.com
+  role: Conure v2 incidents and investigations API
+- host: https://developer.cisco.com
+  role: developer portal / API reference
+- host: https://www.cisco.com
+  role: corporate root
+documents:
+- host: https://visibility.amp.cisco.com
+  path: /.well-known/openid-configuration
+  status: 200
+  content_type: application/json;charset=utf-8
+  file: cisco-xdr-openid-configuration.json
+- host: https://visibility.amp.cisco.com
+  path: /.well-known/oauth-authorization-server
+  status: 200
+  content_type: application/json;charset=utf-8
+  file: cisco-xdr-oauth-authorization-server.json
+- host: https://visibility.amp.cisco.com
+  path: /.well-known/jwks
+  status: 200
+  content_type: application/json;charset=utf-8
+  note: RSA signing keys (RS256); not archived — rotates.
+- host: https://visibility.amp.cisco.com
+  path: /.well-known/jwks.json
+  status: 404
+- host: https://visibility.amp.cisco.com
+  path: /.well-known/oauth-protected-resource
+  status: 404
+- host: https://visibility.amp.cisco.com
+  path: /.well-known/security.txt
+  status: 404
+- host: https://visibility.amp.cisco.com
+  path: /.well-known/api-catalog
+  status: 404
+- host: https://visibility.amp.cisco.com
+  path: /.well-known/ai-plugin.json
+  status: 404
+- host: https://visibility.amp.cisco.com
+  path: /.well-known/agent-card.json
+  status: 404
+- host: https://visibility.amp.cisco.com
+  path: /.well-known/agent.json
+  status: 404
+- host: https://conure.us.security.cisco.com
+  path: /.well-known/security.txt
+  status: 404
+- host: https://conure.us.security.cisco.com
+  path: /.well-known/agent-card.json
+  status: 404
+- host: https://developer.cisco.com
+  path: /.well-known/security.txt
+  status: 404
+- host: https://developer.cisco.com
+  path: /.well-known/agent-card.json
+  status: 404
+- host: https://www.cisco.com
+  path: /.well-known/security.txt
+  status: 200
+  content_type: text/plain
+  file: cisco-xdr-security.txt
+  note: PGP-signed RFC 9116 document; Contact mailto:psirt@cisco.com, Policy at sec.cloudapps.cisco.com, CSAF provider metadata.
+summary:
+  probed: 15
+  hits: 4
+  agent_card: none

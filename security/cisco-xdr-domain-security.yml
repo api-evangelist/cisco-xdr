@@ -1,0 +1,33 @@
+generated: '2026-08-19'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: developer.cisco.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Feb 20 00:05:07 2027 GMT
+  hsts: true
+  hsts_max_age: 15552000
+- host: www.cisco.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov  9 01:46:22 2026 GMT
+  hsts: null
+- host: visibility.amp.cisco.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Mar  2 14:47:05 2027 GMT
+  hsts: null
+domains:
+- domain: cisco.com
+  dnssec: false
+  caa:
+  - 128 issuewild "ssl.com"
+  - 128 iodef "mailto:infosec@cisco.com"
+  - 0 issue "ssl.com"
+  - 0 issue "globalsign.com"
+  - 128 issuewild "digicert.com"
+  - 128 issuewild "identrust.com"
+  spf: true
+  dmarc: true
+  dmarc_policy: reject

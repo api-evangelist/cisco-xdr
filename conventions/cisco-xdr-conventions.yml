@@ -1,0 +1,108 @@
+generated: '2026-08-19'
+method: derived
+source: openapi/ (52 harvested specs) + https://developer.cisco.com/docs/cisco-xdr/ + well-known/cisco-xdr-oauth-authorization-server.json
+summary: >-
+  Cisco XDR is four API families behind one OAuth authorization server. The IROH platform, the CTIA
+  private-intelligence store, the Conure v2 incident search service and the Automation workflow
+  engine each have their own host, their own path style, their own pagination and their own error
+  envelope. The one thing they share is the token.
+authentication:
+  style: oauth2
+  grant: client_credentials
+  token_endpoint: https://visibility.amp.cisco.com/iroh/oauth2/token
+  client_auth: HTTP Basic (base64 client_id:client_password)
+  request_header: 'Authorization: Bearer <access_token>'
+  token_lifetime_seconds: 600
+  additional_grants: [authorization_code, 'urn:ietf:params:oauth:grant-type:device_code', 'urn:ietf:params:oauth:grant-type:token-exchange']
+  pkce: [S256, plain]
+  docs: https://developer.cisco.com/docs/cisco-xdr/authentication/
+  detail: authentication/cisco-xdr-authentication.yml
+  scopes: scopes/cisco-xdr-scopes.yml
+base_urls:
+  note: Different families use different hosts. Mixing them produces 404s — the provider says so in its own MCP INSTALL.md.
+  regions: [us, eu, apjc]
+  families:
+  - family: IROH platform
+    us: https://visibility.amp.cisco.com/iroh
+    eu: https://visibility.eu.amp.cisco.com/iroh
+    apjc: https://visibility.apjc.amp.cisco.com/iroh
+  - family: Private intelligence (CTIA)
+    us: https://private.intel.amp.cisco.com/ctia
+    eu: https://private.intel.eu.amp.cisco.com/ctia
+    apjc: https://private.intel.apjc.amp.cisco.com/ctia
+  - family: Automation
+    us: https://automate.us.security.cisco.com/api
+    eu: https://automate.eu.security.cisco.com/api
+    apjc: https://automate.apjc.security.cisco.com/api
+  - family: Conure v2 (incidents and investigations)
+    us: https://conure.us.security.cisco.com
+    eu: https://conure.eu.security.cisco.com
+    apjc: https://conure.apjc.security.cisco.com
+idempotency:
+  supported: false
+  header: null
+  detail: >-
+    No Idempotency-Key header, no idempotency section, and no request-id-based dedupe is declared in
+    any of the 581 harvested operations or anywhere in the Cisco XDR developer documentation.
+    Retrying a failed POST /ctia/incident or POST /iroh/iroh-response/respond/trigger is not safe:
+    the response-action trigger is a real-world side effect (block, isolate, quarantine) and the
+    contract gives an agent no way to make it exactly-once. This is a genuine absence, recorded so
+    an agent does not assume the common REST default.
+    Partial safety does exist elsewhere: CTIA entity writes accept an external_id and every entity
+    is addressable at /ctia/<entity>/external_id/{external_id}, which lets a caller check for a
+    prior create before retrying. That is a reconciliation pattern, not idempotency.
+pagination:
+  styles:
+  - style: offset-limit
+    used_by: CTIA, IROH, Automation
+    params: [limit, offset]
+  - style: search_after cursor
+    used_by: CTIA search endpoints
+    params: [search_after]
+    note: search_after appears on 157 operations — the highest-frequency query parameter in the whole surface.
+  - style: start/limit
+    used_by: Automation API instance and workflow listings
+    params: [start, limit]
+  response_headers:
+  - name: X-Total-Hits
+    meaning: total matching documents
+  - name: X-Next
+    meaning: link to the next page
+  - name: X-Sort
+    meaning: sort vector to feed back into search_after
+  sorting: [sort_by, sort_order]
+filtering:
+  full_text: [query, simple_query, search_fields]
+  time_window: [from, to, timezone]
+  faceting: [aggregate-on, agg-key, granularity]
+  field_selection: [fields]
+  consistency: 'wait_for=true makes a write visible to search before the response returns (101 operations)'
+content_negotiation:
+  default: application/json
+  also_supported: [application/x-yaml, application/edn, 'application/transit+json', 'application/transit+msgpack']
+  note: >-
+    CTIA and Conure genuinely serve EDN and Transit — a Clojure lineage showing through the HTTP
+    contract. 406 Not Acceptable is a real outcome, declared on 99 operations.
+versioning:
+  scheme: mixed
+  detail: >-
+    Not one scheme. CTIA versions in the document (info.version v2.71.0) and not in the path.
+    Conure versions in the path (/v1/, /v2/) and its info.version is a build id
+    (conure-218-1-ee422dee). Automation versions in the path with THREE live majors (/v1, /v1.1,
+    /v1.2) whose coverage differs — the provider's own MCP INSTALL.md lists "Automation API Path
+    Versioning" as known issue number one. IROH does not version its paths at all; the specs carry
+    a service build version (1.0.107).
+tracing:
+  request_id: null
+  correlation: trace_id returned in IROH error bodies (not a request header)
+  note: No request-id request header is documented; correlation is response-only and error-only.
+rate_limit_signaling: rate-limits/cisco-xdr-rate-limits.yml
+errors: errors/cisco-xdr-problem-types.yml
+lifecycle: lifecycle/cisco-xdr-lifecycle.yml
+operation_identity:
+  operation_ids_declared: 1
+  operation_ids_total_iroh_ctia_conure: 491
+  note: >-
+    Exactly one operation in the IROH + CTIA + Conure surface declares an operationId
+    (findObservables). The Automation API is the only family that names its operations. This is why
+    mcp/cisco-xdr-tool-crosswalk.yml binds by method+path for three of the four families.

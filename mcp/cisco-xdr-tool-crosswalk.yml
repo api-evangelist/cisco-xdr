@@ -1,0 +1,208 @@
+generated: '2026-08-19'
+method: derived
+source: mcp/cisco-xdr-mcp.yml + openapi/ (52 harvested Cisco XDR specs)
+note: >-
+  Binding is by HTTP method + path, not operationId, because Cisco XDR's Swagger 2.0 documents
+  publish almost no operationIds — exactly one operation in the entire IROH/CTIA surface
+  (findObservables on POST /iroh/iroh-inspect/inspect) carries one. The Automation API
+  (OpenAPI 3.0.1) is the exception and does declare operationIds, so those rows name them.
+  The MCP server is stdio-only and its live tools/list could not be introspected anonymously,
+  so tool names and descriptions come from the provider's own INSTALL.md tables and the REST
+  bindings come from the server's documented path map in that same file.
+surfaces:
+  openapi:
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-casebook-api-openapi.yml
+  - openapi/cisco-xdr-incident-api-openapi.yml
+  - openapi/cisco-xdr-indicator-api-openapi.yml
+  - openapi/cisco-xdr-judgement-api-openapi.yml
+  - openapi/cisco-xdr-feed-api-openapi.yml
+  - openapi/cisco-xdr-sighting-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+  - openapi/cisco-xdr-automation-openapi.json
+  graphql:
+    endpoint: https://private.intel.amp.cisco.com/ctia/graphql
+    note: CTIA exposes a GraphQL tag (POST /ctia/graphql). Introspection is auth-gated; SDL not harvested.
+  mcp:
+    url: null
+    transport: stdio
+    gated: true
+    note: No hosted endpoint. tools/list requires a locally built server plus tenant OAuth credentials.
+crosswalk:
+- tool: xdr_inspect
+  category: inspect
+  rest: ['POST /iroh/iroh-inspect/inspect (findObservables)']
+  binding: rest
+  confidence: high
+- tool: xdr_investigate
+  category: inspect
+  rest: ['POST /iroh/iroh-enrich/observe/observables', 'POST /iroh/iroh-enrich/deliberate/observables', 'POST /iroh/iroh-enrich/refer/observables']
+  binding: rest
+  confidence: high
+  note: Server-side composite — one tool call fans out to observe + deliberate + refer.
+- tool: xdr_inspect_and_investigate
+  category: inspect
+  rest: ['POST /iroh/iroh-inspect/inspect (findObservables)', 'POST /iroh/iroh-enrich/observe/observables', 'POST /iroh/iroh-enrich/deliberate/observables', 'POST /iroh/iroh-enrich/refer/observables']
+  binding: rest
+  confidence: high
+  note: Composite of xdr_inspect then xdr_investigate; no single REST operation does this.
+- tool: xdr_incidents_list
+  category: incidents
+  rest: ['GET /v2/incident/search']
+  binding: rest
+  confidence: high
+  note: Conure v2 host; INSTALL.md records the v2.1.0 switch away from the IROH incident path (which 404d).
+- tool: xdr_incident_get
+  category: incidents
+  rest: ['GET /ctia/incident/{id}', 'GET /v2/incident/{incident-id}']
+  binding: rest
+  confidence: medium
+  note: Two backing surfaces exist (CTIA and Conure v2); INSTALL.md says get/update/worklog use the IROH incident path.
+- tool: xdr_incident_update
+  category: incidents
+  rest: ['PATCH /ctia/incident/{id}']
+  binding: rest
+  confidence: medium
+- tool: xdr_incident_worklog
+  category: incidents
+  rest: ['GET /ctia/incident/{id}']
+  binding: rest
+  confidence: low
+  note: No standalone worklog operation is published in the harvested specs; likely a note/relationship read.
+- tool: xdr_incident_worklog_add
+  category: incidents
+  rest: ['POST /ctia/note']
+  binding: rest
+  confidence: low
+  note: CTIA Note API is the only published note-write surface; scope private-intel/note:write matches.
+- tool: xdr_incident_observables
+  category: incidents
+  rest: ['GET /v1/incident/{incident-id}/assets', 'GET /ctia/incident/{id}']
+  binding: rest
+  confidence: low
+- tool: xdr_response_get_actions
+  category: response
+  rest: ['POST /iroh/iroh-response/respond/observables']
+  binding: rest
+  confidence: high
+- tool: xdr_response_trigger
+  category: response
+  rest: ['POST /iroh/iroh-response/respond/trigger/{module-instance-id}/{action-id}']
+  binding: rest
+  confidence: high
+- tool: xdr_casebook_list
+  category: casebooks
+  rest: ['GET /ctia/casebook/search']
+  binding: rest
+  confidence: high
+- tool: xdr_casebook_get
+  category: casebooks
+  rest: ['GET /ctia/casebook/{id}']
+  binding: rest
+  confidence: high
+- tool: xdr_casebook_create
+  category: casebooks
+  rest: ['POST /ctia/casebook']
+  binding: rest
+  confidence: high
+- tool: xdr_casebook_add_observables
+  category: casebooks
+  rest: ['POST /ctia/casebook/{id}/observables']
+  binding: rest
+  confidence: high
+- tool: xdr_intel_indicators
+  category: threat-intel
+  rest: ['GET /ctia/indicator/search']
+  binding: rest
+  confidence: high
+- tool: xdr_intel_judgments
+  category: threat-intel
+  rest: ['GET /ctia/judgement/search', 'GET /ctia/{observable_type}/{observable_value}/judgements/indicators']
+  binding: rest
+  confidence: high
+- tool: xdr_intel_feeds
+  category: threat-intel
+  rest: ['GET /ctia/feed/search']
+  binding: rest
+  confidence: high
+- tool: xdr_intel_sightings
+  category: threat-intel
+  rest: ['GET /ctia/sighting/search', 'GET /ctia/{observable_type}/{observable_value}/sightings']
+  binding: rest
+  confidence: high
+- tool: xdr_workflow_list
+  category: automation
+  rest: [getAllWorkflowsQueryParamsV1]
+  binding: rest
+  confidence: high
+- tool: xdr_workflow_get
+  category: automation
+  rest: [getWorkflowById]
+  binding: rest
+  confidence: high
+- tool: xdr_workflow_start
+  category: automation
+  rest: [startWorkflowRequest, startWorkflowRequestV1Dot1]
+  binding: rest
+  confidence: high
+  note: INSTALL.md flags v1 vs v1.1 path drift as a known issue.
+- tool: xdr_workflow_instance_list
+  category: automation
+  rest: [listWorkflowInstancesV1, getAllWorkflowInstancesQueryParams]
+  binding: rest
+  confidence: high
+- tool: xdr_workflow_instance_get
+  category: automation
+  rest: [getWFInstanceById]
+  binding: rest
+  confidence: high
+- tool: xdr_workflow_instance_cancel
+  category: automation
+  rest: [CancelWFInstanceByID]
+  binding: rest
+  confidence: high
+- tool: xdr_integrations_list
+  category: admin
+  rest: ['GET /iroh/iroh-int/module-instance']
+  binding: rest
+  confidence: high
+- tool: xdr_profile_get
+  category: admin
+  rest: ['GET /iroh/iroh-int/module-instance']
+  binding: rest
+  confidence: low
+  note: >-
+    iroh-profile publishes no anonymously fetchable swagger.json (404 on every probed path), so the
+    profile read has no captured REST operation. Recorded low rather than dropped.
+mcp_only: []
+rest_only:
+- capability: CTIA threat-intelligence entity CRUD
+  note: >-
+    Actor, Attack Pattern, Campaign, COA, Malware, Tool, Target Record, Asset, Asset Mapping, Asset
+    Properties, Relationship, Bundle and Vulnerability all publish full CRUD + search + metric
+    operations in CTIA. The MCP server exposes none of them.
+- capability: Metrics and aggregation
+  note: 'Every CTIA entity ships /metric/histogram, /metric/topn, /metric/cardinality; no tool binds them.'
+- capability: Webhook management
+  note: 'iroh-webhook publishes 8 operations (create/list/get/patch/delete webhooks + webhook results); no tool binds them.'
+- capability: Module type administration
+  note: 'iroh-int ModuleType / ModuleTypePatch / One-click operations are REST-only.'
+- capability: Event stream
+  note: 'GET /iroh/iroh-event/event/incident/{incident-id} and the SSE event surface are REST-only.'
+- capability: Feedback
+  note: 'iroh-feedback create/read operations are REST-only.'
+- capability: Automation calendars, schedules, targets, variables
+  note: 'The Automation API publishes 90 paths; only 6 workflow/instance tools bind any of them.'
+coverage:
+  tools_named: 27
+  tools_bound: 27
+  tools_bound_high_confidence: 20
+  mcp_only: 0
+  rest_operations_total: 581
+  rest_operations_with_a_tool: 32
+  spec_files: 52

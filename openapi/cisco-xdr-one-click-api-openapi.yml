@@ -1,0 +1,278 @@
+openapi: 3.2.0
+info:
+  title: IROH Int Web service One Click API
+  version: 1.0.107
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: IROH INT API
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/index.html
+  - type: raw
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+servers:
+- url: https://visibility.amp.cisco.com/
+security:
+- iroh: []
+- AuthorizationHeader: []
+- oauth2:
+  - telemetry
+  - integration
+  - private-intel
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - registry
+  - users
+  - investigation
+  - invite
+  - casebook
+  - orbital
+  - enrich
+  - oauth
+  - vault
+  - response
+  - notification
+  - global-intel:read
+  - webhook
+  - ao
+tags:
+- name: One-click
+  description: One-click Routes
+paths:
+  /iroh/iroh-int/module-instance-wrapper:
+    post:
+      x-no-doc: false
+      tags:
+      - One-click
+      summary: Create a new one-click module instance
+      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-instance,vault/configs:read`
+
+
+        Create a new one-click module instance'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OneClickModuleWrapperResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/OneClickModuleWrapperResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/OneClickModuleWrapperResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/OneClickModuleWrapperResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/OneClickModuleWrapperResult'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OneClickModuleCreateParams'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/OneClickModuleCreateParams'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/OneClickModuleCreateParams'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/OneClickModuleCreateParams'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/OneClickModuleCreateParams'
+        required: true
+components:
+  schemas:
+    OneClickModuleWrapperResult:
+      type: object
+      properties:
+        created_new_module?:
+          type: boolean
+        updated_module_to_one_click?:
+          type: boolean
+        error:
+          type: string
+          enum:
+          - already_has_one_click
+          - multiple_module_instances
+          - one_click_update_not_supported
+          - unable_to_create_module
+          - one_click_not_supported_by_module
+        module_instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleInstance'
+      additionalProperties: false
+      required:
+      - created_new_module?
+    ModuleInstanceExternalReference:
+      type: object
+      properties:
+        label:
+          type: string
+        link:
+          type: string
+        external_id:
+          type: string
+        class:
+          description: Class to distinguish external references
+          type: string
+      additionalProperties: false
+      required:
+      - label
+    ModuleInstance:
+      type: object
+      properties:
+        name:
+          type: string
+        module_type_id:
+          type: string
+        org_id:
+          type: string
+        settings:
+          $ref: '#/components/schemas/ModuleInstanceSettings'
+        state:
+          type: string
+          enum:
+          - restricted
+          - active
+        external_references:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleInstanceExternalReference'
+        updated_at:
+          type: string
+          format: date-time
+        parent_id:
+          type: string
+        id:
+          type: string
+        user_id:
+          type: string
+        client_id:
+          type: string
+        enabled:
+          type: boolean
+        visibility:
+          type: string
+          enum:
+          - global
+          - org
+          - user
+        created_at:
+          type: string
+          format: date-time
+      additionalProperties: false
+      required:
+      - name
+      - module_type_id
+      - org_id
+      - id
+      - user_id
+      - enabled
+      - visibility
+      - created_at
+    OneClickModuleCreateParams:
+      type: object
+      properties:
+        module_type_id:
+          type: string
+        settings:
+          $ref: '#/components/schemas/ModuleInstanceSettings'
+        product_tenant_id:
+          type: string
+        type:
+          description: Indicates whether this is an initial one-click request or an update request.
+          type: string
+          enum:
+          - update-to-one-click
+          - one-click
+      additionalProperties: false
+      required:
+      - module_type_id
+      - product_tenant_id
+      - type
+    ModuleInstanceSettings:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+        - $ref: '#/components/schemas/ModuleInstanceSettings'
+  securitySchemes:
+    iroh:
+      type: apiKey
+      in: header
+      name: authorization
+    AuthorizationHeader:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            telemetry: collect application data for analytics
+            integration: Manage your modules
+            private-intel: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile: Get your profile information
+            inspect: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users: Manage users of your organisation
+            investigation: Perform threat analysis investigation
+            invite: Invite users into your organization
+            casebook: Access and modify your casebooks
+            orbital: Orbital Integration.
+            enrich: Query your configured modules for threat intelligence
+            oauth: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao: AO Integration.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

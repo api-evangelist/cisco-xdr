@@ -1,0 +1,3509 @@
+openapi: 3.2.0
+info:
+  title: CTIA Incident API
+  version: 4178275a824512c2fd3a2acdb0e8277233919054 v2.71.0
+  license:
+    name: All Rights Reserved
+    url: ''
+  contact:
+    name: 'Cisco Security Business Group -- Advanced Threat '
+    url: http://github.com/threatgrid/ctia
+    email: cisco-intel-api-support@cisco.com
+  description: "A Threat Intelligence API service\n\n  This API provides a mechanism for making Judgements on the Disposition\n  of Observables, which are then distilled into a final Verdict.  A\n  Disposition is a statement regarding the malicious, or otherwise,\n  nature of an Observable.\n\n  The Judgements can be grouped into Indicators, which can be associated\n  with Campaigns, Actors and TTPs.  Feedback can be given on specific\n  Judgements, indicating agreement or disagreement, or clarification.\n\n  When an Observable with a malicious Verdict is seen, it can be recorded as\n  a Sighting, and the Relations that Observable had with other Observables can\n  be recorded as well.\n\n  We support a pre-defined set of Observable Types.  Each Observable Type has a\n  specific form of natural identifier, its ID, which is almost always\n  the default way it is represented when observed in the wild.\n\n  * Ipv4/IPv6  -- 192.168.1.1\n  * Domain/Hostname -- foo.com, www.bar.com\n  * SHA256  -- the sha256 checksum of a file, or other data blob\n  * MD5 -- the md5 checksum of a file, or other data blob\n  * SHA1 -- the sha1 checksum of a file, or other data blob\n  * URL -- A minimal form of the URL\n\n  The Verdict is derived from all of the Judgements on that Observable which\n  have not yet expired.  The highest priority Judgement becomes the\n  active verdict.  If there is more than one Judgement with that\n  priority, than Clean disposition has priority over all others, then\n  Malicious disposition, and so on down to Unknown.\n\n  <a href='/doc/README.md'>CTIA Documentation</a>"
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR (CTIA)
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    note: Published by Cisco. Retrieved unmodified except for this x-provenance block.
+    provider_published: true
+  x-evidence:
+  - type: source
+    url: https://private.intel.amp.cisco.com/index.html
+  - type: raw
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: /
+security:
+- JWT: []
+- oauth2:
+  - private-intel
+  - private-intel:read
+  - private-intel:write
+  - casebook
+  - casebook:read
+  - casebook:write
+tags:
+- name: Incident
+  description: Incident operations
+paths:
+  /ctia/incident/{id}/status:
+    post:
+      tags:
+      - Incident
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Incident'
+      parameters:
+      - in: query
+        name: wait_for
+        description: wait for updated entity to be available for search
+        required: false
+        schema:
+          type: boolean
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Update an Incident Status
+      description: Requires capability create-incident.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncidentStatusUpdate'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/IncidentStatusUpdate'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/IncidentStatusUpdate'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/IncidentStatusUpdate'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/IncidentStatusUpdate'
+        description: an Incident Status Update
+        required: true
+  /ctia/incident:
+    post:
+      tags:
+      - Incident
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Incident'
+      parameters:
+      - in: query
+        name: wait_for
+        description: wait for entity to be available for search
+        required: false
+        schema:
+          type: boolean
+      summary: Adds a new Incident
+      description: Requires capability create-incident.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewIncident'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewIncident'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewIncident'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewIncident'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewIncident'
+        description: a new Incident
+        required: true
+  /ctia/incident/{id}:
+    put:
+      tags:
+      - Incident
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Incident'
+      parameters:
+      - in: query
+        name: wait_for
+        description: wait for updated entity to be available for search
+        required: false
+        schema:
+          type: boolean
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Update an existing Incident
+      description: Requires capability create-incident.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewIncident'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/NewIncident'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/NewIncident'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/NewIncident'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/NewIncident'
+        description: an updated Incident
+        required: true
+    patch:
+      tags:
+      - Incident
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Incident'
+      parameters:
+      - in: query
+        name: wait_for
+        description: wait for patched entity to be available for search
+        required: false
+        schema:
+          type: boolean
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Partially update an existing Incident
+      description: Requires capability create-incident.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartialNewIncident'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/PartialNewIncident'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/PartialNewIncident'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/PartialNewIncident'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/PartialNewIncident'
+        description: Incident partial update
+        required: true
+    get:
+      tags:
+      - Incident
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PartialIncident'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/PartialIncident'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/PartialIncident'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/PartialIncident'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/PartialIncident'
+      summary: Get one Incident by ID
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - incident_time.remediated
+            - assignees
+            - detection_sources
+            - schema_version
+            - revision
+            - incident_time.closed
+            - incident_time.discovered
+            - incident_time.contained
+            - incident_time.reported
+            - source
+            - title
+            - discovery_method
+            - source_uri
+            - incident_time.opened
+            - intended_effect
+            - status
+            - language
+            - id
+            - promotion_method
+            - severity
+            - tlp
+            - incident_time.rejected
+            - techniques
+            - timestamp
+            - confidence
+            - tactics
+      description: Requires capability read-incident.
+    delete:
+      tags:
+      - Incident
+      responses:
+        '204':
+          description: ''
+      x-no-doc: false
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: wait_for
+        description: wait for deleted entity to no more be available for search
+        required: false
+        schema:
+          type: boolean
+      summary: Delete one Incident
+      description: Requires capability delete-incident.
+  /ctia/incident/external_id/{external_id}:
+    get:
+      tags:
+      - Incident
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIncident'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIncident'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIncident'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIncident'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIncident'
+      parameters:
+      - in: query
+        name: sort_by
+        description: Sort results on a field
+        required: false
+        schema:
+          type: string
+          enum:
+          - schema_version
+          - revision
+          - source
+          - title
+          - source_uri
+          - language
+          - id
+          - tlp
+          - timestamp
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - incident_time.remediated
+            - assignees
+            - detection_sources
+            - schema_version
+            - revision
+            - incident_time.closed
+            - incident_time.discovered
+            - incident_time.contained
+            - incident_time.reported
+            - source
+            - title
+            - discovery_method
+            - source_uri
+            - incident_time.opened
+            - intended_effect
+            - status
+            - language
+            - id
+            - promotion_method
+            - severity
+            - tlp
+            - incident_time.rejected
+            - techniques
+            - timestamp
+            - confidence
+            - tactics
+      - in: path
+        name: external_id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: List Incident by external id
+      description: Requires capability read-incident.
+  /ctia/incident/search:
+    get:
+      tags:
+      - Incident
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIncident'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIncident'
+            application/edn:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIncident'
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIncident'
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PartialIncident'
+      summary: Search for Incident entities using a ES query syntax and field filters
+      description: Requires capability search-incident.
+      parameters:
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: categories
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tactics
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: status
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: promotion_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: techniques
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: sort_by
+        description: 'Sort result on fields.
+
+
+          The following fields are supported: assignees, confidence, detection_sources, discovery_method, id, incident_time.closed, incident_time.contained, incident_time.discovered, incident_time.opened, incident_time.rejected, incident_time.remediated, incident_time.reported, intended_effect, language, promotion_method, revision, schema_version, severity, source, source_uri, status, tactics, techniques, timestamp, title, tlp
+
+
+          Fields can be combined with '','' and sort order can be specified by '':asc'' and '':desc''. For example:
+
+
+          -  assignees       # sort by assignees ascending
+
+          -  assignees:desc  # sort by assignees descending
+
+          -  assignees,confidence:desc  # sort by assignees ascending, then confidence descending'
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - incident_time.remediated
+            - assignees
+            - detection_sources
+            - schema_version
+            - revision
+            - incident_time.closed
+            - incident_time.discovered
+            - incident_time.contained
+            - incident_time.reported
+            - source
+            - title
+            - discovery_method
+            - source_uri
+            - incident_time.opened
+            - intended_effect
+            - status
+            - language
+            - id
+            - promotion_method
+            - severity
+            - tlp
+            - incident_time.rejected
+            - techniques
+            - timestamp
+            - confidence
+            - tactics
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: assignees
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: detection_sources
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_fields
+        description: '''fields'' key of Elasticsearch Fulltext Query.'
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - id
+            - short_description
+            - title
+            - source
+            - description
+      - in: query
+        name: severity
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: discovery_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+    delete:
+      tags:
+      - Incident
+      description: Requires capabilities delete-incident, search-incident.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+            application/x-yaml:
+              schema:
+                type: integer
+                format: int64
+            application/edn:
+              schema:
+                type: integer
+                format: int64
+            application/transit+json:
+              schema:
+                type: integer
+                format: int64
+            application/transit+msgpack:
+              schema:
+                type: integer
+                format: int64
+      summary: Delete Incident entities matching given Lucene/ES query string or/and field filters
+      parameters:
+      - in: query
+        name: categories
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: status
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: promotion_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: techniques
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: assignees
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: detection_sources
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: REALLY_DELETE_ALL_THESE_ENTITIES
+        description: ' If you do not set this value or set it to false this route will perform a dry run. Set this value to true to perform the deletion. You MUST confirm you will fix the mess after the inevitable disaster that will occur after you perform that operation. DO NOT FORGET TO SET THAT TO FALSE AFTER EACH DELETION IF YOU INTEND TO USE THAT ROUTE MULTIPLE TIMES.'
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: discovery_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: wait_for
+        description: wait for matched entity to be deleted
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/incident/search/count:
+    get:
+      tags:
+      - Incident
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+            application/x-yaml:
+              schema:
+                type: integer
+                format: int64
+            application/edn:
+              schema:
+                type: integer
+                format: int64
+            application/transit+json:
+              schema:
+                type: integer
+                format: int64
+            application/transit+msgpack:
+              schema:
+                type: integer
+                format: int64
+      summary: Count Incident matching a Lucene/ES query string and field filters
+      description: Requires capability search-incident.
+      parameters:
+      - in: query
+        name: categories
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: status
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: promotion_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: techniques
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: assignees
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: detection_sources
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: discovery_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/incident/metric/average:
+    get:
+      tags:
+      - Incident
+      description: Requires capability search-incident.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Average for some Incident field. Use X-Total-Hits header on response for count used for average. For aggregate-on field X.Y.Z, response body will be {:data {:X {:Y {:Z <average>}}}}. If X-Total-Hits is 0, then average will be nil.
+      parameters:
+      - in: query
+        name: categories
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: status
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: promotion_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: techniques
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: assignees
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: detection_sources
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: Start date of the average. See `aggregate-on` doc for which field is used to filter.
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: discovery_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: 'The field to compute an average over. `from` and `to` are dates to narrow the entities used in this calculation.
+
+
+          When aggregate-on=intervals.new_to_opened, from/to filters on  when the incident was first ingested in CTIA. When aggregate-on=intervals.opened_to_closed, from/to filters on  when the incident was first ingested in CTIA. When aggregate-on=intervals.new_to_contained, from/to filters on  when the incident was first ingested in CTIA.'
+        required: true
+        schema:
+          type: string
+          enum:
+          - intervals.new_to_contained
+          - intervals.opened_to_closed
+          - intervals.new_to_opened
+      - in: query
+        name: agg-key
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: End date of the average. See `aggregate-on` doc for which field is used to filter.
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/incident/metric/histogram:
+    get:
+      tags:
+      - Incident
+      description: Requires capability search-incident.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Histogram for some Incident field
+      parameters:
+      - in: query
+        name: categories
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: status
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: promotion_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: techniques
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: assignees
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: detection_sources
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: granularity
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+      - in: query
+        name: from
+        description: Start date of the histogram. Filters the value of selected aggregated-on field.
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: discovery_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - incident_time.contained
+          - incident_time.closed
+          - timestamp
+          - incident_time.remediated
+          - incident_time.rejected
+          - incident_time.opened
+          - incident_time.discovered
+          - incident_time.reported
+      - in: query
+        name: agg-key
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: timezone
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - -05:00
+          - +02:00
+          - +01:00
+          - -09:00
+          - -01:00
+          - +03:00
+          - +08:00
+          - +04:00
+          - +00:00
+          - '+11:00'
+          - '-10:00'
+          - +05:00
+          - -03:00
+          - -04:00
+          - -02:00
+          - -07:00
+          - '-11:00'
+          - -06:00
+          - '+10:00'
+          - +09:00
+          - +07:00
+          - -08:00
+          - +06:00
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: End date of the histogram. Filters the value of selected aggregated-on field.
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/incident/metric/topn:
+    get:
+      tags:
+      - Incident
+      description: Requires capability search-incident.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Topn for some Incident field
+      parameters:
+      - in: query
+        name: sort_order
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: categories
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: status
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: promotion_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: techniques
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: assignees
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: detection_sources
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: discovery_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - confidence
+          - techniques
+          - detection_sources
+          - categories
+          - tactics
+          - assignees
+          - discovery_method
+          - status
+          - promotion_method
+          - title
+          - source
+          - intended_effect
+          - severity
+      - in: query
+        name: agg-key
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/incident/metric/cardinality:
+    get:
+      tags:
+      - Incident
+      description: Requires capability search-incident.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/MetricResult'
+      summary: Cardinality for some Incident field
+      parameters:
+      - in: query
+        name: categories
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: status
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: promotion_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: techniques
+        description: ''
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: assignees
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: detection_sources
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: from
+        description: ''
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: discovery_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: aggregate-on
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - confidence
+          - techniques
+          - detection_sources
+          - categories
+          - tactics
+          - assignees
+          - discovery_method
+          - status
+          - promotion_method
+          - title
+          - source
+          - intended_effect
+          - severity
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: revision
+        description: ''
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+  /ctia/incident/{id}/link:
+    post:
+      tags:
+      - Incident
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relationship'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Relationship'
+            application/edn:
+              schema:
+                $ref: '#/components/schemas/Relationship'
+            application/transit+json:
+              schema:
+                $ref: '#/components/schemas/Relationship'
+            application/transit+msgpack:
+              schema:
+                $ref: '#/components/schemas/Relationship'
+      parameters:
+      - in: path
+        name: id
+        description: ''
+        required: true
+        schema:
+          type: string
+      summary: Link an Incident to a Casebook or Investigation
+      description: 'Requires capabilities create-relationship, read-incident, read-relationship.
+
+
+        Additionally, casebook_id requires read-casebook, investigation_id requires read-investigation.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncidentLinkRequest'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/IncidentLinkRequest'
+          application/edn:
+            schema:
+              $ref: '#/components/schemas/IncidentLinkRequest'
+          application/transit+json:
+            schema:
+              $ref: '#/components/schemas/IncidentLinkRequest'
+          application/transit+msgpack:
+            schema:
+              $ref: '#/components/schemas/IncidentLinkRequest'
+        description: an Incident Link request
+        required: true
+  /ctia/{observable_type}/{observable_value}/sightings/incidents:
+    get:
+      tags:
+      - Incident
+      parameters:
+      - in: query
+        name: sort_order
+        description: Sort direction
+        required: false
+        schema:
+          type: string
+          enum:
+          - desc
+          - asc
+      - in: query
+        name: offset
+        description: Pagination Offset
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: search_after
+        description: Pagination stateless cursor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: limit
+        description: Pagination Limit
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - in: query
+        name: sort_by
+        description: Sort result on a field
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+      - in: path
+        name: observable_type
+        description: Observable type names
+        required: true
+        example: acudid
+        schema:
+          type: string
+          enum:
+          - file_path
+          - mac_address
+          - trend_micro_id
+          - cybereason_id
+          - process_args
+          - s1_agent_id
+          - device
+          - hostname
+          - certificate_common_name
+          - serial_number
+          - meraki_network_id
+          - url
+          - jamf_management_id
+          - certificate_serial
+          - intune_id
+          - meraki_org_id
+          - cisco_cm_id
+          - registry_key
+          - process_path
+          - darktrace_id
+          - process_username
+          - cortex_agent_id
+          - orbital_node_id
+          - process_uid
+          - ngfw_name
+          - user
+          - certificate_issuer
+          - ipv6
+          - email
+          - cisco_uc_id
+          - cvm_id
+          - sha256
+          - crowdstrike_id
+          - google_cloud_id
+          - google_chromebook_id
+          - acudid
+          - sha1
+          - registry_name
+          - md5
+          - service_now_id
+          - ip
+          - domain
+          - email_subject
+          - imei
+          - ngfw_id
+          - amp_computer_guid
+          - ms_machine_id
+          - secure_access_id
+          - mutex
+          - processor_id
+          - swc_device_id
+          - registry_path
+          - odns_identity
+          - odns_identity_label
+          - cisco_mid
+          - process_name
+          - pki_serial
+          - meraki_node_sn
+          - email_messageid
+          - imsi
+          - user_agent
+          - process_hash
+          - file_name
+      - in: path
+        name: observable_value
+        description: ''
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/edn:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  type: string
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  type: string
+      summary: Returns Incident references associated with the specified observable based on Sighting relationships
+      description: Requires capabilities list-relationships, list-sightings.
+components:
+  schemas:
+    NewIncidentScores:
+      type: object
+      properties:
+        asset:
+          type: number
+          format: double
+        ttp:
+          type: number
+          format: double
+        probability:
+          type: number
+          format: double
+        global:
+          type: number
+          format: double
+        ml_score:
+          type: number
+          format: double
+      additionalProperties: false
+    IncidentStatusUpdate:
+      description: an Incident Status Update
+      type: object
+      properties:
+        status:
+          example: Closed
+          type: string
+          enum:
+          - New
+          - Closed
+          - 'Open: Recovered'
+          - 'Closed: Other'
+          - 'Hold: Internal'
+          - 'Hold: Legal'
+          - 'Closed: Under Review'
+          - Rejected
+          - Open
+          - 'Closed: Merged'
+          - Restoration Achieved
+          - Incident Reported
+          - 'Closed: Suspected'
+          - Stalled
+          - 'Open: Contained'
+          - 'Closed: Near-Miss'
+          - 'Hold: External'
+          - Containment Achieved
+          - 'New: Processing'
+          - 'Closed: Confirmed Threat'
+          - 'Closed: False Positive'
+          - 'Open: Reported'
+          - 'Open: Investigating'
+          - Hold
+          - 'New: Presented'
+      additionalProperties: false
+      required:
+      - status
+    IncidentTime:
+      example:
+        opened: '2016-01-01T01:01:01.000Z'
+        discovered: '2016-01-01T01:01:01.000Z'
+        reported: '2016-01-01T01:01:01.000Z'
+        remediated: '2016-01-01T01:01:01.000Z'
+        closed: '2016-01-01T01:01:01.000Z'
+        rejected: '2016-01-01T01:01:01.000Z'
+        contained: '2016-01-01T01:01:01.000Z'
+      description: Relevant time values associated with this Incident.
+      type: object
+      properties:
+        opened:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time the incident was first opened.
+          type: string
+          format: date-time
+        discovered:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time the incident was first discovered.
+          type: string
+          format: date-time
+        reported:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time the incident was first reported.
+          type: string
+          format: date-time
+        remediated:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time that the remediation of the damage from the incident was completed.
+          type: string
+          format: date-time
+        closed:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time that the incident was last closed.
+          type: string
+          format: date-time
+        rejected:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time that the incident was first rejected.
+          type: string
+          format: date-time
+        contained:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time that the incident was first contained.
+          type: string
+          format: date-time
+      additionalProperties: false
+      required:
+      - opened
+    PartialIncident:
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        assignees:
+          example:
+          - string
+          description: A set of owners assigned to this incident.
+          type: array
+          items:
+            type: string
+        detection_sources:
+          example:
+          - string
+          description: A set of sources that contributed threat detections to the incident.
+          type: array
+          items:
+            type: string
+        meta:
+          $ref: '#/components/schemas/MetaData'
+        schema_version:
+          example: 1.3.30
+          description: CTIM schema version for this entity.
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: incident
+          type: string
+          enum:
+          - incident
+        created:
+          type: string
+          format: date-time
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        incident_time:
+          $ref: '#/components/schemas/IncidentTime'
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        discovery_method:
+          example: Agent Disclosure
+          description: Identifies how the incident was discovered.
+          type: string
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        intended_effect:
+          example: Account Takeover
+          description: Specifies the suspected intended effect of this incident
+          type: string
+        categories:
+          example:
+          - Attrition
+          description: A set of categories for this incident.
+          type: array
+          items:
+            type: string
+        status:
+          example: Closed
+          description: The `status` field represents the current state of an incident within the incident management process. Its values help in tracking and reporting the progress of the incident from its discovery to its resolution.
+          type: string
+          enum:
+          - New
+          - Closed
+          - 'Open: Recovered'
+          - 'Closed: Other'
+          - 'Hold: Internal'
+          - 'Hold: Legal'
+          - 'Closed: Under Review'
+          - Rejected
+          - Open
+          - 'Closed: Merged'
+          - Restoration Achieved
+          - Incident Reported
+          - 'Closed: Suspected'
+          - Stalled
+          - 'Open: Contained'
+          - 'Closed: Near-Miss'
+          - 'Hold: External'
+          - Containment Achieved
+          - 'New: Processing'
+          - 'Closed: Confirmed Threat'
+          - 'Closed: False Positive'
+          - 'Open: Reported'
+          - 'Open: Investigating'
+          - Hold
+          - 'New: Presented'
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        detection_status:
+          example: active
+          description: Represents the state of an incident within the incident generation process, indicating whether the incident is actively receiving updates or is no longer being updated.
+          type: string
+          enum:
+          - inactive_oversized
+          - inactive_user_closed
+          - active
+          - inactive_merged
+          - inactive_expired
+        id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        promotion_method:
+          example: Automated
+          description: Describes method for promoting an Incident, whether manually or automatically. An Incident may be created manually by a SOAR analyst or SOC operator, or through an automated correlation or aggregation rule or engine that matches a specific set of events or alerts, and promotes them to Incident(s).
+          type: string
+          enum:
+          - Automated
+          - Manual
+        severity:
+          example: Critical
+          description: "Represents the potential impact of an incident on an organization's security posture and business operations. It helps organizations prioritize and allocate resources for incident response based on the severity level of the incident \nIt helps analysts and incident handlers prioritize incidents by indicating the level of risk and potential impact associated with the incident. This enables organizations to allocate resources efficiently and address the most critical incidents first.\nCan also be used to generate reports and metrics for measuring the effectiveness of the incident response process and to identify trends and patterns in the threat landscape.\nIt is important to note that the `severity` field is subjective and can be interpreted differently by different organizations or analysts. Therefore, it should be used in conjunction with other intelligence attributes, such as the `confidence` field, to provide a more comprehensive view of the incident."
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Critical
+          - Low
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        scores:
+          $ref: '#/components/schemas/IncidentScores'
+        client_id:
+          type: string
+        techniques:
+          example:
+          - string
+          description: Represents the specific methods or actions used by an attacker to carry out an offensive maneuver or achieve their goals.
+          type: array
+          items:
+            type: string
+        groups:
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: 'Represents the level of certainty or trustworthiness associated with the incident. It denotes the reliability of the intelligence associated with the incident.
+
+            The `confidence` field can take on several values, including:
+
+            - `info`: Indicates that the incident information is based on sources with no previous track record or there is no track record for the source reporting the incident.
+
+            - `low`: Indicates that the incident information is based on sources with a questionable track record or there is limited information about the accuracy of the source.
+
+            - `medium`: Indicates that the incident information is based on sources with a mixed track record or of uncertain reliability.
+
+            - `high`: Indicates that the incident information is based on sources with a proven track record and high degree of reliability.
+
+            The `confidence` field can be used to indicate the level of trust and confidence that can be attributed to the incident, and it may impact how the incident is prioritized, analyzed and addressed. It can also help in the decision-making process associated with the incident response activities.
+
+            It is important to note that the `confidence` field is subjective and can be interpreted differently by different organizations or analysts. As such, it is often used in conjunction with other intelligence attributes, such as the `severity` field, to provide a more complete picture of the incident.'
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        owner:
+          type: string
+        short_id:
+          example: string
+          description: A human-readable, short identifier for the incident, unique within an organization.
+          type: string
+        tactics:
+          example:
+          - string
+          description: Represents the offensive techniques, approaches, or procedures that an adversary may use to achieve their objectives during an attack. It helps in understanding the intent and capabilities of the adversary and can be used to identify indicators of attack (IoAs) or indicators of compromise (IoCs) that are associated with the adversary's tactics.
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+    PartialNewIncidentScores:
+      type: object
+      properties:
+        asset:
+          type: number
+          format: double
+        ttp:
+          type: number
+          format: double
+        probability:
+          type: number
+          format: double
+        global:
+          type: number
+          format: double
+        ml_score:
+          type: number
+          format: double
+      additionalProperties: false
+    NewIncident:
+      description: a new Incident
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        assignees:
+          example:
+          - string
+          description: A set of owners assigned to this incident.
+          type: array
+          items:
+            type: string
+        detection_sources:
+          example:
+          - string
+          description: A set of sources that contributed threat detections to the incident.
+          type: array
+          items:
+            type: string
+        meta:
+          $ref: '#/components/schemas/MetaData'
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: incident
+          type: string
+          enum:
+          - incident
+        created:
+          type: string
+          format: date-time
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        incident_time:
+          $ref: '#/components/schemas/IncidentTime'
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        discovery_method:
+          example: Agent Disclosure
+          description: Identifies how the incident was discovered.
+          type: string
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        intended_effect:
+          example: Account Takeover
+          description: Specifies the suspected intended effect of this incident
+          type: string
+        categories:
+          example:
+          - Attrition
+          description: A set of categories for this incident.
+          type: array
+          items:
+            type: string
+        status:
+          example: Closed
+          description: The `status` field represents the current state of an incident within the incident management process. Its values help in tracking and reporting the progress of the incident from its discovery to its resolution.
+          type: string
+          enum:
+          - New
+          - Closed
+          - 'Open: Recovered'
+          - 'Closed: Other'
+          - 'Hold: Internal'
+          - 'Hold: Legal'
+          - 'Closed: Under Review'
+          - Rejected
+          - Open
+          - 'Closed: Merged'
+          - Restoration Achieved
+          - Incident Reported
+          - 'Closed: Suspected'
+          - Stalled
+          - 'Open: Contained'
+          - 'Closed: Near-Miss'
+          - 'Hold: External'
+          - Containment Achieved
+          - 'New: Processing'
+          - 'Closed: Confirmed Threat'
+          - 'Closed: False Positive'
+          - 'Open: Reported'
+          - 'Open: Investigating'
+          - Hold
+          - 'New: Presented'
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        detection_status:
+          example: active
+          description: Represents the state of an incident within the incident generation process, indicating whether the incident is actively receiving updates or is no longer being updated.
+          type: string
+          enum:
+          - inactive_oversized
+          - inactive_user_closed
+          - active
+          - inactive_merged
+          - inactive_expired
+        id:
+          example: string
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          type: string
+        promotion_method:
+          example: Automated
+          description: Describes method for promoting an Incident, whether manually or automatically. An Incident may be created manually by a SOAR analyst or SOC operator, or through an automated correlation or aggregation rule or engine that matches a specific set of events or alerts, and promotes them to Incident(s).
+          type: string
+          enum:
+          - Automated
+          - Manual
+        severity:
+          example: Critical
+          description: "Represents the potential impact of an incident on an organization's security posture and business operations. It helps organizations prioritize and allocate resources for incident response based on the severity level of the incident \nIt helps analysts and incident handlers prioritize incidents by indicating the level of risk and potential impact associated with the incident. This enables organizations to allocate resources efficiently and address the most critical incidents first.\nCan also be used to generate reports and metrics for measuring the effectiveness of the incident response process and to identify trends and patterns in the threat landscape.\nIt is important to note that the `severity` field is subjective and can be interpreted differently by different organizations or analysts. Therefore, it should be used in conjunction with other intelligence attributes, such as the `confidence` field, to provide a more comprehensive view of the incident."
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Critical
+          - Low
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        scores:
+          $ref: '#/components/schemas/NewIncidentScores'
+        client_id:
+          type: string
+        techniques:
+          example:
+          - string
+          description: Represents the specific methods or actions used by an attacker to carry out an offensive maneuver or achieve their goals.
+          type: array
+          items:
+            type: string
+        groups:
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: 'Represents the level of certainty or trustworthiness associated with the incident. It denotes the reliability of the intelligence associated with the incident.
+
+            The `confidence` field can take on several values, including:
+
+            - `info`: Indicates that the incident information is based on sources with no previous track record or there is no track record for the source reporting the incident.
+
+            - `low`: Indicates that the incident information is based on sources with a questionable track record or there is limited information about the accuracy of the source.
+
+            - `medium`: Indicates that the incident information is based on sources with a mixed track record or of uncertain reliability.
+
+            - `high`: Indicates that the incident information is based on sources with a proven track record and high degree of reliability.
+
+            The `confidence` field can be used to indicate the level of trust and confidence that can be attributed to the incident, and it may impact how the incident is prioritized, analyzed and addressed. It can also help in the decision-making process associated with the incident response activities.
+
+            It is important to note that the `confidence` field is subjective and can be interpreted differently by different organizations or analysts. As such, it is often used in conjunction with other intelligence attributes, such as the `severity` field, to provide a more complete picture of the incident.'
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        owner:
+          type: string
+        short_id:
+          example: string
+          description: A human-readable, short identifier for the incident, unique within an organization.
+          type: string
+        tactics:
+          example:
+          - string
+          description: Represents the offensive techniques, approaches, or procedures that an adversary may use to achieve their objectives during an attack. It helps in understanding the intent and capabilities of the adversary and can be used to identify indicators of attack (IoAs) or indicators of compromise (IoCs) that are associated with the adversary's tactics.
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+      required:
+      - incident_time
+      - status
+      - confidence
+    Incident:
+      example:
+        description: string
+        assignees:
+        - string
+        detection_sources:
+        - string
+        meta:
+          keyword: anything
+        schema_version: 1.3.30
+        revision: 10
+        type: incident
+        source: string
+        external_ids:
+        - string
+        short_description: string
+        title: string
+        incident_time:
+          opened: '2016-01-01T01:01:01.000Z'
+          discovered: '2016-01-01T01:01:01.000Z'
+          reported: '2016-01-01T01:01:01.000Z'
+          remediated: '2016-01-01T01:01:01.000Z'
+          closed: '2016-01-01T01:01:01.000Z'
+          rejected: '2016-01-01T01:01:01.000Z'
+          contained: '2016-01-01T01:01:01.000Z'
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        discovery_method: Agent Disclosure
+        source_uri: string
+        intended_effect: Account Takeover
+        categories:
+        - Attrition
+        status: Closed
+        language: string
+        detection_status: active
+        id: string
+        promotion_method: Automated
+        severity: Critical
+        tlp: green
+        scores:
+          asset: 10.0
+        techniques:
+        - string
+        timestamp: '2016-01-01T01:01:01.000Z'
+        confidence: High
+        short_id: string
+        tactics:
+        - string
+      description: "Information about computer security incident response. A computer security\n   incident is a violation or imminent threat of violation of computer\n   security policies, acceptable use policies, or standard security practices.\n   Incidents pertain to one or more *adverse events*, each of which is modeled\n   as a [sighting](sighting.md)."
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        assignees:
+          example:
+          - string
+          description: A set of owners assigned to this incident.
+          type: array
+          items:
+            type: string
+        detection_sources:
+          example:
+          - string
+          description: A set of sources that contributed threat detections to the incident.
+          type: array
+          items:
+            type: string
+        meta:
+          $ref: '#/components/schemas/MetaData'
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        type:
+          example: incident
+          type: string
+          enum:
+          - incident
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        incident_time:
+          $ref: '#/components/schemas/IncidentTime'
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        discovery_method:
+          example: Agent Disclosure
+          description: Identifies how the incident was discovered.
+          type: string
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        intended_effect:
+          example: Account Takeover
+          description: Specifies the suspected intended effect of this incident
+          type: string
+        categories:
+          example:
+          - Attrition
+          description: A set of categories for this incident.
+          type: array
+          items:
+            type: string
+        status:
+          example: Closed
+          description: The `status` field represents the current state of an incident within the incident management process. Its values help in tracking and reporting the progress of the incident from its discovery to its resolution.
+          type: string
+          enum:
+          - New
+          - Closed
+          - 'Open: Recovered'
+          - 'Closed: Other'
+          - 'Hold: Internal'
+          - 'Hold: Legal'
+          - 'Closed: Under Review'
+          - Rejected
+          - Open
+          - 'Closed: Merged'
+          - Restoration Achieved
+          - Incident Reported
+          - 'Closed: Suspected'
+          - Stalled
+          - 'Open: Contained'
+          - 'Closed: Near-Miss'
+          - 'Hold: External'
+          - Containment Achieved
+          - 'New: Processing'
+          - 'Closed: Confirmed Threat'
+          - 'Closed: False Positive'
+          - 'Open: Reported'
+          - 'Open: Investigating'
+          - Hold
+          - 'New: Presented'
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        detection_status:
+          example: active
+          description: Represents the state of an incident within the incident generation process, indicating whether the incident is actively receiving updates or is no longer being updated.
+          type: string
+          enum:
+          - inactive_oversized
+          - inactive_user_closed
+          - active
+          - inactive_merged
+          - inactive_expired
+        id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        promotion_method:
+          example: Automated
+          description: Describes method for promoting an Incident, whether manually or automatically. An Incident may be created manually by a SOAR analyst or SOC operator, or through an automated correlation or aggregation rule or engine that matches a specific set of events or alerts, and promotes them to Incident(s).
+          type: string
+          enum:
+          - Automated
+          - Manual
+        severity:
+          example: Critical
+          description: "Represents the potential impact of an incident on an organization's security posture and business operations. It helps organizations prioritize and allocate resources for incident response based on the severity level of the incident \nIt helps analysts and incident handlers prioritize incidents by indicating the level of risk and potential impact associated with the incident. This enables organizations to allocate resources efficiently and address the most critical incidents first.\nCan also be used to generate reports and metrics for measuring the effectiveness of the incident response process and to identify trends and patterns in the threat landscape.\nIt is important to note that the `severity` field is subjective and can be interpreted differently by different organizations or analysts. Therefore, it should be used in conjunction with other intelligence attributes, such as the `confidence` field, to provide a more comprehensive view of the incident."
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Critical
+          - Low
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        scores:
+          $ref: '#/components/schemas/IncidentScores'
+        techniques:
+          example:
+          - string
+          description: Represents the specific methods or actions used by an attacker to carry out an offensive maneuver or achieve their goals.
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: 'Represents the level of certainty or trustworthiness associated with the incident. It denotes the reliability of the intelligence associated with the incident.
+
+            The `confidence` field can take on several values, including:
+
+            - `info`: Indicates that the incident information is based on sources with no previous track record or there is no track record for the source reporting the incident.
+
+            - `low`: Indicates that the incident information is based on sources with a questionable track record or there is limited information about the accuracy of the source.
+
+            - `medium`: Indicates that the incident information is based on sources with a mixed track record or of uncertain reliability.
+
+            - `high`: Indicates that the incident information is based on sources with a proven track record and high degree of reliability.
+
+            The `confidence` field can be used to indicate the level of trust and confidence that can be attributed to the incident, and it may impact how the incident is prioritized, analyzed and addressed. It can also help in the decision-making process associated with the incident response activities.
+
+            It is important to note that the `confidence` field is subjective and can be interpreted differently by different organizations or analysts. As such, it is often used in conjunction with other intelligence attributes, such as the `severity` field, to provide a more complete picture of the incident.'
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        short_id:
+          example: string
+          description: A human-readable, short identifier for the incident, unique within an organization.
+          type: string
+        tactics:
+          example:
+          - string
+          description: Represents the offensive techniques, approaches, or procedures that an adversary may use to achieve their objectives during an attack. It helps in understanding the intent and capabilities of the adversary and can be used to identify indicators of attack (IoAs) or indicators of compromise (IoCs) that are associated with the adversary's tactics.
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+    MetricResultData:
+      type: object
+      additionalProperties: {}
+    PartialNewIncident:
+      description: Incident partial update
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        assignees:
+          example:
+          - string
+          description: A set of owners assigned to this incident.
+          type: array
+          items:
+            type: string
+        detection_sources:
+          example:
+          - string
+          description: A set of sources that contributed threat detections to the incident.
+          type: array
+          items:
+            type: string
+        meta:
+          $ref: '#/components/schemas/MetaData'
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: incident
+          type: string
+          enum:
+          - incident
+        created:
+          type: string
+          format: date-time
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        incident_time:
+          $ref: '#/components/schemas/PartialNewIncidentIncidentTime'
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/PartialNewIncidentExternalReferences'
+        discovery_method:
+          example: Agent Disclosure
+          description: Identifies how the incident was discovered.
+          type: string
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        intended_effect:
+          example: Account Takeover
+          description: Specifies the suspected intended effect of this incident
+          type: string
+        categories:
+          example:
+          - Attrition
+          description: A set of categories for this incident.
+          type: array
+          items:
+            type: string
+        status:
+          example: Closed
+          description: The `status` field represents the current state of an incident within the incident management process. Its values help in tracking and reporting the progress of the incident from its discovery to its resolution.
+          type: string
+          enum:
+          - New
+          - Closed
+          - 'Open: Recovered'
+          - 'Closed: Other'
+          - 'Hold: Internal'
+          - 'Hold: Legal'
+          - 'Closed: Under Review'
+          - Rejected
+          - Open
+          - 'Closed: Merged'
+          - Restoration Achieved
+          - Incident Reported
+          - 'Closed: Suspected'
+          - Stalled
+          - 'Open: Contained'
+          - 'Closed: Near-Miss'
+          - 'Hold: External'
+          - Containment Achieved
+          - 'New: Processing'
+          - 'Closed: Confirmed Threat'
+          - 'Closed: False Positive'
+          - 'Open: Reported'
+          - 'Open: Investigating'
+          - Hold
+          - 'New: Presented'
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        detection_status:
+          example: active
+          description: Represents the state of an incident within the incident generation process, indicating whether the incident is actively receiving updates or is no longer being updated.
+          type: string
+          enum:
+          - inactive_oversized
+          - inactive_user_closed
+          - active
+          - inactive_merged
+          - inactive_expired
+        id:
+          example: string
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          type: string
+        promotion_method:
+          example: Automated
+          description: Describes method for promoting an Incident, whether manually or automatically. An Incident may be created manually by a SOAR analyst or SOC operator, or through an automated correlation or aggregation rule or engine that matches a specific set of events or alerts, and promotes them to Incident(s).
+          type: string
+          enum:
+          - Automated
+          - Manual
+        severity:
+          example: Critical
+          description: "Represents the potential impact of an incident on an organization's security posture and business operations. It helps organizations prioritize and allocate resources for incident response based on the severity level of the incident \nIt helps analysts and incident handlers prioritize incidents by indicating the level of risk and potential impact associated with the incident. This enables organizations to allocate resources efficiently and address the most critical incidents first.\nCan also be used to generate reports and metrics for measuring the effectiveness of the incident response process and to identify trends and patterns in the threat landscape.\nIt is important to note that the `severity` field is subjective and can be interpreted differently by different organizations or analysts. Therefore, it should be used in conjunction with other intelligence attributes, such as the `confidence` field, to provide a more comprehensive view of the incident."
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Critical
+          - Low
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        scores:
+          $ref: '#/components/schemas/PartialNewIncidentScores'
+        client_id:
+          type: string
+        techniques:
+          example:
+          - string
+          description: Represents the specific methods or actions used by an attacker to carry out an offensive maneuver or achieve their goals.
+          type: array
+          items:
+            type: string
+        groups:
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        confidence:
+          example: High
+          description: 'Represents the level of certainty or trustworthiness associated with the incident. It denotes the reliability of the intelligence associated with the incident.
+
+            The `confidence` field can take on several values, including:
+
+            - `info`: Indicates that the incident information is based on sources with no previous track record or there is no track record for the source reporting the incident.
+
+            - `low`: Indicates that the incident information is based on sources with a questionable track record or there is limited information about the accuracy of the source.
+
+            - `medium`: Indicates that the incident information is based on sources with a mixed track record or of uncertain reliability.
+
+            - `high`: Indicates that the incident information is based on sources with a proven track record and high degree of reliability.
+
+            The `confidence` field can be used to indicate the level of trust and confidence that can be attributed to the incident, and it may impact how the incident is prioritized, analyzed and addressed. It can also help in the decision-making process associated with the incident response activities.
+
+            It is important to note that the `confidence` field is subjective and can be interpreted differently by different organizations or analysts. As such, it is often used in conjunction with other intelligence attributes, such as the `severity` field, to provide a more complete picture of the incident.'
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        owner:
+          type: string
+        short_id:
+          example: string
+          description: A human-readable, short identifier for the incident, unique within an organization.
+          type: string
+        tactics:
+          example:
+          - string
+          description: Represents the offensive techniques, approaches, or procedures that an adversary may use to achieve their objectives during an attack. It helps in understanding the intent and capabilities of the adversary and can be used to identify indicators of attack (IoAs) or indicators of compromise (IoCs) that are associated with the adversary's tactics.
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+    PartialNewIncidentExternalReferences:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
+      type: object
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: false
+    PartialNewIncidentIncidentTime:
+      example:
+        opened: '2016-01-01T01:01:01.000Z'
+        discovered: '2016-01-01T01:01:01.000Z'
+        reported: '2016-01-01T01:01:01.000Z'
+        remediated: '2016-01-01T01:01:01.000Z'
+        closed: '2016-01-01T01:01:01.000Z'
+        rejected: '2016-01-01T01:01:01.000Z'
+        contained: '2016-01-01T01:01:01.000Z'
+      description: Relevant time values associated with this Incident.
+      type: object
+      properties:
+        opened:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time the incident was first opened.
+          type: string
+          format: date-time
+        discovered:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time the incident was first discovered.
+          type: string
+          format: date-time
+        reported:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time the incident was first reported.
+          type: string
+          format: date-time
+        remediated:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time that the remediation of the damage from the incident was completed.
+          type: string
+          format: date-time
+        closed:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time that the incident was last closed.
+          type: string
+          format: date-time
+        rejected:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time that the incident was first rejected.
+          type: string
+          format: date-time
+        contained:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time that the incident was first contained.
+          type: string
+          format: date-time
+      additionalProperties: false
+    IncidentScores:
+      example:
+        asset: 10.0
+      description: Used to indicate the severity or impact score of the threat represented by the incident.
+      type: object
+      additionalProperties:
+        example: 10.0
+        description: "Field is used to indicate the severity or impact of the threat represented by the incident.\nIt's an open-type dictionary object with score types and numeric value of the score.\n\nFor example, systems can have the following score types:\n\n- `asset` - assesses the potential damage or harm that the threat can cause to the affected asset(s). The scale ranges from 0 to 10, with 10 indicating the highest potential harm. \n\n- `global` - assesses the overall impact or significance of the threat to the organization or wider community. The scale ranges from 0 to 1000, with 1000 indicating the highest impact.\n\n- `ttp` - a measure of the threat actor's proficiency in utilizing TTPs. Typically, ranges from 0-100, with a higher score indicating a greater threat or concern."
+        type: number
+        format: double
+    MetricResult:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MetricResultData'
+        type:
+          type: string
+          enum:
+          - histogram
+          - topn
+          - avg
+          - cardinality
+        filters:
+          $ref: '#/components/schemas/MetricResultFilters'
+      additionalProperties: false
+      required:
+      - data
+      - type
+      - filters
+    ExternalReference:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
+      type: object
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: false
+      required:
+      - source_name
+    MetaData:
+      example:
+        keyword: anything
+      description: metadata associated to the incident.
+      type: object
+      additionalProperties:
+        example: anything
+        description: custom field relevant to attach meta data to.
+    IncidentLinkRequest:
+      description: an Incident Link request
+      type: object
+      properties:
+        casebook_id:
+          example: string
+          description: A URI leading to an entity.
+          type: string
+        investigation_id:
+          example: string
+          description: A URI leading to an entity.
+          type: string
+        tlp:
+          example: green
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+      additionalProperties: false
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
+    Relationship:
+      example:
+        description: string
+        schema_version: 1.3.30
+        revision: 10
+        target_ref: string
+        type: relationship
+        source: string
+        external_ids:
+        - string
+        short_description: string
+        title: string
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        source_uri: string
+        source_ref: string
+        language: string
+        id: string
+        tlp: green
+        timestamp: '2016-01-01T01:01:01.000Z'
+        relationship_type: attributed-to
+      description: Represents a relationship between two entities.
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        target_ref:
+          example: string
+          description: A URI leading to an entity.
+          type: string
+        type:
+          example: relationship
+          type: string
+          enum:
+          - relationship
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        source_ref:
+          example: string
+          description: A URI leading to an entity.
+          type: string
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        relationship_type:
+          example: attributed-to
+          type: string
+      additionalProperties: false
+  securitySchemes:
+    JWT:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Ex: Bearer \<token\>'
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            private-intel: Private Intelligence Full Access
+            private-intel:read: Private Intelligence Read Access
+            private-intel:write: Private Intelligence Write Access
+            casebook: Casebook Full Access
+            casebook:read: Casebook Read Access
+            casebook:write: Casebook Write Access
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token

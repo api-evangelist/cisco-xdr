@@ -1,0 +1,1428 @@
+generated: '2026-08-19'
+method: searched
+source: openapi/cisco-xdr-actor-api-openapi.yml, openapi/cisco-xdr-asset-api-openapi.yml, openapi/cisco-xdr-asset-mapping-api-openapi.yml,
+  openapi/cisco-xdr-asset-properties-api-openapi.yml, openapi/cisco-xdr-attack-pattern-api-openapi.yml, openapi/cisco-xdr-automation-openapi.json,
+  openapi/cisco-xdr-bulk-api-openapi.yml, openapi/cisco-xdr-bundle-api-openapi.yml, openapi/cisco-xdr-campaign-api-openapi.yml,
+  openapi/cisco-xdr-casebook-api-openapi.yml, openapi/cisco-xdr-coa-api-openapi.yml, openapi/cisco-xdr-deliberate-api-openapi.yml,
+  openapi/cisco-xdr-event-api-openapi.yml, openapi/cisco-xdr-feed-api-openapi.yml, openapi/cisco-xdr-feedback-api-openapi.yml,
+  openapi/cisco-xdr-graphql-api-openapi.yml, openapi/cisco-xdr-health-api-openapi.yml, openapi/cisco-xdr-incident-api-openapi.yml,
+  openapi/cisco-xdr-incidents-investigations-openapi.json, openapi/cisco-xdr-indicator-api-openapi.yml, openapi/cisco-xdr-inspect-api-openapi.yml,
+  openapi/cisco-xdr-investigation-api-openapi.yml, openapi/cisco-xdr-invite-api-openapi.yml, openapi/cisco-xdr-iroh-api-openapi.yml,
+  openapi/cisco-xdr-judgement-api-openapi.yml, openapi/cisco-xdr-login-api-openapi.yml, openapi/cisco-xdr-malware-api-openapi.yml,
+  openapi/cisco-xdr-metrics-api-openapi.yml, openapi/cisco-xdr-moduleinstance-api-openapi.yml, openapi/cisco-xdr-moduletype-api-openapi.yml,
+  openapi/cisco-xdr-moduletypepatch-api-openapi.yml, openapi/cisco-xdr-note-api-openapi.yml, openapi/cisco-xdr-observe-api-openapi.yml,
+  openapi/cisco-xdr-one-click-api-openapi.yml, openapi/cisco-xdr-private-intel-api-openapi.yml, openapi/cisco-xdr-properties-api-openapi.yml,
+  openapi/cisco-xdr-query-api-openapi.yml, openapi/cisco-xdr-refer-api-openapi.yml, openapi/cisco-xdr-relationship-api-openapi.yml,
+  openapi/cisco-xdr-reputation-api-openapi.yml, openapi/cisco-xdr-response-api-openapi.yml, openapi/cisco-xdr-session-cookie-api-openapi.yml,
+  openapi/cisco-xdr-sighting-api-openapi.yml, openapi/cisco-xdr-status-api-openapi.yml, openapi/cisco-xdr-target-record-api-openapi.yml,
+  openapi/cisco-xdr-tool-api-openapi.yml, openapi/cisco-xdr-verdict-api-openapi.yml, openapi/cisco-xdr-version-api-openapi.yml,
+  openapi/cisco-xdr-vulnerability-api-openapi.yml, openapi/cisco-xdr-webhook-api-openapi.yml, openapi/cisco-xdr-webhookresult-api-openapi.yml
+docs: https://visibility.amp.cisco.com/iroh/doc/iroh-auth/index.html#scopes
+docs_alt:
+- https://developer.cisco.com/docs/cisco-xdr/authentication/
+- https://docs.xdr.security.cisco.com/Content/Administration/api-clients.htm
+note: Three different views of the same authorization surface, and they do not agree. The specs declare 41 oauth2
+  scopes. The RFC 8414 authorization-server metadata at visibility.amp.cisco.com/.well-known/oauth-authorization-server
+  advertises 32. And the operation descriptions inside the IROH specs require 36 finer-grained scope strings that
+  appear in NEITHER list - things like response/trigger:write, webhook/management:read and private-intel/incident:write.
+  Those hierarchical scopes are what actually gates an operation, so they are captured separately below. An API
+  Client created from the coarse list alone will get 403s.
+authorization_server:
+  issuer: IROH Auth
+  authorization_endpoint: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+  token_endpoint: https://visibility.amp.cisco.com/iroh/oauth2/token
+  device_authorization_endpoint: https://visibility.amp.cisco.com/iroh/oauth2/device_authorization
+  refresh_endpoint: https://visibility.amp.cisco.com/iroh/oauth2/refresh
+  jwks_uri: https://visibility.amp.cisco.com/.well-known/jwks
+  grant_types_supported:
+  - authorization_code
+  - client_credential
+  - urn:ietf:params:oauth:grant-type:device_code
+  - urn:ietf:params:oauth:grant-type:token-exchange
+  code_challenge_methods_supported:
+  - S256
+  - plain
+  scopes_supported:
+  - forensics_analyst
+  - insights
+  - telemetry
+  - security-events
+  - integration
+  - private-intel
+  - base-telemetry
+  - admin
+  - cognitive
+  - profile
+  - inspect
+  - asset
+  - event
+  - feedback
+  - sse
+  - forensics_admin
+  - registry
+  - users
+  - investigation
+  - invite
+  - playbook
+  - casebook
+  - forensics_responder
+  - detection
+  - orbital
+  - enrich
+  - oauth
+  - global-intel
+  - response
+  - notification
+  - webhook
+  - ao
+schemes:
+- name: oauth2
+  source: openapi/cisco-xdr-actor-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-asset-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-asset-mapping-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-asset-properties-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-attack-pattern-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oAuth2
+  source: openapi/cisco-xdr-automation-openapi.json
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-bulk-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-bundle-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-campaign-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-casebook-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-coa-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-deliberate-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-event-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-feed-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-feedback-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-graphql-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-health-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-incident-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-incidents-investigations-openapi.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-indicator-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-inspect-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-investigation-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-invite-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-iroh-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-judgement-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-login-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-malware-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-metrics-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-moduletype-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-note-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-observe-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-one-click-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-private-intel-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-properties-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-query-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-refer-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-relationship-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-reputation-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-response-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-session-cookie-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-sighting-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-status-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-target-record-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-tool-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-verdict-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-version-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-vulnerability-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-webhook-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+- name: oauth2
+  source: openapi/cisco-xdr-webhookresult-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+    tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+scopes:
+- scope: admin
+  description: Provide admin privileges
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: ao
+  description: AO Integration.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: ao:read
+  description: AO Integration.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+- scope: asset
+  description: Access and modify your assets
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: casebook
+  description: Casebook Full Access
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-actor-api-openapi.yml
+  - openapi/cisco-xdr-asset-api-openapi.yml
+  - openapi/cisco-xdr-asset-mapping-api-openapi.yml
+  - openapi/cisco-xdr-asset-properties-api-openapi.yml
+  - openapi/cisco-xdr-attack-pattern-api-openapi.yml
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-bulk-api-openapi.yml
+  - openapi/cisco-xdr-bundle-api-openapi.yml
+  - openapi/cisco-xdr-campaign-api-openapi.yml
+  - openapi/cisco-xdr-casebook-api-openapi.yml
+  - openapi/cisco-xdr-coa-api-openapi.yml
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feed-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-graphql-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-incident-api-openapi.yml
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+  - openapi/cisco-xdr-indicator-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-investigation-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-judgement-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-malware-api-openapi.yml
+  - openapi/cisco-xdr-metrics-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-note-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-properties-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-relationship-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-sighting-api-openapi.yml
+  - openapi/cisco-xdr-status-api-openapi.yml
+  - openapi/cisco-xdr-target-record-api-openapi.yml
+  - openapi/cisco-xdr-tool-api-openapi.yml
+  - openapi/cisco-xdr-verdict-api-openapi.yml
+  - openapi/cisco-xdr-version-api-openapi.yml
+  - openapi/cisco-xdr-vulnerability-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: casebook:read
+  description: Casebook Read Access
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-actor-api-openapi.yml
+  - openapi/cisco-xdr-asset-api-openapi.yml
+  - openapi/cisco-xdr-asset-mapping-api-openapi.yml
+  - openapi/cisco-xdr-asset-properties-api-openapi.yml
+  - openapi/cisco-xdr-attack-pattern-api-openapi.yml
+  - openapi/cisco-xdr-bulk-api-openapi.yml
+  - openapi/cisco-xdr-bundle-api-openapi.yml
+  - openapi/cisco-xdr-campaign-api-openapi.yml
+  - openapi/cisco-xdr-casebook-api-openapi.yml
+  - openapi/cisco-xdr-coa-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feed-api-openapi.yml
+  - openapi/cisco-xdr-graphql-api-openapi.yml
+  - openapi/cisco-xdr-incident-api-openapi.yml
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+  - openapi/cisco-xdr-indicator-api-openapi.yml
+  - openapi/cisco-xdr-investigation-api-openapi.yml
+  - openapi/cisco-xdr-judgement-api-openapi.yml
+  - openapi/cisco-xdr-malware-api-openapi.yml
+  - openapi/cisco-xdr-metrics-api-openapi.yml
+  - openapi/cisco-xdr-note-api-openapi.yml
+  - openapi/cisco-xdr-properties-api-openapi.yml
+  - openapi/cisco-xdr-relationship-api-openapi.yml
+  - openapi/cisco-xdr-sighting-api-openapi.yml
+  - openapi/cisco-xdr-status-api-openapi.yml
+  - openapi/cisco-xdr-target-record-api-openapi.yml
+  - openapi/cisco-xdr-tool-api-openapi.yml
+  - openapi/cisco-xdr-verdict-api-openapi.yml
+  - openapi/cisco-xdr-version-api-openapi.yml
+  - openapi/cisco-xdr-vulnerability-api-openapi.yml
+- scope: casebook:write
+  description: Casebook Write Access
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-actor-api-openapi.yml
+  - openapi/cisco-xdr-asset-api-openapi.yml
+  - openapi/cisco-xdr-asset-mapping-api-openapi.yml
+  - openapi/cisco-xdr-asset-properties-api-openapi.yml
+  - openapi/cisco-xdr-attack-pattern-api-openapi.yml
+  - openapi/cisco-xdr-bulk-api-openapi.yml
+  - openapi/cisco-xdr-bundle-api-openapi.yml
+  - openapi/cisco-xdr-campaign-api-openapi.yml
+  - openapi/cisco-xdr-casebook-api-openapi.yml
+  - openapi/cisco-xdr-coa-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feed-api-openapi.yml
+  - openapi/cisco-xdr-graphql-api-openapi.yml
+  - openapi/cisco-xdr-incident-api-openapi.yml
+  - openapi/cisco-xdr-indicator-api-openapi.yml
+  - openapi/cisco-xdr-investigation-api-openapi.yml
+  - openapi/cisco-xdr-judgement-api-openapi.yml
+  - openapi/cisco-xdr-malware-api-openapi.yml
+  - openapi/cisco-xdr-metrics-api-openapi.yml
+  - openapi/cisco-xdr-note-api-openapi.yml
+  - openapi/cisco-xdr-properties-api-openapi.yml
+  - openapi/cisco-xdr-relationship-api-openapi.yml
+  - openapi/cisco-xdr-sighting-api-openapi.yml
+  - openapi/cisco-xdr-status-api-openapi.yml
+  - openapi/cisco-xdr-target-record-api-openapi.yml
+  - openapi/cisco-xdr-tool-api-openapi.yml
+  - openapi/cisco-xdr-verdict-api-openapi.yml
+  - openapi/cisco-xdr-version-api-openapi.yml
+  - openapi/cisco-xdr-vulnerability-api-openapi.yml
+- scope: cognitive
+  description: Cognitive Integration
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: enrich
+  description: Query your configured modules for threat intelligence
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: enrich:read
+  description: Query your configured modules for threat intelligence
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+- scope: event
+  description: Read IROH Events
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: event:read
+  description: Get event information for an org. Needed to get full report information.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+- scope: feedback
+  description: Submit Customer Feedback
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: global-intel:read
+  description: Access AMP Global Intelligence
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: inspect
+  description: Extract Observables and data from text
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: inspect:read
+  description: Extract Observables and data from text
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+- scope: integration
+  description: Manage your modules
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: integration:read
+  description: Manage your modules
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+- scope: investigation
+  description: Perform threat analysis investigation
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: invite
+  description: Invite users into your organization
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: invite:read
+  description: Invite users into your organization
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+- scope: notification
+  description: Receive notifications from integrations
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: oauth
+  description: Manage OAuth2 Clients
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: oauth:read
+  description: Manage OAuth2 Clients
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+- scope: orbital
+  description: Orbital Integration.
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: playbook
+  description: Access and modify your playbooks
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+- scope: playbook:read
+  description: Get playbook state. Needed to get full report information.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+- scope: private-intel
+  description: Private Intelligence Full Access
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-actor-api-openapi.yml
+  - openapi/cisco-xdr-asset-api-openapi.yml
+  - openapi/cisco-xdr-asset-mapping-api-openapi.yml
+  - openapi/cisco-xdr-asset-properties-api-openapi.yml
+  - openapi/cisco-xdr-attack-pattern-api-openapi.yml
+  - openapi/cisco-xdr-bulk-api-openapi.yml
+  - openapi/cisco-xdr-bundle-api-openapi.yml
+  - openapi/cisco-xdr-campaign-api-openapi.yml
+  - openapi/cisco-xdr-casebook-api-openapi.yml
+  - openapi/cisco-xdr-coa-api-openapi.yml
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feed-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-graphql-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-incident-api-openapi.yml
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+  - openapi/cisco-xdr-indicator-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-investigation-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-judgement-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-malware-api-openapi.yml
+  - openapi/cisco-xdr-metrics-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-note-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-properties-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-relationship-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-sighting-api-openapi.yml
+  - openapi/cisco-xdr-status-api-openapi.yml
+  - openapi/cisco-xdr-target-record-api-openapi.yml
+  - openapi/cisco-xdr-tool-api-openapi.yml
+  - openapi/cisco-xdr-verdict-api-openapi.yml
+  - openapi/cisco-xdr-version-api-openapi.yml
+  - openapi/cisco-xdr-vulnerability-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: private-intel:read
+  description: Private Intelligence Read Access
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-actor-api-openapi.yml
+  - openapi/cisco-xdr-asset-api-openapi.yml
+  - openapi/cisco-xdr-asset-mapping-api-openapi.yml
+  - openapi/cisco-xdr-asset-properties-api-openapi.yml
+  - openapi/cisco-xdr-attack-pattern-api-openapi.yml
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-bulk-api-openapi.yml
+  - openapi/cisco-xdr-bundle-api-openapi.yml
+  - openapi/cisco-xdr-campaign-api-openapi.yml
+  - openapi/cisco-xdr-casebook-api-openapi.yml
+  - openapi/cisco-xdr-coa-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feed-api-openapi.yml
+  - openapi/cisco-xdr-graphql-api-openapi.yml
+  - openapi/cisco-xdr-incident-api-openapi.yml
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+  - openapi/cisco-xdr-indicator-api-openapi.yml
+  - openapi/cisco-xdr-investigation-api-openapi.yml
+  - openapi/cisco-xdr-judgement-api-openapi.yml
+  - openapi/cisco-xdr-malware-api-openapi.yml
+  - openapi/cisco-xdr-metrics-api-openapi.yml
+  - openapi/cisco-xdr-note-api-openapi.yml
+  - openapi/cisco-xdr-properties-api-openapi.yml
+  - openapi/cisco-xdr-relationship-api-openapi.yml
+  - openapi/cisco-xdr-sighting-api-openapi.yml
+  - openapi/cisco-xdr-status-api-openapi.yml
+  - openapi/cisco-xdr-target-record-api-openapi.yml
+  - openapi/cisco-xdr-tool-api-openapi.yml
+  - openapi/cisco-xdr-verdict-api-openapi.yml
+  - openapi/cisco-xdr-version-api-openapi.yml
+  - openapi/cisco-xdr-vulnerability-api-openapi.yml
+- scope: private-intel:write
+  description: Private Intelligence Write Access
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-actor-api-openapi.yml
+  - openapi/cisco-xdr-asset-api-openapi.yml
+  - openapi/cisco-xdr-asset-mapping-api-openapi.yml
+  - openapi/cisco-xdr-asset-properties-api-openapi.yml
+  - openapi/cisco-xdr-attack-pattern-api-openapi.yml
+  - openapi/cisco-xdr-bulk-api-openapi.yml
+  - openapi/cisco-xdr-bundle-api-openapi.yml
+  - openapi/cisco-xdr-campaign-api-openapi.yml
+  - openapi/cisco-xdr-casebook-api-openapi.yml
+  - openapi/cisco-xdr-coa-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feed-api-openapi.yml
+  - openapi/cisco-xdr-graphql-api-openapi.yml
+  - openapi/cisco-xdr-incident-api-openapi.yml
+  - openapi/cisco-xdr-incidents-investigations-openapi.json
+  - openapi/cisco-xdr-indicator-api-openapi.yml
+  - openapi/cisco-xdr-investigation-api-openapi.yml
+  - openapi/cisco-xdr-judgement-api-openapi.yml
+  - openapi/cisco-xdr-malware-api-openapi.yml
+  - openapi/cisco-xdr-metrics-api-openapi.yml
+  - openapi/cisco-xdr-note-api-openapi.yml
+  - openapi/cisco-xdr-properties-api-openapi.yml
+  - openapi/cisco-xdr-relationship-api-openapi.yml
+  - openapi/cisco-xdr-sighting-api-openapi.yml
+  - openapi/cisco-xdr-status-api-openapi.yml
+  - openapi/cisco-xdr-target-record-api-openapi.yml
+  - openapi/cisco-xdr-tool-api-openapi.yml
+  - openapi/cisco-xdr-verdict-api-openapi.yml
+  - openapi/cisco-xdr-version-api-openapi.yml
+  - openapi/cisco-xdr-vulnerability-api-openapi.yml
+- scope: profile
+  description: Get your profile information
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: profile:read
+  description: Get your profile information
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+- scope: registry
+  description: Manage registry entries
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: response
+  description: List and execute response actions using configured modules
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: response:read
+  description: List and execute response actions using configured modules
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+- scope: sse
+  description: SSE Integration. Manage your Devices.
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: telemetry
+  description: Collect application data for analytics
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: users
+  description: Manage users of your organisation
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: users:read
+  description: Manage users of your organization
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+- scope: vault
+  description: Grants access to Module Vaults
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+- scope: webhook
+  description: Manage your Webhooks
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cisco-xdr-automation-openapi.json
+  - openapi/cisco-xdr-deliberate-api-openapi.yml
+  - openapi/cisco-xdr-event-api-openapi.yml
+  - openapi/cisco-xdr-feedback-api-openapi.yml
+  - openapi/cisco-xdr-health-api-openapi.yml
+  - openapi/cisco-xdr-inspect-api-openapi.yml
+  - openapi/cisco-xdr-invite-api-openapi.yml
+  - openapi/cisco-xdr-iroh-api-openapi.yml
+  - openapi/cisco-xdr-login-api-openapi.yml
+  - openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  - openapi/cisco-xdr-moduletype-api-openapi.yml
+  - openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  - openapi/cisco-xdr-observe-api-openapi.yml
+  - openapi/cisco-xdr-one-click-api-openapi.yml
+  - openapi/cisco-xdr-private-intel-api-openapi.yml
+  - openapi/cisco-xdr-query-api-openapi.yml
+  - openapi/cisco-xdr-refer-api-openapi.yml
+  - openapi/cisco-xdr-reputation-api-openapi.yml
+  - openapi/cisco-xdr-response-api-openapi.yml
+  - openapi/cisco-xdr-session-cookie-api-openapi.yml
+  - openapi/cisco-xdr-webhook-api-openapi.yml
+  - openapi/cisco-xdr-webhookresult-api-openapi.yml
+operation_scopes:
+- scope: admin/integration/module-type:write
+  operations: 6
+- scope: admin/webhook/management:write
+  operations: 2
+- scope: admin/webhook/result:write
+  operations: 2
+- scope: enrich/observables/deliberate:read
+  operations: 2
+- scope: enrich/observables/observe:read
+  operations: 2
+- scope: enrich/observables/refer:read
+  operations: 2
+- scope: enrich/observables/reputation:read
+  operations: 2
+- scope: enrich/query-ocsf:read
+  operations: 4
+- scope: enrich/targets/observe:read
+  operations: 2
+- scope: event:read
+  operations: 6
+- scope: feedback:read
+  operations: 2
+- scope: feedback:write
+  operations: 2
+- scope: global-intel:read
+  operations: 18
+- scope: inspect:read
+  operations: 2
+- scope: integration/health:read
+  operations: 4
+- scope: integration/module-instance
+  operations: 2
+- scope: integration/module-instance:read
+  operations: 4
+- scope: integration/module-instance:write
+  operations: 6
+- scope: integration/module-type-patch:read
+  operations: 6
+- scope: integration/module-type-patch:write
+  operations: 6
+- scope: integration/module-type:read
+  operations: 4
+- scope: integration/module-type:write
+  operations: 6
+- scope: private-intel/incident
+  operations: 2
+- scope: private-intel/incident:read
+  operations: 10
+- scope: private-intel/incident:write
+  operations: 4
+- scope: private-intel/note:write
+  operations: 2
+- scope: private-intel:read
+  operations: 16
+- scope: private-intel:write
+  operations: 4
+- scope: response/observables:read
+  operations: 2
+- scope: response/sighting:read
+  operations: 2
+- scope: response/trigger:write
+  operations: 2
+- scope: vault/configs:read
+  operations: 2
+- scope: webhook/management:read
+  operations: 4
+- scope: webhook/management:write
+  operations: 6
+- scope: webhook/result:read
+  operations: 4
+- scope: webhook/result:write
+  operations: 2
+gaps:
+- 'Scopes advertised by the authorization server but not declared in any spec: base-telemetry, detection, forensics_admin,
+  forensics_analyst, forensics_responder, global-intel, insights, security-events'
+- 'Fine-grained operation scopes declared in operation descriptions but absent from every securityDefinitions scopes
+  map: admin/integration/module-type:write, admin/webhook/management:write, admin/webhook/result:write, enrich/observables/deliberate:read,
+  enrich/observables/observe:read, enrich/observables/refer:read, enrich/observables/reputation:read, enrich/query-ocsf:read,
+  enrich/targets/observe:read, feedback:read, feedback:write, integration/health:read, integration/module-instance,
+  integration/module-instance:read, integration/module-instance:write, integration/module-type-patch:read, integration/module-type-patch:write,
+  integration/module-type:read, integration/module-type:write, private-intel/incident, private-intel/incident:read,
+  private-intel/incident:write, private-intel/note:write, response/observables:read, response/sighting:read, response/trigger:write,
+  vault/configs:read, webhook/management:read, webhook/management:write, webhook/result:read, webhook/result:write'
