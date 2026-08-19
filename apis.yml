@@ -2,10 +2,13 @@ aid: cisco-xdr
 name: Cisco XDR
 description: 'Cisco XDR is Cisco''s extended detection and response platform, the successor to SecureX. It correlates
   telemetry from Cisco Secure Endpoint, Secure Firewall, Umbrella, Duo, Secure Email and third-party sources into
-  incidents, and exposes REST APIs for incidents, investigations, response actions and threat intelligence, documented
-  on Cisco DevNet. Cisco publishes an XDR MCP server alongside the REST surface. Unlike most of Cisco''s estate,
-  XDR does publish anonymously fetchable Swagger 2.0 documents: nine IROH service specifications at visibility.amp.cisco.com
-  plus the CTIA threat-intelligence API, together 251 paths and 335 operations.'
+  incidents, and exposes four distinct REST API families behind a single OAuth 2.0 authorization server: the IROH
+  platform (inspect, enrich, response actions, integration modules, events, webhooks) at visibility.amp.cisco.com,
+  the CTIA private-intelligence store at private.intel.amp.cisco.com, the Conure v2 incidents and investigations
+  service at conure.us.security.cisco.com, and the Automation workflow engine at automate.us.security.cisco.com.
+  All four publish anonymously fetchable machine-readable contracts — 52 documents, 581 operations, 1,176 schema
+  definitions — and Cisco additionally ships a 27-tool MCP server through CiscoDevNet, stdio-only. There is no sandbox,
+  no test mode and no idempotency key anywhere, including on the operation that blocks, isolates and quarantines.'
 url: https://raw.githubusercontent.com/api-evangelist/cisco-xdr/refs/heads/main/apis.yml
 type: Index
 access: 3rd-Party
@@ -15,11 +18,8 @@ x-source: cisco-family-buildout:2026-08-19
 x-parent: cisco
 x-relationship: product
 x-contract-status: real
-x-contract-note: 'Cisco XDR publishes anonymously fetchable Swagger 2.0 at visibility.amp.cisco.com/iroh/<service>/swagger.json
-  — nine IROH services plus the CTIA threat intelligence API at private.intel.amp.cisco.com/swagger.json. Ten documents,
-  251 paths, 335 operations, harvested 2026-08-19 with x-provenance. The host returns real 404s on invented paths,
-  so the 200s are genuine. This corrects an earlier ''none'' reading: the initial probe checked developer.cisco.com
-  and the product page, not the IROH service hosts.'
+x-contract-note: Anonymously fetchable Swagger 2.0 for nine IROH services at visibility.amp.cisco.com plus the CTIA
+  threat-intelligence API — 581 operations. The host returns real 404s on invented paths, so the 200s are genuine.
 specificationVersion: '0.23'
 created: '2026-08-19'
 modified: '2026-08-19'
@@ -30,411 +30,684 @@ tags:
 - Incident Response
 - SOC
 - Threat Intelligence
+- Extended Detection and Response
+- OAuth
+- Webhooks
+- Automation
+- MCP
 apis:
 - aid: cisco-xdr:cisco-xdr-actor-api
   name: Cisco XDR Actor API
   description: Actor operations
   tags:
   - Actor
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-actor-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-asset-api
   name: Cisco XDR Asset API
   description: Asset operations
   tags:
   - Asset
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-asset-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-asset-mapping-api
   name: Cisco XDR Asset Mapping API
   description: Asset Mapping operations
   tags:
   - Asset Mapping
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-asset-mapping-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-asset-properties-api
   name: Cisco XDR Asset Properties API
   description: Asset Properties operations
   tags:
   - Asset Properties
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-asset-properties-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-attack-pattern-api
   name: Cisco XDR Attack Pattern API
   description: Attack Pattern operations
   tags:
   - Attack Pattern
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-attack-pattern-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-bulk-api
   name: Cisco XDR Bulk API
   description: The Bulk API from Cisco XDR — 1 operation(s) for bulk.
   tags:
   - Bulk
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-bulk-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-bundle-api
   name: Cisco XDR Bundle API
   description: The Bundle API from Cisco XDR — 2 operation(s) for bundle.
   tags:
   - Bundle
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-bundle-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-campaign-api
   name: Cisco XDR Campaign API
   description: Campaign operations
   tags:
   - Campaign
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-campaign-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-casebook-api
   name: Cisco XDR Casebook API
   description: Casebook operations
   tags:
   - Casebook
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-casebook-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-coa-api
   name: Cisco XDR COA API
   description: COA operations
   tags:
   - COA
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-coa-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-deliberate-api
   name: Cisco XDR Deliberate API
-  description: >-
-    This set of routes allow to quickly get answers from your integrations You might use them at the start
-    of any investigation to quickly get answers from your modules if something is bad.
+  description: This set of routes allow to quickly get answers from your integrations You might use them at the
+    start of any investigation to quickly get answers from your modules if something is bad.
   tags:
   - Deliberate
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-deliberate-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/enrich-api-guide/
 - aid: cisco-xdr:cisco-xdr-event-api
   name: Cisco XDR Event API
   description: Events operations
   tags:
   - Event
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-event-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-feed-api
   name: Cisco XDR Feed API
   description: Feed operations
   tags:
   - Feed
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-feed-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-feedback-api
   name: Cisco XDR Feedback API
   description: Feedback Routes
   tags:
   - Feedback
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-feedback-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-graphql-api
   name: Cisco XDR Graph QL API
   description: The GraphQL API from Cisco XDR — 1 operation(s) for graphql.
   tags:
   - GraphQL
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-graphql-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-health-api
   name: Cisco XDR Health API
-  description: >-
-    This set of routes allow to check the health of your integrations setup Verify if your modules are
+  description: This set of routes allow to check the health of your integrations setup Verify if your modules are
     setup correctly and if your credentials are correct.
   tags:
   - Health
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-health-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/enrich-api-guide/
 - aid: cisco-xdr:cisco-xdr-incident-api
   name: Cisco XDR Incident API
   description: Incident operations
   tags:
   - Incident
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-incident-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/incident-management-api-guide/
 - aid: cisco-xdr:cisco-xdr-indicator-api
   name: Cisco XDR Indicator API
   description: Indicator operations
   tags:
   - Indicator
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-indicator-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-inspect-api
   name: Cisco XDR Inspect API
   description: Inspect related routes
   tags:
   - Inspect
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-inspect-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/inspect-api-guide/
 - aid: cisco-xdr:cisco-xdr-investigation-api
   name: Cisco XDR Investigation API
   description: The Investigation API from Cisco XDR — 8 operation(s) for investigation.
   tags:
   - Investigation
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-investigation-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-invite-api
   name: Cisco XDR INVITE API
   description: The INVITE API from Cisco XDR — 2 operation(s) for invite.
   tags:
   - INVITE
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-invite-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-iroh-api
   name: Cisco XDR Iroh API
   description: The Iroh API from Cisco XDR — 3 operation(s) for iroh.
   tags:
   - Iroh
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-iroh-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-judgement-api
   name: Cisco XDR Judgement API
   description: Judgement operations
   tags:
   - Judgement
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-judgement-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-login-api
   name: Cisco XDR LOGIN API
   description: The LOGIN API from Cisco XDR — 4 operation(s) for login.
   tags:
   - LOGIN
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-login-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-malware-api
   name: Cisco XDR Malware API
   description: Malware operations
   tags:
   - Malware
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-malware-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-metrics-api
   name: Cisco XDR Metrics API
   description: The Metrics API from Cisco XDR — 1 operation(s) for metrics.
   tags:
   - Metrics
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-metrics-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-moduleinstance-api
   name: Cisco XDR Module Instance API
   description: ModuleInstance Routes
   tags:
   - ModuleInstance
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-moduleinstance-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-moduletype-api
   name: Cisco XDR Module Type API
   description: ModuleType Routes
   tags:
   - ModuleType
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-moduletype-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-moduletypepatch-api
   name: Cisco XDR Module Type Patch API
   description: ModuleTypePatch Routes
   tags:
   - ModuleTypePatch
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-moduletypepatch-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-note-api
   name: Cisco XDR Note API
   description: The Note API from Cisco XDR — 8 operation(s) for note.
   tags:
   - Note
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-note-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-observe-api
   name: Cisco XDR Observe API
-  description: >-
-    This set of routes allow to get in depth investigation data about a threat You might use them at the
-    start of any investigation to get the full picture and get to know if something has been seen in your
-    environment.
+  description: This set of routes allow to get in depth investigation data about a threat You might use them at
+    the start of any investigation to get the full picture and get to know if something has been seen in your environment.
   tags:
   - Observe
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-observe-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/enrich-api-guide/
 - aid: cisco-xdr:cisco-xdr-one-click-api
   name: Cisco XDR One Click API
   description: One-click Routes
   tags:
   - One-click
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-one-click-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-private-intel-api
   name: Cisco XDR Private Intel API
   description: Access private-intel
   tags:
   - Private Intel
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-private-intel-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/incident-management-api-guide/
 - aid: cisco-xdr:cisco-xdr-properties-api
   name: Cisco XDR Properties API
   description: The Properties API from Cisco XDR — 1 operation(s) for properties.
   tags:
   - Properties
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-properties-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-query-api
   name: Cisco XDR Query API
-  description: >-
-    This set of routes allow to query for records related to observable events.Results are returned in
+  description: This set of routes allow to query for records related to observable events.Results are returned in
     OCSF format.
   tags:
   - Query
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-query-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/enrich-api-guide/
 - aid: cisco-xdr:cisco-xdr-refer-api
   name: Cisco XDR Refer API
-  description: >-
-    This set of routes allow to get relevant Reference links and quickly pivot pursuing your investigation
+  description: This set of routes allow to get relevant Reference links and quickly pivot pursuing your investigation
     on a specific product interface.
   tags:
   - Refer
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-refer-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/enrich-api-guide/
 - aid: cisco-xdr:cisco-xdr-relationship-api
   name: Cisco XDR Relationship API
   description: Relationship operations
   tags:
   - Relationship
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-relationship-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-reputation-api
   name: Cisco XDR Reputation API
   description: The Reputation API from Cisco XDR — 1 operation(s) for reputation.
   tags:
   - Reputation
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-reputation-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/enrich-api-guide/
 - aid: cisco-xdr:cisco-xdr-response-api
   name: Cisco XDR Response API
   description: IROH Response
   tags:
   - Response
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-response-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/response-api-guide/
 - aid: cisco-xdr:cisco-xdr-session-cookie-api
   name: Cisco XDR Session Cookie API
   description: Cookie-based session validation
   tags:
   - Session Cookie
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-session-cookie-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-sighting-api
   name: Cisco XDR Sighting API
   description: Sighting operations
   tags:
   - Sighting
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-sighting-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-status-api
   name: Cisco XDR Status API
   description: The Status API from Cisco XDR — 1 operation(s) for status.
   tags:
   - Status
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-status-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-target-record-api
   name: Cisco XDR Target Record API
   description: Target Record operations
   tags:
   - Target Record
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-target-record-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-tool-api
   name: Cisco XDR Tool API
   description: Tool operations
   tags:
   - Tool
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-tool-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-verdict-api
   name: Cisco XDR Verdict API
   description: The Verdict API from Cisco XDR — 1 operation(s) for verdict.
   tags:
   - Verdict
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-verdict-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-version-api
   name: Cisco XDR Version API
   description: The Version API from Cisco XDR — 1 operation(s) for version.
   tags:
   - Version
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-version-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-vulnerability-api
   name: Cisco XDR Vulnerability API
   description: The Vulnerability API from Cisco XDR — 9 operation(s) for vulnerability.
   tags:
   - Vulnerability
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-vulnerability-api-openapi.yml
+  baseURL: https://private.intel.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-webhook-api
   name: Cisco XDR Webhook API
   description: Webhook Routes
   tags:
   - Webhook
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-webhook-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-webhookresult-api
   name: Cisco XDR Webhook Result API
   description: The WebhookResult API from Cisco XDR — 2 operation(s) for webhookresult.
   tags:
   - WebhookResult
+  - Security
+  - XDR
+  - Threat Detection
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-webhookresult-api-openapi.yml
+  baseURL: https://visibility.amp.cisco.com
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+- aid: cisco-xdr:cisco-xdr-mcp-server
+  name: Cisco XDR MCP Server
+  description: Model Context Protocol server published by CiscoDevNet exposing 27 Cisco XDR tools across Inspect,
+    Investigate, Incidents, Response Actions, Casebooks, Threat Intel, Workflows and Admin, plus 5 resources and
+    6 prompts. Apache-2.0, TypeScript, stdio transport only — there is no hosted endpoint and the package is not
+    on npm, so a human must clone and build it before any agent can reach Cisco XDR through it.
+  humanURL: https://github.com/CiscoDevNet/xdr-mcp-community
+  baseURL: https://visibility.amp.cisco.com
+  tags:
+  - Security
+  - XDR
+  - MCP
+  - Agent
+  - Threat Detection
+  properties:
+  - type: MCPServer
+    url: mcp/cisco-xdr-mcp.yml
+  - type: MCPServer
+    url: https://github.com/CiscoDevNet/xdr-mcp-community
+  - type: ToolCrosswalk
+    url: mcp/cisco-xdr-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Documentation
+    url: https://github.com/CiscoDevNet/xdr-mcp-community/blob/main/INSTALL.md
 common:
+- type: Overlay
+  url: overlays/cisco-xdr-incidents-investigations-overlay.yaml
+- type: Overlay
+  url: overlays/cisco-xdr-automation-overlay.yaml
 - type: OAuthScopes
   url: scopes/cisco-xdr-scopes.yml
 - type: Authentication
@@ -460,8 +733,84 @@ common:
   url: https://www.cisco.com/site/us/en/products/security/xdr/index.html
 - type: Portal
   url: https://developer.cisco.com/
+- type: OpenAPI
+  url: openapi/cisco-xdr-incidents-investigations-openapi.json
+- type: OpenAPI
+  url: openapi/cisco-xdr-automation-openapi.json
+- type: Conventions
+  url: conventions/cisco-xdr-conventions.yml
+- type: ErrorCatalog
+  url: errors/cisco-xdr-problem-types.yml
+- type: DataModel
+  url: data-model/cisco-xdr-data-model.yml
+- type: Lifecycle
+  url: lifecycle/cisco-xdr-lifecycle.yml
+- type: StatusPage
+  url: https://status.tdr.cisco.com/
+- type: ChangeLog
+  url: changelog/cisco-xdr-changelog.yml
+- type: ChangeLog
+  url: https://developer.cisco.com/docs/cisco-xdr/api-changelog/
+- type: RateLimits
+  url: rate-limits/cisco-xdr-rate-limits.yml
+- type: Plans
+  url: plans/cisco-xdr-plans-pricing.yml
+- type: Packages
+  url: packages/cisco-xdr-packages.yml
+- type: SDKs
+  url: packages/cisco-xdr-packages.yml
+- type: WellKnown
+  url: well-known/cisco-xdr-well-known.yml
+- type: SecurityTxt
+  url: well-known/cisco-xdr-security.txt
+- type: Security
+  url: https://sec.cloudapps.cisco.com/security/center/resources/security_vulnerability_policy.html
+- type: TrustCenter
+  url: security/cisco-xdr-trust-center.yml
+- type: Compliance
+  url: https://trustportal.cisco.com/
+- type: Conformance
+  url: conformance/cisco-xdr-conformance.yml
+- type: Webhooks
+  url: asyncapi/cisco-xdr-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/cisco-xdr-llms.txt
+- type: Overlay
+  url: overlays/cisco-xdr-inspect-overlay.yaml
+- type: Overlay
+  url: overlays/cisco-xdr-iroh-response-overlay.yaml
+- type: MCPServer
+  url: mcp/cisco-xdr-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/cisco-xdr-tool-crosswalk.yml
+- type: DeveloperPortal
+  url: https://developer.cisco.com/cisco-xdr/
+- type: GettingStarted
+  url: https://developer.cisco.com/docs/cisco-xdr/getting-started/
+- type: Support
+  url: https://developer.cisco.com/docs/cisco-xdr/developer-support/
+- type: HelpCenter
+  url: https://docs.xdr.security.cisco.com/
+- type: Blog
+  url: https://blogs.cisco.com/tag/xdr
+- type: GitHubOrganization
+  url: https://github.com/CiscoDevNet
+- type: TermsOfService
+  url: https://www.cisco.com/c/en/us/about/legal/cloud-and-software.html
+- type: PrivacyPolicy
+  url: https://www.cisco.com/c/en/us/about/legal/privacy-full.html
+- type: Login
+  url: https://xdr.us.security.cisco.com/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/cisco.png
+x-enrichment:
+  date: '2026-08-19'
+  status: enriched
+  artifacts_added: 37
+  pass: local-v1
