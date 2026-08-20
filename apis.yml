@@ -31,6 +31,18 @@ tags:
 - SOC
 - Threat Intelligence
 - Extended Detection and Response
+- Authentication
+- Webhook
+- Automation
+- MCP
+tags_raw:
+- Security
+- XDR
+- Threat Detection
+- Incident Response
+- SOC
+- Threat Intelligence
+- Extended Detection and Response
 - OAuth
 - Webhooks
 - Automation
@@ -157,6 +169,11 @@ apis:
   name: Cisco XDR COA API
   description: COA operations
   tags:
+  - coa
+  - Security
+  - XDR
+  - Threat Detection
+  tags_raw:
   - COA
   - Security
   - XDR
@@ -302,6 +319,11 @@ apis:
   name: Cisco XDR INVITE API
   description: The INVITE API from Cisco XDR — 2 operation(s) for invite.
   tags:
+  - invite
+  - Security
+  - XDR
+  - Threat Detection
+  tags_raw:
   - INVITE
   - Security
   - XDR
@@ -341,6 +363,11 @@ apis:
   name: Cisco XDR LOGIN API
   description: The LOGIN API from Cisco XDR — 4 operation(s) for login.
   tags:
+  - Login
+  - Security
+  - XDR
+  - Threat Detection
+  tags_raw:
   - LOGIN
   - Security
   - XDR
@@ -446,6 +473,11 @@ apis:
   name: Cisco XDR One Click API
   description: One-click Routes
   tags:
+  - One-Click
+  - Security
+  - XDR
+  - Threat Detection
+  tags_raw:
   - One-click
   - Security
   - XDR
@@ -687,6 +719,12 @@ apis:
   humanURL: https://github.com/CiscoDevNet/xdr-mcp-community
   baseURL: https://visibility.amp.cisco.com
   tags:
+  - Security
+  - XDR
+  - MCP
+  - Agents
+  - Threat Detection
+  tags_raw:
   - Security
   - XDR
   - MCP
