@@ -185,8 +185,9 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-deliberate-api
   name: Cisco XDR Deliberate API
-  description: This set of routes allow to quickly get answers from your integrations You might use them at the
-    start of any investigation to quickly get answers from your modules if something is bad.
+  description: >-
+    This set of routes allow to quickly get answers from your integrations You might use them at the start
+    of any investigation to quickly get answers from your modules if something is bad.
   tags:
   - Deliberate
   - Security
@@ -251,7 +252,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-health-api
   name: Cisco XDR Health API
-  description: This set of routes allow to check the health of your integrations setup Verify if your modules are
+  description: >-
+    This set of routes allow to check the health of your integrations setup Verify if your modules are
     setup correctly and if your credentials are correct.
   tags:
   - Health
@@ -457,8 +459,10 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-observe-api
   name: Cisco XDR Observe API
-  description: This set of routes allow to get in depth investigation data about a threat You might use them at
-    the start of any investigation to get the full picture and get to know if something has been seen in your environment.
+  description: >-
+    This set of routes allow to get in depth investigation data about a threat You might use them at the
+    start of any investigation to get the full picture and get to know if something has been seen in your
+    environment.
   tags:
   - Observe
   - Security
@@ -515,7 +519,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-query-api
   name: Cisco XDR Query API
-  description: This set of routes allow to query for records related to observable events.Results are returned in
+  description: >-
+    This set of routes allow to query for records related to observable events.Results are returned in
     OCSF format.
   tags:
   - Query
@@ -529,7 +534,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/enrich-api-guide/
 - aid: cisco-xdr:cisco-xdr-refer-api
   name: Cisco XDR Refer API
-  description: This set of routes allow to get relevant Reference links and quickly pivot pursuing your investigation
+  description: >-
+    This set of routes allow to get relevant Reference links and quickly pivot pursuing your investigation
     on a specific product interface.
   tags:
   - Refer
@@ -712,10 +718,12 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-mcp-server
   name: Cisco XDR MCP Server
-  description: Model Context Protocol server published by CiscoDevNet exposing 27 Cisco XDR tools across Inspect,
-    Investigate, Incidents, Response Actions, Casebooks, Threat Intel, Workflows and Admin, plus 5 resources and
-    6 prompts. Apache-2.0, TypeScript, stdio transport only — there is no hosted endpoint and the package is not
-    on npm, so a human must clone and build it before any agent can reach Cisco XDR through it.
+  description: >-
+    Model Context Protocol server published by CiscoDevNet exposing 27 Cisco XDR tools across Inspect,
+    Investigate, Incidents, Response Actions, Casebooks, Threat Intel, Workflows and Admin, plus 5 resources
+    and 6 prompts. Apache-2.0, TypeScript, stdio transport only — there is no hosted endpoint and the
+    package is not on npm, so a human must clone and build it before any agent can reach Cisco XDR through
+    it.
   humanURL: https://github.com/CiscoDevNet/xdr-mcp-community
   baseURL: https://visibility.amp.cisco.com
   tags:
@@ -741,6 +749,338 @@ apis:
     url: skills/_index.yml
   - type: Documentation
     url: https://github.com/CiscoDevNet/xdr-mcp-community/blob/main/INSTALL.md
+- aid: cisco-xdr:cisco-xdr-calendars-api
+  name: Cisco XDR Calendars API
+  description: The Calendars API from Cisco XDR — 3 operation(s) for calendars.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Calendars
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-calendars-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-categories-api
+  name: Cisco XDR Categories API
+  description: The Categories API from Cisco XDR — 2 operation(s) for categories.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-categories-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-changeowner-api
+  name: Cisco XDR Change Owner API
+  description: The ChangeOwner API from Cisco XDR — 1 operation(s) for changeowner.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - ChangeOwner
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-changeowner-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-comments-api
+  name: Cisco XDR Comments API
+  description: The Comments API from Cisco XDR — 2 operation(s) for comments.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Comments
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-comments-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-events-api
+  name: Cisco XDR Events API
+  description: The Events API from Cisco XDR — 2 operation(s) for events.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-events-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-eventsratelimit-api
+  name: Cisco XDR Events Rate Limit API
+  description: The EventsRateLimit API from Cisco XDR — 1 operation(s) for eventsratelimit.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - EventsRateLimit
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-eventsratelimit-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-metadata-api
+  name: Cisco XDR Metadata API
+  description: The Metadata API from Cisco XDR — 1 operation(s) for metadata.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-metadata-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-ratings-api
+  name: Cisco XDR Ratings API
+  description: The Ratings API from Cisco XDR — 3 operation(s) for ratings.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Ratings
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-ratings-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-references-api
+  name: Cisco XDR References API
+  description: The References API from Cisco XDR — 1 operation(s) for references.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - References
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-references-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-remotemeta-api
+  name: Cisco XDR Remote Meta API
+  description: The RemoteMeta API from Cisco XDR — 3 operation(s) for remotemeta.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - RemoteMeta
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-remotemeta-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-rules-api
+  name: Cisco XDR Rules API
+  description: The Rules API from Cisco XDR — 4 operation(s) for rules.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-rules-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-runtimeusers-api
+  name: Cisco XDR Runtime Users API
+  description: The RuntimeUsers API from Cisco XDR — 2 operation(s) for runtimeusers.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - RuntimeUsers
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-runtimeusers-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-schedules-api
+  name: Cisco XDR Schedules API
+  description: The Schedules API from Cisco XDR — 2 operation(s) for schedules.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-schedules-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-schemas-api
+  name: Cisco XDR Schemas API
+  description: The Schemas API from Cisco XDR — 2 operation(s) for schemas.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Schemas
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-schemas-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-shareobjectpermissions-api
+  name: Cisco XDR Share Object Permissions API
+  description: >-
+    The ShareObjectPermissions API from Cisco XDR — 1 operation(s) for shareobjectpermissions.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - ShareObjectPermissions
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-shareobjectpermissions-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-sxirohincident-api
+  name: Cisco XDR SXIROH Incident API
+  description: The SXIROHIncident API from Cisco XDR — 1 operation(s) for sxirohincident.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - SXIROHIncident
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-sxirohincident-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-tables-api
+  name: Cisco XDR Tables API
+  description: The Tables API from Cisco XDR — 2 operation(s) for tables.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Tables
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-tables-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-tabletypes-api
+  name: Cisco XDR Table Types API
+  description: The TableTypes API from Cisco XDR — 2 operation(s) for tabletypes.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - TableTypes
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-tabletypes-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-targetgroups-api
+  name: Cisco XDR Target Groups API
+  description: The TargetGroups API from Cisco XDR — 2 operation(s) for targetgroups.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - TargetGroups
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-targetgroups-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-targets-api
+  name: Cisco XDR Targets API
+  description: The Targets API from Cisco XDR — 3 operation(s) for targets.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Targets
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-targets-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-tasks-api
+  name: Cisco XDR Tasks API
+  description: The Tasks API from Cisco XDR — 5 operation(s) for tasks.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-tasks-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-tenants-api
+  name: Cisco XDR Tenants API
+  description: The Tenants API from Cisco XDR — 3 operation(s) for tenants.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Tenants
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-tenants-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-triggers-api
+  name: Cisco XDR Triggers API
+  description: The Triggers API from Cisco XDR — 2 operation(s) for triggers.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Triggers
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-triggers-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-v1-api
+  name: Cisco XDR V1 API
+  description: The v1 API from Cisco XDR — 4 operation(s) for v1.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - v1
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-v1-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-v2-api
+  name: Cisco XDR V2 API
+  description: The v2 API from Cisco XDR — 75 operation(s) for v2.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - v2
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-v2-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-v3-api
+  name: Cisco XDR V3 API
+  description: The v3 API from Cisco XDR — 10 operation(s) for v3.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - v3
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-v3-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-variables-api
+  name: Cisco XDR Variables API
+  description: The Variables API from Cisco XDR — 3 operation(s) for variables.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Variables
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-variables-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-variabletypes-api
+  name: Cisco XDR Variable Types API
+  description: The VariableTypes API from Cisco XDR — 3 operation(s) for variabletypes.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - VariableTypes
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-variabletypes-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-webhooks-api
+  name: Cisco XDR Webhooks API
+  description: The Webhooks API from Cisco XDR — 3 operation(s) for webhooks.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-webhooks-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-workflowinstances-api
+  name: Cisco XDR Workflow Instances API
+  description: The WorkflowInstances API from Cisco XDR — 7 operation(s) for workflowinstances.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - WorkflowInstances
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-workflowinstances-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-workflows-api
+  name: Cisco XDR Workflows API
+  description: The Workflows API from Cisco XDR — 20 operation(s) for workflows.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-workflows-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-workflowvariablereferences-api
+  name: Cisco XDR Workflow Variable References API
+  description: >-
+    The WorkflowVariableReferences API from Cisco XDR — 1 operation(s) for workflowvariablereferences.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - WorkflowVariableReferences
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-workflowvariablereferences-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-xchange-api
+  name: Cisco XDR Xchange API
+  description: The Xchange API from Cisco XDR — 4 operation(s) for xchange.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Xchange
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-xchange-api-openapi.yml
 common:
 - type: Overlay
   url: overlays/cisco-xdr-incidents-investigations-overlay.yaml
