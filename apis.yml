@@ -12,6 +12,18 @@ description: 'Cisco XDR is Cisco''s extended detection and response platform, th
 url: https://raw.githubusercontent.com/api-evangelist/cisco-xdr/refs/heads/main/apis.yml
 type: Index
 access: 3rd-Party
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 position: Consumer
 x-type: company
 x-source: cisco-family-buildout:2026-08-19
