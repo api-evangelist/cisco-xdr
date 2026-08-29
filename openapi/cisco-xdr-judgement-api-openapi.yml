@@ -1587,6 +1587,19 @@ paths:
       description: Requires capability list-judgements.
 components:
   schemas:
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
     PartialJudgement:
       example:
         valid_time:
@@ -1955,111 +1968,6 @@ components:
           type: string
           format: date-time
       additionalProperties: false
-    MetricResultData:
-      type: object
-      additionalProperties: {}
-    Observable:
-      example:
-        value: 1.2.3.4
-        type: ip
-      description: An AssetMapping is a record that a specific Observable maps to an Asset for an indicated period of time.
-      type: object
-      properties:
-        value:
-          example: 1.2.3.4
-          description: The value of the observable.
-          type: string
-        type:
-          example: ip
-          description: The type of observable.
-          type: string
-          enum:
-          - file_path
-          - mac_address
-          - trend_micro_id
-          - cybereason_id
-          - process_args
-          - s1_agent_id
-          - device
-          - hostname
-          - certificate_common_name
-          - serial_number
-          - meraki_network_id
-          - url
-          - jamf_management_id
-          - certificate_serial
-          - intune_id
-          - meraki_org_id
-          - cisco_cm_id
-          - registry_key
-          - process_path
-          - darktrace_id
-          - process_username
-          - cortex_agent_id
-          - orbital_node_id
-          - process_uid
-          - ngfw_name
-          - user
-          - certificate_issuer
-          - ipv6
-          - email
-          - cisco_uc_id
-          - cvm_id
-          - sha256
-          - crowdstrike_id
-          - google_cloud_id
-          - google_chromebook_id
-          - acudid
-          - sha1
-          - registry_name
-          - md5
-          - service_now_id
-          - ip
-          - domain
-          - email_subject
-          - imei
-          - ngfw_id
-          - amp_computer_guid
-          - ms_machine_id
-          - secure_access_id
-          - mutex
-          - processor_id
-          - swc_device_id
-          - registry_path
-          - odns_identity
-          - odns_identity_label
-          - cisco_mid
-          - process_name
-          - pki_serial
-          - meraki_node_sn
-          - email_messageid
-          - imsi
-          - user_agent
-          - process_hash
-          - file_name
-      additionalProperties: false
-      required:
-      - value
-      - type
-    MetricResult:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/MetricResultData'
-        type:
-          type: string
-          enum:
-          - histogram
-          - topn
-          - avg
-          - cardinality
-        filters:
-          $ref: '#/components/schemas/MetricResultFilters'
-      additionalProperties: false
-      required:
-      - data
-      - type
-      - filters
     ExternalReference:
       example:
         source_name: string
@@ -2097,19 +2005,6 @@ components:
       additionalProperties: false
       required:
       - source_name
-    MetricResultFilters:
-      type: object
-      properties:
-        from:
-          type: string
-          format: date-time
-        to:
-          type: string
-          format: date-time
-      additionalProperties: {}
-      required:
-      - from
-      - to
     Judgement:
       example:
         valid_time:
@@ -2276,6 +2171,111 @@ components:
           - High
           - Low
       additionalProperties: false
+    Observable:
+      example:
+        value: 1.2.3.4
+        type: ip
+      description: An AssetMapping is a record that a specific Observable maps to an Asset for an indicated period of time.
+      type: object
+      properties:
+        value:
+          example: 1.2.3.4
+          description: The value of the observable.
+          type: string
+        type:
+          example: ip
+          description: The type of observable.
+          type: string
+          enum:
+          - file_path
+          - mac_address
+          - trend_micro_id
+          - cybereason_id
+          - process_args
+          - s1_agent_id
+          - device
+          - hostname
+          - certificate_common_name
+          - serial_number
+          - meraki_network_id
+          - url
+          - jamf_management_id
+          - certificate_serial
+          - intune_id
+          - meraki_org_id
+          - cisco_cm_id
+          - registry_key
+          - process_path
+          - darktrace_id
+          - process_username
+          - cortex_agent_id
+          - orbital_node_id
+          - process_uid
+          - ngfw_name
+          - user
+          - certificate_issuer
+          - ipv6
+          - email
+          - cisco_uc_id
+          - cvm_id
+          - sha256
+          - crowdstrike_id
+          - google_cloud_id
+          - google_chromebook_id
+          - acudid
+          - sha1
+          - registry_name
+          - md5
+          - service_now_id
+          - ip
+          - domain
+          - email_subject
+          - imei
+          - ngfw_id
+          - amp_computer_guid
+          - ms_machine_id
+          - secure_access_id
+          - mutex
+          - processor_id
+          - swc_device_id
+          - registry_path
+          - odns_identity
+          - odns_identity_label
+          - cisco_mid
+          - process_name
+          - pki_serial
+          - meraki_node_sn
+          - email_messageid
+          - imsi
+          - user_agent
+          - process_hash
+          - file_name
+      additionalProperties: false
+      required:
+      - value
+      - type
+    MetricResultData:
+      type: object
+      additionalProperties: {}
+    MetricResult:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MetricResultData'
+        type:
+          type: string
+          enum:
+          - histogram
+          - topn
+          - avg
+          - cardinality
+        filters:
+          $ref: '#/components/schemas/MetricResultFilters'
+      additionalProperties: false
+      required:
+      - data
+      - type
+      - filters
   securitySchemes:
     JWT:
       type: apiKey

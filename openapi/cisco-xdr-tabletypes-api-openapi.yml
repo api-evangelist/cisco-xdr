@@ -1,0 +1,695 @@
+openapi: 3.2.0
+info:
+  title: REST API. Table Types API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: TableTypes
+paths:
+  /v1/table_types:
+    get:
+      tags:
+      - TableTypes
+      summary: '# Handler to return get all table types'
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: getAllTableType
+      responses:
+        '200':
+          description: 'A TableTypeGetAllResponse model
+
+
+            # This is used for returning a response of Target Type as a body'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreateTableTypeGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    post:
+      tags:
+      - TableTypes
+      summary: Handler to create Table Type.
+      description: 'Allowed Role(s): admin'
+      operationId: tableTypeCreateRequest
+      requestBody:
+        description: The request to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tableTypePostRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '201':
+          description: 'A TableTypeGetResponse model
+
+
+            # This is used for returning a response of Target Type as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTableTypeGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/table_types/{table_type_id}:
+    get:
+      tags:
+      - TableTypes
+      summary: Handler to return Table type's information using ID.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: getTableTypeById
+      parameters:
+      - name: table_type_id
+        in: path
+        description: The Table Type ID
+        required: true
+        schema:
+          type: string
+          x-go-name: TableTypeID
+        x-go-name: TableTypeID
+      responses:
+        '200':
+          description: 'A TableTypeSchemaGetResponse model
+
+
+            # This is used for returning a response of Target Type as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableTypeSchemaResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    put:
+      tags:
+      - TableTypes
+      summary: Handler to Update Table Type.
+      description: 'Allowed Role(s): admin'
+      operationId: tableTypePutRequest
+      parameters:
+      - name: table_type_id
+        in: path
+        description: The request to submit.
+        required: true
+        schema:
+          type: string
+          x-go-name: TableTypeID
+        x-go-name: TableTypeID
+      requestBody:
+        description: The request to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tableTypePostRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: 'A TableTypeGetResponse model
+
+
+            # This is used for returning a response of Target Type as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTableTypeGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '412':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+    delete:
+      tags:
+      - TableTypes
+      summary: Handler to delete Table type using ID.
+      description: 'Allowed Role(s): admin'
+      operationId: delTableTypeById
+      parameters:
+      - name: table_type_id
+        in: path
+        description: The Table Type ID
+        required: true
+        schema:
+          type: string
+          x-go-name: TableTypeID
+        x-go-name: TableTypeID
+      responses:
+        '204':
+          description: NoContent response model
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '412':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+components:
+  schemas:
+    TableTypeSchemaResponse:
+      title: TableTypeSchemaResponse ...
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        data_type:
+          type: string
+          x-go-name: DataType
+        description:
+          type: string
+          x-go-name: Description
+        display_name:
+          type: string
+          x-go-name: Name
+        id:
+          type: string
+          x-go-name: SchemaID
+        inherits:
+          type: string
+          x-go-name: Inherits
+        owner:
+          type: string
+          x-go-name: Owner
+        property_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: PropertySchema
+        row_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: RowSchema
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    tableTypePostRequest:
+      title: TableTypePostRequest ...
+      type: object
+      properties:
+        columns:
+          type: array
+          description: Specify columns for table type
+          items:
+            type: object
+            additionalProperties:
+              type: object
+              properties: {}
+          x-go-name: ConsoleCols
+        description:
+          type: string
+          description: Description of the Table Type
+          x-go-name: Description
+        display_name:
+          type: string
+          description: Name of the Table Type
+          x-go-name: Name
+        inherits:
+          type: string
+          description: Inherits
+          x-go-name: Inherits
+        max_column_size:
+          type: integer
+          description: Define column size
+          format: int32
+          x-go-name: MaxColumnSize
+        max_columns:
+          type: integer
+          description: Define Max columns for Table Type
+          format: int32
+          x-go-name: MaxColumns
+        max_rows:
+          type: integer
+          description: Define MaxRows for Table Type
+          format: int32
+          x-go-name: MaxRows
+        max_table_size:
+          type: integer
+          description: Define the table size
+          format: int32
+          x-go-name: MaxTableSize
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+      x-go-name: TableTypePostRequest
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    CreateTableTypeGetResponse:
+      title: CreateTableTypeGetResponse ...
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        data_type:
+          type: string
+          x-go-name: DataType
+        description:
+          type: string
+          x-go-name: Description
+        display_name:
+          type: string
+          x-go-name: Name
+        has_tables:
+          type: boolean
+          x-go-name: HasTables
+        id:
+          type: string
+          x-go-name: TableTypeID
+        inherits:
+          type: string
+          x-go-name: Inherits
+        max_column_size:
+          type: integer
+          format: int64
+          x-go-name: MaxColumnSize
+        max_columns:
+          type: integer
+          format: int64
+          x-go-name: MaxColumns
+        max_rows:
+          type: integer
+          format: int64
+          x-go-name: MaxRows
+        max_table_size:
+          type: integer
+          format: int64
+          x-go-name: MaxTableSize
+        owner:
+          type: string
+          x-go-name: Owner
+        row_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: RowSchema
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

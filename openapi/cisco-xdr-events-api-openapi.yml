@@ -1,0 +1,669 @@
+openapi: 3.2.0
+info:
+  title: REST API. Events API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: Events
+paths:
+  /v1/events:
+    get:
+      tags:
+      - Events
+      summary: '# Handler to get all events information'
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: GetAllEvents
+      responses:
+        '200':
+          description: 'An EventsResponse response model
+
+
+            # This is used for returning a response with a single event as body'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    post:
+      tags:
+      - Events
+      summary: '# Handler to create a event'
+      description: 'Allowed Role(s): admin, user
+
+
+        Either ViewSchemaID or Type or both in request body can be provided to create an Event.'
+      operationId: EventCreateRequest
+      requestBody:
+        description: The event to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventPostRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '201':
+          description: 'An EventResponse response model
+
+
+            # This is used for returning a response with a single event as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/events/{event_id}:
+    get:
+      tags:
+      - Events
+      summary: readEventByID Handler to return Event infomration.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: GeEventByID
+      parameters:
+      - name: event_id
+        in: path
+        description: An ID of event
+        required: true
+        schema:
+          type: string
+          x-go-name: EventID
+        x-go-name: EventID
+      responses:
+        '200':
+          description: 'An EventResponse response model
+
+
+            # This is used for returning a response with a single event as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    put:
+      tags:
+      - Events
+      summary: '# Handler to update event'
+      description: 'Allowed Role(s): admin'
+      operationId: EventUpdateRequest
+      parameters:
+      - name: event_id
+        in: path
+        description: The eventID of Event
+        required: true
+        schema:
+          type: string
+          x-go-name: EventID
+        x-go-name: EventID
+      requestBody:
+        description: The event to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventPutRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: 'An EventResponse response model
+
+
+            # This is used for returning a response with a single event as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+    delete:
+      tags:
+      - Events
+      summary: '# Handler to delete event'
+      description: 'Allowed Role(s): admin'
+      operationId: DeleteEventByID
+      parameters:
+      - name: event_id
+        in: path
+        description: An ID of event
+        required: true
+        schema:
+          type: string
+          x-go-name: EventID
+        x-go-name: EventID
+      responses:
+        '204':
+          description: NoContent response model
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '412':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+components:
+  schemas:
+    EventPutRequest:
+      title: EventPutRequest ...
+      required:
+      - properties
+      - title
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Event
+          x-go-name: Description
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of event
+          x-go-name: Properties
+        title:
+          type: string
+          description: Title of Event
+          x-go-name: Title
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    EventPostRequest:
+      required:
+      - properties
+      - title
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Event
+          x-go-name: Description
+        name:
+          type: string
+          description: Name of Event
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of event
+          x-go-name: Properties
+        schema_id:
+          type: string
+          description: ViewSchemaID of Schedule
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          description: Title of Event
+          x-go-name: Title
+        type:
+          type: string
+          description: Type
+          x-go-name: Type
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+      description: 'EventPostRequest struct for events post api
+
+        Either ViewSchemaID or Type or both can be provided to create an Event.'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Event:
+      title: Event ...
+      required:
+      - properties
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
+        id:
+          type: string
+          x-go-name: EventID
+        invalid_properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: InvalidProperties
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of event
+          x-go-name: Properties
+        rule_id:
+          type: string
+          x-go-name: RuleID
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        status:
+          $ref: '#/components/schemas/Status'
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

@@ -234,6 +234,19 @@ paths:
         required: true
 components:
   schemas:
+    CodeBody:
+      type: object
+      properties:
+        code:
+          description: The code from the query parameter of the URL the user is redirected to after a successful login
+          type: string
+        access-token-lifetime-in-sec:
+          description: You can optionally reduce the lifetime of access tokens returned. This parameter will set the lifetime to your preferred choice but you will not be allowed to make the lifetime longer than the configured value. If you try to put a longer lifetime, it will silently returns the token with the configured lifetime.
+          type: integer
+          format: int64
+      additionalProperties: false
+      required:
+      - code
     TokenResponse:
       type: object
       properties:
@@ -252,19 +265,6 @@ components:
       required:
       - access_token
       - token_type
-    CodeBody:
-      type: object
-      properties:
-        code:
-          description: The code from the query parameter of the URL the user is redirected to after a successful login
-          type: string
-        access-token-lifetime-in-sec:
-          description: You can optionally reduce the lifetime of access tokens returned. This parameter will set the lifetime to your preferred choice but you will not be allowed to make the lifetime longer than the configured value. If you try to put a longer lifetime, it will silently returns the token with the configured lifetime.
-          type: integer
-          format: int64
-      additionalProperties: false
-      required:
-      - code
   securitySchemes:
     iroh:
       type: apiKey

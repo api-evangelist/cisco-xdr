@@ -197,36 +197,6 @@ paths:
                 $ref: '#/components/schemas/NormalizedError-500'
 components:
   schemas:
-    HealthStatus:
-      type: object
-      properties:
-        module:
-          type: string
-        module_instance_id:
-          type: string
-        module_type_id:
-          type: string
-        module_instance_state:
-          type: string
-        data:
-          $ref: '#/components/schemas/ModuleHealthStatus'
-      additionalProperties: false
-      required:
-      - module
-      - module_instance_id
-      - module_type_id
-      - data
-    EnvelopedHealthDataDataQuotasKeyword8148663:
-      type: object
-      properties:
-        description:
-          type: string
-        values:
-          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663Values'
-      additionalProperties: false
-      required:
-      - description
-      - values
     EnvelopedHealthDataDataQuotasKeyword8148663Values:
       type: object
       properties:
@@ -256,20 +226,6 @@ components:
           type: string
           format: date-time
       additionalProperties: false
-    ModuleHealthStatus:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - unknown
-          - ok
-          - error
-        quotas:
-          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotas'
-      additionalProperties: false
-      required:
-      - status
     EnvelopedHealth:
       example:
         data:
@@ -314,6 +270,41 @@ components:
           items:
             $ref: '#/components/schemas/ErrorMessage'
       additionalProperties: false
+    ModuleHealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - unknown
+          - ok
+          - error
+        quotas:
+          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotas'
+      additionalProperties: false
+      required:
+      - status
+    EnvelopedSingleHealth:
+      example:
+        data:
+          module: SecureX Global Threat Intelligence
+          module_instance_id: 60852826-5ba1-4e8e-b2d7-f827186c100b
+          module_type_id: 87563e81-ddc5-5f61-b4f8-dbe71252c922
+          data:
+            status: ok
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/HealthStatus'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+      additionalProperties: false
+    EnvelopedHealthDataDataQuotas:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663'
     NormalizedError-500:
       example:
         error: unknown server error
@@ -333,6 +324,25 @@ components:
           type: string
         schema.core.AnythingSchema@3c6f0b88: {}
       additionalProperties: {}
+    HealthStatus:
+      type: object
+      properties:
+        module:
+          type: string
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        data:
+          $ref: '#/components/schemas/ModuleHealthStatus'
+      additionalProperties: false
+      required:
+      - module
+      - module_instance_id
+      - module_type_id
+      - data
     NormalizedError-401:
       example:
         error: invalid_request
@@ -351,6 +361,17 @@ components:
           type: string
         schema.core.AnythingSchema@3c6f0b88: {}
       additionalProperties: {}
+    EnvelopedHealthDataDataQuotasKeyword8148663:
+      type: object
+      properties:
+        description:
+          type: string
+        values:
+          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663Values'
+      additionalProperties: false
+      required:
+      - description
+      - values
     ErrorMessage:
       type: object
       properties:
@@ -379,27 +400,6 @@ components:
       - code
       - message
       - type
-    EnvelopedHealthDataDataQuotas:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663'
-    EnvelopedSingleHealth:
-      example:
-        data:
-          module: SecureX Global Threat Intelligence
-          module_instance_id: 60852826-5ba1-4e8e-b2d7-f827186c100b
-          module_type_id: 87563e81-ddc5-5f61-b4f8-dbe71252c922
-          data:
-            status: ok
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/HealthStatus'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorMessage'
-      additionalProperties: false
   securitySchemes:
     iroh:
       type: apiKey

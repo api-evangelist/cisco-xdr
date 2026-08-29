@@ -352,14 +352,12 @@ paths:
         required: true
 components:
   schemas:
-    PatchWebhookParams:
+    NewWebhookParams:
       type: object
       properties:
         integration_id:
           description: id of the integration this record belongs to
-          type:
-          - string
-          - 'null'
+          type: string
         webhook_type:
           description: should the Webhook Trigger an API or an AO Workflow
           type: string
@@ -377,24 +375,18 @@ components:
         auth:
           description: inform authentication mechanism to be used in webhook delivery
           x-oneOf:
-          - $ref: '#/components/schemas/PatchWebhookParamsAuth'
+          - $ref: '#/components/schemas/NewWebhookParamsAuth'
         event_filter_map:
-          $ref: '#/components/schemas/PatchWebhookParamsEventFilterMap'
+          $ref: '#/components/schemas/EventFilterMap'
         workflow:
           description: if the webhook triggers an AO workflow, the workflow tag
-          type:
-          - string
-          - 'null'
+          type: string
         url:
           description: if the webhook triggers an API, the target URL
-          type:
-          - string
-          - 'null'
+          type: string
         record_type_filter:
           description: trigger on these record types
-          type:
-          - array
-          - 'null'
+          type: array
           items:
             type: string
             enum:
@@ -455,9 +447,7 @@ components:
           uniqueItems: true
         enabled:
           description: Enable/Disable the Webhook
-          type:
-          - boolean
-          - 'null'
+          type: boolean
         visibility:
           type: string
           enum:
@@ -465,7 +455,26 @@ components:
           - org
           - user
       additionalProperties: false
-    NewWebhookParamsAuthConf:
+      required:
+      - webhook_type
+      - name
+      - source
+      - event_type_filter
+      - visibility
+    NewWebhookParamsAuth:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - iroh-jwt
+        conf:
+          $ref: '#/components/schemas/NewWebhookParamsAuthConf'
+      additionalProperties: false
+      required:
+      - type
+      - conf
+    PatchWebhookParamsAuthConf:
       type: object
       properties:
         client_id:
@@ -474,20 +483,7 @@ components:
       additionalProperties: false
       required:
       - client_id
-    WebhookAuth:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - iroh-jwt
-        conf:
-          $ref: '#/components/schemas/WebhookAuthConf'
-      additionalProperties: {}
-      required:
-      - type
-      - conf
-    PatchWebhookParamsAuthConf:
+    NewWebhookParamsAuthConf:
       type: object
       properties:
         client_id:
@@ -627,20 +623,7 @@ components:
       - enabled
       - visibility
       - created_at
-    EventFilterMap:
-      description: fields available in event.data
-      type: object
-      properties:
-        module_type_id:
-          type: string
-        module_instance_visibility:
-          type: string
-          enum:
-          - global
-          - org
-          - user
-      additionalProperties: {}
-    PatchWebhookParamsAuth:
+    WebhookAuth:
       type: object
       properties:
         type:
@@ -648,30 +631,8 @@ components:
           enum:
           - iroh-jwt
         conf:
-          $ref: '#/components/schemas/PatchWebhookParamsAuthConf'
-      additionalProperties: false
-      required:
-      - type
-      - conf
-    WebhookAuthConf:
-      type: object
-      properties:
-        client_id:
-          description: client-id of the client that will be used to generate JWT for the webhook creator to the webhook endpoint. This is mandatory for the `iroh-jwt` authentication type and ignored for other authentication types.
-          type: string
+          $ref: '#/components/schemas/WebhookAuthConf'
       additionalProperties: {}
-      required:
-      - client_id
-    NewWebhookParamsAuth:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - iroh-jwt
-        conf:
-          $ref: '#/components/schemas/NewWebhookParamsAuthConf'
-      additionalProperties: false
       required:
       - type
       - conf
@@ -691,12 +652,36 @@ components:
           - org
           - user
       additionalProperties: {}
-    NewWebhookParams:
+    EventFilterMap:
+      description: fields available in event.data
+      type: object
+      properties:
+        module_type_id:
+          type: string
+        module_instance_visibility:
+          type: string
+          enum:
+          - global
+          - org
+          - user
+      additionalProperties: {}
+    WebhookAuthConf:
+      type: object
+      properties:
+        client_id:
+          description: client-id of the client that will be used to generate JWT for the webhook creator to the webhook endpoint. This is mandatory for the `iroh-jwt` authentication type and ignored for other authentication types.
+          type: string
+      additionalProperties: {}
+      required:
+      - client_id
+    PatchWebhookParams:
       type: object
       properties:
         integration_id:
           description: id of the integration this record belongs to
-          type: string
+          type:
+          - string
+          - 'null'
         webhook_type:
           description: should the Webhook Trigger an API or an AO Workflow
           type: string
@@ -714,18 +699,24 @@ components:
         auth:
           description: inform authentication mechanism to be used in webhook delivery
           x-oneOf:
-          - $ref: '#/components/schemas/NewWebhookParamsAuth'
+          - $ref: '#/components/schemas/PatchWebhookParamsAuth'
         event_filter_map:
-          $ref: '#/components/schemas/EventFilterMap'
+          $ref: '#/components/schemas/PatchWebhookParamsEventFilterMap'
         workflow:
           description: if the webhook triggers an AO workflow, the workflow tag
-          type: string
+          type:
+          - string
+          - 'null'
         url:
           description: if the webhook triggers an API, the target URL
-          type: string
+          type:
+          - string
+          - 'null'
         record_type_filter:
           description: trigger on these record types
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
             enum:
@@ -786,7 +777,9 @@ components:
           uniqueItems: true
         enabled:
           description: Enable/Disable the Webhook
-          type: boolean
+          type:
+          - boolean
+          - 'null'
         visibility:
           type: string
           enum:
@@ -794,12 +787,19 @@ components:
           - org
           - user
       additionalProperties: false
+    PatchWebhookParamsAuth:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - iroh-jwt
+        conf:
+          $ref: '#/components/schemas/PatchWebhookParamsAuthConf'
+      additionalProperties: false
       required:
-      - webhook_type
-      - name
-      - source
-      - event_type_filter
-      - visibility
+      - type
+      - conf
   securitySchemes:
     iroh:
       type: apiKey

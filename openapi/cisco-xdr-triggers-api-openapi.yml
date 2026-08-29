@@ -1,0 +1,718 @@
+openapi: 3.2.0
+info:
+  title: REST API. Triggers API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: Triggers
+paths:
+  /v1/workflows/{workflow_id}/triggers:
+    get:
+      tags:
+      - Triggers
+      summary: '# Handler to get all triggers information'
+      description: 'Allowed Role(s): admin, user, sat
+
+        Allowed User(s): Who have VIEW permission to given workflow'
+      operationId: getTriggersById
+      parameters:
+      - name: workflow_id
+        in: path
+        description: The Id of Workflow
+        required: true
+        schema:
+          type: string
+          x-go-name: WorkflowID
+        x-go-name: WorkflowID
+      responses:
+        '200':
+          description: 'An TriggerGetAllResponse response model
+
+
+            # This is used for returning a response of Trigger as a body'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trigger'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    post:
+      tags:
+      - Triggers
+      summary: '# Handler to get create a trigger for a workflow'
+      description: 'Allowed Role(s): admin
+
+        Allowed User(s): Who have MANAGE permission to given workflow'
+      operationId: triggerCreateRequest
+      parameters:
+      - name: workflow_id
+        in: path
+        description: The Id of Workflow
+        required: true
+        schema:
+          type: string
+          x-go-name: WorkflowID
+        x-go-name: WorkflowID
+      requestBody:
+        description: The trigger to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriggerPostRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '201':
+          description: 'An TriggerGetResponse response model
+
+
+            # This is used for returning a response of Trigger as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trigger'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/workflows/{workflow_id}/triggers/{trigger_id}:
+    get:
+      tags:
+      - Triggers
+      summary: '# Handler to get a trigger information by ID'
+      description: 'Allowed Role(s): admin, user, sat
+
+        Allowed User(s): Who have VIEW permission to given workflow'
+      operationId: getTriggerById
+      parameters:
+      - name: workflow_id
+        in: path
+        description: The Id of Workflow
+        required: true
+        schema:
+          type: string
+          x-go-name: WorkflowID
+        x-go-name: WorkflowID
+      - name: trigger_id
+        in: path
+        description: The Id of Trigger
+        required: true
+        schema:
+          type: string
+          x-go-name: TriggerID
+        x-go-name: TriggerID
+      responses:
+        '200':
+          description: 'An TriggerGetResponse response model
+
+
+            # This is used for returning a response of Trigger as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trigger'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    put:
+      tags:
+      - Triggers
+      summary: '# Handler to update trigger'
+      description: 'Allowed Role(s): admin
+
+        Allowed User(s): Who have MODIFY/MANAGE permission to given workflow'
+      operationId: triggerUpdateRequest
+      parameters:
+      - name: workflow_id
+        in: path
+        description: The Id of Workflow
+        required: true
+        schema:
+          type: string
+          x-go-name: WorkflowID
+        x-go-name: WorkflowID
+      - name: trigger_id
+        in: path
+        description: The Id of Trigger
+        required: true
+        schema:
+          type: string
+          x-go-name: TriggerID
+        x-go-name: TriggerID
+      requestBody:
+        description: The trigger to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriggerPutRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: 'An TriggerGetResponse response model
+
+
+            # This is used for returning a response of Trigger as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trigger'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+    delete:
+      tags:
+      - Triggers
+      summary: '# Handler to delete trigger'
+      description: 'Allowed Role(s): admin
+
+        Allowed User(s): Who have MANAGE permission to given workflow'
+      operationId: triggerDeleteRequest
+      parameters:
+      - name: workflow_id
+        in: path
+        description: The Id of Workflow
+        required: true
+        schema:
+          type: string
+          x-go-name: WorkflowID
+        x-go-name: WorkflowID
+      - name: trigger_id
+        in: path
+        description: The Id of Trigger
+        required: true
+        schema:
+          type: string
+          x-go-name: TriggerID
+        x-go-name: TriggerID
+      responses:
+        '204':
+          description: NoContent response model
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+components:
+  schemas:
+    TriggerStatus:
+      title: TriggerStatus ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        error_msg:
+          type: string
+          x-go-name: ErrorMsg
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TriggerPutRequest:
+      required:
+      - type
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Trigger
+          x-go-name: Description
+        disabled:
+          type: boolean
+          description: Disabled
+          x-go-name: Disabled
+        name:
+          type: string
+          description: Name of Trigger
+          x-go-name: Name
+        ref_id:
+          type: string
+          description: RefID, ID of an Event or ID of an schedule
+          x-go-name: RefID
+        type:
+          $ref: '#/components/schemas/TriggerType'
+        version:
+          type: string
+          description: Version of Trigger
+          x-go-name: Version
+      description: TriggerPutRequest struct for triggers post api
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    TriggerType:
+      title: TriggerType ...
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Trigger:
+      title: Trigger ...
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
+        disabled:
+          type: boolean
+          x-go-name: Disabled
+        id:
+          type: string
+          x-go-name: TriggerID
+        invalid_actions:
+          type: array
+          items:
+            type: string
+          x-go-name: InvalidActions
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        ref_id:
+          type: string
+          x-go-name: RefID
+        status:
+          $ref: '#/components/schemas/TriggerStatus'
+        type:
+          $ref: '#/components/schemas/TriggerType'
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        valid_actions:
+          type: array
+          items:
+            type: string
+          x-go-name: ValidActions
+        workflow_id:
+          type: string
+          x-go-name: WorkflowID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TriggerPostRequest:
+      required:
+      - name
+      - ref_id
+      - type
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Trigger
+          x-go-name: Description
+        disabled:
+          type: boolean
+          description: Disabled
+          x-go-name: Disabled
+        name:
+          type: string
+          description: Name of Trigger
+          x-go-name: Name
+        ref_id:
+          type: string
+          description: RefID, ID of an Event or ID of a Schedule
+          x-go-name: RefID
+        type:
+          $ref: '#/components/schemas/TriggerType'
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+        version:
+          type: string
+          description: Version
+          x-go-name: Version
+      description: TriggerPostRequest struct for triggers post api
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

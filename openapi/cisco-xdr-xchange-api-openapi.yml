@@ -1,0 +1,702 @@
+openapi: 3.2.0
+info:
+  title: REST API. Xchange API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: Xchange
+paths:
+  /v1/xchange/{xchange_id}:
+    get:
+      tags:
+      - Xchange
+      summary: Handler to return xchange object's information using xchange ID or unique name.
+      description: 'Allowed Role(s): admin, user, sat
+
+        Allowed User(s): Who have atleast VIEW permission to given workflow'
+      operationId: readXchangeByIDParams
+      parameters:
+      - name: xchange_id
+        in: path
+        description: The xchangeID of xchange
+        required: true
+        schema:
+          type: string
+          x-go-name: XchangeID
+        x-go-name: XchangeID
+      responses:
+        '200':
+          description: 'An XchangeDefinitionResponse response model
+
+
+            # This is used to return a response of Xchange workflow or Xchange pack as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XchangeGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+  /v1/xchange/{xchange_id}/releasenotes:
+    get:
+      tags:
+      - Xchange
+      summary: Handler to return xchange's release notes of all the published versions using xchange ID.
+      description: 'Allowed Role(s): admin, user, sat
+
+        Allowed User(s): Who have atleast VIEW permission to given workflow'
+      operationId: readReleaseNotesParams
+      parameters:
+      - name: xchange_id
+        in: path
+        description: The xchangeID of xchange
+        required: true
+        schema:
+          type: string
+          x-go-name: XchangeID
+        x-go-name: XchangeID
+      responses:
+        '200':
+          description: 'An XchangeReleaseNotes response model
+
+
+            # This is used to return a response of Xchange''s release notes'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties:
+                    $ref: '#/components/schemas/ReleaseNote'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+  /v1/xchanges:
+    post:
+      tags:
+      - Xchange
+      summary: Handler to return xchange objects.
+      description: 'Allowed Role(s): admin, user, sat
+
+        Allowed User(s): Who have atleast VIEW permission to given xchange_workflow or xchange_pack'
+      operationId: readAllXchangeQueryParams
+      parameters:
+      - name: section
+        in: query
+        description: The section which the xchange document belongs to.
+        schema:
+          type: string
+          x-go-name: Section
+        x-go-name: Section
+      - name: start
+        in: query
+        description: Start return list of instances from the number specified
+        schema:
+          type: integer
+          format: uint8
+          x-go-name: Start
+        x-go-name: Start
+      - name: limit
+        in: query
+        description: Number of xchange instances will return by this request, must between 0-100
+        schema:
+          type: integer
+          format: uint8
+          x-go-name: Limit
+        x-go-name: Limit
+      - name: state
+        in: query
+        description: Comma separated list of xchange states to filter
+        schema:
+          type: string
+          x-go-name: State
+        x-go-name: State
+      responses:
+        '200':
+          description: 'An XchangeGetAllResponse response model
+
+
+            # This is used for returning a collection of xchange in body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XchangeGetAllPaginationResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '401':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+  /v1/xchanges/featured:
+    post:
+      tags:
+      - Xchange
+      summary: Handler to replace the featured xchanges.
+      description: 'Allowed Role(s): admin, user, sat
+
+        Allowed User(s): Who have atleast VIEW permission to given xchange_workflow or xchange_pack'
+      operationId: XChangeFeaturedPostRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/XChangeIDOrder'
+        required: true
+        x-go-name: XChangeInfo
+      responses:
+        '200':
+          description: NoContent response model
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '401':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: xchange_info
+components:
+  schemas:
+    XChange:
+      title: XChange ...
+      type: object
+      properties:
+        author:
+          type: string
+          x-go-name: Author
+        base_type:
+          type: string
+          x-go-name: BaseType
+        blurb:
+          type: string
+          x-go-name: Blurb
+        categories:
+          type: array
+          items:
+            type: string
+          x-go-name: Categories
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        data_schema_id:
+          type: string
+          x-go-name: DataSchemaID
+        id:
+          type: string
+          x-go-name: XChangeID
+        image:
+          type: string
+          x-go-name: Image
+        install_count:
+          type: integer
+          format: uint32
+          x-go-name: InstallCount
+        install_info:
+          $ref: '#/components/schemas/InstallInfo'
+        name:
+          type: string
+          x-go-name: Name
+        object_type:
+          $ref: '#/components/schemas/LHObjType'
+        owner:
+          type: string
+          x-go-name: Owner
+        path:
+          type: string
+          x-go-name: Path
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        publisher_info:
+          $ref: '#/components/schemas/PublisherInfo'
+        rating:
+          $ref: '#/components/schemas/RatingInfo'
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        view_schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    LHObjType:
+      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    ReleaseNote:
+      type: object
+      properties:
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        rlease_note:
+          type: string
+          x-go-name: RleaseNote
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    RatingInfo:
+      type: object
+      properties:
+        avg_rating:
+          type: number
+          format: double
+          x-go-name: AverageRating
+        rating_updated_on:
+          type: string
+          format: date-time
+          x-go-name: RatingUpdatedOn
+        total_no_of_ratings:
+          type: integer
+          format: uint32
+          x-go-name: TotalNoOfRatings
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    XchangeGetResponse:
+      title: XchangeGetResponse ...
+      type: object
+      properties:
+        _id:
+          type: string
+          x-go-name: XChangeID
+        base_type:
+          type: string
+          x-go-name: BaseType
+        blurb:
+          type: string
+          x-go-name: Blurb
+        categories:
+          type: array
+          items:
+            type: string
+          x-go-name: Categories
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        data_schema_id:
+          type: string
+          x-go-name: DataSchemaID
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        view_schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    XChangeIDOrder:
+      type: object
+      properties:
+        display_order:
+          type: integer
+          format: int64
+          x-go-name: DisplayOrder
+        xchange_id:
+          type: string
+          x-go-name: XChangeID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    PublisherInfo:
+      type: object
+      properties:
+        published_by:
+          type: string
+          x-go-name: PublishedBy
+        published_version:
+          type: string
+          x-go-name: PublishedVersion
+        publisher_tenant_id:
+          type: string
+          x-go-name: PublisherTenantID
+        status:
+          $ref: '#/components/schemas/Status'
+      description: PublisherInfo applicable for only global xchange tenant
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    XchangeGetAllPaginationResponse:
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/XChange'
+          x-go-name: Results
+        total_count:
+          type: integer
+          format: uint32
+          x-go-name: TotalCount
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    InstallInfo:
+      title: InstallInfo ...
+      type: object
+      properties:
+        installed_time:
+          type: string
+          format: date-time
+          x-go-name: InstalledTime
+        status:
+          $ref: '#/components/schemas/Status'
+        version:
+          type: string
+          x-go-name: InstalledVersion
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

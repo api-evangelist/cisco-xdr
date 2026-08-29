@@ -1,0 +1,434 @@
+openapi: 3.2.0
+info:
+  title: REST API. Comments API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: Comments
+paths:
+  /v1/comments:
+    post:
+      tags:
+      - Comments
+      summary: Create comment.
+      description: This endpoint allows users to add a comment.
+      operationId: commentCreateRequest
+      requestBody:
+        description: The target to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentPostRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '201':
+          description: 'CommentResponse
+
+
+            This is used for returning a comment.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/comment'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '401':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '412':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/comments/batch_get:
+    post:
+      tags:
+      - Comments
+      summary: Get all comments.
+      description: This endpoint allows users to get all comments by filter.
+      operationId: getAllCommentsQueryParam
+      parameters:
+      - name: limit
+        in: query
+        description: Number of comments to return for this request
+        required: true
+        schema:
+          type: integer
+          format: int64
+          x-go-name: Limit
+        x-go-name: Limit
+      - name: start
+        in: query
+        description: Return list of comments from n'th comment, n is start to be provided
+        schema:
+          type: integer
+          format: int64
+          x-go-name: Start
+        x-go-name: Start
+      - name: sort_by
+        in: query
+        description: Return list of comments in sorted order
+        schema:
+          type: string
+          x-go-name: SortBy
+        x-go-name: SortBy
+      - name: order
+        in: query
+        description: Return list of comments in sorted order of asc/desc
+        schema:
+          type: string
+          x-go-name: Order
+        x-go-name: Order
+      requestBody:
+        description: An request body to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentsPostRequestParams'
+        required: false
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: An GetAllCommentsSwaggerResponse model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllCommentsResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '401':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+components:
+  schemas:
+    CommentPostRequest:
+      title: CommentPostRequest
+      required:
+      - message
+      - ref_base_type
+      - ref_id
+      - ref_type
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message.
+          x-go-name: Message
+        ref_base_type:
+          type: string
+          description: The base type of the entity.
+          x-go-name: RefBaseType
+        ref_id:
+          type: string
+          description: The ID of the entity.
+          x-go-name: RefID
+        ref_type:
+          type: string
+          description: The type of the entity.
+          x-go-name: RefType
+      description: The comment create request model.
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    LHObjType:
+      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
+    CommentsPostRequestParams:
+      title: CommentsPostRequestParams ...
+      required:
+      - ref_id
+      - ref_object_type
+      type: object
+      properties:
+        ref_id:
+          type: string
+          description: 'commented object ID to get for.
+
+            in: body'
+          x-go-name: RefID
+        ref_object_type:
+          $ref: '#/components/schemas/LHObjType'
+        version:
+          type: string
+          description: 'commented version to get for.
+
+            in: body'
+          x-go-name: Version
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    GetAllCommentsResponse:
+      title: An GetAllCommentsResponse model.
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/comment'
+          x-go-name: Results
+        total_count:
+          type: integer
+          format: int32
+          x-go-name: TotalCount
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    comment:
+      title: Comment
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        commented_by:
+          type: string
+          x-go-name: CommentedBy
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        id:
+          type: string
+          x-go-name: CommentID
+        message:
+          type: string
+          x-go-name: Message
+        object_type:
+          $ref: '#/components/schemas/LHObjType'
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        ref_base_type:
+          type: string
+          x-go-name: RefBaseType
+        ref_id:
+          type: string
+          x-go-name: RefID
+        ref_object_type:
+          $ref: '#/components/schemas/LHObjType'
+        type:
+          type: string
+          x-go-name: Type
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        version:
+          type: string
+          x-go-name: Version
+      description: This is a comment model.
+      x-go-name: Comment
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

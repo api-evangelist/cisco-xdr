@@ -1,0 +1,801 @@
+openapi: 3.2.0
+info:
+  title: REST API. Webhooks API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: Webhooks
+paths:
+  /v1/webhooks:
+    get:
+      tags:
+      - Webhooks
+      summary: '# Handler to get all webhooks information'
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: GetAllWebhooks
+      responses:
+        '200':
+          description: 'An WebhooksResponse response model
+
+
+            # This is used for returning a response with a single webhook as body'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WebhookGetAllResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    post:
+      tags:
+      - Webhooks
+      summary: '# Handler to create a webhook'
+      description: 'Allowed Role(s): admin
+
+
+        Either ViewSchemaID or Type or both in request body can be provided to create an Webhook.'
+      operationId: WebhookCreateRequest
+      requestBody:
+        description: The webhook to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookPostRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '201':
+          description: 'An WebhookResponse response model
+
+
+            # This is used for returning a response with a single webhook as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/webhooks/{webhook_id}:
+    get:
+      tags:
+      - Webhooks
+      summary: readWebhookByID Handler to return Webhook information.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: readWebhookByID
+      parameters:
+      - name: webhook_id
+        in: path
+        description: An ID of webhook
+        required: true
+        schema:
+          type: string
+          x-go-name: WebhookID
+        x-go-name: WebhookID
+      responses:
+        '200':
+          description: 'An WebhookResponse response model
+
+
+            # This is used for returning a response with a single webhook as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    put:
+      tags:
+      - Webhooks
+      summary: '# Handler to update webhook'
+      description: 'Allowed Role(s): admin'
+      operationId: WebhookUpdateRequest
+      parameters:
+      - name: webhook_id
+        in: path
+        description: The webhookID of Webhook
+        required: true
+        schema:
+          type: string
+          x-go-name: WebhookID
+        x-go-name: WebhookID
+      requestBody:
+        description: The webhook to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookPutRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: 'An WebhookResponse response model
+
+
+            # This is used for returning a response with a single webhook as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+    delete:
+      tags:
+      - Webhooks
+      summary: '# Handler to delete webhook'
+      description: 'Allowed Role(s): admin'
+      operationId: deleteWebhookByID
+      parameters:
+      - name: webhook_id
+        in: path
+        description: An ID of webhook
+        required: true
+        schema:
+          type: string
+          x-go-name: WebhookID
+        x-go-name: WebhookID
+      responses:
+        '204':
+          description: NoContent response model
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '412':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+  /v1/webhooks/{webhook_id}/refresh_api_key:
+    post:
+      tags:
+      - Webhooks
+      summary: Handler to refresh api_key for webhook
+      description: 'Allowed Role(s): admin'
+      operationId: WebhookRefreshAPIKeyRequest
+      parameters:
+      - name: webhook_id
+        in: path
+        description: The webhookID of Webhook
+        required: true
+        schema:
+          type: string
+          x-go-name: WebhookID
+        x-go-name: WebhookID
+      responses:
+        '200':
+          description: 'An WebhookResponse response model
+
+
+            # This is used for returning a response with a single webhook as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+components:
+  schemas:
+    WebhookPutRequest:
+      title: WebhookPutRequest ...
+      required:
+      - properties
+      - title
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Webhook
+          x-go-name: Description
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of webhook
+          x-go-name: Properties
+        title:
+          type: string
+          description: Title of Webhook
+          x-go-name: Title
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    WebhookGetAllResponse:
+      title: WebhookGetAllResponse ...
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        data_schema_id:
+          type: string
+          x-go-name: DataSchemaID
+        description:
+          type: string
+          x-go-name: Description
+        id:
+          type: string
+          x-go-name: WebhookID
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        status:
+          $ref: '#/components/schemas/Status'
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        version:
+          type: string
+          x-go-name: Version
+        view_schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    WebhookPostRequest:
+      required:
+      - properties
+      - title
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Webhook
+          x-go-name: Description
+        name:
+          type: string
+          description: Name of Webhook
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of webhook
+          x-go-name: Properties
+        schema_id:
+          type: string
+          description: ViewSchemaID of webhook
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          description: Title of Webhook
+          x-go-name: Title
+        type:
+          type: string
+          description: Type
+          x-go-name: Type
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+      description: 'WebhookPostRequest struct for webhooks post api
+
+        Either ViewSchemaID or Type or both can be provided to create an Webhook.'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    WebhookGetResponse:
+      title: WebhookGetResponse ...
+      type: object
+      properties:
+        api_key:
+          type: string
+          x-go-name: APIKey
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
+        id:
+          type: string
+          x-go-name: WebhookID
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        status:
+          $ref: '#/components/schemas/Status'
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        uri:
+          type: string
+          x-go-name: URI
+        version:
+          type: string
+          x-go-name: Version
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

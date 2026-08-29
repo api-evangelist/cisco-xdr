@@ -1214,6 +1214,19 @@ paths:
           format: date-time
 components:
   schemas:
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
     NewRelationship:
       description: a new Relationship
       type: object
@@ -1338,9 +1351,43 @@ components:
       - target_ref
       - source_ref
       - relationship_type
-    MetricResultData:
+    ExternalReference:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
       type: object
-      additionalProperties: {}
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: false
+      required:
+      - source_name
     PartialRelationship:
       example:
         description: string
@@ -1486,75 +1533,6 @@ components:
           example: attributed-to
           type: string
       additionalProperties: false
-    MetricResult:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/MetricResultData'
-        type:
-          type: string
-          enum:
-          - histogram
-          - topn
-          - avg
-          - cardinality
-        filters:
-          $ref: '#/components/schemas/MetricResultFilters'
-      additionalProperties: false
-      required:
-      - data
-      - type
-      - filters
-    ExternalReference:
-      example:
-        source_name: string
-        description: string
-        url: string
-        hashes:
-        - string
-        external_id: string
-      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
-      type: object
-      properties:
-        source_name:
-          example: string
-          description: The source within which the external-reference is defined (system, registry, organization, etc.)
-          type: string
-        description:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        url:
-          example: string
-          description: A URL reference to an external resource.
-          type: string
-        hashes:
-          example:
-          - string
-          description: Specifies a dictionary of hashes for the contents of the url.
-          type: array
-          items:
-            type: string
-        external_id:
-          example: string
-          description: An identifier for the external reference content.
-          type: string
-      additionalProperties: false
-      required:
-      - source_name
-    MetricResultFilters:
-      type: object
-      properties:
-        from:
-          type: string
-          format: date-time
-        to:
-          type: string
-          format: date-time
-      additionalProperties: {}
-      required:
-      - from
-      - to
     Relationship:
       example:
         description: string
@@ -1678,6 +1656,28 @@ components:
           example: attributed-to
           type: string
       additionalProperties: false
+    MetricResultData:
+      type: object
+      additionalProperties: {}
+    MetricResult:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MetricResultData'
+        type:
+          type: string
+          enum:
+          - histogram
+          - topn
+          - avg
+          - cardinality
+        filters:
+          $ref: '#/components/schemas/MetricResultFilters'
+      additionalProperties: false
+      required:
+      - data
+      - type
+      - filters
   securitySchemes:
     JWT:
       type: apiKey

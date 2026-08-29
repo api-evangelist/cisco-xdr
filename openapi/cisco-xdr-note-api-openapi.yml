@@ -1276,6 +1276,19 @@ paths:
           format: date-time
 components:
   schemas:
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
     NoteRelatedEntity:
       example:
         entity_type: string
@@ -1293,9 +1306,43 @@ components:
       required:
       - entity_type
       - entity_id
-    MetricResultData:
+    ExternalReference:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
       type: object
-      additionalProperties: {}
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: false
+      required:
+      - source_name
     PartialNewNoteRelatedEntities:
       example:
         entity_type: string
@@ -1310,6 +1357,360 @@ components:
           description: A URI leading to an entity.
           type: string
       additionalProperties: false
+    NewNote:
+      description: a new Note
+      type: object
+      properties:
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        content:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        note_class:
+          example: keyword
+          type: string
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: note
+          type: string
+          enum:
+          - note
+        created:
+          type: string
+          format: date-time
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        author:
+          example: string
+          type: string
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        client_id:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        related_entities:
+          example:
+          - entity_type: string
+            entity_id: string
+          type: array
+          items:
+            $ref: '#/components/schemas/NoteRelatedEntity'
+        owner:
+          type: string
+      additionalProperties: false
+      required:
+      - content
+      - note_class
+      - related_entities
+    PartialNewNote:
+      description: Note partial update
+      type: object
+      properties:
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        content:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        note_class:
+          example: keyword
+          type: string
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: note
+          type: string
+          enum:
+          - note
+        created:
+          type: string
+          format: date-time
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/PartialNewNoteExternalReferences'
+        author:
+          example: string
+          type: string
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        client_id:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        related_entities:
+          example:
+          - entity_type: string
+            entity_id: string
+          type: array
+          items:
+            $ref: '#/components/schemas/PartialNewNoteRelatedEntities'
+        owner:
+          type: string
+      additionalProperties: false
+    Note:
+      example:
+        schema_version: 1.3.30
+        revision: 10
+        content: string
+        note_class: keyword
+        type: note
+        source: string
+        external_ids:
+        - string
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        author: string
+        source_uri: string
+        language: string
+        id: string
+        tlp: green
+        timestamp: '2016-01-01T01:01:01.000Z'
+        related_entities:
+        - entity_type: string
+          entity_id: string
+      description: 'A Note is intended to convey informative text to provide further context and/or to provide additional analysis not contained in the Objects, assigning Text/content to the Object the Note relates to Notes can be created by anyone (not just the original object creator).
+
+        For example, an analyst may add a Note to a Campaign object created by another organization indicating that they''ve seen posts related to that Campaign on a hacker forum.'
+      type: object
+      properties:
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        content:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        note_class:
+          example: keyword
+          type: string
+        type:
+          example: note
+          type: string
+          enum:
+          - note
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        author:
+          example: string
+          type: string
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        related_entities:
+          example:
+          - entity_type: string
+            entity_id: string
+          type: array
+          items:
+            $ref: '#/components/schemas/NoteRelatedEntity'
+      additionalProperties: false
+    MetricResultData:
+      type: object
+      additionalProperties: {}
     PartialNewNoteExternalReferences:
       example:
         source_name: string
@@ -1345,6 +1746,25 @@ components:
           description: An identifier for the external reference content.
           type: string
       additionalProperties: false
+    MetricResult:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MetricResultData'
+        type:
+          type: string
+          enum:
+          - histogram
+          - topn
+          - avg
+          - cardinality
+        filters:
+          $ref: '#/components/schemas/MetricResultFilters'
+      additionalProperties: false
+      required:
+      - data
+      - type
+      - filters
     PartialNote:
       example:
         schema_version: 1.3.30
@@ -1486,426 +1906,6 @@ components:
         owner:
           type: string
       additionalProperties: false
-    Note:
-      example:
-        schema_version: 1.3.30
-        revision: 10
-        content: string
-        note_class: keyword
-        type: note
-        source: string
-        external_ids:
-        - string
-        external_references:
-        - source_name: string
-          description: string
-          url: string
-          hashes:
-          - string
-          external_id: string
-        author: string
-        source_uri: string
-        language: string
-        id: string
-        tlp: green
-        timestamp: '2016-01-01T01:01:01.000Z'
-        related_entities:
-        - entity_type: string
-          entity_id: string
-      description: 'A Note is intended to convey informative text to provide further context and/or to provide additional analysis not contained in the Objects, assigning Text/content to the Object the Note relates to Notes can be created by anyone (not just the original object creator).
-
-        For example, an analyst may add a Note to a Campaign object created by another organization indicating that they''ve seen posts related to that Campaign on a hacker forum.'
-      type: object
-      properties:
-        schema_version:
-          type: string
-        revision:
-          example: 10
-          description: A monotonically increasing revision, incremented each time the object is changed.
-          type: integer
-          format: int64
-        content:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        note_class:
-          example: keyword
-          type: string
-        type:
-          example: note
-          type: string
-          enum:
-          - note
-        source:
-          example: string
-          description: Represents the source of the intelligence that led to the creation of the entity.
-          type: string
-        external_ids:
-          example:
-          - string
-          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
-          type: array
-          items:
-            type: string
-        external_references:
-          example:
-          - source_name: string
-            description: string
-            url: string
-            hashes:
-            - string
-            external_id: string
-          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalReference'
-        author:
-          example: string
-          type: string
-        source_uri:
-          example: string
-          description: URI of the source of the intelligence that led to the creation of the entity.
-          type: string
-        language:
-          example: string
-          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
-
-
-            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
-          type: string
-        id:
-          example: string
-          description: Globally unique URI identifying this object.
-          type: string
-        tlp:
-          example: green
-          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
-
-
-            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
-
-
-            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
-          type: string
-          enum:
-          - white
-          - green
-          - red
-          - amber
-        timestamp:
-          example: '2016-01-01T01:01:01.000Z'
-          description: The time this object was created at, or last modified.
-          type: string
-          format: date-time
-        related_entities:
-          example:
-          - entity_type: string
-            entity_id: string
-          type: array
-          items:
-            $ref: '#/components/schemas/NoteRelatedEntity'
-      additionalProperties: false
-    MetricResult:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/MetricResultData'
-        type:
-          type: string
-          enum:
-          - histogram
-          - topn
-          - avg
-          - cardinality
-        filters:
-          $ref: '#/components/schemas/MetricResultFilters'
-      additionalProperties: false
-      required:
-      - data
-      - type
-      - filters
-    ExternalReference:
-      example:
-        source_name: string
-        description: string
-        url: string
-        hashes:
-        - string
-        external_id: string
-      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
-      type: object
-      properties:
-        source_name:
-          example: string
-          description: The source within which the external-reference is defined (system, registry, organization, etc.)
-          type: string
-        description:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        url:
-          example: string
-          description: A URL reference to an external resource.
-          type: string
-        hashes:
-          example:
-          - string
-          description: Specifies a dictionary of hashes for the contents of the url.
-          type: array
-          items:
-            type: string
-        external_id:
-          example: string
-          description: An identifier for the external reference content.
-          type: string
-      additionalProperties: false
-      required:
-      - source_name
-    PartialNewNote:
-      description: Note partial update
-      type: object
-      properties:
-        authorized_groups:
-          type: array
-          items:
-            type: string
-        schema_version:
-          type: string
-        revision:
-          example: 10
-          description: A monotonically increasing revision, incremented each time the object is changed.
-          type: integer
-          format: int64
-        content:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        note_class:
-          example: keyword
-          type: string
-        authorized_users:
-          type: array
-          items:
-            type: string
-        type:
-          example: note
-          type: string
-          enum:
-          - note
-        created:
-          type: string
-          format: date-time
-        source:
-          example: string
-          description: Represents the source of the intelligence that led to the creation of the entity.
-          type: string
-        external_ids:
-          example:
-          - string
-          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
-          type: array
-          items:
-            type: string
-        modified:
-          type: string
-          format: date-time
-        external_references:
-          example:
-          - source_name: string
-            description: string
-            url: string
-            hashes:
-            - string
-            external_id: string
-          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
-          type: array
-          items:
-            $ref: '#/components/schemas/PartialNewNoteExternalReferences'
-        author:
-          example: string
-          type: string
-        source_uri:
-          example: string
-          description: URI of the source of the intelligence that led to the creation of the entity.
-          type: string
-        language:
-          example: string
-          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
-
-
-            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
-          type: string
-        id:
-          example: string
-          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
-          type: string
-        tlp:
-          example: green
-          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
-
-
-            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
-
-
-            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
-          type: string
-          enum:
-          - white
-          - green
-          - red
-          - amber
-        client_id:
-          type: string
-        groups:
-          type: array
-          items:
-            type: string
-        timestamp:
-          example: '2016-01-01T01:01:01.000Z'
-          description: The time this object was created at, or last modified.
-          type: string
-          format: date-time
-        related_entities:
-          example:
-          - entity_type: string
-            entity_id: string
-          type: array
-          items:
-            $ref: '#/components/schemas/PartialNewNoteRelatedEntities'
-        owner:
-          type: string
-      additionalProperties: false
-    NewNote:
-      description: a new Note
-      type: object
-      properties:
-        authorized_groups:
-          type: array
-          items:
-            type: string
-        schema_version:
-          type: string
-        revision:
-          example: 10
-          description: A monotonically increasing revision, incremented each time the object is changed.
-          type: integer
-          format: int64
-        content:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        note_class:
-          example: keyword
-          type: string
-        authorized_users:
-          type: array
-          items:
-            type: string
-        type:
-          example: note
-          type: string
-          enum:
-          - note
-        created:
-          type: string
-          format: date-time
-        source:
-          example: string
-          description: Represents the source of the intelligence that led to the creation of the entity.
-          type: string
-        external_ids:
-          example:
-          - string
-          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
-          type: array
-          items:
-            type: string
-        modified:
-          type: string
-          format: date-time
-        external_references:
-          example:
-          - source_name: string
-            description: string
-            url: string
-            hashes:
-            - string
-            external_id: string
-          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalReference'
-        author:
-          example: string
-          type: string
-        source_uri:
-          example: string
-          description: URI of the source of the intelligence that led to the creation of the entity.
-          type: string
-        language:
-          example: string
-          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
-
-
-            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
-          type: string
-        id:
-          example: string
-          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
-          type: string
-        tlp:
-          example: green
-          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
-
-
-            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
-
-
-            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
-          type: string
-          enum:
-          - white
-          - green
-          - red
-          - amber
-        client_id:
-          type: string
-        groups:
-          type: array
-          items:
-            type: string
-        timestamp:
-          example: '2016-01-01T01:01:01.000Z'
-          description: The time this object was created at, or last modified.
-          type: string
-          format: date-time
-        related_entities:
-          example:
-          - entity_type: string
-            entity_id: string
-          type: array
-          items:
-            $ref: '#/components/schemas/NoteRelatedEntity'
-        owner:
-          type: string
-      additionalProperties: false
-      required:
-      - content
-      - note_class
-      - related_entities
-    MetricResultFilters:
-      type: object
-      properties:
-        from:
-          type: string
-          format: date-time
-        to:
-          type: string
-          format: date-time
-      additionalProperties: {}
-      required:
-      - from
-      - to
   securitySchemes:
     JWT:
       type: apiKey

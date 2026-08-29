@@ -1,0 +1,1786 @@
+openapi: 3.2.0
+info:
+  title: REST API. Workflow Instances API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: WorkflowInstances
+paths:
+  /v1.1/instances:
+    post:
+      tags:
+      - WorkflowInstances
+      summary: Handler to get all Workflow Instances.
+      description: 'Allowed Role(s): admin, user, sat
+
+        Allowed User(s): Who have atleast VIEW permission to given workflow'
+      operationId: getAllWorkflowInstancesQueryParams
+      parameters:
+      - name: state
+        in: query
+        description: The state of workflow.
+        schema:
+          type: string
+          x-go-name: State
+        x-go-name: State
+      - name: search
+        in: query
+        description: The search term to filter workflow by workflow display name
+        schema:
+          type: string
+          x-go-name: Search
+        x-go-name: Search
+      - name: start
+        in: query
+        description: Start return list of instances from the number specified
+        schema:
+          type: integer
+          format: uint8
+          x-go-name: Start
+        x-go-name: Start
+      - name: limit
+        in: query
+        description: Number of workflow instances will return by this request, must between 0-100
+        required: true
+        schema:
+          type: integer
+          format: uint8
+          x-go-name: Limit
+        x-go-name: Limit
+      - name: date_from
+        in: query
+        description: Return instances that started on after this date or on this date, example date is 2019-05-19T00:00:00Z
+        required: true
+        schema:
+          type: string
+          format: date-time
+          x-go-name: DateFrom
+        x-go-name: DateFrom
+      - name: date_to
+        in: query
+        description: Return instances that are started on before this date or on this date, example date is 2019-05-19T00:00:00Z
+        schema:
+          type: string
+          format: date-time
+          x-go-name: DateTo
+        x-go-name: DateTo
+      requestBody:
+        description: An request body to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowsInstancePostRequest'
+        required: false
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: 'An WFInstanceResponse response model
+
+
+            # This is used for returning a response with a workflow instance as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WFInstancePaginationResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/instances:
+    get:
+      tags:
+      - WorkflowInstances
+      summary: Handler to get all Workflow Instances.
+      description: 'Allowed Role(s): admin, user, sat
+
+        Allowed User(s): Who have atleast VIEW permission to given workflow'
+      operationId: listWorkflowInstancesV1
+      parameters:
+      - name: workflow_id
+        in: query
+        description: An ID of workflow.
+        required: true
+        schema:
+          type: string
+          x-go-name: WoprkflowID
+        x-go-name: WoprkflowID
+      responses:
+        '200':
+          description: 'An WFInstanceResponseV1 response model
+
+
+            # This is used for returning a response with a workflow instance as body'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkflowInstanceGetAllResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+  /v1/instances/remove:
+    post:
+      tags:
+      - WorkflowInstances
+      summary: Handler to delete workflow instances in a batch.
+      description: 'Allowed Role(s): admin'
+      operationId: WorkflowInstanceBatchDeletePostRequest
+      parameters:
+      - name: state
+        in: query
+        description: Comma separated list of The state of instance.
+        schema:
+          type: string
+          x-go-name: State
+        x-go-name: State
+      - name: date_from
+        in: query
+        description: Return instances that started on after this date or on this date, example date is 2019-05-19T00:00:00Z
+        schema:
+          type: string
+          format: date-time
+          x-go-name: DateFrom
+        x-go-name: DateFrom
+      - name: date_to
+        in: query
+        description: Return instances that are started on before this date or on this date, example date is 2019-05-19T00:00:00Z
+        schema:
+          type: string
+          format: date-time
+          x-go-name: DateTo
+        x-go-name: DateTo
+      requestBody:
+        description: 'workflow instance IDs for deleting the specified instances in the list or workflow definition ID for deleting
+
+          the instances associated with the workflow'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowInstanceBatchDeletePostReq'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '202':
+          description: 'An WorkflowInstanceDeleteResponse response model
+
+
+            # Returns message not marked for deletion if workflow instances are in running state'
+          headers:
+            message:
+              schema:
+                type: string
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/instances/summary:
+    get:
+      tags:
+      - WorkflowInstances
+      summary: Handler to get a summary of workflows instances.
+      description: 'Including total number of instances, total number of canceled, failed, running and successful instances
+
+        Allowed Role(s): admin, user, sat
+
+        Allowed User(s): Who have atleast VIEW permission to workflow'
+      operationId: instancesSummaryQueryParam
+      parameters:
+      - name: workflow_id
+        in: query
+        schema:
+          type: string
+          x-go-name: WorkflowID
+        x-go-name: WorkflowID
+      responses:
+        '200':
+          description: 'An GetInstancesSummaryResponse model.
+
+
+            # It will return a summary of workflows'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instancesSummaryResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+  /v1/instances/{wf_instance_id}:
+    get:
+      tags:
+      - WorkflowInstances
+      summary: Handler returning workflow instance information.
+      description: 'Allowed Role(s): admin, user, sat
+
+        Allowed User(s): Who have atleast VIEW permission to given workflow'
+      operationId: getWFInstanceById
+      parameters:
+      - name: wf_instance_id
+        in: path
+        description: The Id of worklfow instance
+        required: true
+        schema:
+          type: string
+          x-go-name: WFInstanceID
+        x-go-name: WFInstanceID
+      - name: detailed
+        in: query
+        description: 'Whether to return all block instances for an instance if it has blocks
+
+          If false, will only return first block instance and a block count'
+        schema:
+          type: boolean
+          x-go-name: Detailed
+        x-go-name: Detailed
+      responses:
+        '200':
+          description: 'An WorkflowInstanceResponse response model
+
+
+            # This is used for returning a response of workflow instance as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowInstanceGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    post:
+      tags:
+      - WorkflowInstances
+      summary: Handler to manage(cancel/pause/resume) a specific workflow instance
+      description: 'Allowed Role(s): admin, user
+
+        Allowed User(s): Who have RUN permission to given workflow'
+      operationId: ManageWFInstanceByID
+      parameters:
+      - name: wf_instance_id
+        in: path
+        description: The Id of worklfow instance
+        required: true
+        schema:
+          type: string
+          x-go-name: WFInstanceID
+        x-go-name: WFInstanceID
+      - name: cancel
+        in: query
+        description: True for canceling an running/created status instance
+        schema:
+          type: boolean
+          x-go-name: Cancel
+        x-go-name: Cancel
+      - name: pause
+        in: query
+        description: True for pause an instance has running status
+        schema:
+          type: boolean
+          x-go-name: Pause
+        x-go-name: Pause
+      - name: resume
+        in: query
+        description: True for resume an instance has paused status
+        schema:
+          type: boolean
+          x-go-name: Resume
+        x-go-name: Resume
+      - name: rerun
+        in: query
+        description: True for run an instance has failed status
+        schema:
+          type: boolean
+          x-go-name: ReRun
+        x-go-name: ReRun
+      responses:
+        '200':
+          description: 'An ManageInstanceResponse response model
+
+
+            # Return instance status'
+          headers:
+            status:
+              schema:
+                type: string
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    delete:
+      tags:
+      - WorkflowInstances
+      summary: Handler for delete workflow instance.
+      description: 'Allowed Role(s): admin
+
+        Allowed User(s): Who have MANAGE permission to given workflow'
+      operationId: deleteWFInstanceById
+      parameters:
+      - name: wf_instance_id
+        in: path
+        description: The Id of worklfow instance
+        required: true
+        schema:
+          type: string
+          x-go-name: WFInstanceID
+        x-go-name: WFInstanceID
+      responses:
+        '202':
+          description: 'An WorkflowInstanceDeleteResponse response model
+
+
+            # Returns message not marked for deletion if workflow instances are in running state'
+          headers:
+            message:
+              schema:
+                type: string
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+  /v1/instances/{wf_instance_id}/actions/{action_instance_id}:
+    get:
+      tags:
+      - WorkflowInstances
+      summary: Handler returning information about action's instance.
+      description: 'Allowed Role(s): admin, user, sat
+
+        Allowed User(s): Who have atleast VIEW permission to given workflow'
+      operationId: getWFActionInstanceById
+      parameters:
+      - name: wf_instance_id
+        in: path
+        description: The Id of worklfow instance
+        required: true
+        schema:
+          type: string
+          x-go-name: WFInstanceID
+        x-go-name: WFInstanceID
+      - name: action_instance_id
+        in: path
+        description: The Id of worklfow action instance
+        required: true
+        schema:
+          type: string
+          x-go-name: WFActionInstanceID
+        x-go-name: WFActionInstanceID
+      - name: iteration
+        in: query
+        description: Iteration number for block instance if it has blocks
+        schema:
+          type: integer
+          format: uint64
+          x-go-name: Iteration
+        x-go-name: Iteration
+      responses:
+        '200':
+          description: 'An WorkflowActionInstanceResponse response model
+
+
+            # This is used for returning a response of action instance as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActionInstanceGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+  /v1/instances/{wf_instance_id}/cancel:
+    post:
+      tags:
+      - WorkflowInstances
+      summary: '# Handler to cancel a specific workflow instance'
+      description: 'Allowed Role(s): admin, user
+
+        Allowed User(s): Who have RUN permission to given workflow'
+      operationId: CancelWFInstanceByID
+      parameters:
+      - name: wf_instance_id
+        in: path
+        description: The Id of worklfow instance
+        required: true
+        schema:
+          type: string
+          x-go-name: WFInstanceID
+        x-go-name: WFInstanceID
+      responses:
+        '200':
+          description: 'An CancelInstanceGetResponse response model
+
+
+            # Return cancel instance operation status'
+          headers:
+            status:
+              schema:
+                type: string
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+components:
+  schemas:
+    ActionTableInfo:
+      title: ActionTableInfo ..
+      type: object
+      properties:
+        table_id:
+          type: string
+          x-go-name: TableID
+        table_obj_type:
+          $ref: '#/components/schemas/LHObjType'
+        table_type_id:
+          type: string
+          x-go-name: TableTypeID
+        table_type_obj_type:
+          $ref: '#/components/schemas/LHObjType'
+        variable_id:
+          type: string
+          x-go-name: VariableID
+        variable_scope:
+          type: string
+          x-go-name: VariableScope
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    OutputInfo:
+      title: OutputInfo ..
+      type: object
+      properties:
+        items:
+          $ref: '#/components/schemas/ActionOutputVariable'
+        name:
+          type: string
+          x-go-name: Name
+        type:
+          type: string
+          x-go-name: Type
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    WorkflowInstanceGetResponse:
+      title: WorkflowInstanceGetResponse ...
+      type: object
+      properties:
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionInstanceGetAllResponse'
+          x-go-name: Actions
+        base_type:
+          type: string
+          x-go-name: BaseType
+        categories:
+          type: array
+          items:
+            type: string
+          x-go-name: Categories
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        definition_id:
+          type: string
+          x-go-name: DefinitionID
+        description:
+          type: string
+          x-go-name: Description
+        dynamic_map:
+          $ref: '#/components/schemas/DynamicMap'
+        ended_on:
+          type: string
+          format: date-time
+          x-go-name: EndedOn
+        id:
+          type: string
+          x-go-name: InstanceID
+        name:
+          type: string
+          x-go-name: Name
+        output:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Output
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        root_workflow_id:
+          type: string
+          x-go-name: RootWorkflowID
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        started_by:
+          type: string
+          x-go-name: StartedBy
+        started_on:
+          type: string
+          format: date-time
+          x-go-name: StartedOn
+        status:
+          $ref: '#/components/schemas/Status'
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        ui_config:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: UIConfig
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        variables:
+          type: array
+          items:
+            $ref: '#/components/schemas/Variable'
+          x-go-name: WFVariables
+        version:
+          type: string
+          x-go-name: Version
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    VariableContent:
+      title: VariableContent ...
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of variable
+          x-go-name: Description
+        display_on_wizard:
+          type: boolean
+          description: 'Should the variable be shown on wizard
+
+            Used in input scope variables, if it is true, then variable is displayed on wizard'
+          x-go-name: DisplayOnWizard
+        is_invisible:
+          type: boolean
+          x-go-name: IsInvisible
+        is_required:
+          type: boolean
+          description: 'Is the variable Required
+
+            Used in input string and secure string variable, if it is true, then string can''t be emptly'
+          x-go-name: IsRequired
+        name:
+          type: string
+          description: Name of variable
+          x-go-name: Name
+        scope:
+          type: string
+          description: Scope of variable. Scope can be 'input', 'global', 'local', 'static' or 'workflow'
+          x-go-name: Scope
+        type:
+          type: string
+          description: Type of variable. Type can be 'datatype.boolean', 'datatype.string', 'datatype.number' or 'datatype.table'
+          x-go-name: Type
+        value:
+          type: object
+          properties: {}
+          description: Value of variable. Value can be a string, boolean, number or array
+          x-go-name: Value
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Variable:
+      title: Variable ...
+      required:
+      - schema_id
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        id:
+          type: string
+          description: ID of variable
+          x-go-name: VariableID
+        object_type:
+          $ref: '#/components/schemas/LHObjType'
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          $ref: '#/components/schemas/VariableContent'
+        schema_id:
+          type: string
+          description: View schema ID of variable, the value can be TargetTypeID for Table variables
+          x-go-name: ViewSchemaID
+        table_id:
+          type: string
+          description: ID of table
+          x-go-name: TableID
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        variable_def_id:
+          type: string
+          description: ID of variable
+          x-go-name: VariableDefID
+        version:
+          type: string
+          x-go-name: Version
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    ActionOutputVariable:
+      title: ActionOutputVariable ..
+      type: object
+      properties:
+        item_type:
+          type: string
+          x-go-name: ItemType
+        output_variable:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/OutputInfo'
+          x-go-name: Output
+        type:
+          type: string
+          x-go-name: Type
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    WorkflowsInstancePostRequest:
+      title: WorkflowsInstancePostRequest ...
+      type: object
+      properties:
+        owner:
+          type: array
+          description: 'list of owner IDs to filter by
+
+            in: body'
+          items:
+            type: string
+          x-go-name: Owner
+        workflow_ids:
+          type: array
+          description: 'List of workflows to retrieve
+
+
+            in: body'
+          items:
+            type: string
+          x-go-name: WorkflowIDs
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    WFInstancePaginationResponse:
+      title: WFInstancePaginationResponse ...
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowInstanceGetAllResponse'
+          x-go-name: Results
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    WorkflowInstanceGetAllResponse:
+      title: WorkflowInstanceGetAllResponse ...
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        definition_id:
+          type: string
+          x-go-name: DefinitionID
+        ended_on:
+          type: string
+          format: date-time
+          x-go-name: EndedOn
+        id:
+          type: string
+          x-go-name: InstanceID
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        root_workflow_id:
+          type: string
+          x-go-name: RootWorkflowID
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        started_by:
+          type: string
+          x-go-name: StartedBy
+        started_on:
+          type: string
+          format: date-time
+          x-go-name: StartedOn
+        status:
+          $ref: '#/components/schemas/Status'
+        type:
+          type: string
+          x-go-name: Type
+        ui_config:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: UIConfig
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        version:
+          type: string
+          x-go-name: Version
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    ColumnMapInfo:
+      title: ColumnMapInfo will be one entry in column map
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnData'
+          x-go-name: Columns
+        parent_action_ids:
+          type: object
+          additionalProperties:
+            type: string
+          x-go-name: ParentMap
+        persist_output_as_table:
+          type: boolean
+          x-go-name: PersistOutput
+        table_type_columns:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/ColumnData'
+          x-go-name: TblTypeColumns
+        table_type_id:
+          type: string
+          x-go-name: TableTypeID
+      description: '{
+
+        "table_type_id": "16bsMd7aS2mqII9n5bIe8EGIl39",
+
+        "table_type_columns": {
+
+        "<referenced_table_type_id>": [
+
+        {
+
+        "name": "id",
+
+        "type": "number"
+
+        },
+
+        {
+
+        "name": "name",
+
+        "type": "string"
+
+        }
+
+        ]
+
+        },
+
+        "parent_action_ids": {
+
+        "<parent_action_id/reference workflow/global var id>" : "<referenced_table_type_id>"
+
+        },
+
+        "columns": [
+
+        {
+
+        "name": "id",
+
+        "type": "number"
+
+        },
+
+        {
+
+        "name": "name",
+
+        "type": "string"
+
+        }
+
+        ]
+
+        }'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    ColumnData:
+      title: ColumnData ..
+      type: object
+      properties:
+        name:
+          type: string
+          x-go-name: Name
+        type:
+          type: string
+          x-go-name: Type
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    WorkflowInstanceBatchDeletePostReq:
+      title: WorkflowInstanceBatchDeletePostReq ...
+      type: object
+      properties:
+        owner:
+          type: array
+          description: 'list of owner IDs to filter by
+
+            in: body'
+          items:
+            type: string
+          x-go-name: Owner
+        wf_instance_ids:
+          type: array
+          description: workflow instance IDs
+          items:
+            type: string
+          x-go-name: WFInstanceIDs
+        workflow_ids:
+          type: array
+          items:
+            type: string
+          x-go-name: WorkflowIDs
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    instancesSummaryResponse:
+      title: An InstancesSummaryResponse model.
+      type: object
+      properties:
+        canceled:
+          type: integer
+          format: int64
+          x-go-name: Canceled
+        failed:
+          type: integer
+          format: int64
+          x-go-name: Failed
+        paused:
+          type: integer
+          format: int64
+          x-go-name: Paused
+        running:
+          type: integer
+          format: int64
+          x-go-name: Running
+        success:
+          type: integer
+          format: int64
+          x-go-name: Success
+        total:
+          type: integer
+          format: int64
+          x-go-name: Total
+        waiting_for_event:
+          type: integer
+          format: int64
+          x-go-name: WaitingForEvent
+      x-go-name: InstancesSummaryResponse
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    ActionInstanceGetResponse:
+      title: ActionInstanceGetResponse ...
+      type: object
+      properties:
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionInstanceGetAllResponse'
+          x-go-name: Actions
+        adapter_id:
+          type: string
+          x-go-name: AdapterID
+        base_type:
+          type: string
+          x-go-name: BaseType
+        blocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionInstanceGetAllResponse'
+          x-go-name: Branches
+        definition_id:
+          type: string
+          x-go-name: DefinitionID
+        description:
+          type: string
+          x-go-name: Description
+        ended_on:
+          type: string
+          format: date-time
+          x-go-name: EndedOn
+        id:
+          type: string
+          x-go-name: InstanceID
+        name:
+          type: string
+          x-go-name: Name
+        output:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Output
+        output_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: OutputSchema
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        property_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: PropertySchema
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        skip_execution:
+          type: boolean
+          x-go-name: SkipExecution
+        started_by:
+          type: string
+          x-go-name: StartedBy
+        started_on:
+          type: string
+          format: date-time
+          x-go-name: StartedOn
+        status:
+          $ref: '#/components/schemas/Status'
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        ui_config:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: UIConfig
+        version:
+          type: string
+          x-go-name: Version
+        workflow_id:
+          type: string
+          x-go-name: WorkflowID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    LHObjType:
+      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
+    ActionInstanceGetAllResponse:
+      title: ActionInstanceGetAllResponse ...
+      type: object
+      properties:
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionInstanceGetAllResponse'
+          x-go-name: Actions
+        adapter_id:
+          type: string
+          x-go-name: AdapterID
+        base_type:
+          type: string
+          x-go-name: BaseType
+        blocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionInstanceGetAllResponse'
+          x-go-name: Branches
+        blocks_count:
+          type: integer
+          format: int64
+          x-go-name: BranchesCount
+        definition_id:
+          type: string
+          x-go-name: DefinitionID
+        id:
+          type: string
+          x-go-name: InstanceID
+        name:
+          type: string
+          x-go-name: Name
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        skip_execution:
+          type: boolean
+          x-go-name: SkipExecution
+        status:
+          $ref: '#/components/schemas/Status'
+        subworkflow_id:
+          type: string
+          x-go-name: SubWorkflowID
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        version:
+          type: string
+          x-go-name: Version
+        workflow_id:
+          type: string
+          x-go-name: WorkflowID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    DynamicMap:
+      title: 'DynamicMap will have two individual map
+
+        ActionVariableMap will look like following:
+
+        "action_variable_map": {
+
+        "<actionID>": {
+
+        "jsonpath_queries_1": {
+
+        "type": "array",
+
+        "output_variable":{
+
+        "script_query_name":{
+
+        "name": "script_query_name",
+
+        "type":"string"
+
+        },
+
+        "script_query_name_1":{
+
+        "name": "script_query_name_1",
+
+        "type":"string"
+
+        }
+
+        }
+
+        }
+
+        "jsonpath_queries_2": {
+
+        "type": "object",
+
+        "output_variable":{
+
+        "query_name":{
+
+        "name": "query_name",
+
+        "type":"string"
+
+        }
+
+        }
+
+        }
+
+        }
+
+        }
+
+        Action output table is for orchestrator to keep track of dynamic created table and table type
+
+        it will look like following:
+
+        "action_output_table": {
+
+        "<action_definition_id>": {
+
+        "<action_dynamic_property_1>": {
+
+        "table_id": "",
+
+        "table_type_id": ""
+
+        },
+
+        "<action_dynamic_property_2>": {
+
+        "table_id": "",
+
+        "table_type_id": ""
+
+        }
+
+        }
+
+        }'
+      type: object
+      properties:
+        action_output_table:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/ActionTableInfo'
+          description: 'Action output table will be used for workflow instance
+
+            Do not initialize for workflow definition'
+          x-go-name: ActionOutputTable
+        action_variable_map:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/ActionOutputVariable'
+          x-go-name: ActionVariableMap
+        column_map:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ColumnMapInfo'
+          x-go-name: ColumnMap
+      description: DynamicMap ..
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

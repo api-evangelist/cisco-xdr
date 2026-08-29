@@ -1,0 +1,389 @@
+openapi: 3.2.0
+info:
+  title: REST API. Tables API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: Tables
+paths:
+  /v1/tables/{table_id}:
+    get:
+      tags:
+      - Tables
+      summary: Handler to retrieve table rows.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: tableGetRowsReqParams
+      parameters:
+      - name: table_id
+        in: path
+        description: The Table ID
+        required: true
+        schema:
+          type: string
+          x-go-name: TableID
+        x-go-name: TableID
+      - name: offset
+        in: query
+        description: Offset - number of rows to skip
+        required: true
+        schema:
+          type: integer
+          format: int64
+          x-go-name: Offset
+        x-go-name: Offset
+      - name: rows
+        in: query
+        description: Rows - number of rows to return
+        required: true
+        schema:
+          type: integer
+          format: int64
+          x-go-name: Rows
+        x-go-name: Rows
+      - name: workflow_id
+        in: query
+        description: Workflow ID if the table is a workflow table
+        schema:
+          type: string
+          x-go-name: WorkflowID
+        x-go-name: WorkflowID
+      - name: workflow_instance_id
+        in: query
+        description: Workflow instance ID if the table is a workflow instance table
+        schema:
+          type: string
+          x-go-name: WorkflowInstanceID
+        x-go-name: WorkflowInstanceID
+      - name: scope
+        in: query
+        description: variable scope for this Table
+        schema:
+          type: string
+          x-go-name: Scope
+        x-go-name: Scope
+      responses:
+        '200':
+          description: 'A TableResponse model
+
+
+            # This is used for returning a response of Table as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+  /v1/update_table/{table_id}:
+    post:
+      tags:
+      - Tables
+      summary: Handler to update/add/delete rows
+      description: 'Allowed Role(s): admin'
+      operationId: tableUpdateRowPostRequest
+      parameters:
+      - name: table_id
+        in: path
+        description: The Table ID
+        required: true
+        schema:
+          type: string
+          x-go-name: TableID
+        x-go-name: TableID
+      - name: workflow_id
+        in: query
+        description: Workflow ID if the table is a workflow table
+        schema:
+          type: string
+          x-go-name: WorkflowID
+        x-go-name: WorkflowID
+      requestBody:
+        description: rows for add/update/delete
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTableRowPostRequest'
+        required: true
+        x-go-name: UpdateRowRequest
+      responses:
+        '200':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '204':
+          description: NoContent response model
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: rows
+components:
+  schemas:
+    UpdateTableRowPostRequest:
+      type: object
+      properties:
+        rows_to_be_added:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserTableRow'
+          x-go-name: RowsToAdd
+        rows_to_be_deleted:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserTableRow'
+          x-go-name: RowsToDelete
+        rows_to_be_updated:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserTableRow'
+          x-go-name: RowsToUpdate
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    TableGetResponse:
+      title: TableGetResponse ...
+      type: object
+      properties:
+        data_type:
+          type: string
+          x-go-name: DataType
+        name:
+          type: string
+          x-go-name: Name
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/TableRow'
+          x-go-name: Rows
+        rows_count:
+          type: integer
+          format: uint32
+          x-go-name: RowsCount
+        table_id:
+          type: string
+          x-go-name: TableID
+        table_type_id:
+          type: string
+          x-go-name: TableTypeID
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    UserTableRow:
+      type: object
+      properties:
+        column_data:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: ColumnData
+        previous_row_id:
+          type: string
+          x-go-name: PreviousRowID
+        previous_suffix_id:
+          type: string
+          x-go-name: PreviousSuffixID
+        row_id:
+          type: string
+          x-go-name: RowID
+        suffix_id:
+          type: string
+          x-go-name: SuffixID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    TableRow:
+      type: object
+      properties:
+        column_data:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: ColumnData
+        row_id:
+          type: string
+          x-go-name: RowID
+        suffix_id:
+          type: string
+          x-go-name: SuffixID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

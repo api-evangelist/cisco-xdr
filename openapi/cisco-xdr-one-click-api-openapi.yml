@@ -106,43 +106,6 @@ paths:
         required: true
 components:
   schemas:
-    OneClickModuleWrapperResult:
-      type: object
-      properties:
-        created_new_module?:
-          type: boolean
-        updated_module_to_one_click?:
-          type: boolean
-        error:
-          type: string
-          enum:
-          - already_has_one_click
-          - multiple_module_instances
-          - one_click_update_not_supported
-          - unable_to_create_module
-          - one_click_not_supported_by_module
-        module_instances:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModuleInstance'
-      additionalProperties: false
-      required:
-      - created_new_module?
-    ModuleInstanceExternalReference:
-      type: object
-      properties:
-        label:
-          type: string
-        link:
-          type: string
-        external_id:
-          type: string
-        class:
-          description: Class to distinguish external references
-          type: string
-      additionalProperties: false
-      required:
-      - label
     ModuleInstance:
       type: object
       properties:
@@ -195,6 +158,62 @@ components:
       - enabled
       - visibility
       - created_at
+    ModuleInstanceExternalReference:
+      type: object
+      properties:
+        label:
+          type: string
+        link:
+          type: string
+        external_id:
+          type: string
+        class:
+          description: Class to distinguish external references
+          type: string
+      additionalProperties: false
+      required:
+      - label
+    ModuleInstanceSettings:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+        - $ref: '#/components/schemas/ModuleInstanceSettings'
+    OneClickModuleWrapperResult:
+      type: object
+      properties:
+        created_new_module?:
+          type: boolean
+        updated_module_to_one_click?:
+          type: boolean
+        error:
+          type: string
+          enum:
+          - already_has_one_click
+          - multiple_module_instances
+          - one_click_update_not_supported
+          - unable_to_create_module
+          - one_click_not_supported_by_module
+        module_instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleInstance'
+      additionalProperties: false
+      required:
+      - created_new_module?
     OneClickModuleCreateParams:
       type: object
       properties:
@@ -215,25 +234,6 @@ components:
       - module_type_id
       - product_tenant_id
       - type
-    ModuleInstanceSettings:
-      type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-        - type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-        - $ref: '#/components/schemas/ModuleInstanceSettings'
   securitySchemes:
     iroh:
       type: apiKey

@@ -1,0 +1,1080 @@
+openapi: 3.2.0
+info:
+  title: REST API. Tasks API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: Tasks
+paths:
+  /v1/tasks:
+    get:
+      tags:
+      - Tasks
+      summary: Handler to get all tasks.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: getAllTasksQueryParam
+      parameters:
+      - name: owner
+        in: query
+        description: Comma separated list of owner IDs to filter by
+        schema:
+          type: string
+          x-go-name: Owner
+        x-go-name: Owner
+      - name: search
+        in: query
+        description: Comma separated list of search terms to filter based on task display names, and task response
+        schema:
+          type: string
+          x-go-name: Search
+        x-go-name: Search
+      - name: state
+        in: query
+        description: Comma separated list of task states to filter
+        schema:
+          type: string
+          x-go-name: State
+        x-go-name: State
+      - name: limit
+        in: query
+        description: Number of tasks to return for this request
+        schema:
+          type: integer
+          format: int64
+          x-go-name: Limit
+        x-go-name: Limit
+      - name: start
+        in: query
+        description: Return list of tasks from n'th task, n is start to be provided
+        schema:
+          type: integer
+          format: int64
+          x-go-name: Start
+        x-go-name: Start
+      - name: sort_by
+        in: query
+        description: Comma separated list of task priorities to filter
+        schema:
+          type: string
+          x-go-name: Priority
+        x-go-name: Priority
+      - name: due_date
+        in: query
+        description: filter tasks based on due date, an valid date will be 2019-05-15T12:00:00Z
+        schema:
+          type: string
+          x-go-name: DueDate
+        x-go-name: DueDate
+      - name: requestor
+        in: query
+        description: Comma separated list of task requestors to filter
+        schema:
+          type: string
+          x-go-name: Requestor
+        x-go-name: Requestor
+      - name: assignees
+        in: query
+        description: Comma separated list of task assignees to filter
+        schema:
+          type: string
+          x-go-name: Assignees
+        x-go-name: Assignees
+      - name: response
+        in: query
+        description: Comma separated list of responses that assignees has responded
+        schema:
+          type: string
+          x-go-name: Response
+        x-go-name: Response
+      - name: type
+        in: query
+        description: Filter based on type of task
+        schema:
+          type: string
+          x-go-name: TaskType
+        x-go-name: TaskType
+      responses:
+        '200':
+          description: An GetAllTasksSwaggerResponse model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllTasksResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+  /v1/tasks/batch_get:
+    get:
+      tags:
+      - Tasks
+      summary: Handler to get tasks in batch.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: getAllTasksInBatch
+      responses:
+        '200':
+          description: An GetAllTasksSwaggerResponse model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllTasksResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+  /v1/tasks/summary:
+    get:
+      tags:
+      - Tasks
+      summary: Handler to get a summary of tasks.
+      description: 'Including total number of tasks, not completed, due soon, overdue, expired and assigned to the user.
+
+        Allowed Role(s): admin, user, sat
+
+        Allowed User(s): Who have atleast VIEW permission to given task'
+      operationId: listTaskSummary
+      responses:
+        '200':
+          description: 'An GetTasksSummaryResponse model.
+
+
+            # It will return a summary of tasks'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TasksSummaryResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+  /v1/tasks/{task_id}:
+    get:
+      tags:
+      - Tasks
+      summary: Handler to get a specific task.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: readTaskRequest
+      parameters:
+      - name: task_id
+        in: path
+        description: Task ID
+        required: true
+        schema:
+          type: string
+          x-go-name: TaskID
+        x-go-name: TaskID
+      responses:
+        '200':
+          description: An ReadTaskResponse model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTaskResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    patch:
+      tags:
+      - Tasks
+      summary: Handler to update a task.
+      description: 'Allowed Role(s): admin, user'
+      operationId: taskPatchRequest
+      parameters:
+      - name: task_id
+        in: path
+        description: Task ID
+        required: true
+        schema:
+          type: string
+          x-go-name: TaskID
+        x-go-name: TaskID
+      requestBody:
+        description: Task request to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskPatchRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: An ReadTaskResponse model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTaskResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/tasks/{task_id}/action:
+    post:
+      tags:
+      - Tasks
+      summary: Handler for an assignee of a task to take action on the task.
+      description: 'Allowed Role(s): admin, user'
+      operationId: taskActionRequest
+      parameters:
+      - name: task_id
+        in: path
+        description: Task ID
+        required: true
+        schema:
+          type: string
+          x-go-name: TaskID
+        x-go-name: TaskID
+      requestBody:
+        description: Task action to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TakeActionRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: An ReadTaskResponse model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTaskResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+components:
+  schemas:
+    RelativeTime:
+      title: RelativeTime ...
+      type: object
+      properties:
+        duration:
+          type: integer
+          format: int64
+          x-go-name: Duration
+        time_units:
+          $ref: '#/components/schemas/TimeUnit'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    LHTime:
+      type: object
+      description: LHTime embeds time.Time
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TakeActionRequest:
+      title: An TakeActionRequest model.
+      type: object
+      properties:
+        message:
+          type: string
+          description: Response message
+          x-go-name: Message
+        prompt_response:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Prompt response
+          x-go-name: PromptResponse
+        response:
+          type: string
+          description: Response
+          x-go-name: Response
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    FormElement:
+      title: FormElement ...
+      type: object
+      properties:
+        allow_multiselect:
+          type: boolean
+          x-go-name: AllowMultiselect
+        form_element:
+          $ref: '#/components/schemas/FormElementType'
+        form_label:
+          type: string
+          x-go-name: Label
+        form_label_text:
+          type: string
+          x-go-name: Text
+        form_source_array:
+          type: object
+          properties: {}
+          x-go-name: DropDown
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TaskPatchRequest:
+      title: An TaskPatchRequest model.
+      type: object
+      properties:
+        approval_choices:
+          type: array
+          description: Approval choices of task
+          items:
+            type: string
+          x-go-name: ApprovalChoices
+        assignees:
+          type: array
+          description: List of assignees of the task
+          items:
+            type: string
+          x-go-name: Assignees
+        description:
+          type: string
+          description: Task description
+          x-go-name: Description
+        display_name:
+          type: string
+          description: Task name
+          x-go-name: Name
+        due_date:
+          $ref: '#/components/schemas/DueTaskDateInfo'
+        expiration_date:
+          $ref: '#/components/schemas/TaskDateInfo'
+        expiration_status:
+          type: string
+          description: Task expiration status
+          x-go-name: ExpirationStatus
+        minimum_approvals:
+          type: integer
+          description: Minimum Approvals for the task
+          format: uint32
+          x-go-name: MinimumApprovals
+        priority:
+          type: string
+          description: Task priority
+          x-go-name: Priority
+        subject_line:
+          type: string
+          description: Task subject line
+          x-go-name: SubjectLine
+        task_message:
+          type: string
+          description: Approval message of task
+          x-go-name: ApprovalMessage
+        task_owner:
+          type: string
+          description: Task owner
+          x-go-name: TaskOwner
+        task_requestor:
+          type: string
+          description: Task requestor
+          x-go-name: TaskRequestor
+        title:
+          type: string
+          description: Task title
+          x-go-name: Title
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    DueTaskDateInfo:
+      title: DueTaskDateInfo ...
+      type: object
+      properties:
+        is_relative_time:
+          type: boolean
+          x-go-name: IsRelativeTime
+        is_specified_date:
+          type: boolean
+          x-go-name: IsSpecifiedDate
+        relative_time:
+          $ref: '#/components/schemas/RelativeTime'
+        set_due_date:
+          type: boolean
+          x-go-name: SetDueDate
+        specified_date:
+          type: string
+          x-go-name: SpecifiedDate
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    AssigneeResponse:
+      title: AssigneeResponse ...
+      type: object
+      properties:
+        assignee:
+          type: string
+          x-go-name: Assignee
+        message:
+          type: string
+          x-go-name: Message
+        response:
+          type: string
+          x-go-name: Response
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    GetAllTaskResponse:
+      title: An GetAllTaskResponse model.
+      type: object
+      properties:
+        action_instance_id:
+          type: string
+          x-go-name: ActionInstanceID
+        approval_choices:
+          type: array
+          items:
+            type: string
+          x-go-name: ApprovalChoices
+        assignee_responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssigneeResponse'
+          x-go-name: AssigneeResponses
+        assignee_roles:
+          type: array
+          items:
+            type: string
+          x-go-name: AssigneeRoles
+        assignees:
+          type: array
+          items:
+            type: string
+          x-go-name: Assignees
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
+        display_name:
+          type: string
+          x-go-name: Name
+        due_date:
+          $ref: '#/components/schemas/LHTime'
+        expiration_date:
+          $ref: '#/components/schemas/LHTime'
+        expiration_status:
+          type: string
+          x-go-name: ExpirationStatus
+        id:
+          type: string
+          x-go-name: TaskID
+        minimum_approvals:
+          type: integer
+          format: uint32
+          x-go-name: MinimumApprovals
+        priority:
+          $ref: '#/components/schemas/TaskPriority'
+        prompt_title:
+          type: string
+          x-go-name: PromptTitle
+        response:
+          type: string
+          x-go-name: Response
+        status:
+          $ref: '#/components/schemas/Status'
+        subject_line:
+          type: string
+          x-go-name: SubjectLine
+        task_owner:
+          type: string
+          x-go-name: TaskOwner
+        task_requestor:
+          type: string
+          x-go-name: TaskRequestor
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        wf_instance_id:
+          type: string
+          x-go-name: WFInstanceID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TaskDateInfo:
+      title: TaskDateInfo ...
+      type: object
+      properties:
+        is_relative_time:
+          type: boolean
+          x-go-name: IsRelativeTime
+        is_specified_date:
+          type: boolean
+          x-go-name: IsSpecifiedDate
+        relative_time:
+          $ref: '#/components/schemas/RelativeTime'
+        specified_date:
+          type: string
+          x-go-name: SpecifiedDate
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    TimeUnit:
+      title: TimeUnit ...
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    GetAllTasksResponse:
+      title: An GetAllTasksResponse model.
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetAllTaskResponse'
+          x-go-name: Results
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    FormElementType:
+      type: string
+      description: FormElementType contains the FromElement type enum
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TasksSummaryResponse:
+      title: An TasksSummaryResponse model.
+      type: object
+      properties:
+        action_required:
+          type: integer
+          format: int64
+          x-go-name: ActionRequired
+        assigned_to_me:
+          type: integer
+          format: int64
+          x-go-name: AssignedToMe
+        completed:
+          type: integer
+          format: int64
+          x-go-name: Completed
+        due_soon:
+          type: integer
+          format: int64
+          x-go-name: DueSoon
+        expired:
+          type: integer
+          format: int64
+          x-go-name: Expired
+        overdue:
+          type: integer
+          format: int64
+          x-go-name: Overdue
+        total:
+          type: integer
+          format: int64
+          x-go-name: Total
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    TaskPriority:
+      type: string
+      description: TaskPriority contains the Priority enum
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    GetTaskResponse:
+      title: An GetTaskResponse model.
+      type: object
+      properties:
+        action_instance_id:
+          type: string
+          x-go-name: ActionInstanceID
+        approval_choices:
+          type: array
+          items:
+            type: string
+          x-go-name: ApprovalChoices
+        assignee_responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssigneeResponse'
+          x-go-name: AssigneeResponses
+        assignee_roles:
+          type: array
+          items:
+            type: string
+          x-go-name: AssigneeRoles
+        assignees:
+          type: array
+          items:
+            type: string
+          x-go-name: Assignees
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
+        display_name:
+          type: string
+          x-go-name: Name
+        due_date:
+          $ref: '#/components/schemas/LHTime'
+        expiration_date:
+          $ref: '#/components/schemas/LHTime'
+        expiration_status:
+          type: string
+          x-go-name: ExpirationStatus
+        form_elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/FormElement'
+          x-go-name: FormElements
+        id:
+          type: string
+          x-go-name: TaskID
+        minimum_approvals:
+          type: integer
+          format: uint32
+          x-go-name: MinimumApprovals
+        priority:
+          $ref: '#/components/schemas/TaskPriority'
+        prompt_body_text:
+          type: string
+          x-go-name: PromptBodyText
+        prompt_response:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: PromptResponse
+        response:
+          type: string
+          x-go-name: Response
+        status:
+          $ref: '#/components/schemas/Status'
+        subject_line:
+          type: string
+          x-go-name: SubjectLine
+        task_message:
+          type: string
+          x-go-name: ApprovalMessage
+        task_owner:
+          type: string
+          x-go-name: TaskOwner
+        task_requestor:
+          type: string
+          x-go-name: TaskRequestor
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        wf_instance_id:
+          type: string
+          x-go-name: WFInstanceID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

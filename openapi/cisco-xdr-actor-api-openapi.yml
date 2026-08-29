@@ -1302,6 +1302,19 @@ paths:
           format: date-time
 components:
   schemas:
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
     Actor:
       example:
         description: string
@@ -1686,9 +1699,6 @@ components:
           items:
             type: string
       additionalProperties: false
-    MetricResultData:
-      type: object
-      additionalProperties: {}
     ValidTime:
       example:
         start_time: '2016-01-01T01:01:01.000Z'
@@ -1707,83 +1717,6 @@ components:
           type: string
           format: date-time
       additionalProperties: false
-    RelatedIdentity:
-      example:
-        identity: string
-        confidence: High
-        information_source: string
-        relationship: string
-      description: Describes a related Identity
-      type: object
-      properties:
-        identity:
-          example: string
-          description: The reference (URI) of the related Identity object.
-          type: string
-        confidence:
-          example: High
-          description: Specifies the level of confidence in the assertion of the relationship between the two objects.
-          type: string
-          enum:
-          - Medium
-          - Info
-          - Unknown
-          - None
-          - High
-          - Low
-        information_source:
-          example: string
-          description: Specifies the source of the information about the relationship between the two components.
-          type: string
-        relationship:
-          example: string
-          type: string
-      additionalProperties: false
-    Identity:
-      example:
-        description: string
-        related_identities:
-        - identity: string
-          confidence: High
-          information_source: string
-          relationship: string
-      description: Can contain information such as the name of the attacker, the group or organization they belong to, or any other identifier that can help in the attribution process.
-      type: object
-      properties:
-        description:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        related_identities:
-          example:
-          - identity: string
-            confidence: High
-            information_source: string
-            relationship: string
-          description: Identifies other entity Identities related to this Identity.
-          type: array
-          items:
-            $ref: '#/components/schemas/RelatedIdentity'
-      additionalProperties: false
-    MetricResult:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/MetricResultData'
-        type:
-          type: string
-          enum:
-          - histogram
-          - topn
-          - avg
-          - cardinality
-        filters:
-          $ref: '#/components/schemas/MetricResultFilters'
-      additionalProperties: false
-      required:
-      - data
-      - type
-      - filters
     ExternalReference:
       example:
         source_name: string
@@ -1988,19 +1921,86 @@ components:
       - source
       - short_description
       - title
-    MetricResultFilters:
+    RelatedIdentity:
+      example:
+        identity: string
+        confidence: High
+        information_source: string
+        relationship: string
+      description: Describes a related Identity
       type: object
       properties:
-        from:
+        identity:
+          example: string
+          description: The reference (URI) of the related Identity object.
           type: string
-          format: date-time
-        to:
+        confidence:
+          example: High
+          description: Specifies the level of confidence in the assertion of the relationship between the two objects.
           type: string
-          format: date-time
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        information_source:
+          example: string
+          description: Specifies the source of the information about the relationship between the two components.
+          type: string
+        relationship:
+          example: string
+          type: string
+      additionalProperties: false
+    MetricResultData:
+      type: object
       additionalProperties: {}
+    MetricResult:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MetricResultData'
+        type:
+          type: string
+          enum:
+          - histogram
+          - topn
+          - avg
+          - cardinality
+        filters:
+          $ref: '#/components/schemas/MetricResultFilters'
+      additionalProperties: false
       required:
-      - from
-      - to
+      - data
+      - type
+      - filters
+    Identity:
+      example:
+        description: string
+        related_identities:
+        - identity: string
+          confidence: High
+          information_source: string
+          relationship: string
+      description: Can contain information such as the name of the attacker, the group or organization they belong to, or any other identifier that can help in the attribution process.
+      type: object
+      properties:
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        related_identities:
+          example:
+          - identity: string
+            confidence: High
+            information_source: string
+            relationship: string
+          description: Identifies other entity Identities related to this Identity.
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedIdentity'
+      additionalProperties: false
   securitySchemes:
     JWT:
       type: apiKey

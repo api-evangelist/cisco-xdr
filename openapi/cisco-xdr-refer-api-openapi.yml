@@ -192,6 +192,30 @@ paths:
         required: true
 components:
   schemas:
+    EnvelopedRefs:
+      example:
+        data:
+        - module: Talos Intelligence
+          module_instance_id: 03ce55b5-225d-48ae-9654-c120654de377
+          module_type_id: 2460c99b-2f01-523b-a65d-30a3c6603245
+          id: ref-talos-search-domain-ilo.brenz.pl
+          title: Search for this domain
+          description: Lookup this domain on Talos Intelligence
+          categories:
+          - Talos Intelligence
+          - Search
+          url: https://www.talosintelligence.com/reputation_center/lookup?search=ilo.brenz.pl
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ref'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+      additionalProperties: false
     Ref:
       type: object
       properties:
@@ -225,48 +249,6 @@ components:
       - id
       - url
       - module_instance_id
-    EnvelopedRefs:
-      example:
-        data:
-        - module: Talos Intelligence
-          module_instance_id: 03ce55b5-225d-48ae-9654-c120654de377
-          module_type_id: 2460c99b-2f01-523b-a65d-30a3c6603245
-          id: ref-talos-search-domain-ilo.brenz.pl
-          title: Search for this domain
-          description: Lookup this domain on Talos Intelligence
-          categories:
-          - Talos Intelligence
-          - Search
-          url: https://www.talosintelligence.com/reputation_center/lookup?search=ilo.brenz.pl
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Ref'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorMessage'
-      additionalProperties: false
-    NormalizedError-401:
-      example:
-        error: invalid_request
-        error_description: No JWT found in HTTP Authorization header
-      type: object
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
-        error_code:
-          type: string
-        error_uri:
-          type: string
-        trace_id:
-          type: string
-        schema.core.AnythingSchema@3c6f0b88: {}
-      additionalProperties: {}
     Observable:
       example:
         value: 1.2.3.4
@@ -355,6 +337,24 @@ components:
         error: unknown server error
         error_description: An unknown error has occurred during the enrichment
         trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_code:
+          type: string
+        error_uri:
+          type: string
+        trace_id:
+          type: string
+        schema.core.AnythingSchema@3c6f0b88: {}
+      additionalProperties: {}
+    NormalizedError-401:
+      example:
+        error: invalid_request
+        error_description: No JWT found in HTTP Authorization header
       type: object
       properties:
         error:

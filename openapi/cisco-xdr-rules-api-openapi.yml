@@ -1,0 +1,997 @@
+openapi: 3.2.0
+info:
+  title: REST API. Rules API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: Rules
+paths:
+  /v1/rules:
+    post:
+      tags:
+      - Rules
+      summary: '# Handler to create a rule'
+      description: 'Allowed Role(s): admin, user'
+      operationId: RuleCreateRequest
+      requestBody:
+        description: The rule to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RulePostRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '201':
+          description: 'An RuleResponse response model
+
+
+            # This is used for returning a response with a single rule as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '401':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/rules/batch_get:
+    post:
+      tags:
+      - Rules
+      summary: Handler to get all rules.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: getAllRulesQueryParam
+      parameters:
+      - name: search
+        in: query
+        description: Comma separated list of search terms to filter based on rule names
+        schema:
+          type: string
+          x-go-name: Search
+        x-go-name: Search
+      - name: state
+        in: query
+        description: Comma separated list of rule states to filter
+        schema:
+          type: string
+          x-go-name: State
+        x-go-name: State
+      - name: limit
+        in: query
+        description: Number of rules to return for this request
+        required: true
+        schema:
+          type: integer
+          format: int64
+          x-go-name: Limit
+        x-go-name: Limit
+      - name: start
+        in: query
+        description: Return list of rules from n'th rule, n is start to be provided
+        schema:
+          type: integer
+          format: int64
+          x-go-name: Start
+        x-go-name: Start
+      - name: sort_by
+        in: query
+        description: Return list of rules in sorted order
+        schema:
+          type: string
+          x-go-name: SortBy
+        x-go-name: SortBy
+      requestBody:
+        description: An request body to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RulesPostRequest'
+        required: false
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: An GetAllRulesSwaggerResponse model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllRulesPaginatedResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '401':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/rules/priority:
+    patch:
+      tags:
+      - Rules
+      summary: '# Handler to update a rule'
+      description: 'Allowed Role(s): admin'
+      operationId: rulePriorityOrderRequest
+      requestBody:
+        description: An request body to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RulePatchRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: 'An RuleResponse response model
+
+
+            # This is used for returning a response with a single rule as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '401':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/rules/{rule_id}:
+    get:
+      tags:
+      - Rules
+      summary: '# Handler to get rule by ID.'
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: getRuleRequest
+      parameters:
+      - name: rule_id
+        in: path
+        description: The ID of Rule
+        required: true
+        schema:
+          type: string
+          x-go-name: RuleID
+        x-go-name: RuleID
+      responses:
+        '200':
+          description: An GetRuleResponse model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllRuleResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '401':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    put:
+      tags:
+      - Rules
+      summary: '# Handler to update a rule'
+      description: 'Allowed Role(s): admin'
+      operationId: RuleUpdateRequest
+      parameters:
+      - name: rule_id
+        in: path
+        description: The ruleID of Rule
+        required: true
+        schema:
+          type: string
+          x-go-name: RuleID
+        x-go-name: RuleID
+      requestBody:
+        description: The rule to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RulePutRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: 'An RuleResponse response model
+
+
+            # This is used for returning a response with a single rule as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '401':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+    delete:
+      tags:
+      - Rules
+      summary: '# Handler to delete rule'
+      description: 'Allowed Role(s): admin'
+      operationId: DeleteRuleByID
+      parameters:
+      - name: rule_id
+        in: path
+        description: An ruleID of rule
+        required: true
+        schema:
+          type: string
+          x-go-name: RuleID
+        x-go-name: RuleID
+      responses:
+        '204':
+          description: NoContent response model
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '412':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+components:
+  schemas:
+    GetAllRuleResponse:
+      title: An GetAllRuleResponse model.
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
+        disabled:
+          type: boolean
+          x-go-name: Disabled
+        group_by_priority_order:
+          type: string
+          x-go-name: GroupByPriorityOrder
+        id:
+          type: string
+          x-go-name: RuleID
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        rule_type:
+          $ref: '#/components/schemas/RuleType'
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        standalone:
+          type: string
+          x-go-name: Standalone
+        status:
+          $ref: '#/components/schemas/RuleStatus'
+        stop_subsequent_rules:
+          type: string
+          x-go-name: StopSubsequentRules
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        version:
+          type: string
+          x-go-name: Version
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    RulePutRequest:
+      required:
+      - properties
+      - title
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Rule
+          x-go-name: Description
+        name:
+          type: string
+          description: Name of Rule
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of Rule
+          x-go-name: Properties
+        title:
+          type: string
+          description: Title of Rule
+          x-go-name: Title
+      description: RulePutRequest struct for rule put api
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    GetAllRulesPaginatedResponse:
+      title: An GetAllRulesPaginatedResponse model.
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetAllRuleResponse'
+          x-go-name: Results
+        total_count:
+          type: integer
+          format: int32
+          x-go-name: TotalCount
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    RuleStatus:
+      title: RuleStatus ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        error_msg:
+          type: string
+          x-go-name: ErrorMsg
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    PrevRulePriorityPatchRequest:
+      title: PrevRulePriorityPatchRequest ...
+      type: object
+      properties:
+        id:
+          type: string
+          x-go-name: RuleID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    RulesPostRequest:
+      title: RulesPostRequest ...
+      type: object
+      properties:
+        group_by_priority_order:
+          type: string
+          description: 'Flag for Group by, values: "true"/"false". Only supports incident rule types
+
+            in: body'
+          x-go-name: GroupByPriorityOrder
+        standalone:
+          type: string
+          description: 'Flag for standalone rules, values: "true"/"false"
+
+            in: body'
+          x-go-name: Standalone
+        types:
+          type: array
+          description: 'list of types to get for.
+
+            in: body'
+          items:
+            type: string
+          x-go-name: Types
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    Rule:
+      title: Rule ...
+      required:
+      - properties
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
+        disabled:
+          type: boolean
+          x-go-name: Disabled
+        id:
+          type: string
+          x-go-name: RuleID
+        invalid_properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: InvalidProperties
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of rule
+          x-go-name: Properties
+        rule_type:
+          $ref: '#/components/schemas/RuleType'
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        status:
+          $ref: '#/components/schemas/RuleStatus'
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    RulePostRequest:
+      required:
+      - properties
+      - title
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Rule
+          x-go-name: Description
+        name:
+          type: string
+          description: Name of Rule
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of Rule
+          x-go-name: Properties
+        schema_id:
+          type: string
+          description: ViewSchemaID of Schedule
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          description: Title of Rule
+          x-go-name: Title
+        type:
+          type: string
+          description: Type
+          x-go-name: Type
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+      description: 'RulePostRequest struct for rule post api
+
+        Either ViewSchemaID or Type or both can be provided to create an Rule.'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    RulePatchRequest:
+      type: object
+      properties:
+        previous_rule:
+          $ref: '#/components/schemas/PrevRulePriorityPatchRequest'
+        rule:
+          $ref: '#/components/schemas/RulePriorityPatchRequest'
+        type:
+          type: string
+          x-go-name: Type
+      description: RulePatchRequest struct for rule patch api
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    RuleType:
+      title: RuleType ...
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    RulePriorityPatchRequest:
+      title: RulePriorityPatchRequest ...
+      type: object
+      properties:
+        id:
+          type: string
+          x-go-name: RuleID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

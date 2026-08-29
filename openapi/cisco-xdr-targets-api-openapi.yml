@@ -1,0 +1,951 @@
+openapi: 3.2.0
+info:
+  title: REST API. Targets API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: Targets
+paths:
+  /v1/targets:
+    get:
+      tags:
+      - Targets
+      summary: Handler returning all Targets.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: getAllTargetQueryParams
+      parameters:
+      - name: is_internal
+        in: query
+        description: internal Schemas.
+        schema:
+          type: boolean
+          x-go-name: IsInternal
+        x-go-name: IsInternal
+      - name: types
+        in: query
+        description: Types of Targets, comma separated list if getting more than one type.
+        schema:
+          type: string
+          x-go-name: Types
+        x-go-name: Types
+      responses:
+        '200':
+          description: 'The TargetDefinitonAllResponse response model
+
+
+            # This is used for returning a response of Targets as body'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TargetDefinitionGetAllResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    post:
+      tags:
+      - Targets
+      summary: Handler to create a Target.
+      description: 'Allowed Role(s): admin
+
+
+        Either ViewSchemaID or Type or both in request body can be provided to create a Target.'
+      operationId: targetCreateRequest
+      requestBody:
+        description: The target to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TargetDefinitionPostRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '201':
+          description: 'The TargetDefinitonResponse response model
+
+
+            # This is used for returning a response of Target as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetDefinitionGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/targets/validate:
+    post:
+      tags:
+      - Targets
+      summary: validateTargets Handler to perform target validations
+      description: 'Allowed Role(s): admin'
+      operationId: targetValidateRequest
+      parameters:
+      - name: all
+        in: query
+        description: 'if true, it validates all targets in the system. Will ignore the request body.
+
+          if false, request_body is required and target validation is performed on specific target_ids specified in the body'
+        schema:
+          type: boolean
+          x-go-name: AllTargets
+        x-go-name: AllTargets
+      requestBody:
+        description: The target to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TargetIDsRequest'
+        required: false
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: targetValidationResponse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/targetValidationResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/targets/{target_id}:
+    get:
+      tags:
+      - Targets
+      summary: ReadTargetByID Handler to return Target information.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: getTargetById
+      parameters:
+      - name: target_id
+        in: path
+        description: The definitionId of target
+        required: true
+        schema:
+          type: string
+          x-go-name: TargetID
+        x-go-name: TargetID
+      responses:
+        '200':
+          description: 'The TargetDefinitonResponse response model
+
+
+            # This is used for returning a response of Target as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetDefinitionGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    put:
+      tags:
+      - Targets
+      summary: updateTarget Handler to update the target.
+      description: 'Allowed Role(s): admin'
+      operationId: targetUpdateRequest
+      parameters:
+      - name: target_id
+        in: path
+        description: The definitionId of target
+        required: true
+        schema:
+          type: string
+          x-go-name: TargetID
+        x-go-name: TargetID
+      requestBody:
+        description: The target to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TargetDefinitionPutRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: 'The TargetDefinitonResponse response model
+
+
+            # This is used for returning a response of Target as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetDefinitionGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+    delete:
+      tags:
+      - Targets
+      summary: deleteTarget handler for delete Target byId.
+      description: 'Allowed Role(s): admin'
+      operationId: deleteTargetById
+      parameters:
+      - name: target_id
+        in: path
+        description: The definitionId of target
+        required: true
+        schema:
+          type: string
+          x-go-name: TargetID
+        x-go-name: TargetID
+      responses:
+        '204':
+          description: NoContent response model
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '412':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+components:
+  schemas:
+    TargetIDsRequest:
+      title: TargetIDsRequest ...
+      type: object
+      properties:
+        target_ids:
+          type: array
+          description: Target IDs
+          items:
+            type: string
+          x-go-name: TargetIDs
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    TargetDefinitionGetResponse:
+      title: TargetDefinitionGetResponse ...
+      type: object
+      properties:
+        adapter_id:
+          type: string
+          x-go-name: AdapterID
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        def_access_meta:
+          $ref: '#/components/schemas/DefAccessMeta'
+        description:
+          type: string
+          x-go-name: Description
+        id:
+          type: string
+          x-go-name: DefinitionID
+        invalid_properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: InvalidProperties
+        metadata:
+          $ref: '#/components/schemas/TargetMetadata'
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        status:
+          $ref: '#/components/schemas/Status'
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        valid:
+          type: boolean
+          x-go-name: Valid
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    DefAccessMeta:
+      title: DefAccessMeta ...
+      type: object
+      properties:
+        is_integration:
+          type: boolean
+          x-go-name: IsIntegration
+        is_internal:
+          type: boolean
+          x-go-name: IsInternal
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    targetValidationResponse:
+      title: TargetValidationResponse ...
+      type: object
+      properties:
+        invalid_targets:
+          type: array
+          items:
+            type: string
+          x-go-name: InValidTargets
+        valid_targets:
+          type: array
+          items:
+            type: string
+          x-go-name: ValidTargets
+      x-go-name: TargetValidationResponse
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TargetDefinitionGetAllResponse:
+      title: TargetDefinitionGetAllResponse ...
+      type: object
+      properties:
+        adapter_id:
+          type: string
+          x-go-name: AdapterID
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        def_access_meta:
+          $ref: '#/components/schemas/DefAccessMeta'
+        id:
+          type: string
+          x-go-name: DefinitionID
+        metadata:
+          $ref: '#/components/schemas/TargetMetadata'
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        status:
+          $ref: '#/components/schemas/Status'
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        valid:
+          type: boolean
+          x-go-name: Valid
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    TargetMetadata:
+      type: object
+      properties:
+        sx_module_info:
+          $ref: '#/components/schemas/ModuleInfo'
+      description: TargetMetadata maintains SecureX module data info
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    ModuleInfo:
+      type: object
+      properties:
+        api_name:
+          type: string
+          x-go-name: APIName
+        bypass_iroh_proxy:
+          type: boolean
+          x-go-name: ByPassIROHProxy
+        external_id:
+          type: string
+          x-go-name: ExternalID
+        flags:
+          type: array
+          items:
+            type: string
+          x-go-name: Flags
+        id:
+          type: string
+          x-go-name: ModuleUniqueID
+        integrated_module:
+          type: boolean
+          x-go-name: IntegratedModule
+        module_instance_id:
+          type: string
+          x-go-name: ModuleInstanceID
+        module_type:
+          type: string
+          x-go-name: ModuleType
+        module_type_id:
+          type: string
+          x-go-name: ModuleTypeID
+        openapi_spec:
+          type: string
+          x-go-name: APISpec
+        revision:
+          type: string
+          x-go-name: Revision
+        target_url:
+          type: string
+          x-go-name: TargetURL
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TargetDefinitionPutRequest:
+      title: TargetDefinitionPutRequest ...
+      required:
+      - properties
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of the target
+          x-go-name: Description
+        name:
+          type: string
+          description: Name of the target
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of the target
+          x-go-name: Properties
+        title:
+          type: string
+          description: Title of the target
+          x-go-name: Title
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    TargetDefinitionPostRequest:
+      title: TargetDefinitionPostRequest ...
+      required:
+      - name
+      - properties
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of the target
+          x-go-name: Description
+        name:
+          type: string
+          description: Name of the target
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of the target
+          x-go-name: Properties
+        schema_id:
+          type: string
+          description: View SchemaID of the target
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          description: Title of the target
+          x-go-name: Title
+        type:
+          type: string
+          description: Type
+          x-go-name: Type
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+      description: Either ViewSchemaID or Type or both can be provided to create a Target.
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

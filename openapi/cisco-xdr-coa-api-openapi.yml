@@ -1375,275 +1375,21 @@ paths:
           format: date-time
 components:
   schemas:
-    RelatedCOA:
-      example:
-        confidence: High
-        source: string
-        relationship: string
-        COA_id: string
+    MetricResultFilters:
       type: object
       properties:
-        confidence:
-          example: High
-          type: string
-          enum:
-          - Medium
-          - Info
-          - Unknown
-          - None
-          - High
-          - Low
-        source:
-          example: string
-          type: string
-        relationship:
-          example: string
-          type: string
-        COA_id:
-          example: string
-          description: A URI leading to a COA.
-          type: string
-      additionalProperties: false
-      required:
-      - COA_id
-    ModifierType:
-      example:
-        response: acknowledge
-        method:
-        - acl
-        additional_properties:
-          context: string
-        time:
-          start_time: '2016-01-01T01:01:01.000Z'
-          end_time: '2016-01-01T01:01:01.000Z'
-        frequency: string
-        duration: '2016-01-01T01:01:01.000Z'
-        source: string
-        search: cve
-        option: string
-        id: string
-        location: internal
-        delay: '2016-01-01T01:01:01.000Z'
-        destination: copy-to
-      type: object
-      properties:
-        response:
-          example: acknowledge
-          type: string
-          enum:
-          - query
-          - status
-          - acknowledge
-          - command-ref
-        method:
-          example:
-          - acl
-          type: array
-          items:
-            type: string
-            enum:
-            - blackhole
-            - unauthenticated
-            - suspend
-            - graceful
-            - hibernate
-            - whitelist
-            - honeypot
-            - immediate
-            - spawn
-            - blacklist
-            - acl
-            - segmentation
-            - authenticated
-        additional_properties:
-          $ref: '#/components/schemas/AdditionalProperties'
-        time:
-          $ref: '#/components/schemas/ValidTime'
-        frequency:
-          example: string
-          description: String with at most 1024 characters.
-          type: string
-        duration:
-          example: '2016-01-01T01:01:01.000Z'
-          description: Schema definition for all date or timestamp values.  Serialized as a string, the field should follow the rules of the [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+        from:
           type: string
           format: date-time
-        source:
-          example: string
-          description: String with at most 1024 characters.
-          type: string
-        search:
-          example: cve
-          type: string
-          enum:
-          - vendor_bulletin
-          - patch
-          - signature
-          - cve
-        option:
-          example: string
-          description: String with at most 1024 characters.
-          type: string
-        id:
-          example: string
-          description: String with at most 1024 characters.
-          type: string
-        location:
-          example: internal
-          type: string
-          enum:
-          - internal
-          - perimeter
-        delay:
-          example: '2016-01-01T01:01:01.000Z'
-          description: Schema definition for all date or timestamp values.  Serialized as a string, the field should follow the rules of the [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+        to:
           type: string
           format: date-time
-        destination:
-          example: copy-to
-          type: string
-          enum:
-          - modify-to
-          - set-to
-          - copy-to
-          - move-to
-          - save-to
-          - restore-point
-          - report-to
-      additionalProperties: false
-    TargetType:
-      example:
-        type: acudid
-        specifiers: string
-      type: object
-      properties:
-        type:
-          example: acudid
-          type: string
-        specifiers:
-          example: string
-          description: Observable types that can be acted upon.
-          type: string
-      additionalProperties: false
+      additionalProperties: {}
       required:
-      - type
-    ActionType:
-      example:
-        type: alert
-      type: object
-      properties:
-        type:
-          example: alert
-          type: string
-          enum:
-          - stop
-          - save
-          - delete
-          - remediate
-          - redirect
-          - alert
-          - query
-          - augment
-          - snapshot
-          - update
-          - allow
-          - scan
-          - investigate
-          - modify
-          - sync
-          - start
-          - pause
-          - deny
-          - substitute
-          - distill
-          - move
-          - restart
-          - other
-          - detonate
-          - response
-          - set
-          - notify
-          - report
-          - restore
-          - get
-          - throttle
-          - mitigate
-          - resume
-          - locate
-          - contain
-      additionalProperties: false
-      required:
-      - type
-    PartialCOA:
-      example:
-        description: string
-        valid_time:
-          start_time: '2016-01-01T01:01:01.000Z'
-          end_time: '2016-01-01T01:01:01.000Z'
-        stage: Containment
-        schema_version: 1.3.30
-        revision: 10
-        efficacy: High
-        type: coa
-        related_COAs:
-        - confidence: High
-          source: string
-          relationship: string
-          COA_id: string
-        source: string
-        external_ids:
-        - string
-        short_description: string
-        title: string
-        external_references:
-        - source_name: string
-          description: string
-          url: string
-          hashes:
-          - string
-          external_id: string
-        source_uri: string
-        coa_type: Diplomatic Actions
-        language: string
-        id: string
-        tlp: green
-        objective:
-        - string
-        cost: High
-        timestamp: '2016-01-01T01:01:01.000Z'
-        open_c2_coa:
-          type: structured_coa
-          id: string
-          action:
-            type: alert
-          target:
-            type: acudid
-            specifiers: string
-          actuator:
-            type: endpoint
-            specifiers:
-            - string
-          modifiers:
-            response: acknowledge
-            method:
-            - acl
-            additional_properties:
-              context: string
-            time:
-              start_time: '2016-01-01T01:01:01.000Z'
-              end_time: '2016-01-01T01:01:01.000Z'
-            frequency: string
-            duration: '2016-01-01T01:01:01.000Z'
-            source: string
-            search: cve
-            option: string
-            id: string
-            location: internal
-            delay: '2016-01-01T01:01:01.000Z'
-            destination: copy-to
-        structured_coa_type: openc2
-        impact: string
-      description: Course of Action. A corrective or preventative action to be taken in response to a threat.
+      - from
+      - to
+    NewCOA:
+      description: a new Coa
       type: object
       properties:
         description:
@@ -1780,7 +1526,7 @@ components:
           type: string
         id:
           example: string
-          description: Globally unique URI identifying this object.
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
           type: string
         tlp:
           example: green
@@ -1840,27 +1586,6 @@ components:
         owner:
           type: string
       additionalProperties: false
-    ValidTime:
-      example:
-        start_time: '2016-01-01T01:01:01.000Z'
-        end_time: '2016-01-01T01:01:01.000Z'
-      description: Period of time when a cyber observation is valid.
-      type: object
-      properties:
-        start_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: If not present, the valid time position of the indicator does not have an upper bound.
-          type: string
-          format: date-time
-        end_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
-          type: string
-          format: date-time
-      additionalProperties: false
-    MetricResultData:
-      type: object
-      additionalProperties: {}
     ActuatorType:
       example:
         type: endpoint
@@ -2172,25 +1897,71 @@ components:
           description: Characterizes the estimated impact of applying this course of action.
           type: string
       additionalProperties: false
-    MetricResult:
+    RelatedCOA:
+      example:
+        confidence: High
+        source: string
+        relationship: string
+        COA_id: string
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/MetricResultData'
-        type:
+        confidence:
+          example: High
           type: string
           enum:
-          - histogram
-          - topn
-          - avg
-          - cardinality
-        filters:
-          $ref: '#/components/schemas/MetricResultFilters'
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        source:
+          example: string
+          type: string
+        relationship:
+          example: string
+          type: string
+        COA_id:
+          example: string
+          description: A URI leading to a COA.
+          type: string
       additionalProperties: false
       required:
-      - data
+      - COA_id
+    TargetType:
+      example:
+        type: acudid
+        specifiers: string
+      type: object
+      properties:
+        type:
+          example: acudid
+          type: string
+        specifiers:
+          example: string
+          description: Observable types that can be acted upon.
+          type: string
+      additionalProperties: false
+      required:
       - type
-      - filters
+    ValidTime:
+      example:
+        start_time: '2016-01-01T01:01:01.000Z'
+        end_time: '2016-01-01T01:01:01.000Z'
+      description: Period of time when a cyber observation is valid.
+      type: object
+      properties:
+        start_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If not present, the valid time position of the indicator does not have an upper bound.
+          type: string
+          format: date-time
+        end_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
+          type: string
+          format: date-time
+      additionalProperties: false
     ExternalReference:
       example:
         source_name: string
@@ -2228,8 +1999,76 @@ components:
       additionalProperties: false
       required:
       - source_name
-    NewCOA:
-      description: a new Coa
+    PartialCOA:
+      example:
+        description: string
+        valid_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        stage: Containment
+        schema_version: 1.3.30
+        revision: 10
+        efficacy: High
+        type: coa
+        related_COAs:
+        - confidence: High
+          source: string
+          relationship: string
+          COA_id: string
+        source: string
+        external_ids:
+        - string
+        short_description: string
+        title: string
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        source_uri: string
+        coa_type: Diplomatic Actions
+        language: string
+        id: string
+        tlp: green
+        objective:
+        - string
+        cost: High
+        timestamp: '2016-01-01T01:01:01.000Z'
+        open_c2_coa:
+          type: structured_coa
+          id: string
+          action:
+            type: alert
+          target:
+            type: acudid
+            specifiers: string
+          actuator:
+            type: endpoint
+            specifiers:
+            - string
+          modifiers:
+            response: acknowledge
+            method:
+            - acl
+            additional_properties:
+              context: string
+            time:
+              start_time: '2016-01-01T01:01:01.000Z'
+              end_time: '2016-01-01T01:01:01.000Z'
+            frequency: string
+            duration: '2016-01-01T01:01:01.000Z'
+            source: string
+            search: cve
+            option: string
+            id: string
+            location: internal
+            delay: '2016-01-01T01:01:01.000Z'
+            destination: copy-to
+        structured_coa_type: openc2
+        impact: string
+      description: Course of Action. A corrective or preventative action to be taken in response to a threat.
       type: object
       properties:
         description:
@@ -2366,7 +2205,7 @@ components:
           type: string
         id:
           example: string
-          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          description: Globally unique URI identifying this object.
           type: string
         tlp:
           example: green
@@ -2426,19 +2265,6 @@ components:
         owner:
           type: string
       additionalProperties: false
-    MetricResultFilters:
-      type: object
-      properties:
-        from:
-          type: string
-          format: date-time
-        to:
-          type: string
-          format: date-time
-      additionalProperties: {}
-      required:
-      - from
-      - to
     OpenC2COA:
       example:
         type: structured_coa
@@ -2493,6 +2319,180 @@ components:
       required:
       - type
       - action
+    ActionType:
+      example:
+        type: alert
+      type: object
+      properties:
+        type:
+          example: alert
+          type: string
+          enum:
+          - stop
+          - save
+          - delete
+          - remediate
+          - redirect
+          - alert
+          - query
+          - augment
+          - snapshot
+          - update
+          - allow
+          - scan
+          - investigate
+          - modify
+          - sync
+          - start
+          - pause
+          - deny
+          - substitute
+          - distill
+          - move
+          - restart
+          - other
+          - detonate
+          - response
+          - set
+          - notify
+          - report
+          - restore
+          - get
+          - throttle
+          - mitigate
+          - resume
+          - locate
+          - contain
+      additionalProperties: false
+      required:
+      - type
+    ModifierType:
+      example:
+        response: acknowledge
+        method:
+        - acl
+        additional_properties:
+          context: string
+        time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        frequency: string
+        duration: '2016-01-01T01:01:01.000Z'
+        source: string
+        search: cve
+        option: string
+        id: string
+        location: internal
+        delay: '2016-01-01T01:01:01.000Z'
+        destination: copy-to
+      type: object
+      properties:
+        response:
+          example: acknowledge
+          type: string
+          enum:
+          - query
+          - status
+          - acknowledge
+          - command-ref
+        method:
+          example:
+          - acl
+          type: array
+          items:
+            type: string
+            enum:
+            - blackhole
+            - unauthenticated
+            - suspend
+            - graceful
+            - hibernate
+            - whitelist
+            - honeypot
+            - immediate
+            - spawn
+            - blacklist
+            - acl
+            - segmentation
+            - authenticated
+        additional_properties:
+          $ref: '#/components/schemas/AdditionalProperties'
+        time:
+          $ref: '#/components/schemas/ValidTime'
+        frequency:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+        duration:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Schema definition for all date or timestamp values.  Serialized as a string, the field should follow the rules of the [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+          type: string
+          format: date-time
+        source:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+        search:
+          example: cve
+          type: string
+          enum:
+          - vendor_bulletin
+          - patch
+          - signature
+          - cve
+        option:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+        id:
+          example: string
+          description: String with at most 1024 characters.
+          type: string
+        location:
+          example: internal
+          type: string
+          enum:
+          - internal
+          - perimeter
+        delay:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Schema definition for all date or timestamp values.  Serialized as a string, the field should follow the rules of the [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+          type: string
+          format: date-time
+        destination:
+          example: copy-to
+          type: string
+          enum:
+          - modify-to
+          - set-to
+          - copy-to
+          - move-to
+          - save-to
+          - restore-point
+          - report-to
+      additionalProperties: false
+    MetricResultData:
+      type: object
+      additionalProperties: {}
+    MetricResult:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MetricResultData'
+        type:
+          type: string
+          enum:
+          - histogram
+          - topn
+          - avg
+          - cardinality
+        filters:
+          $ref: '#/components/schemas/MetricResultFilters'
+      additionalProperties: false
+      required:
+      - data
+      - type
+      - filters
     AdditionalProperties:
       example:
         context: string

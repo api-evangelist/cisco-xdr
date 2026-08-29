@@ -215,45 +215,6 @@ components:
       additionalProperties: false
       required:
       - content
-    '500':
-      description: The error string.
-      example:
-        error: unknown-exception
-        error_description: This exception has been logged for further inspection.
-        trace_id: 5755e17e-992f-4892-b2f6-db59b2bf480c
-      type: object
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
-        trace_id:
-          type: string
-      additionalProperties: false
-      required:
-      - error
-    '401':
-      description: An object describing the problem.
-      example:
-        error: invalid_request
-        error_description: No JWT found in HTTP Authorization header
-      type: object
-      properties:
-        error:
-          type: string
-        exception_message:
-          type: string
-        level:
-          type: string
-        token:
-          type: string
-        error_description:
-          type: string
-        trace_id:
-          type: string
-      additionalProperties: false
-      required:
-      - error
     Observable:
       example:
         value: 1.2.3.4
@@ -337,6 +298,45 @@ components:
       required:
       - value
       - type
+    '401':
+      description: An object describing the problem.
+      example:
+        error: invalid_request
+        error_description: No JWT found in HTTP Authorization header
+      type: object
+      properties:
+        error:
+          type: string
+        exception_message:
+          type: string
+        level:
+          type: string
+        token:
+          type: string
+        error_description:
+          type: string
+        trace_id:
+          type: string
+      additionalProperties: false
+      required:
+      - error
+    '500':
+      description: The error string.
+      example:
+        error: unknown-exception
+        error_description: This exception has been logged for further inspection.
+        trace_id: 5755e17e-992f-4892-b2f6-db59b2bf480c
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        trace_id:
+          type: string
+      additionalProperties: false
+      required:
+      - error
     '403':
       description: An object describing the problem.
       example:

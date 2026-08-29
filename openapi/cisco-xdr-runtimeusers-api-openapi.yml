@@ -1,0 +1,720 @@
+openapi: 3.2.0
+info:
+  title: REST API. Runtime Users API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: RuntimeUsers
+paths:
+  /v1/runtime_users:
+    get:
+      tags:
+      - RuntimeUsers
+      summary: Handler to get all runtimeusers.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: listRuntimeUsers
+      parameters:
+      - name: types
+        in: query
+        description: Type of Runtime user.
+        schema:
+          type: string
+          x-go-name: Types
+        x-go-name: Types
+      responses:
+        '200':
+          description: 'RuntimeUserResponse response model
+
+
+            # This is used for returning a response with a single runtime user as body'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RuntimeUserDefinitionGetAllResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    post:
+      tags:
+      - RuntimeUsers
+      summary: Handler to create a runtimeuser.
+      description: 'Allowed Role(s): admin
+
+
+        Either ViewSchemaID or Type or both in request body can be provided to create a Runtime User.'
+      operationId: runtimeUserCreateRequest
+      requestBody:
+        description: The runtime user to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RuntimeUserDefinitionPostRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '201':
+          description: 'RuntimeUserDefinitonResponse response model
+
+
+            # This is used for returning a response with a single runtime user as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeUserDefinitionGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/runtime_users/{runtime_user_id}:
+    get:
+      tags:
+      - RuntimeUsers
+      summary: readRuntimeUserByID Handler to return information about runtime user.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: getRuntimeUserById
+      parameters:
+      - name: runtime_user_id
+        in: path
+        description: The definitionId of runtimeuser
+        required: true
+        schema:
+          type: string
+          x-go-name: RuntimeUserID
+        x-go-name: RuntimeUserID
+      responses:
+        '200':
+          description: 'RuntimeUserDefinitonResponse response model
+
+
+            # This is used for returning a response with a single runtime user as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeUserDefinitionGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    delete:
+      tags:
+      - RuntimeUsers
+      summary: deleteRuntimeUser Handler to delete runtime user using definition ID.
+      description: 'Allowed Role(s): admin'
+      operationId: deleteRuntimeUserById
+      parameters:
+      - name: runtime_user_id
+        in: path
+        description: The definitionId of runtimeuser
+        required: true
+        schema:
+          type: string
+          x-go-name: RuntimeUserID
+        x-go-name: RuntimeUserID
+      responses:
+        '204':
+          description: NoContent response model
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '412':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    patch:
+      tags:
+      - RuntimeUsers
+      summary: updateRuntimeUser Handler to update runtime user.
+      description: 'Allowed Role(s): admin'
+      operationId: runtimeUserUpdateRequest
+      parameters:
+      - name: runtime_user_id
+        in: path
+        description: he definitionId of runtimeuser
+        required: true
+        schema:
+          type: string
+          x-go-name: RuntimeUserID
+        x-go-name: RuntimeUserID
+      requestBody:
+        description: The runtime user to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RuntimeUserDefinitionPatchRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: 'RuntimeUserDefinitonResponse response model
+
+
+            # This is used for returning a response with a single runtime user as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeUserDefinitionGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+components:
+  schemas:
+    RuntimeUserDefinitionGetAllResponse:
+      title: RuntimeUserDefinitionGetAllResponse ...
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        def_access_meta:
+          $ref: '#/components/schemas/DefAccessMeta'
+        id:
+          type: string
+          x-go-name: DefinitionID
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        status:
+          $ref: '#/components/schemas/Status'
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    DefAccessMeta:
+      title: DefAccessMeta ...
+      type: object
+      properties:
+        is_integration:
+          type: boolean
+          x-go-name: IsIntegration
+        is_internal:
+          type: boolean
+          x-go-name: IsInternal
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    RuntimeUserDefinitionGetResponse:
+      title: RuntimeUserDefinitionGetResponse ...
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        def_access_meta:
+          $ref: '#/components/schemas/DefAccessMeta'
+        description:
+          type: string
+          x-go-name: Description
+        id:
+          type: string
+          x-go-name: DefinitionID
+        invalid_properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: InvalidProperties
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        status:
+          $ref: '#/components/schemas/Status'
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        valid:
+          type: boolean
+          x-go-name: Valid
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    RuntimeUserDefinitionPostRequest:
+      title: RuntimeUserDefinitionPostRequest ...
+      type: object
+      properties:
+        description:
+          type: string
+          x-go-name: Description
+        name:
+          type: string
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+      description: Either ViewSchemaID or Type or both can be provided to create a Runtime User.
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    RuntimeUserDefinitionPatchRequest:
+      title: RuntimeUserDefinitionPatchRequest ...
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of runtime user
+          x-go-name: Description
+        name:
+          type: string
+          description: Name of runtime user
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of runtime user
+          x-go-name: Properties
+        title:
+          type: string
+          description: Title of runtime user
+          x-go-name: Title
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

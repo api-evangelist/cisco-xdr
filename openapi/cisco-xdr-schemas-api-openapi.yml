@@ -1,0 +1,880 @@
+openapi: 3.2.0
+info:
+  title: REST API. Schemas API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: Schemas
+paths:
+  /v1/schemas:
+    get:
+      tags:
+      - Schemas
+      summary: Handler returning information about all Schemas.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: getAllSchemaQueryParams
+      parameters:
+      - name: base_type
+        in: query
+        description: Base type of Schema.
+        required: true
+        schema:
+          type: string
+          x-go-name: BaseType
+        x-go-name: BaseType
+      - name: schema_type
+        in: query
+        description: Type of Schema.
+        required: true
+        schema:
+          type: string
+          x-go-name: SchemaType
+        x-go-name: SchemaType
+      - name: detailed
+        in: query
+        description: detailed Schema.
+        schema:
+          type: boolean
+          x-go-name: Detailed
+        x-go-name: Detailed
+      - name: variable_type
+        in: query
+        description: variable_type of data_type schema.
+        schema:
+          type: boolean
+          x-go-name: VariableType
+        x-go-name: VariableType
+      - name: is_internal
+        in: query
+        description: internal Schemas.
+        schema:
+          type: boolean
+          x-go-name: IsInternal
+        x-go-name: IsInternal
+      responses:
+        '200':
+          description: 'An GetSchemaAllResponse response model
+
+
+            # This is used for returning a response of schema as a body'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schema'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    post:
+      tags:
+      - Schemas
+      summary: Handler to create a schema template for all base_types.
+      description: 'Allowed Role(s): admin'
+      operationId: schemaCreateRequest
+      requestBody:
+        description: The schema to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchemaNewPostRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '201':
+          description: 'An SchemaPostResponse response model
+
+
+            # This is used for returning a response of schema as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaNewPostResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/schemas/{type_or_id}:
+    get:
+      tags:
+      - Schemas
+      summary: Handler returning information about Template.
+      description: 'Allowed Role(s): admin, user, sat'
+      operationId: getSchemaById
+      parameters:
+      - name: type_or_id
+        in: path
+        description: The type or Id of Schema
+        required: true
+        schema:
+          type: string
+          x-go-name: TypeORID
+        x-go-name: TypeORID
+      - name: schema_type
+        in: query
+        description: Type of Schema. It can be "data" or "view".
+        schema:
+          type: string
+          x-go-name: SchemaType
+        x-go-name: SchemaType
+      responses:
+        '200':
+          description: 'An GetDataViewSchemaResponse response model
+
+
+            # This is used for returning a response of both data and view schema as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaByTypeResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    put:
+      tags:
+      - Schemas
+      summary: handler method for updating adapter template/schema.
+      description: 'Allowed Role(s): admin'
+      operationId: schemaUpdateRequest
+      parameters:
+      - name: type_or_id
+        in: path
+        description: The type or id of schema
+        required: true
+        schema:
+          type: string
+          x-go-name: TypeORID
+        x-go-name: TypeORID
+      requestBody:
+        description: The schema to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchemaPutRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: 'An GetSchemaResponse response model
+
+
+            # This is used for returning a response of schema as a body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schema'
+        '312':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+    delete:
+      tags:
+      - Schemas
+      summary: Handler for delete Schema.
+      description: 'Allowed Role(s): admin'
+      operationId: deleteSchemaById
+      parameters:
+      - name: type_or_id
+        in: path
+        description: The type or Id of Schema
+        required: true
+        schema:
+          type: string
+          x-go-name: TypeORID
+        x-go-name: TypeORID
+      responses:
+        '204':
+          description: NoContent response model
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '412':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+components:
+  schemas:
+    Deprecated:
+      title: Deprecated ...
+      type: object
+      properties:
+        deprecated_in:
+          type: string
+          x-go-name: DeprecatedIn
+        deprecated_message:
+          type: string
+          x-go-name: DeprecatedMessage
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Obsolete:
+      title: Obsolete ...
+      type: object
+      properties:
+        obsolete_from:
+          type: string
+          x-go-name: ObsoleteFrom
+        obsolete_message:
+          type: string
+          x-go-name: ObsoleteMessage
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    AccessMetaType:
+      title: AccessMetaType ...
+      type: object
+      properties:
+        id:
+          type: string
+          x-go-name: ID
+        type:
+          type: string
+          x-go-name: Type
+        version:
+          type: string
+          x-go-name: Version
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    AccessMeta:
+      title: AccessMeta ...
+      type: object
+      properties:
+        adapter:
+          $ref: '#/components/schemas/AccessMetaType'
+        deprecated:
+          $ref: '#/components/schemas/Deprecated'
+        disable_duplicate:
+          type: boolean
+          x-go-name: DisableDuplicate
+        is_integration:
+          type: boolean
+          x-go-name: IsIntegration
+        is_internal:
+          type: boolean
+          x-go-name: IsInternal
+        obsolete:
+          $ref: '#/components/schemas/Obsolete'
+        runtime_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMetaType'
+          x-go-name: RuntimeUsers
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMetaType'
+          x-go-name: Targets
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Serverless:
+      title: Serverless ...
+      type: object
+      properties:
+        cloud_type:
+          type: string
+          x-go-name: CloudType
+        name:
+          type: string
+          x-go-name: Name
+        region:
+          type: string
+          x-go-name: Region
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    ActionFunc:
+      title: ActionFunc ...
+      type: object
+      properties:
+        is_microservice:
+          type: boolean
+          x-go-name: IsMicroservice
+        micro_service:
+          $ref: '#/components/schemas/MicroService'
+        serverless:
+          $ref: '#/components/schemas/Serverless'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    SchemaByTypeResponse:
+      title: SchemaByTypeResponse ...
+      type: object
+      properties:
+        data_schema:
+          $ref: '#/components/schemas/Schema'
+        view_schema:
+          $ref: '#/components/schemas/Schema'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    SchemaNewPostRequest:
+      title: SchemaNewPostRequest ...
+      required:
+      - data_schema
+      type: object
+      properties:
+        data_schema:
+          $ref: '#/components/schemas/Schema'
+        view_schema:
+          $ref: '#/components/schemas/Schema'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    SchemaPutRequest:
+      title: A SchemaPutRequest for one or more schema templates.
+      type: object
+      properties:
+        access_meta:
+          $ref: '#/components/schemas/AccessMeta'
+        action_func:
+          $ref: '#/components/schemas/ActionFunc'
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Attributes
+        description:
+          type: string
+          x-go-name: Description
+        group:
+          type: string
+          x-go-name: Group
+        id:
+          type: string
+          x-go-name: SchemaID
+        inherits:
+          type: object
+          properties: {}
+          x-go-name: Inherits
+        invisible:
+          type: boolean
+          x-go-name: Invisible
+        is_internal:
+          type: boolean
+          x-go-name: IsInternal
+        name:
+          type: string
+          x-go-name: Name
+        output_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: OutputSchema
+        property_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: PropertySchema
+        title:
+          type: string
+          x-go-name: Title
+        trigger_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: TriggerSchema
+        variable_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: VariableSchema
+        version:
+          type: string
+          x-go-name: Version
+        view_config:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: ViewConfig
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    MicroService:
+      title: MicroService ...
+      type: object
+      properties:
+        end_point:
+          type: string
+          x-go-name: EndPoint
+        name:
+          type: string
+          x-go-name: Name
+        port:
+          type: integer
+          format: uint32
+          x-go-name: Port
+        protocol:
+          type: string
+          x-go-name: Protocol
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    SchemaNewPostResponse:
+      title: SchemaNewPostResponse ...
+      type: object
+      properties:
+        data_schema:
+          $ref: '#/components/schemas/Schema'
+        view_schema:
+          $ref: '#/components/schemas/Schema'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    Schema:
+      title: Schema ...
+      type: object
+      properties:
+        access_meta:
+          $ref: '#/components/schemas/AccessMeta'
+        action_func:
+          $ref: '#/components/schemas/ActionFunc'
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Attributes
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
+        group:
+          type: string
+          x-go-name: Group
+        inherits:
+          type: object
+          properties: {}
+          x-go-name: Inherits
+        invisible:
+          type: boolean
+          x-go-name: Invisible
+        name:
+          type: string
+          x-go-name: Name
+        output_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: OutputSchema
+        owner:
+          type: string
+          x-go-name: Owner
+        property_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: PropertySchema
+        schema_id:
+          type: string
+          x-go-name: SchemaID
+        schema_type:
+          type: string
+          x-go-name: SchemaType
+        title:
+          type: string
+          x-go-name: Title
+        trigger_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: TriggerSchema
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        variable_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: VariableSchema
+        variable_type:
+          type: boolean
+          x-go-name: VariableType
+        version:
+          type: string
+          x-go-name: Version
+        view_config:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: ViewConfig
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'

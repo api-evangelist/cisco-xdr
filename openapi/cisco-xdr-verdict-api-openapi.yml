@@ -156,6 +156,74 @@ paths:
       description: Requires capability read-verdict.
 components:
   schemas:
+    Verdict:
+      example:
+        type: verdict
+        disposition: 1
+        observable:
+          value: 1.2.3.4
+          type: ip
+        judgement_id: string
+        disposition_name: Clean
+        valid_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+      description: "A Verdict is chosen from all of the Judgements on that Observable which have not yet expired.  The highest priority Judgement becomes the active verdict.  If there is more than one Judgement with that priority, then Clean disposition has priority over all others, then Malicious disposition, and so on down to Unknown.\n\n The ID of a verdict is a a str of the form \"observable.type:observable.value\" for example, \"ip:1.1.1.1\""
+      type: object
+      properties:
+        type:
+          example: verdict
+          type: string
+          enum:
+          - verdict
+        disposition:
+          example: 1
+          description: Numeric verdict identifiers.
+          type: integer
+          format: int64
+          enum:
+          - 1
+          - 4
+          - 3
+          - 2
+          - 5
+        observable:
+          $ref: '#/components/schemas/Observable'
+        judgement_id:
+          example: string
+          description: A URI leading to a judgement.
+          type: string
+        disposition_name:
+          example: Clean
+          description: 'The disposition_name field is optional, but is intended to be shown to a user.  Applications must therefore remember the mapping of numbers to human words, as in: {1 "Clean", 2 "Malicious", 3 "Suspicious", 4 "Common", 5 "Unknown"}'
+          type: string
+          enum:
+          - Common
+          - Unknown
+          - Suspicious
+          - Malicious
+          - Clean
+        valid_time:
+          $ref: '#/components/schemas/ValidTime'
+      additionalProperties: false
+    ValidTime:
+      example:
+        start_time: '2016-01-01T01:01:01.000Z'
+        end_time: '2016-01-01T01:01:01.000Z'
+      description: Period of time when a cyber observation is valid.
+      type: object
+      properties:
+        start_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If not present, the valid time position of the indicator does not have an upper bound.
+          type: string
+          format: date-time
+        end_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
+          type: string
+          format: date-time
+      additionalProperties: false
     Observable:
       example:
         value: 1.2.3.4
@@ -239,74 +307,6 @@ components:
       required:
       - value
       - type
-    Verdict:
-      example:
-        type: verdict
-        disposition: 1
-        observable:
-          value: 1.2.3.4
-          type: ip
-        judgement_id: string
-        disposition_name: Clean
-        valid_time:
-          start_time: '2016-01-01T01:01:01.000Z'
-          end_time: '2016-01-01T01:01:01.000Z'
-      description: "A Verdict is chosen from all of the Judgements on that Observable which have not yet expired.  The highest priority Judgement becomes the active verdict.  If there is more than one Judgement with that priority, then Clean disposition has priority over all others, then Malicious disposition, and so on down to Unknown.\n\n The ID of a verdict is a a str of the form \"observable.type:observable.value\" for example, \"ip:1.1.1.1\""
-      type: object
-      properties:
-        type:
-          example: verdict
-          type: string
-          enum:
-          - verdict
-        disposition:
-          example: 1
-          description: Numeric verdict identifiers.
-          type: integer
-          format: int64
-          enum:
-          - 1
-          - 4
-          - 3
-          - 2
-          - 5
-        observable:
-          $ref: '#/components/schemas/Observable'
-        judgement_id:
-          example: string
-          description: A URI leading to a judgement.
-          type: string
-        disposition_name:
-          example: Clean
-          description: 'The disposition_name field is optional, but is intended to be shown to a user.  Applications must therefore remember the mapping of numbers to human words, as in: {1 "Clean", 2 "Malicious", 3 "Suspicious", 4 "Common", 5 "Unknown"}'
-          type: string
-          enum:
-          - Common
-          - Unknown
-          - Suspicious
-          - Malicious
-          - Clean
-        valid_time:
-          $ref: '#/components/schemas/ValidTime'
-      additionalProperties: false
-    ValidTime:
-      example:
-        start_time: '2016-01-01T01:01:01.000Z'
-        end_time: '2016-01-01T01:01:01.000Z'
-      description: Period of time when a cyber observation is valid.
-      type: object
-      properties:
-        start_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: If not present, the valid time position of the indicator does not have an upper bound.
-          type: string
-          format: date-time
-        end_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
-          type: string
-          format: date-time
-      additionalProperties: false
   securitySchemes:
     JWT:
       type: apiKey

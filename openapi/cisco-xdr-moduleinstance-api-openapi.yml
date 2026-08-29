@@ -300,111 +300,6 @@ paths:
         required: true
 components:
   schemas:
-    PartialModuleInstanceSettings:
-      type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-        - type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-        - $ref: '#/components/schemas/PartialModuleInstanceSettings'
-    ModuleInstanceExternalReference:
-      type: object
-      properties:
-        label:
-          type: string
-        link:
-          type: string
-        external_id:
-          type: string
-        class:
-          description: Class to distinguish external references
-          type: string
-      additionalProperties: false
-      required:
-      - label
-    NewModuleInstanceParams:
-      type: object
-      properties:
-        name:
-          type: string
-        module_type_id:
-          type: string
-        visibility:
-          type: string
-          enum:
-          - global
-          - org
-          - user
-        parent_id:
-          type: string
-        settings:
-          $ref: '#/components/schemas/ModuleInstanceSettings'
-        external_references:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModuleInstanceExternalReference'
-        enabled:
-          type: boolean
-      additionalProperties: false
-      required:
-      - name
-      - module_type_id
-      - visibility
-    PatchModuleInstanceParams:
-      type: object
-      properties:
-        name:
-          type: string
-        module_type_id:
-          type: string
-        parent_id:
-          type:
-          - string
-          - 'null'
-        external_references:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ModuleInstanceExternalReference'
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        settings:
-          $ref: '#/components/schemas/PartialModuleInstanceSettings'
-      additionalProperties: false
-    ModuleInstanceSettings:
-      type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-        - type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-        - $ref: '#/components/schemas/ModuleInstanceSettings'
     ModuleInstanceResponse:
       type: object
       properties:
@@ -452,6 +347,111 @@ components:
       - enabled
       - visibility
       - created_at
+    ModuleInstanceExternalReference:
+      type: object
+      properties:
+        label:
+          type: string
+        link:
+          type: string
+        external_id:
+          type: string
+        class:
+          description: Class to distinguish external references
+          type: string
+      additionalProperties: false
+      required:
+      - label
+    ModuleInstanceSettings:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+        - $ref: '#/components/schemas/ModuleInstanceSettings'
+    PartialModuleInstanceSettings:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+        - $ref: '#/components/schemas/PartialModuleInstanceSettings'
+    PatchModuleInstanceParams:
+      type: object
+      properties:
+        name:
+          type: string
+        module_type_id:
+          type: string
+        parent_id:
+          type:
+          - string
+          - 'null'
+        external_references:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModuleInstanceExternalReference'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        settings:
+          $ref: '#/components/schemas/PartialModuleInstanceSettings'
+      additionalProperties: false
+    NewModuleInstanceParams:
+      type: object
+      properties:
+        name:
+          type: string
+        module_type_id:
+          type: string
+        visibility:
+          type: string
+          enum:
+          - global
+          - org
+          - user
+        parent_id:
+          type: string
+        settings:
+          $ref: '#/components/schemas/ModuleInstanceSettings'
+        external_references:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleInstanceExternalReference'
+        enabled:
+          type: boolean
+      additionalProperties: false
+      required:
+      - name
+      - module_type_id
+      - visibility
   securitySchemes:
     iroh:
       type: apiKey

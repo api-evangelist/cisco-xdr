@@ -1,0 +1,777 @@
+openapi: 3.2.0
+info:
+  title: REST API. Variable Types API
+  version: 1.0.0
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+servers:
+- url: https://automate.us.security.cisco.com/{basePath}
+  variables:
+    basePath:
+      default: api
+security:
+- oAuth2:
+  - integration:read
+  - private-intel:read
+  - profile:read
+  - inspect:read
+  - users:read
+  - invite:read
+  - enrich:read
+  - oauth:read
+  - response:read
+  - global-intel:read
+  - ao:read
+  - playbook:read
+tags:
+- name: VariableTypes
+paths:
+  /v1/variable_types:
+    post:
+      tags:
+      - VariableTypes
+      summary: Create a Variable Type.
+      description: This endpoint allows an admin user to create a new Variable type.
+      operationId: VariableTypeCreateRequest
+      requestBody:
+        description: The request body for creating the variable type
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableTypePostRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '201':
+          description: 'VariableTypeAPIResponse VariableType response model
+
+
+            This is used for returning a response of Variable Type as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variableTypeResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/variable_types/batch_get:
+    post:
+      tags:
+      - VariableTypes
+      summary: Handler to get all VariableTypes.
+      operationId: getAllVarTypesRequest
+      parameters:
+      - name: limit
+        in: query
+        description: Number of variable types to return for this request
+        schema:
+          type: integer
+          format: int64
+          x-go-name: Limit
+        x-go-name: Limit
+      - name: start
+        in: query
+        description: Return list of variable types from n'th variable types
+        schema:
+          type: integer
+          format: int64
+          x-go-name: Start
+        x-go-name: Start
+      - name: sort_by
+        in: query
+        description: Return list of variable types in sorted order (created_on/updated_on)
+        schema:
+          type: string
+          x-go-name: SortBy
+        x-go-name: SortBy
+      requestBody:
+        description: An request body to submit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetAllVarTypesPostRequest'
+        required: false
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: A GetAllVarTypesSwaggerResponse model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllVariableTypesResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+  /v1/variable_types/{variable_type_id}:
+    get:
+      tags:
+      - VariableTypes
+      summary: Get a Variable Type.
+      description: This endpoint allows an admin user to fetch a Variable type.
+      operationId: ReadVariableTypeRequest
+      parameters:
+      - name: variable_type_id
+        in: path
+        description: The ID of variable type to get
+        required: true
+        schema:
+          type: string
+          x-go-name: VariableTypeID
+        x-go-name: VariableTypeID
+      responses:
+        '200':
+          description: variableTypeGetResponse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variableTypeGetResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+    put:
+      tags:
+      - VariableTypes
+      summary: Update a Variable Type.
+      description: This endpoint allows an admin user to update a Variable type.
+      operationId: VariableTypeUpdateRequest
+      parameters:
+      - name: variable_type_id
+        in: path
+        description: The ID of variable type to update.
+        required: true
+        schema:
+          type: string
+          x-go-name: VariableTypeID
+        x-go-name: VariableTypeID
+      requestBody:
+        description: The payload for updating the variable type.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableTypePutRequest'
+        required: true
+        x-go-name: RequestBody
+      responses:
+        '200':
+          description: 'VariableTypeAPIResponse VariableType response model
+
+
+            This is used for returning a response of Variable Type as body'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variableTypeResponse'
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '409':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+      x-codegen-request-body-name: request_body
+    delete:
+      tags:
+      - VariableTypes
+      summary: Delete a Variable Type.
+      description: This endpoint allows an admin user to delete a Variable type.
+      operationId: DeleteVariableTypeRequest
+      parameters:
+      - name: variable_type_id
+        in: path
+        description: The ID of variable type to delete.
+        required: true
+        schema:
+          type: string
+          x-go-name: VariableTypeID
+        x-go-name: VariableTypeID
+      responses:
+        '204':
+          description: NoContent response model
+          content: {}
+        '400':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '403':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '404':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '412':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+        '500':
+          description: A Error is a swagger response to represent error
+          headers:
+            code:
+              schema:
+                type: integer
+                format: int64
+            description:
+              schema:
+                type: string
+            message:
+              schema:
+                type: string
+          content: {}
+components:
+  schemas:
+    VariableTypePostRequest:
+      required:
+      - name
+      type: object
+      properties:
+        description:
+          type: string
+          x-go-name: Description
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableTypeObjectKey'
+          x-go-name: Keys
+        name:
+          type: string
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+        variable_type_id:
+          type: string
+          x-go-name: VariableTypeID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    VariableTypeObjectKey:
+      title: VariableTypeObjectKey ...
+      type: object
+      properties:
+        name:
+          type: string
+          x-go-name: Name
+        type:
+          type: string
+          x-go-name: Type
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    variableTypeResponse:
+      type: object
+      properties:
+        inherits:
+          type: array
+          items:
+            type: string
+          x-go-name: Inherits
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableTypeObjectKey'
+          x-go-name: Keys
+        name:
+          type: string
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        property_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: PropertySchema
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        variable_type_id:
+          type: string
+          x-go-name: VariableTypeID
+        variable_type_schema_id:
+          type: string
+          x-go-name: VariableTypeSchemaID
+      description: VariableTypeResponse struct defines response for variable types
+      x-go-name: VariableTypeResponse
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    variableTypeGetResponse:
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
+        id:
+          type: string
+          x-go-name: VariableTypeID
+        inherits:
+          type: array
+          items:
+            type: string
+          x-go-name: Inherits
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableTypeObjectKey'
+          x-go-name: Keys
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        property_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: PropertySchema
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        variable_type_schema_id:
+          type: string
+          x-go-name: VariableTypeSchemaID
+      description: VariableTypeGetResponse model for variabletype
+      x-go-name: VariableTypeGetResponse
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    VariableTypePutRequest:
+      required:
+      - name
+      type: object
+      properties:
+        description:
+          type: string
+          x-go-name: Description
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableTypeObjectKey'
+          x-go-name: Keys
+        name:
+          type: string
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    GetAllVariableTypesResponse:
+      title: A GetAllVariableTypesResponse model.
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            type: object
+            properties: {}
+          x-go-name: Results
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    GetAllVarTypesPostRequest:
+      title: GetAllVarTypesPostRequest ...
+      type: object
+      properties:
+        type:
+          type: string
+          description: 'type of variabletypes, values datatype.object/datatype.array
+
+            in: body'
+          x-go-name: Type
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+          scopes:
+            telemetry: Collect application data for analytics
+            integration:read: Manage your modules
+            private-intel:read: Access Private Intelligence
+            admin: Provide admin privileges
+            cognitive: Cognitive Integration
+            profile:read: Get your profile information
+            inspect:read: Extract Observables and data from text
+            asset: Access and modify your assets
+            event: Read IROH Events
+            feedback: Submit Customer Feedback
+            sse: SSE Integration. Manage your Devices.
+            registry: Manage registry entries
+            users:read: Manage users of your organization
+            investigation: Perform threat analysis investigation
+            invite:read: Invite users into your organization
+            casebook: Access and modify your casebooks
+            playbook: Access and modify your playbooks
+            orbital: Orbital Integration.
+            enrich:read: Query your configured modules for threat intelligence
+            oauth:read: Manage OAuth2 Clients
+            vault: Grants access to Module Vaults
+            response:read: List and execute response actions using configured modules
+            notification: Receive notifications from integrations
+            global-intel:read: Access AMP Global Intelligence
+            webhook: Manage your Webhooks
+            ao:read: AO Integration.
+x-original-swagger-version: '2.0'
