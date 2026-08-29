@@ -1,0 +1,307 @@
+slug: cisco-xdr
+provider: Cisco XDR
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 29
+edges:
+- tag: Incident
+  spec_file: cisco-xdr-incident-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.92
+  evidence: POST /ctia/incident/{id}/status Update an Incident Status; schemas Incident, IncidentStatusUpdate,
+    IncidentScores
+  reason: Security incident records within an extended detection and response platform — squarely SOC/SIEM
+    incident response, not IT service management or production reliability incidents.
+- tag: Attack Pattern
+  spec_file: cisco-xdr-attack-pattern-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.9
+  evidence: '"AttackPattern corresponding to the MITRE external_references external_id", schemas KillChainPhase,
+    NewAttackPattern'
+  reason: MITRE ATT&CK attack patterns and kill-chain phases stored as threat-intelligence entities —
+    clearly cybersecurity threat detection and response, not marketing campaigns or product design.
+- tag: v1
+  spec_file: cisco-xdr-v1-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.9
+  evidence: XDR High Priority Incident and Investigation API; "Incident Summary Search", "Incident Assets",
+    "Incident Events"
+  reason: Operations retrieve security incident summaries, affected assets and events in an extended detection
+    and response platform — SOC/SIEM incident response, i.e. Threat Detection & Response Management.
+- tag: v3
+  spec_file: cisco-xdr-v3-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.9
+  evidence: '"Search incidents", "XDR 2.0 Output for Incidents", "Graph Endpoint from entities" under
+    XDR High Priority Incident and Investigation API'
+  reason: Incident search, storyboards, entity graphs and investigations for a security operations centre
+    — threat detection and response.
+- tag: Indicator
+  spec_file: cisco-xdr-indicator-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.88
+  evidence: POST /ctia/indicator Adds a new Indicator; schemas KillChainPhase, CompositeIndicatorExpression,
+    Judgement relationships to observables
+  reason: Indicators of compromise with kill-chain phases are threat-intelligence artefacts driving detection
+    and response.
+- tag: Response
+  spec_file: cisco-xdr-response-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.88
+  evidence: POST /iroh/iroh-response/respond/sighting — "List available actions for a sighting"; POST
+    .../respond/trigger/{module-instance-id}/{action-id} — "Trigger an Action"
+  reason: Enumerates and triggers containment/response actions against observables and sightings across
+    security modules — direct realisation of security incident response.
+- tag: v2
+  spec_file: cisco-xdr-v2-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.88
+  evidence: XDR High Priority Incident and Investigation API; "Create Investigation"; "Updates a casebook's
+    observables"
+  reason: Casebooks, observables and investigations are SOC threat-investigation artefacts in Cisco's
+    XDR platform, squarely security threat detection and response rather than generic IT service incident
+    management.
+- tag: Actor
+  spec_file: cisco-xdr-actor-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: '"The Judgements can be grouped into Indicators, which can be associated with Campaigns, Actors
+    and TTPs" — POST /ctia/actor "Adds a new Actor"'
+  reason: CRUD over threat-actor entities in a Cyber Threat Intelligence store; unambiguously threat intelligence
+    supporting detection and response.
+- tag: Campaign
+  spec_file: cisco-xdr-campaign-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: 'CTIA description: "Judgements can be grouped into Indicators, which can be associated with
+    Campaigns, Actors and TTPs"'
+  reason: 'Homograph: Campaign here is a threat-actor attack campaign in the threat intelligence model,
+    not a marketing campaign. Maps to cybersecurity threat detection and response.'
+- tag: Deliberate
+  spec_file: cisco-xdr-deliberate-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: '"Get Observable verdicts" — "IROH Integrations: configure and query Threat Response modules"'
+  reason: Returns malicious/clean verdicts for observables by querying threat response modules — core
+    security threat detection enrichment.
+- tag: Investigation
+  spec_file: cisco-xdr-investigation-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: POST /ctia/investigation Adds a new Investigation; schemas InvestigationTargets, InvestigationTargetsObservables
+  reason: Security investigations over observables and targets in a threat-intel/XDR context — SOC investigation
+    work, not internal audit or HSE investigation.
+- tag: Judgement
+  spec_file: cisco-xdr-judgement-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: '''Adds a new Judgement'' on a ''Threat Intelligence API service ... making Judgements on
+    the Disposition of Observables, which are then distilled into a final Verdict'''
+  reason: CRUD over threat-intelligence judgements/verdicts on observables is core threat detection and
+    response (SOC/threat intel) work.
+- tag: Malware
+  spec_file: cisco-xdr-malware-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: '''Adds a new Malware'' with schemas ''NewMalware, KillChainPhase'' in ''A Threat Intelligence
+    API service'''
+  reason: Management of malware threat-intelligence entities with kill-chain phases supports threat detection
+    and response.
+- tag: Observe
+  spec_file: cisco-xdr-observe-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: '''Enrich Observables'' / ''Enrich Targets'' with schemas ''Verdict, Campaign, CVE, VulnerabilityImpact'''
+  reason: Observable enrichment producing verdicts, campaign and CVE context is threat detection/investigation
+    functionality.
+- tag: Private Intel
+  spec_file: cisco-xdr-private-intel-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: GET /iroh/private-intel/incident/search — "Search incidents in Private Intel"; "Get all MITRE
+    tactics related to incident"
+  reason: Operations create, patch, search and status-update security incidents and link them to MITRE
+    ATT&CK tactics within a threat-intelligence store — security incident detection/response work, not
+    generic ITSM or business incident handling.
+- tag: Sighting
+  spec_file: cisco-xdr-sighting-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: When an Observable with a malicious Verdict is seen, it can be recorded as a Sighting ...
+    POST /ctia/sighting  Adds a new Sighting
+  reason: Threat intelligence records of observed malicious indicators, with search and metrics. Squarely
+    threat detection and response within cybersecurity management.
+- tag: COA
+  spec_file: cisco-xdr-coa-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: '"Adds a new Coa", schemas OpenC2COA, ActuatorType, ActionType'
+  reason: Course of Action entities (OpenC2 response actions) in the threat intelligence repository —
+    security response/remediation actions, i.e. threat detection & response.
+- tag: Casebook
+  spec_file: cisco-xdr-casebook-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: '"Adds a new Casebook", "Edit Observables on a casebook", schemas Verdict, Incident'
+  reason: Casebooks collect observables/incident artefacts for security investigation workflows in the
+    SOC — cybersecurity threat detection and incident response.
+- tag: Reputation
+  spec_file: cisco-xdr-reputation-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: GET /iroh/iroh-enrich/reputation/observable — "Enrich Observable Reputation"; schemas Verdict,
+    Campaign, CVE, Weakness
+  reason: Enriches security observables with reputation verdicts and threat context (campaigns, CVEs)
+    — threat intelligence enrichment used in SOC detection and investigation.
+- tag: Tool
+  spec_file: cisco-xdr-tool-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.78
+  evidence: '"A Threat Intelligence API service ... Judgements can be grouped into Indicators, which can
+    be associated with Campaigns, Actors and TTPs"; schemas "KillChainPhase, Tool, NewTool"'
+  reason: CTIA 'Tool' is a STIX-style threat-intelligence entity (attacker tooling with kill-chain phases),
+    curated for detection and response — cybersecurity threat detection/response, not a generic tooling
+    registry.
+- tag: Vulnerability
+  spec_file: cisco-xdr-vulnerability-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.78
+  evidence: '"List Vulnerabilities with configurations matching CPE 2.3 match strings"; schemas "CVE,
+    CVSSv2, CVSSv3, VulnerabilityImpact, Configurations"'
+  reason: Manages vulnerability records with CVE identifiers, CVSS scoring and CPE configuration matching
+    — the data backbone of vulnerability identification and prioritisation.
+- tag: Feed
+  spec_file: cisco-xdr-feed-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.75
+  evidence: Get a Feed View as newline separated entries; 'A Threat Intelligence API service ... making
+    Judgements on the Disposition of Observables'; schemas Observable, Judgement, Feed
+  reason: Feeds publish curated threat-intelligence observables/judgements for consumption by security
+    controls, which is threat detection and response tooling. Not a marketing/content feed.
+- tag: Verdict
+  spec_file: cisco-xdr-verdict-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.75
+  evidence: '"Returns the current Verdict associated with the specified observable."; "A Disposition is
+    a statement regarding the malicious, or otherwise, nature of an Observable"'
+  reason: Returns the malicious/clean disposition of a security observable — threat intelligence used
+    for detection and response, not a financial or legal verdict.
+- tag: Tenants
+  spec_file: cisco-xdr-tenants-api-openapi.yml
+  capability_id: BC-4230.10
+  capability_id_l1: BC-4230
+  capability_name: Tenant Provisioning & Lifecycle
+  confidence: 0.72
+  evidence: '"POST /v2/tenants  TenantPostRequest  Handler to create a Tenant."; schemas "Tenant, TenantPutRequest,
+    EntitlementSummary, Tier"'
+  reason: Create/read/update of tenants and sub-tenants with tier and entitlement summary is multi-tenant
+    tenant provisioning and lifecycle management in the SaaS platform sense.
+- tag: Asset Properties
+  spec_file: cisco-xdr-asset-properties-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.7
+  evidence: CTIA "A Threat Intelligence API service" — "Adds a new Asset-properties", schemas AssetProperty,
+    AssetMapping
+  reason: Threat intelligence entity CRUD within Cisco's CTIA store; asset properties here are security
+    asset attributes used in threat detection/response, not facilities or fixed-asset accounting. Maps
+    to Cybersecurity Management, threat detection & response as the closest fit; some ambiguity over sub-capability.
+- tag: Inspect
+  spec_file: cisco-xdr-inspect-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.7
+  evidence: POST /iroh/iroh-inspect/inspect findObservables Find Observables; 'Extract Observables from
+    text'
+  reason: Extraction of security observables (IPs, domains, hashes) from text to feed threat enrichment/investigation;
+    a detection-and-response utility. Moderate confidence as it is a single narrow parsing operation.
+- tag: Query
+  spec_file: cisco-xdr-query-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.7
+  evidence: POST /iroh/iroh-enrich/query/ocsf — "Retrieve OCSF event data asynchronously"; schemas EnvelopedQueryOcsfBundleDataEventsMalware,
+    ...EventsKillChain, ...EventsFinding
+  reason: Generic tag, but the operations query normalised security event/finding data (malware, kill
+    chain) from threat-response modules, which supports SOC detection and investigation. Confidence moderated
+    by the thin, generic tag surface.
+- tag: Relationship
+  spec_file: cisco-xdr-relationship-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.7
+  evidence: POST /ctia/relationship — "Adds a new Relationship"; document describes "A Threat Intelligence
+    API service ... Judgements ... Indicators ... associated with Campaigns, Actors and TTPs"
+  reason: CRUD/search over relationship entities in the Cisco Threat Intelligence API, linking indicators,
+    actors and campaigns — threat intelligence management supporting detection and response. Tag itself
+    is generic, hence moderate confidence.
+- tag: Target Record
+  spec_file: cisco-xdr-target-record-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.7
+  evidence: 'POST /ctia/target-record    Adds a new Target-record ... schemas: TargetRecord, Observable,
+    Target'
+  reason: CTIA threat-intelligence entity linking observables to targeted assets, part of the Threat Intelligence
+    API service described in the document. Supports threat detection and response; slightly less explicit
+    than Sighting so confidence is moderate.

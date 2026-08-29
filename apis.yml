@@ -1094,6 +1094,9 @@ apis:
   - type: OpenAPI
     url: openapi/cisco-xdr-xchange-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/cisco-xdr-capability-edges.yml
+  name: Cisco XDR Business Capability Map
 - type: Overlay
   url: overlays/cisco-xdr-incidents-investigations-overlay.yaml
 - type: Overlay
