@@ -181,7 +181,7 @@ apis:
   name: Cisco XDR COA API
   description: COA operations
   tags:
-  - coa
+  - COA
   - Security
   - XDR
   - Threat Detection
@@ -333,7 +333,7 @@ apis:
   name: Cisco XDR INVITE API
   description: The INVITE API from Cisco XDR — 2 operation(s) for invite.
   tags:
-  - invite
+  - INVITE
   - Security
   - XDR
   - Threat Detection
@@ -377,7 +377,7 @@ apis:
   name: Cisco XDR LOGIN API
   description: The LOGIN API from Cisco XDR — 4 operation(s) for login.
   tags:
-  - Login
+  - LOGIN
   - Security
   - XDR
   - Threat Detection
@@ -489,7 +489,7 @@ apis:
   name: Cisco XDR One Click API
   description: One-click Routes
   tags:
-  - One-Click
+  - One-click
   - Security
   - XDR
   - Threat Detection
@@ -807,6 +807,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -948,6 +950,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
+  - Target Groups
+  tags_raw:
   - TargetGroups
   properties:
   - type: OpenAPI
@@ -968,6 +972,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
+  - Task
+  tags_raw:
   - Tasks
   properties:
   - type: OpenAPI
@@ -1008,6 +1014,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
+  - V2
+  tags_raw:
   - v2
   properties:
   - type: OpenAPI
@@ -1018,6 +1026,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
+  - V3
+  tags_raw:
   - v3
   properties:
   - type: OpenAPI
@@ -1048,6 +1058,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
@@ -1058,6 +1070,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
+  - Workflow Instances
+  tags_raw:
   - WorkflowInstances
   properties:
   - type: OpenAPI
