@@ -181,7 +181,7 @@ apis:
   name: Cisco XDR COA API
   description: COA operations
   tags:
-  - COA
+  - coa
   - Security
   - XDR
   - Threat Detection
@@ -333,7 +333,7 @@ apis:
   name: Cisco XDR INVITE API
   description: The INVITE API from Cisco XDR — 2 operation(s) for invite.
   tags:
-  - INVITE
+  - invite
   - Security
   - XDR
   - Threat Detection
@@ -377,7 +377,7 @@ apis:
   name: Cisco XDR LOGIN API
   description: The LOGIN API from Cisco XDR — 4 operation(s) for login.
   tags:
-  - LOGIN
+  - Login
   - Security
   - XDR
   - Threat Detection
@@ -489,7 +489,7 @@ apis:
   name: Cisco XDR One Click API
   description: One-click Routes
   tags:
-  - One-click
+  - One-Click
   - Security
   - XDR
   - Threat Detection
@@ -1014,7 +1014,7 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
-  - V2
+  - v2
   tags_raw:
   - v2
   properties:
@@ -1026,7 +1026,7 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
-  - V3
+  - v3
   tags_raw:
   - v3
   properties:
