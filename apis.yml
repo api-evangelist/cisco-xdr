@@ -1,14 +1,15 @@
 aid: cisco-xdr
 name: Cisco XDR
-description: 'Cisco XDR is Cisco''s extended detection and response platform, the successor to SecureX. It correlates
-  telemetry from Cisco Secure Endpoint, Secure Firewall, Umbrella, Duo, Secure Email and third-party sources into
-  incidents, and exposes four distinct REST API families behind a single OAuth 2.0 authorization server: the IROH
-  platform (inspect, enrich, response actions, integration modules, events, webhooks) at visibility.amp.cisco.com,
-  the CTIA private-intelligence store at private.intel.amp.cisco.com, the Conure v2 incidents and investigations
-  service at conure.us.security.cisco.com, and the Automation workflow engine at automate.us.security.cisco.com.
-  All four publish anonymously fetchable machine-readable contracts — 52 documents, 581 operations, 1,176 schema
-  definitions — and Cisco additionally ships a 27-tool MCP server through CiscoDevNet, stdio-only. There is no sandbox,
-  no test mode and no idempotency key anywhere, including on the operation that blocks, isolates and quarantines.'
+description: 'Cisco XDR is Cisco''s extended detection and response platform, the successor to SecureX.
+  It correlates telemetry from Cisco Secure Endpoint, Secure Firewall, Umbrella, Duo, Secure Email and
+  third-party sources into incidents, and exposes four distinct REST API families behind a single OAuth
+  2.0 authorization server: the IROH platform (inspect, enrich, response actions, integration modules,
+  events, webhooks) at visibility.amp.cisco.com, the CTIA private-intelligence store at private.intel.amp.cisco.com,
+  the Conure v2 incidents and investigations service at conure.us.security.cisco.com, and the Automation
+  workflow engine at automate.us.security.cisco.com. All four publish anonymously fetchable machine-readable
+  contracts — 52 documents, 581 operations, 1,176 schema definitions — and Cisco additionally ships a
+  27-tool MCP server through CiscoDevNet, stdio-only. There is no sandbox, no test mode and no idempotency
+  key anywhere, including on the operation that blocks, isolates and quarantines.'
 url: https://raw.githubusercontent.com/api-evangelist/cisco-xdr/refs/heads/main/apis.yml
 type: Index
 access: 3rd-Party
@@ -47,11 +48,12 @@ x-source: cisco-family-buildout:2026-08-19
 x-parent: cisco
 x-relationship: product
 x-contract-status: real
-x-contract-note: Anonymously fetchable Swagger 2.0 for nine IROH services at visibility.amp.cisco.com plus the CTIA
-  threat-intelligence API — 581 operations. The host returns real 404s on invented paths, so the 200s are genuine.
+x-contract-note: Anonymously fetchable Swagger 2.0 for nine IROH services at visibility.amp.cisco.com
+  plus the CTIA threat-intelligence API — 581 operations. The host returns real 404s on invented paths,
+  so the 200s are genuine.
 specificationVersion: '0.23'
 created: '2026-08-19'
-modified: '2026-08-19'
+modified: '2026-09-16'
 tags:
 - Security
 - XDR
@@ -214,9 +216,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-deliberate-api
   name: Cisco XDR Deliberate API
-  description: >-
-    This set of routes allow to quickly get answers from your integrations You might use them at the start
-    of any investigation to quickly get answers from your modules if something is bad.
+  description: This set of routes allow to quickly get answers from your integrations You might use them
+    at the start of any investigation to quickly get answers from your modules if something is bad.
   tags:
   - Deliberate
   - Security
@@ -281,9 +282,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-health-api
   name: Cisco XDR Health API
-  description: >-
-    This set of routes allow to check the health of your integrations setup Verify if your modules are
-    setup correctly and if your credentials are correct.
+  description: This set of routes allow to check the health of your integrations setup Verify if your
+    modules are setup correctly and if your credentials are correct.
   tags:
   - Health
   - Security
@@ -488,10 +488,9 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-observe-api
   name: Cisco XDR Observe API
-  description: >-
-    This set of routes allow to get in depth investigation data about a threat You might use them at the
-    start of any investigation to get the full picture and get to know if something has been seen in your
-    environment.
+  description: This set of routes allow to get in depth investigation data about a threat You might use
+    them at the start of any investigation to get the full picture and get to know if something has been
+    seen in your environment.
   tags:
   - Observe
   - Security
@@ -548,9 +547,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-query-api
   name: Cisco XDR Query API
-  description: >-
-    This set of routes allow to query for records related to observable events.Results are returned in
-    OCSF format.
+  description: This set of routes allow to query for records related to observable events.Results are
+    returned in OCSF format.
   tags:
   - Query
   - Security
@@ -563,9 +561,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/enrich-api-guide/
 - aid: cisco-xdr:cisco-xdr-refer-api
   name: Cisco XDR Refer API
-  description: >-
-    This set of routes allow to get relevant Reference links and quickly pivot pursuing your investigation
-    on a specific product interface.
+  description: This set of routes allow to get relevant Reference links and quickly pivot pursuing your
+    investigation on a specific product interface.
   tags:
   - Refer
   - Security
@@ -747,12 +744,11 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-mcp-server
   name: Cisco XDR MCP Server
-  description: >-
-    Model Context Protocol server published by CiscoDevNet exposing 27 Cisco XDR tools across Inspect,
-    Investigate, Incidents, Response Actions, Casebooks, Threat Intel, Workflows and Admin, plus 5 resources
-    and 6 prompts. Apache-2.0, TypeScript, stdio transport only — there is no hosted endpoint and the
-    package is not on npm, so a human must clone and build it before any agent can reach Cisco XDR through
-    it.
+  description: Model Context Protocol server published by CiscoDevNet exposing 27 Cisco XDR tools across
+    Inspect, Investigate, Incidents, Response Actions, Casebooks, Threat Intel, Workflows and Admin, plus
+    5 resources and 6 prompts. Apache-2.0, TypeScript, stdio transport only — there is no hosted endpoint
+    and the package is not on npm, so a human must clone and build it before any agent can reach Cisco
+    XDR through it.
   humanURL: https://github.com/CiscoDevNet/xdr-mcp-community
   baseURL: https://visibility.amp.cisco.com
   tags:
@@ -922,8 +918,7 @@ apis:
     url: openapi/cisco-xdr-schemas-api-openapi.yml
 - aid: cisco-xdr:cisco-xdr-shareobjectpermissions-api
   name: Cisco XDR Share Object Permissions API
-  description: >-
-    The ShareObjectPermissions API from Cisco XDR — 1 operation(s) for shareobjectpermissions.
+  description: The ShareObjectPermissions API from Cisco XDR — 1 operation(s) for shareobjectpermissions.
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
@@ -1105,8 +1100,7 @@ apis:
     url: openapi/cisco-xdr-workflows-api-openapi.yml
 - aid: cisco-xdr:cisco-xdr-workflowvariablereferences-api
   name: Cisco XDR Workflow Variable References API
-  description: >-
-    The WorkflowVariableReferences API from Cisco XDR — 1 operation(s) for workflowvariablereferences.
+  description: The WorkflowVariableReferences API from Cisco XDR — 1 operation(s) for workflowvariablereferences.
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
@@ -1158,9 +1152,9 @@ common:
 - type: Portal
   url: https://developer.cisco.com/
 - type: OpenAPI
-  url: openapi/cisco-xdr-incidents-investigations-openapi.json
+  url: openapi/_original/cisco-xdr-incidents-investigations-openapi.json
 - type: OpenAPI
-  url: openapi/cisco-xdr-automation-openapi.json
+  url: openapi/_original/cisco-xdr-automation-openapi.json
 - type: Conventions
   url: conventions/cisco-xdr-conventions.yml
 - type: ErrorCatalog
