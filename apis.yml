@@ -216,8 +216,9 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-deliberate-api
   name: Cisco XDR Deliberate API
-  description: This set of routes allow to quickly get answers from your integrations You might use them
-    at the start of any investigation to quickly get answers from your modules if something is bad.
+  description: >-
+    This set of routes allow to quickly get answers from your integrations You might use them at the start
+    of any investigation to quickly get answers from your modules if something is bad.
   tags:
   - Deliberate
   - Security
@@ -267,23 +268,11 @@ apis:
     url: openapi/cisco-xdr-feedback-api-openapi.yml
   baseURL: https://visibility.amp.cisco.com
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
-- aid: cisco-xdr:cisco-xdr-graphql-api
-  name: Cisco XDR Graph QL API
-  description: The GraphQL API from Cisco XDR — 1 operation(s) for graphql.
-  tags:
-  - GraphQL
-  - Security
-  - XDR
-  - Threat Detection
-  properties:
-  - type: OpenAPI
-    url: openapi/cisco-xdr-graphql-api-openapi.yml
-  baseURL: https://private.intel.amp.cisco.com
-  humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-health-api
   name: Cisco XDR Health API
-  description: This set of routes allow to check the health of your integrations setup Verify if your
-    modules are setup correctly and if your credentials are correct.
+  description: >-
+    This set of routes allow to check the health of your integrations setup Verify if your modules are
+    setup correctly and if your credentials are correct.
   tags:
   - Health
   - Security
@@ -488,9 +477,10 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-observe-api
   name: Cisco XDR Observe API
-  description: This set of routes allow to get in depth investigation data about a threat You might use
-    them at the start of any investigation to get the full picture and get to know if something has been
-    seen in your environment.
+  description: >-
+    This set of routes allow to get in depth investigation data about a threat You might use them at the
+    start of any investigation to get the full picture and get to know if something has been seen in your
+    environment.
   tags:
   - Observe
   - Security
@@ -547,8 +537,9 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-query-api
   name: Cisco XDR Query API
-  description: This set of routes allow to query for records related to observable events.Results are
-    returned in OCSF format.
+  description: >-
+    This set of routes allow to query for records related to observable events.Results are returned in
+    OCSF format.
   tags:
   - Query
   - Security
@@ -561,8 +552,9 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/enrich-api-guide/
 - aid: cisco-xdr:cisco-xdr-refer-api
   name: Cisco XDR Refer API
-  description: This set of routes allow to get relevant Reference links and quickly pivot pursuing your
-    investigation on a specific product interface.
+  description: >-
+    This set of routes allow to get relevant Reference links and quickly pivot pursuing your investigation
+    on a specific product interface.
   tags:
   - Refer
   - Security
@@ -744,11 +736,12 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
 - aid: cisco-xdr:cisco-xdr-mcp-server
   name: Cisco XDR MCP Server
-  description: Model Context Protocol server published by CiscoDevNet exposing 27 Cisco XDR tools across
-    Inspect, Investigate, Incidents, Response Actions, Casebooks, Threat Intel, Workflows and Admin, plus
-    5 resources and 6 prompts. Apache-2.0, TypeScript, stdio transport only — there is no hosted endpoint
-    and the package is not on npm, so a human must clone and build it before any agent can reach Cisco
-    XDR through it.
+  description: >-
+    Model Context Protocol server published by CiscoDevNet exposing 27 Cisco XDR tools across Inspect,
+    Investigate, Incidents, Response Actions, Casebooks, Threat Intel, Workflows and Admin, plus 5 resources
+    and 6 prompts. Apache-2.0, TypeScript, stdio transport only — there is no hosted endpoint and the
+    package is not on npm, so a human must clone and build it before any agent can reach Cisco XDR through
+    it.
   humanURL: https://github.com/CiscoDevNet/xdr-mcp-community
   baseURL: https://visibility.amp.cisco.com
   tags:
@@ -918,7 +911,8 @@ apis:
     url: openapi/cisco-xdr-schemas-api-openapi.yml
 - aid: cisco-xdr:cisco-xdr-shareobjectpermissions-api
   name: Cisco XDR Share Object Permissions API
-  description: The ShareObjectPermissions API from Cisco XDR — 1 operation(s) for shareobjectpermissions.
+  description: >-
+    The ShareObjectPermissions API from Cisco XDR — 1 operation(s) for shareobjectpermissions.
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
@@ -956,18 +950,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-tabletypes-api-openapi.yml
-- aid: cisco-xdr:cisco-xdr-targetgroups-api
-  name: Cisco XDR Target Groups API
-  description: The TargetGroups API from Cisco XDR — 2 operation(s) for targetgroups.
-  humanURL: https://developer.cisco.com/docs/cisco-xdr/
-  baseURL: https://private.intel.amp.cisco.com
-  tags:
-  - Target Groups
-  tags_raw:
-  - TargetGroups
-  properties:
-  - type: OpenAPI
-    url: openapi/cisco-xdr-targetgroups-api-openapi.yml
 - aid: cisco-xdr:cisco-xdr-targets-api
   name: Cisco XDR Targets API
   description: The Targets API from Cisco XDR — 3 operation(s) for targets.
@@ -1076,18 +1058,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-webhooks-api-openapi.yml
-- aid: cisco-xdr:cisco-xdr-workflowinstances-api
-  name: Cisco XDR Workflow Instances API
-  description: The WorkflowInstances API from Cisco XDR — 7 operation(s) for workflowinstances.
-  humanURL: https://developer.cisco.com/docs/cisco-xdr/
-  baseURL: https://private.intel.amp.cisco.com
-  tags:
-  - Workflow Instances
-  tags_raw:
-  - WorkflowInstances
-  properties:
-  - type: OpenAPI
-    url: openapi/cisco-xdr-workflowinstances-api-openapi.yml
 - aid: cisco-xdr:cisco-xdr-workflows-api
   name: Cisco XDR Workflows API
   description: The Workflows API from Cisco XDR — 20 operation(s) for workflows.
@@ -1100,7 +1070,8 @@ apis:
     url: openapi/cisco-xdr-workflows-api-openapi.yml
 - aid: cisco-xdr:cisco-xdr-workflowvariablereferences-api
   name: Cisco XDR Workflow Variable References API
-  description: The WorkflowVariableReferences API from Cisco XDR — 1 operation(s) for workflowvariablereferences.
+  description: >-
+    The WorkflowVariableReferences API from Cisco XDR — 1 operation(s) for workflowvariablereferences.
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
@@ -1118,6 +1089,36 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-xchange-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-graph-ql-api
+  name: Cisco XDR Graph QL API
+  description: The Graph QL API from Cisco XDR — 1 operation(s) for graph ql.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Graph QL
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-graph-ql-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-target-groups-api
+  name: Cisco XDR Target Groups API
+  description: The Target Groups API from Cisco XDR — 2 operation(s) for target groups.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Target Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-target-groups-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-workflow-instances-api
+  name: Cisco XDR Workflow Instances API
+  description: The Workflow Instances API from Cisco XDR — 7 operation(s) for workflow instances.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Workflow Instances
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-workflow-instances-api-openapi.yml
 common:
 - type: CapabilityMap
   url: capabilities/cisco-xdr-capability-edges.yml
