@@ -326,6 +326,11 @@ apis:
   name: Cisco XDR Investigation API
   description: The Investigation API from Cisco XDR — 8 operation(s) for investigation.
   tags:
+  - Investigations
+  - Security
+  - XDR
+  - Threat Detection
+  tags_raw:
   - Investigation
   - Security
   - XDR
@@ -773,6 +778,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
+  - Calendar
+  tags_raw:
   - Calendars
   properties:
   - type: OpenAPI
@@ -895,6 +902,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
+  - Schedule
+  tags_raw:
   - Schedules
   properties:
   - type: OpenAPI
@@ -905,6 +914,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
+  - Schema
+  tags_raw:
   - Schemas
   properties:
   - type: OpenAPI
@@ -1095,6 +1106,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
+  - GraphQL
+  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI
