@@ -4257,6 +4257,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV1IncidentSummarySearch
+      x-operation-id-source: derived
   /v1/incident/{incident-id}/assets:
     get:
       responses:
@@ -5292,6 +5294,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV1IncidentByIncidentIdAssets
+      x-operation-id-source: derived
   /v1/incident/{incident-id}/summary:
     get:
       responses:
@@ -11227,6 +11231,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV1IncidentByIncidentIdSummary
+      x-operation-id-source: derived
   /v1/incident/{incident-id}/events:
     get:
       responses:
@@ -29966,6 +29972,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV1IncidentByIncidentIdEvents
+      x-operation-id-source: derived
 components:
   securitySchemes:
     JWT-Bearer:

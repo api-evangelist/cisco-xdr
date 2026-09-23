@@ -42,7 +42,7 @@ paths:
     get:
       tags:
       - WorkflowVariableReferences
-      summary: Handler to return references for the workflow.
+      summary: Handler to return references for the workflow
       description: 'Allowed Role(s): admin, user, sat
 
         Allowed User(s): Who have VIEW permission to given workflow'

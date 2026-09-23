@@ -42,7 +42,7 @@ paths:
     get:
       tags:
       - Tables
-      summary: Handler to retrieve table rows.
+      summary: Handler to retrieve table rows
       description: 'Allowed Role(s): admin, user, sat'
       operationId: tableGetRowsReqParams
       parameters:
@@ -267,6 +267,28 @@ paths:
       x-codegen-request-body-name: rows
 components:
   schemas:
+    UserTableRow:
+      type: object
+      properties:
+        column_data:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: ColumnData
+        previous_row_id:
+          type: string
+          x-go-name: PreviousRowID
+        previous_suffix_id:
+          type: string
+          x-go-name: PreviousSuffixID
+        row_id:
+          type: string
+          x-go-name: RowID
+        suffix_id:
+          type: string
+          x-go-name: SuffixID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     UpdateTableRowPostRequest:
       type: object
       properties:
@@ -314,28 +336,6 @@ components:
         unique_name:
           type: string
           x-go-name: UniqueName
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    UserTableRow:
-      type: object
-      properties:
-        column_data:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: ColumnData
-        previous_row_id:
-          type: string
-          x-go-name: PreviousRowID
-        previous_suffix_id:
-          type: string
-          x-go-name: PreviousSuffixID
-        row_id:
-          type: string
-          x-go-name: RowID
-        suffix_id:
-          type: string
-          x-go-name: SuffixID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     TableRow:
       type: object

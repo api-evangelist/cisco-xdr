@@ -541,6 +541,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV3IncidentFilters
+      x-operation-id-source: derived
   /v3/incident/search:
     post:
       responses:
@@ -3227,6 +3229,8 @@ paths:
                   description: A simple string that is searched across 'id', 'title', 'description', 'short_description', 'source', and exact short_id matches
                   example: malicious process detected
         required: true
+      operationId: postV3IncidentSearch
+      x-operation-id-source: derived
   /v3/incident/{incident-id}/events:
     get:
       responses:
@@ -10295,6 +10299,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV3IncidentByIncidentIdEvents
+      x-operation-id-source: derived
   /v3/incident/{incident-id}/storyboard:
     get:
       responses:
@@ -10762,6 +10768,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV3IncidentByIncidentIdStoryboard
+      x-operation-id-source: derived
   /v3/incident/{incident-id}/storyboard/feedback:
     post:
       responses:
@@ -11396,6 +11404,8 @@ paths:
               - feedback_metadata
               - text
         required: true
+      operationId: postV3IncidentByIncidentIdStoryboardFeedback
+      x-operation-id-source: derived
   /v3/incident/{incident-id}/graph:
     get:
       responses:
@@ -13755,10 +13765,12 @@ paths:
           type: boolean
       tags:
       - v3
-      summary: Graph Endpoint from entities.
+      summary: Graph Endpoint from entities
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV3IncidentByIncidentIdGraph
+      x-operation-id-source: derived
     post:
       responses:
         '405':
@@ -16117,7 +16129,7 @@ paths:
           type: boolean
       tags:
       - v3
-      summary: Graph Endpoint from entities.
+      summary: Graph Endpoint from entities
       security:
       - JWT-Bearer: []
       - oauth2: []
@@ -16195,6 +16207,8 @@ paths:
                 include_process_parents:
                   description: Include parent processes when rendering execution relationships
                   type: boolean
+      operationId: postV3IncidentByIncidentIdGraph
+      x-operation-id-source: derived
   /v3/incident/{incident-id}/entity/{entity-id}:
     get:
       responses:
@@ -18903,6 +18917,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV3IncidentByIncidentIdEntityByEntityId
+      x-operation-id-source: derived
   /v3/investigation/{investigation-id}/events:
     get:
       responses:
@@ -25989,10 +26005,12 @@ paths:
           type: string
       tags:
       - v3
-      summary: Events endpoint from compacted entities.
+      summary: Events endpoint from compacted entities
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV3InvestigationByInvestigationIdEvents
+      x-operation-id-source: derived
   /v3/investigation/{investigation-id}/graph:
     get:
       responses:
@@ -26031,10 +26049,12 @@ paths:
           type: boolean
       tags:
       - v3
-      summary: Graph Endpoint from entities.
+      summary: Graph Endpoint from entities
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV3InvestigationByInvestigationIdGraph
+      x-operation-id-source: derived
     post:
       responses:
         '405':
@@ -28392,7 +28412,7 @@ paths:
           type: boolean
       tags:
       - v3
-      summary: Graph Endpoint from entities.
+      summary: Graph Endpoint from entities
       security:
       - JWT-Bearer: []
       - oauth2: []
@@ -28470,6 +28490,8 @@ paths:
                 include_process_parents:
                   description: Include parent processes when rendering execution relationships
                   type: boolean
+      operationId: postV3InvestigationByInvestigationIdGraph
+      x-operation-id-source: derived
   /v3/investigation/{investigation-id}/entity/{entity-id}:
     get:
       responses:
@@ -31178,6 +31200,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV3InvestigationByInvestigationIdEntityByEntityId
+      x-operation-id-source: derived
 components:
   securitySchemes:
     JWT-Bearer:

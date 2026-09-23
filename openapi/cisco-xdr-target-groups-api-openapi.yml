@@ -36,12 +36,12 @@ security:
   - ao:read
   - playbook:read
 tags:
-- name: TargetGroups
+- name: Target Groups
 paths:
   /v1/target_groups:
     get:
       tags:
-      - TargetGroups
+      - Target Groups
       summary: '# Handler returning all Target groups information'
       description: 'Allowed Role(s): admin, user, sat'
       operationId: getAllTargetGroups
@@ -115,8 +115,8 @@ paths:
           content: {}
     post:
       tags:
-      - TargetGroups
-      summary: Handler to create Target group.
+      - Target Groups
+      summary: Handler to create Target group
       description: 'Allowed Role(s): admin
 
 
@@ -214,8 +214,8 @@ paths:
   /v1/target_groups/{target_group_id}:
     get:
       tags:
-      - TargetGroups
-      summary: readTargetGroupByID Handler to return Target group infomration.
+      - Target Groups
+      summary: readTargetGroupByID Handler to return Target group infomration
       description: 'Allowed Role(s): admin, user, sat'
       operationId: getTargetGroupById
       parameters:
@@ -295,7 +295,7 @@ paths:
           content: {}
     put:
       tags:
-      - TargetGroups
+      - Target Groups
       summary: '# UpdateTarget Handler to update the target group'
       description: 'Allowed Role(s): admin'
       operationId: targetGroupUpdateRequest
@@ -399,7 +399,7 @@ paths:
       x-codegen-request-body-name: request_body
     delete:
       tags:
-      - TargetGroups
+      - Target Groups
       summary: '# Handler to delete Target group'
       description: 'Allowed Role(s): admin'
       operationId: deleteTargetGroupByID
@@ -536,55 +536,53 @@ components:
           x-go-name: ViewTargetType
       description: nolint:lll
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    TargetGroupRequest:
-      title: TargetGroupRequest ...
-      required:
-      - name
-      - targets
-      - title
+    targetGroupGetAllResponse:
+      title: TargetGroupGetAllResponse ...
       type: object
       properties:
-        criteria:
-          type: array
-          description: TargetTypes common attributes
-          items:
-            $ref: '#/components/schemas/Expression'
-          x-go-name: Criteria
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
         description:
           type: string
-          description: Description of TargetGroup
           x-go-name: Description
         id:
           type: string
           x-go-name: TargetGroupID
         name:
           type: string
-          description: Name of TargetGroup
           x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
         schema_id:
           type: string
-          description: ViewSchemaID of Schedule
           x-go-name: ViewSchemaID
-        targets:
-          type: array
-          description: Properties of Targets
-          items:
-            $ref: '#/components/schemas/TargetGroupProperties'
-          x-go-name: TargetGroupProperties
         title:
           type: string
-          description: Title of TargetGroup
           x-go-name: Title
         type:
           type: string
-          description: Type
           x-go-name: Type
         unique_name:
           type: string
-          description: Uniquename
           x-go-name: UniqueName
-      description: Either ViewSchemaID or Type or both can be provided to create a TargetGroup.
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      x-go-name: TargetGroupGetAllResponse
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     targetGroupGetResponse:
       title: TargetGroupGetResponse ...
       type: object
@@ -641,53 +639,55 @@ components:
           x-go-name: UpdatedOn
       x-go-name: TargetGroupGetResponse
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    targetGroupGetAllResponse:
-      title: TargetGroupGetAllResponse ...
+    TargetGroupRequest:
+      title: TargetGroupRequest ...
+      required:
+      - name
+      - targets
+      - title
       type: object
       properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
+        criteria:
+          type: array
+          description: TargetTypes common attributes
+          items:
+            $ref: '#/components/schemas/Expression'
+          x-go-name: Criteria
         description:
           type: string
+          description: Description of TargetGroup
           x-go-name: Description
         id:
           type: string
           x-go-name: TargetGroupID
         name:
           type: string
+          description: Name of TargetGroup
           x-go-name: Name
-        owner:
-          type: string
-          x-go-name: Owner
         schema_id:
           type: string
+          description: ViewSchemaID of Schedule
           x-go-name: ViewSchemaID
+        targets:
+          type: array
+          description: Properties of Targets
+          items:
+            $ref: '#/components/schemas/TargetGroupProperties'
+          x-go-name: TargetGroupProperties
         title:
           type: string
+          description: Title of TargetGroup
           x-go-name: Title
         type:
           type: string
+          description: Type
           x-go-name: Type
         unique_name:
           type: string
+          description: Uniquename
           x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-      x-go-name: TargetGroupGetAllResponse
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+      description: Either ViewSchemaID or Type or both can be provided to create a TargetGroup.
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
   securitySchemes:
     oAuth2:
       type: oauth2

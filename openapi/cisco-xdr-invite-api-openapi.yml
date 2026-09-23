@@ -54,13 +54,13 @@ security:
   - webhook
   - ao
 tags:
-- name: INVITE
+- name: Invite
 paths:
   /iroh/iroh-auth/invite/confirm:
     get:
       x-no-doc: false
       tags:
-      - INVITE
+      - Invite
       summary: Accept invitation
       parameters:
       - in: query
@@ -72,11 +72,13 @@ paths:
       responses:
         default:
           description: ''
+      operationId: getIrohIrohAuthInviteConfirm
+      x-operation-id-source: derived
   /iroh/iroh-auth/invite/prompt/{invite-id}:
     get:
       x-no-doc: false
       tags:
-      - INVITE
+      - Invite
       summary: Prompt a User that has been invited
       parameters:
       - in: path
@@ -88,6 +90,8 @@ paths:
       responses:
         default:
           description: ''
+      operationId: getIrohIrohAuthInvitePromptByInviteId
+      x-operation-id-source: derived
 components:
   securitySchemes:
     iroh:

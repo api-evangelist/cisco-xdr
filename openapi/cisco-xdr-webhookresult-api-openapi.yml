@@ -80,10 +80,7 @@ paths:
             application/transit+msgpack:
               schema:
                 $ref: '#/components/schemas/WebhookResult'
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `webhook/result:read`
-
-
-        '
+      description: 'required scopes: `webhook/result:read`'
       parameters:
       - in: path
         name: id
@@ -92,14 +89,13 @@ paths:
         schema:
           type: string
       summary: Get a `WebhookResult`
+      operationId: getIrohIrohWebhookWebhookResultById
+      x-operation-id-source: derived
     delete:
       x-no-doc: false
       tags:
       - WebhookResult
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `admin/webhook/result:write,webhook/result:write`
-
-
-        '
+      description: 'required scopes: `admin/webhook/result:write,webhook/result:write`'
       parameters:
       - in: path
         name: id
@@ -111,6 +107,8 @@ paths:
       responses:
         default:
           description: ''
+      operationId: deleteIrohIrohWebhookWebhookResultById
+      x-operation-id-source: derived
   /iroh/iroh-webhook/webhook-result:
     get:
       x-no-doc: false
@@ -145,10 +143,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/WebhookResult'
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `webhook/result:read`
-
-
-        '
+      description: 'required scopes: `webhook/result:read`'
       parameters:
       - in: query
         name: enabled
@@ -193,8 +188,28 @@ paths:
         schema:
           type: string
       summary: List `WebhookResult`s
+      operationId: getIrohIrohWebhookWebhookResult
+      x-operation-id-source: derived
 components:
   schemas:
+    WebhookResultErrors:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - fatal
+          - warning
+          - error
+      additionalProperties: false
+      required:
+      - code
+      - message
+      - type
     WebhookResult:
       type: object
       properties:
@@ -253,24 +268,6 @@ components:
       - webhook_id
       - visibility
       - created_at
-    WebhookResultErrors:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - fatal
-          - warning
-          - error
-      additionalProperties: false
-      required:
-      - code
-      - message
-      - type
   securitySchemes:
     iroh:
       type: apiKey

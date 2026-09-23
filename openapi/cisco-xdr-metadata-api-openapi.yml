@@ -40,7 +40,7 @@ tags:
 paths:
   /v1/metadata/refreshtoken:
     post:
-      summary: Handler to refreshtoken if not available.
+      summary: Handler to refreshtoken if not available
       description: 'Allowed Role(s): admin, user'
       operationId: RefreshToken
       responses:

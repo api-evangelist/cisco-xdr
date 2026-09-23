@@ -63,7 +63,7 @@ paths:
       tags:
       - Health
       summary: Health check all the modules
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/health:read`
+      description: 'required scopes: `integration/health:read`
 
 
         Run a health check for all your configured modules'
@@ -122,13 +122,15 @@ paths:
             application/transit+msgpack:
               schema:
                 $ref: '#/components/schemas/NormalizedError-500'
+      operationId: postIrohIrohEnrichHealth
+      x-operation-id-source: derived
   /iroh/iroh-enrich/health/{module_instance_id}:
     post:
       x-no-doc: false
       tags:
       - Health
       summary: Health check one module
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/health:read`
+      description: 'required scopes: `integration/health:read`
 
 
         Run a health check for a specific module'
@@ -195,8 +197,71 @@ paths:
             application/transit+msgpack:
               schema:
                 $ref: '#/components/schemas/NormalizedError-500'
+      operationId: postIrohIrohEnrichHealthByModuleInstanceId
+      x-operation-id-source: derived
 components:
   schemas:
+    ErrorMessage:
+      type: object
+      properties:
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - fatal
+          - warning
+          - error
+        module:
+          type: string
+      additionalProperties: false
+      required:
+      - module_instance_id
+      - module_type_id
+      - code
+      - message
+      - type
+    NormalizedError-500:
+      example:
+        error: unknown server error
+        error_description: An unknown error has occurred during the enrichment
+        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_code:
+          type: string
+        error_uri:
+          type: string
+        trace_id:
+          type: string
+        schema.core.AnythingSchema@3c6f0b88: {}
+      additionalProperties: {}
+    ModuleHealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - unknown
+          - ok
+          - error
+        quotas:
+          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotas'
+      additionalProperties: false
+      required:
+      - status
     EnvelopedHealthDataDataQuotasKeyword8148663Values:
       type: object
       properties:
@@ -226,6 +291,46 @@ components:
           type: string
           format: date-time
       additionalProperties: false
+    HealthStatus:
+      type: object
+      properties:
+        module:
+          type: string
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        data:
+          $ref: '#/components/schemas/ModuleHealthStatus'
+      additionalProperties: false
+      required:
+      - module
+      - module_instance_id
+      - module_type_id
+      - data
+    EnvelopedSingleHealth:
+      example:
+        data:
+          module: SecureX Global Threat Intelligence
+          module_instance_id: 60852826-5ba1-4e8e-b2d7-f827186c100b
+          module_type_id: 87563e81-ddc5-5f61-b4f8-dbe71252c922
+          data:
+            status: ok
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/HealthStatus'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+      additionalProperties: false
+    EnvelopedHealthDataDataQuotas:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663'
     EnvelopedHealth:
       example:
         data:
@@ -270,79 +375,17 @@ components:
           items:
             $ref: '#/components/schemas/ErrorMessage'
       additionalProperties: false
-    ModuleHealthStatus:
+    EnvelopedHealthDataDataQuotasKeyword8148663:
       type: object
       properties:
-        status:
+        description:
           type: string
-          enum:
-          - unknown
-          - ok
-          - error
-        quotas:
-          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotas'
+        values:
+          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663Values'
       additionalProperties: false
       required:
-      - status
-    EnvelopedSingleHealth:
-      example:
-        data:
-          module: SecureX Global Threat Intelligence
-          module_instance_id: 60852826-5ba1-4e8e-b2d7-f827186c100b
-          module_type_id: 87563e81-ddc5-5f61-b4f8-dbe71252c922
-          data:
-            status: ok
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/HealthStatus'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorMessage'
-      additionalProperties: false
-    EnvelopedHealthDataDataQuotas:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663'
-    NormalizedError-500:
-      example:
-        error: unknown server error
-        error_description: An unknown error has occurred during the enrichment
-        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
-      type: object
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
-        error_code:
-          type: string
-        error_uri:
-          type: string
-        trace_id:
-          type: string
-        schema.core.AnythingSchema@3c6f0b88: {}
-      additionalProperties: {}
-    HealthStatus:
-      type: object
-      properties:
-        module:
-          type: string
-        module_instance_id:
-          type: string
-        module_type_id:
-          type: string
-        module_instance_state:
-          type: string
-        data:
-          $ref: '#/components/schemas/ModuleHealthStatus'
-      additionalProperties: false
-      required:
-      - module
-      - module_instance_id
-      - module_type_id
-      - data
+      - description
+      - values
     NormalizedError-401:
       example:
         error: invalid_request
@@ -361,45 +404,6 @@ components:
           type: string
         schema.core.AnythingSchema@3c6f0b88: {}
       additionalProperties: {}
-    EnvelopedHealthDataDataQuotasKeyword8148663:
-      type: object
-      properties:
-        description:
-          type: string
-        values:
-          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663Values'
-      additionalProperties: false
-      required:
-      - description
-      - values
-    ErrorMessage:
-      type: object
-      properties:
-        module_instance_id:
-          type: string
-        module_type_id:
-          type: string
-        module_instance_state:
-          type: string
-        code:
-          type: string
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - fatal
-          - warning
-          - error
-        module:
-          type: string
-      additionalProperties: false
-      required:
-      - module_instance_id
-      - module_type_id
-      - code
-      - message
-      - type
   securitySchemes:
     iroh:
       type: apiKey

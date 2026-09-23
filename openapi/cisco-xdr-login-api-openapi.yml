@@ -54,7 +54,7 @@ security:
   - webhook
   - ao
 tags:
-- name: LOGIN
+- name: Login
 paths:
   /iroh/iroh-auth/login/{idp}/answer:
     get:
@@ -102,13 +102,15 @@ paths:
         schema:
           type: string
       tags:
-      - LOGIN
+      - Login
       summary: Answer from the user
       x-cors-credentials?: true
       description: '*Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*'
       responses:
         default:
           description: ''
+      operationId: getIrohIrohAuthLoginByIdpAnswer
+      x-operation-id-source: derived
   /iroh/iroh-auth/login/{idp}:
     get:
       x-no-doc: false
@@ -175,25 +177,29 @@ paths:
         schema:
           type: boolean
       tags:
-      - LOGIN
+      - Login
       summary: Login redirect
       responses:
         default:
           description: ''
+      operationId: getIrohIrohAuthLoginByIdp
+      x-operation-id-source: derived
   /iroh/iroh-auth/logins:
     get:
       x-no-doc: false
       tags:
-      - LOGIN
+      - Login
       summary: Login redirect
       responses:
         default:
           description: ''
+      operationId: getIrohIrohAuthLogins
+      x-operation-id-source: derived
   /iroh/iroh-auth/code:
     post:
       x-no-doc: false
       tags:
-      - LOGIN
+      - Login
       summary: Retrieve Access and Refresh Tokens from a `code`
       responses:
         '200':
@@ -232,6 +238,8 @@ paths:
             schema:
               $ref: '#/components/schemas/CodeBody'
         required: true
+      operationId: postIrohIrohAuthCode
+      x-operation-id-source: derived
 components:
   schemas:
     CodeBody:

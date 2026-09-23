@@ -62,7 +62,7 @@ paths:
       x-no-doc: false
       tags:
       - Query
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `enrich/query-ocsf:read`
+      description: 'required scopes: `enrich/query-ocsf:read`
 
 
         This route queries all enabled modules supporting the query-ocsf protocol with the supplied query in order to retrieve related event data from all your integrations.'
@@ -180,12 +180,14 @@ paths:
             schema:
               $ref: '#/components/schemas/OCSFQuery'
         required: true
+      operationId: postIrohIrohEnrichQueryOcsfSync
+      x-operation-id-source: derived
   /iroh/iroh-enrich/query/ocsf:
     post:
       x-no-doc: false
       tags:
       - Query
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `enrich/query-ocsf:read`
+      description: 'required scopes: `enrich/query-ocsf:read`
 
 
         This route enqueues a query for all enabled modules supporting the query-ocsf protocol with the supplied query in order to retrieve related event data from all your integrations. Results are written to an external file store'
@@ -267,86 +269,10 @@ paths:
             schema:
               $ref: '#/components/schemas/OCSFQuery'
         required: true
+      operationId: postIrohIrohEnrichQueryOcsf
+      x-operation-id-source: derived
 components:
   schemas:
-    EnvelopedQueryOcsfBundleDataEventsObservables:
-      example:
-        anything: anything
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsProcess:
-      example:
-        anything: anything
-      description: The process object.
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsApi:
-      example:
-        anything: anything
-      description: Describes details about a typical API (Application Programming Interface) call.
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsUnmapped:
-      example:
-        anything: anything
-      description: The attributes that are not mapped to the event schema. The names and values of those attributes are specific to the event source.
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsCisCsc:
-      example:
-        anything: anything
-      type: object
-      additionalProperties:
-        example: anything
-    OCSFQuery:
-      type: object
-      properties:
-        type_id:
-          type: integer
-          format: int64
-        limit:
-          type: integer
-          format: int64
-        value:
-          type: string
-        start_time:
-          type: string
-          format: date-time
-        field:
-          type: string
-        class_uid:
-          type: integer
-          format: int64
-        end_time:
-          type: string
-          format: date-time
-        caller_query_id:
-          type: string
-        version:
-          type: string
-      additionalProperties: false
-      required:
-      - type_id
-      - value
-      - class_uid
-      - version
-    EnvelopedQueryOcsfBundleDataEventsMalware:
-      example:
-        anything: anything
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsActivities:
-      example:
-        anything: anything
-      description: Activities
-      type: object
-      additionalProperties:
-        example: anything
     ErrorMessage:
       type: object
       properties:
@@ -375,6 +301,45 @@ components:
       - code
       - message
       - type
+    EnvelopedQueryOcsfBundleDataEventsDevice:
+      example:
+        anything: anything
+      description: An addressable device, computer system or host.
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsMetadata:
+      example:
+        anything: anything
+      description: The metadata associated with the event.
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsVulnerabilities:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsCloud:
+      example:
+        anything: anything
+      description: Describes details about the Cloud environment where the event was originally created or logged.
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsAttacks:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsKillChain:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
     EnvelopedQueryOCSFBundle:
       type: object
       properties:
@@ -387,30 +352,9 @@ components:
           items:
             $ref: '#/components/schemas/ErrorMessage'
       additionalProperties: false
-    EnvelopedQueryOcsfBundleDataEventsCloud:
+    EnvelopedQueryOcsfBundleDataEventsCisCsc:
       example:
         anything: anything
-      description: Describes details about the Cloud environment where the event was originally created or logged.
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsResources:
-      example:
-        anything: anything
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsMetadata:
-      example:
-        anything: anything
-      description: The metadata associated with the event.
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsDevice:
-      example:
-        anything: anything
-      description: An addressable device, computer system or host.
       type: object
       additionalProperties:
         example: anything
@@ -447,6 +391,51 @@ components:
       - end_time
       - count
       - events
+    NormalizedError-500:
+      example:
+        error: unknown server error
+        error_description: An unknown error has occurred during the enrichment
+        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_code:
+          type: string
+        error_uri:
+          type: string
+        trace_id:
+          type: string
+        schema.core.AnythingSchema@3c6f0b88: {}
+      additionalProperties: {}
+    EnvelopedQueryOcsfBundleDataEventsProcess:
+      example:
+        anything: anything
+      description: The process object.
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsCompliance:
+      example:
+        anything: anything
+      description: The compliance object provides context to compliance findings (e.g., a check against a specific regulatory or best practice framework such as CIS or NIST) and contains compliance related details.
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsDispositions:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsEnrichments:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
     EnvelopedQueryOcsfBundleDataEvents:
       example:
         severity_id: 10
@@ -821,32 +810,6 @@ components:
       - activity_id
       - metadata
       - state_id
-    EnvelopedQueryOcsfBundleDataEventsActor:
-      example:
-        anything: anything
-      description: The actor object describes details about the user/role/process that was the source of the activity.
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsFinding:
-      example:
-        anything: anything
-      description: Finding object provides details related to a finding generated by security tool
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsDispositions:
-      example:
-        anything: anything
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsKillChain:
-      example:
-        anything: anything
-      type: object
-      additionalProperties:
-        example: anything
     NormalizedError-401:
       example:
         error: invalid_request
@@ -865,6 +828,40 @@ components:
           type: string
         schema.core.AnythingSchema@3c6f0b88: {}
       additionalProperties: {}
+    EnvelopedQueryOcsfBundleDataEventsActivities:
+      example:
+        anything: anything
+      description: Activities
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsAnalytic:
+      example:
+        anything: anything
+      description: The analytic technique used to create the finding or detection
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsApi:
+      example:
+        anything: anything
+      description: Describes details about a typical API (Application Programming Interface) call.
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsObservables:
+      example:
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsFinding:
+      example:
+        anything: anything
+      description: Finding object provides details related to a finding generated by security tool
+      type: object
+      additionalProperties:
+        example: anything
     Response8148706:
       type: object
       properties:
@@ -881,57 +878,64 @@ components:
       additionalProperties: false
       required:
       - id
-    EnvelopedQueryOcsfBundleDataEventsAnalytic:
+    EnvelopedQueryOcsfBundleDataEventsActor:
       example:
         anything: anything
-      description: The analytic technique used to create the finding or detection
+      description: The actor object describes details about the user/role/process that was the source of the activity.
       type: object
       additionalProperties:
         example: anything
-    EnvelopedQueryOcsfBundleDataEventsVulnerabilities:
+    EnvelopedQueryOcsfBundleDataEventsResources:
       example:
         anything: anything
       type: object
       additionalProperties:
         example: anything
-    NormalizedError-500:
+    EnvelopedQueryOcsfBundleDataEventsMalware:
       example:
-        error: unknown server error
-        error_description: An unknown error has occurred during the enrichment
-        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
+        anything: anything
+      type: object
+      additionalProperties:
+        example: anything
+    EnvelopedQueryOcsfBundleDataEventsUnmapped:
+      example:
+        anything: anything
+      description: The attributes that are not mapped to the event schema. The names and values of those attributes are specific to the event source.
+      type: object
+      additionalProperties:
+        example: anything
+    OCSFQuery:
       type: object
       properties:
-        error:
+        type_id:
+          type: integer
+          format: int64
+        limit:
+          type: integer
+          format: int64
+        value:
           type: string
-        error_description:
+        start_time:
           type: string
-        error_code:
+          format: date-time
+        field:
           type: string
-        error_uri:
+        class_uid:
+          type: integer
+          format: int64
+        end_time:
           type: string
-        trace_id:
+          format: date-time
+        caller_query_id:
           type: string
-        schema.core.AnythingSchema@3c6f0b88: {}
-      additionalProperties: {}
-    EnvelopedQueryOcsfBundleDataEventsAttacks:
-      example:
-        anything: anything
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsCompliance:
-      example:
-        anything: anything
-      description: The compliance object provides context to compliance findings (e.g., a check against a specific regulatory or best practice framework such as CIS or NIST) and contains compliance related details.
-      type: object
-      additionalProperties:
-        example: anything
-    EnvelopedQueryOcsfBundleDataEventsEnrichments:
-      example:
-        anything: anything
-      type: object
-      additionalProperties:
-        example: anything
+        version:
+          type: string
+      additionalProperties: false
+      required:
+      - type_id
+      - value
+      - class_uid
+      - version
   securitySchemes:
     iroh:
       type: apiKey

@@ -62,7 +62,7 @@ paths:
       x-no-doc: false
       tags:
       - Inspect
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `inspect:read`
+      description: 'required scopes: `inspect:read`
 
 
         Detects and returns observables from plain text.'
@@ -194,27 +194,63 @@ paths:
         required: true
 components:
   schemas:
-    '400':
-      description: An object containing the offending parameters.
+    '403':
+      description: An object describing the problem.
       example:
-        content: missing-required-key
+        missing-scopes:
+        - inspect:read
+        required-scopes:
+        - inspect:read
+        scopes: []
+        user-id: user1
+        org-id: org1
+        trace_id: ctx-43eb882f-75d6-41cf-817a-34bb3dbf71ab
+        error: missing_scope
+        error_description: You do not have the required credentials to access this route.
       type: object
       properties:
-        content:
+        error:
+          type: string
+        error_description:
+          type: string
+        missing-scopes:
+          type: array
+          items:
+            type: string
+        required-scopes:
+          type: array
+          items:
+            type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        trace_id:
+          type: string
+        user-id:
+          type: string
+        org-id:
           type: string
       additionalProperties: false
       required:
-      - content
-    StrContent:
+      - error
+    '500':
+      description: The error string.
+      example:
+        error: unknown-exception
+        error_description: This exception has been logged for further inspection.
+        trace_id: 5755e17e-992f-4892-b2f6-db59b2bf480c
       type: object
       properties:
-        content:
-          description: Text to inspect for observables.
-          example: 1.2.3.4 foo bar xyz.com www.xyz.com
+        error:
+          type: string
+        error_description:
+          type: string
+        trace_id:
           type: string
       additionalProperties: false
       required:
-      - content
+      - error
     Observable:
       example:
         value: 1.2.3.4
@@ -298,6 +334,27 @@ components:
       required:
       - value
       - type
+    '400':
+      description: An object containing the offending parameters.
+      example:
+        content: missing-required-key
+      type: object
+      properties:
+        content:
+          type: string
+      additionalProperties: false
+      required:
+      - content
+    StrContent:
+      type: object
+      properties:
+        content:
+          description: Text to inspect for observables.
+          example: 1.2.3.4 foo bar xyz.com www.xyz.com
+          type: string
+      additionalProperties: false
+      required:
+      - content
     '401':
       description: An object describing the problem.
       example:
@@ -316,63 +373,6 @@ components:
         error_description:
           type: string
         trace_id:
-          type: string
-      additionalProperties: false
-      required:
-      - error
-    '500':
-      description: The error string.
-      example:
-        error: unknown-exception
-        error_description: This exception has been logged for further inspection.
-        trace_id: 5755e17e-992f-4892-b2f6-db59b2bf480c
-      type: object
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
-        trace_id:
-          type: string
-      additionalProperties: false
-      required:
-      - error
-    '403':
-      description: An object describing the problem.
-      example:
-        missing-scopes:
-        - inspect:read
-        required-scopes:
-        - inspect:read
-        scopes: []
-        user-id: user1
-        org-id: org1
-        trace_id: ctx-43eb882f-75d6-41cf-817a-34bb3dbf71ab
-        error: missing_scope
-        error_description: You do not have the required credentials to access this route.
-      type: object
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
-        missing-scopes:
-          type: array
-          items:
-            type: string
-        required-scopes:
-          type: array
-          items:
-            type: string
-        scopes:
-          type: array
-          items:
-            type: string
-        trace_id:
-          type: string
-        user-id:
-          type: string
-        org-id:
           type: string
       additionalProperties: false
       required:

@@ -63,7 +63,19 @@ paths:
       tags:
       - Session Cookie
       summary: Validate the current session
-      description: "Validates the iroh-session cookie and X-Tab-Id header. \nReturns session info if valid. \nRotates the session-id when the rotation interval is exceeded.\n\n**Links**:\n  - [Data Model](/iroh/doc/iroh-auth/#data-model)\n\n*Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*"
+      description: 'Validates the iroh-session cookie and X-Tab-Id header.
+
+        Returns session info if valid.
+
+        Rotates the session-id when the rotation interval is exceeded.
+
+
+        **Links**:
+
+        - Data Model
+
+
+        *Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*'
       x-cors-credentials?: true
       responses:
         '200':
@@ -84,13 +96,31 @@ paths:
             application/transit+msgpack:
               schema:
                 $ref: '#/components/schemas/SessionStatusResponse'
+      operationId: getIrohIrohAuthSessionValidate
+      x-operation-id-source: derived
   /iroh/iroh-auth/session/exchange:
     post:
       x-no-doc: false
       tags:
       - Session Cookie
       summary: Exchange session cookie for a short-lived JWT access token
-      description: "Validates the iroh-session cookie and returns a fresh \nJWT access token for use in Authorization headers. \nThe JWT is short-lived (see expires_in in the response). \nNo refresh token is issued — the session cookie IS the \nrefresh mechanism.\n\n**Links**:\n  - [Data Model](/iroh/doc/iroh-auth/#data-model)\n\n*Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*"
+      description: 'Validates the iroh-session cookie and returns a fresh
+
+        JWT access token for use in Authorization headers.
+
+        The JWT is short-lived (see expires_in in the response).
+
+        No refresh token is issued — the session cookie IS the
+
+        refresh mechanism.
+
+
+        **Links**:
+
+        - Data Model
+
+
+        *Requires credentials on cross-origin requests (emits `Access-Control-Allow-Credentials: true`).*'
       x-cors-credentials?: true
       responses:
         '200':
@@ -111,6 +141,8 @@ paths:
             application/transit+msgpack:
               schema:
                 $ref: '#/components/schemas/SessionTokenExchangeResponse'
+      operationId: postIrohIrohAuthSessionExchange
+      x-operation-id-source: derived
   /iroh/iroh-auth/session/logout:
     post:
       x-no-doc: false
@@ -125,8 +157,31 @@ paths:
       responses:
         default:
           description: ''
+      operationId: postIrohIrohAuthSessionLogout
+      x-operation-id-source: derived
 components:
   schemas:
+    SessionTokenExchangeResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+          format: int64
+        token_type:
+          type: string
+          enum:
+          - bearer
+        scope:
+          type: string
+        needs_renewal:
+          type: boolean
+      additionalProperties: false
+      required:
+      - access_token
+      - expires_in
+      - token_type
     SessionStatusResponse:
       type: object
       properties:
@@ -150,27 +205,6 @@ components:
       - org-id
       - scopes
       - needs-renewal
-    SessionTokenExchangeResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-        expires_in:
-          type: integer
-          format: int64
-        token_type:
-          type: string
-          enum:
-          - bearer
-        scope:
-          type: string
-        needs_renewal:
-          type: boolean
-      additionalProperties: false
-      required:
-      - access_token
-      - expires_in
-      - token_type
   securitySchemes:
     iroh:
       type: apiKey

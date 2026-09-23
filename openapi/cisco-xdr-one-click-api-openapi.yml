@@ -54,16 +54,16 @@ security:
   - webhook
   - ao
 tags:
-- name: One-click
+- name: One Click
   description: One-click Routes
 paths:
   /iroh/iroh-int/module-instance-wrapper:
     post:
       x-no-doc: false
       tags:
-      - One-click
+      - One Click
       summary: Create a new one-click module instance
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-instance,vault/configs:read`
+      description: 'required scopes: `integration/module-instance,vault/configs:read`
 
 
         Create a new one-click module instance'
@@ -104,8 +104,47 @@ paths:
             schema:
               $ref: '#/components/schemas/OneClickModuleCreateParams'
         required: true
+      operationId: postIrohIrohIntModuleInstanceWrapper
+      x-operation-id-source: derived
 components:
   schemas:
+    ModuleInstanceExternalReference:
+      type: object
+      properties:
+        label:
+          type: string
+        link:
+          type: string
+        external_id:
+          type: string
+        class:
+          description: Class to distinguish external references
+          type: string
+      additionalProperties: false
+      required:
+      - label
+    OneClickModuleWrapperResult:
+      type: object
+      properties:
+        created_new_module?:
+          type: boolean
+        updated_module_to_one_click?:
+          type: boolean
+        error:
+          type: string
+          enum:
+          - already_has_one_click
+          - multiple_module_instances
+          - one_click_update_not_supported
+          - unable_to_create_module
+          - one_click_not_supported_by_module
+        module_instances:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleInstance'
+      additionalProperties: false
+      required:
+      - created_new_module?
     ModuleInstance:
       type: object
       properties:
@@ -158,21 +197,6 @@ components:
       - enabled
       - visibility
       - created_at
-    ModuleInstanceExternalReference:
-      type: object
-      properties:
-        label:
-          type: string
-        link:
-          type: string
-        external_id:
-          type: string
-        class:
-          description: Class to distinguish external references
-          type: string
-      additionalProperties: false
-      required:
-      - label
     ModuleInstanceSettings:
       type: object
       additionalProperties:
@@ -192,28 +216,6 @@ components:
               format: double
             - type: string
         - $ref: '#/components/schemas/ModuleInstanceSettings'
-    OneClickModuleWrapperResult:
-      type: object
-      properties:
-        created_new_module?:
-          type: boolean
-        updated_module_to_one_click?:
-          type: boolean
-        error:
-          type: string
-          enum:
-          - already_has_one_click
-          - multiple_module_instances
-          - one_click_update_not_supported
-          - unable_to_create_module
-          - one_click_not_supported_by_module
-        module_instances:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModuleInstance'
-      additionalProperties: false
-      required:
-      - created_new_module?
     OneClickModuleCreateParams:
       type: object
       properties:

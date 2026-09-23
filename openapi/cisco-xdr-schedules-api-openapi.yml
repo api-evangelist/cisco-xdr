@@ -42,7 +42,7 @@ paths:
     get:
       tags:
       - Schedules
-      summary: Handler to get all schedules.
+      summary: Handler to get all schedules
       description: 'Allowed Role(s): admin, user, sat'
       operationId: listSchedules
       responses:
@@ -116,7 +116,7 @@ paths:
     post:
       tags:
       - Schedules
-      summary: Handler to creates a schedule.
+      summary: Handler to creates a schedule
       description: 'Allowed Role(s): admin
 
 
@@ -215,7 +215,7 @@ paths:
     get:
       tags:
       - Schedules
-      summary: Handler to get a specific schedule.
+      summary: Handler to get a specific schedule
       description: 'Allowed Role(s): admin, user, sat'
       operationId: getScheduleById
       parameters:
@@ -296,7 +296,7 @@ paths:
     put:
       tags:
       - Schedules
-      summary: Handler to updates a schedule. Allows partial update.
+      summary: Handler to updates a schedule. Allows partial update
       description: 'Allowed Role(s): admin'
       operationId: scheduleUpdateRequest
       parameters:
@@ -400,7 +400,7 @@ paths:
     delete:
       tags:
       - Schedules
-      summary: Handler to delete a schedule.
+      summary: Handler to delete a schedule
       description: 'Allowed Role(s): admin'
       operationId: deleteScheduleById
       parameters:
@@ -488,6 +488,62 @@ paths:
           content: {}
 components:
   schemas:
+    ScheduleGetResponse:
+      title: ScheduleGetResponse ...
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        id:
+          type: string
+          x-go-name: ScheduleID
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          $ref: '#/components/schemas/ScheduleProperties'
+        rule_id:
+          type: string
+          x-go-name: RuleID
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    SchedulePutRequest:
+      title: SchedulePutRequest ...
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of Schedule
+          x-go-name: Name
+        properties:
+          $ref: '#/components/schemas/ScheduleProperties'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     ScheduleGetAllResponse:
       title: ScheduleGetAllResponse ...
       type: object
@@ -514,89 +570,6 @@ components:
         owner:
           type: string
           x-go-name: Owner
-        rule_id:
-          type: string
-          x-go-name: RuleID
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    ScheduleDefinitionPostRequest:
-      title: SchedulePostRequest ...
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of Schedule
-          x-go-name: Name
-        properties:
-          $ref: '#/components/schemas/ScheduleProperties'
-        schema_id:
-          type: string
-          description: ViewSchemaID of Schedule
-          x-go-name: ViewSchemaID
-        type:
-          type: string
-          description: Type
-          x-go-name: Type
-        unique_name:
-          type: string
-          description: Uniquename
-          x-go-name: UniqueName
-      description: Either ViewSchemaID or Type or both can be provided to create a Schedule.
-      x-go-name: SchedulePostRequest
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    SchedulePutRequest:
-      title: SchedulePutRequest ...
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of Schedule
-          x-go-name: Name
-        properties:
-          $ref: '#/components/schemas/ScheduleProperties'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    ScheduleGetResponse:
-      title: ScheduleGetResponse ...
-      type: object
-      properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        id:
-          type: string
-          x-go-name: ScheduleID
-        name:
-          type: string
-          x-go-name: Name
-        owner:
-          type: string
-          x-go-name: Owner
-        properties:
-          $ref: '#/components/schemas/ScheduleProperties'
         rule_id:
           type: string
           x-go-name: RuleID
@@ -647,6 +620,33 @@ components:
         timezone:
           type: string
           x-go-name: Timezone
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    ScheduleDefinitionPostRequest:
+      title: SchedulePostRequest ...
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of Schedule
+          x-go-name: Name
+        properties:
+          $ref: '#/components/schemas/ScheduleProperties'
+        schema_id:
+          type: string
+          description: ViewSchemaID of Schedule
+          x-go-name: ViewSchemaID
+        type:
+          type: string
+          description: Type
+          x-go-name: Type
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+      description: Either ViewSchemaID or Type or both can be provided to create a Schedule.
+      x-go-name: SchedulePostRequest
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
   securitySchemes:
     oAuth2:

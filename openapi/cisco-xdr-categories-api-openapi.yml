@@ -42,7 +42,7 @@ paths:
     get:
       tags:
       - Categories
-      summary: Handler to get all Categories.
+      summary: Handler to get all Categories
       description: 'Allowed Role(s): admin, user, sat'
       operationId: listCategories
       parameters:
@@ -124,7 +124,7 @@ paths:
     post:
       tags:
       - Categories
-      summary: Handler to create a Category.
+      summary: Handler to create a Category
       description: 'Allowed Role(s): admin
 
 
@@ -237,7 +237,7 @@ paths:
     get:
       tags:
       - Categories
-      summary: Handler to get a specific category.
+      summary: Handler to get a specific category
       description: 'Allowed Role(s): admin, user, sat'
       operationId: getCategoryById
       parameters:
@@ -422,7 +422,7 @@ paths:
     delete:
       tags:
       - Categories
-      summary: Handler for delete Category.
+      summary: Handler for delete Category
       description: 'Allowed Role(s): admin'
       operationId: deleteCategoryById
       parameters:
@@ -510,6 +510,30 @@ paths:
           content: {}
 components:
   schemas:
+    CategoryType:
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    CategoryPutRequest:
+      title: CategoryPutRequest represents a payload for modifying an existing category by its ID.
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Category
+          x-go-name: Description
+        name:
+          type: string
+          description: Name of Category
+          x-go-name: Name
+        title:
+          type: string
+          description: Title of Category
+          x-go-name: Title
+        unique_name:
+          type: string
+          description: Properties of Category
+          x-go-name: UniqueName
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     CategoryPostRequest:
       title: CategoryPostRequest ...
       required:
@@ -541,27 +565,6 @@ components:
           description: Properties of Category
           x-go-name: UniqueName
       description: Either ViewSchemaID or Type or both can be provided to create a Category.
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    CategoryPutRequest:
-      title: CategoryPutRequest represents a payload for modifying an existing category by its ID.
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of Category
-          x-go-name: Description
-        name:
-          type: string
-          description: Name of Category
-          x-go-name: Name
-        title:
-          type: string
-          description: Title of Category
-          x-go-name: Title
-        unique_name:
-          type: string
-          description: Properties of Category
-          x-go-name: UniqueName
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     CategoryGetResponse:
       title: CategoryGetResponse ...
@@ -611,9 +614,6 @@ components:
           format: date-time
           x-go-name: UpdatedOn
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    CategoryType:
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
   securitySchemes:
     oAuth2:
       type: oauth2

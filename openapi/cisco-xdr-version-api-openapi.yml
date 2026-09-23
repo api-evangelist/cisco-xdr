@@ -9,7 +9,12 @@ info:
     name: 'Cisco Security Business Group -- Advanced Threat '
     url: http://github.com/threatgrid/ctia
     email: cisco-intel-api-support@cisco.com
-  description: "A Threat Intelligence API service\n\n  This API provides a mechanism for making Judgements on the Disposition\n  of Observables, which are then distilled into a final Verdict.  A\n  Disposition is a statement regarding the malicious, or otherwise,\n  nature of an Observable.\n\n  The Judgements can be grouped into Indicators, which can be associated\n  with Campaigns, Actors and TTPs.  Feedback can be given on specific\n  Judgements, indicating agreement or disagreement, or clarification.\n\n  When an Observable with a malicious Verdict is seen, it can be recorded as\n  a Sighting, and the Relations that Observable had with other Observables can\n  be recorded as well.\n\n  We support a pre-defined set of Observable Types.  Each Observable Type has a\n  specific form of natural identifier, its ID, which is almost always\n  the default way it is represented when observed in the wild.\n\n  * Ipv4/IPv6  -- 192.168.1.1\n  * Domain/Hostname -- foo.com, www.bar.com\n  * SHA256  -- the sha256 checksum of a file, or other data blob\n  * MD5 -- the md5 checksum of a file, or other data blob\n  * SHA1 -- the sha1 checksum of a file, or other data blob\n  * URL -- A minimal form of the URL\n\n  The Verdict is derived from all of the Judgements on that Observable which\n  have not yet expired.  The highest priority Judgement becomes the\n  active verdict.  If there is more than one Judgement with that\n  priority, than Clean disposition has priority over all others, then\n  Malicious disposition, and so on down to Unknown.\n\n  <a href='/doc/README.md'>CTIA Documentation</a>"
+  description: 'A Threat Intelligence API service
+
+
+    This API provides a mechanism for making Judgements on the Disposition
+
+    of Observables, which are then distilled into a final Verdict.'
   x-provenance:
     method: harvested
     authored_by: Cisco XDR (CTIA)
@@ -61,6 +66,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/VersionInfo'
       summary: API version details
+      operationId: getCtiaVersion
+      x-operation-id-source: derived
 components:
   schemas:
     VersionInfo:

@@ -42,7 +42,7 @@ paths:
     get:
       tags:
       - Schemas
-      summary: Handler returning information about all Schemas.
+      summary: Handler returning information about all Schemas
       description: 'Allowed Role(s): admin, user, sat'
       operationId: getAllSchemaQueryParams
       parameters:
@@ -154,7 +154,7 @@ paths:
     post:
       tags:
       - Schemas
-      summary: Handler to create a schema template for all base_types.
+      summary: Handler to create a schema template for all base_types
       description: 'Allowed Role(s): admin'
       operationId: schemaCreateRequest
       requestBody:
@@ -250,7 +250,7 @@ paths:
     get:
       tags:
       - Schemas
-      summary: Handler returning information about Template.
+      summary: Handler returning information about Template
       description: 'Allowed Role(s): admin, user, sat'
       operationId: getSchemaById
       parameters:
@@ -338,7 +338,7 @@ paths:
     put:
       tags:
       - Schemas
-      summary: handler method for updating adapter template/schema.
+      summary: handler method for updating adapter template/schema
       description: 'Allowed Role(s): admin'
       operationId: schemaUpdateRequest
       parameters:
@@ -442,7 +442,7 @@ paths:
     delete:
       tags:
       - Schemas
-      summary: Handler for delete Schema.
+      summary: Handler for delete Schema
       description: 'Allowed Role(s): admin'
       operationId: deleteSchemaById
       parameters:
@@ -530,118 +530,6 @@ paths:
           content: {}
 components:
   schemas:
-    Deprecated:
-      title: Deprecated ...
-      type: object
-      properties:
-        deprecated_in:
-          type: string
-          x-go-name: DeprecatedIn
-        deprecated_message:
-          type: string
-          x-go-name: DeprecatedMessage
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    Obsolete:
-      title: Obsolete ...
-      type: object
-      properties:
-        obsolete_from:
-          type: string
-          x-go-name: ObsoleteFrom
-        obsolete_message:
-          type: string
-          x-go-name: ObsoleteMessage
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    AccessMetaType:
-      title: AccessMetaType ...
-      type: object
-      properties:
-        id:
-          type: string
-          x-go-name: ID
-        type:
-          type: string
-          x-go-name: Type
-        version:
-          type: string
-          x-go-name: Version
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    AccessMeta:
-      title: AccessMeta ...
-      type: object
-      properties:
-        adapter:
-          $ref: '#/components/schemas/AccessMetaType'
-        deprecated:
-          $ref: '#/components/schemas/Deprecated'
-        disable_duplicate:
-          type: boolean
-          x-go-name: DisableDuplicate
-        is_integration:
-          type: boolean
-          x-go-name: IsIntegration
-        is_internal:
-          type: boolean
-          x-go-name: IsInternal
-        obsolete:
-          $ref: '#/components/schemas/Obsolete'
-        runtime_users:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccessMetaType'
-          x-go-name: RuntimeUsers
-        targets:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccessMetaType'
-          x-go-name: Targets
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    Serverless:
-      title: Serverless ...
-      type: object
-      properties:
-        cloud_type:
-          type: string
-          x-go-name: CloudType
-        name:
-          type: string
-          x-go-name: Name
-        region:
-          type: string
-          x-go-name: Region
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    ActionFunc:
-      title: ActionFunc ...
-      type: object
-      properties:
-        is_microservice:
-          type: boolean
-          x-go-name: IsMicroservice
-        micro_service:
-          $ref: '#/components/schemas/MicroService'
-        serverless:
-          $ref: '#/components/schemas/Serverless'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    SchemaByTypeResponse:
-      title: SchemaByTypeResponse ...
-      type: object
-      properties:
-        data_schema:
-          $ref: '#/components/schemas/Schema'
-        view_schema:
-          $ref: '#/components/schemas/Schema'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    SchemaNewPostRequest:
-      title: SchemaNewPostRequest ...
-      required:
-      - data_schema
-      type: object
-      properties:
-        data_schema:
-          $ref: '#/components/schemas/Schema'
-        view_schema:
-          $ref: '#/components/schemas/Schema'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     SchemaPutRequest:
       title: A SchemaPutRequest for one or more schema templates.
       type: object
@@ -715,33 +603,17 @@ components:
             properties: {}
           x-go-name: ViewConfig
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    MicroService:
-      title: MicroService ...
+    Deprecated:
+      title: Deprecated ...
       type: object
       properties:
-        end_point:
+        deprecated_in:
           type: string
-          x-go-name: EndPoint
-        name:
+          x-go-name: DeprecatedIn
+        deprecated_message:
           type: string
-          x-go-name: Name
-        port:
-          type: integer
-          format: uint32
-          x-go-name: Port
-        protocol:
-          type: string
-          x-go-name: Protocol
+          x-go-name: DeprecatedMessage
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    SchemaNewPostResponse:
-      title: SchemaNewPostResponse ...
-      type: object
-      properties:
-        data_schema:
-          $ref: '#/components/schemas/Schema'
-        view_schema:
-          $ref: '#/components/schemas/Schema'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     Schema:
       title: Schema ...
       type: object
@@ -844,6 +716,134 @@ components:
             properties: {}
           x-go-name: ViewConfig
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    SchemaNewPostResponse:
+      title: SchemaNewPostResponse ...
+      type: object
+      properties:
+        data_schema:
+          $ref: '#/components/schemas/Schema'
+        view_schema:
+          $ref: '#/components/schemas/Schema'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    Serverless:
+      title: Serverless ...
+      type: object
+      properties:
+        cloud_type:
+          type: string
+          x-go-name: CloudType
+        name:
+          type: string
+          x-go-name: Name
+        region:
+          type: string
+          x-go-name: Region
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    SchemaNewPostRequest:
+      title: SchemaNewPostRequest ...
+      required:
+      - data_schema
+      type: object
+      properties:
+        data_schema:
+          $ref: '#/components/schemas/Schema'
+        view_schema:
+          $ref: '#/components/schemas/Schema'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    ActionFunc:
+      title: ActionFunc ...
+      type: object
+      properties:
+        is_microservice:
+          type: boolean
+          x-go-name: IsMicroservice
+        micro_service:
+          $ref: '#/components/schemas/MicroService'
+        serverless:
+          $ref: '#/components/schemas/Serverless'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    MicroService:
+      title: MicroService ...
+      type: object
+      properties:
+        end_point:
+          type: string
+          x-go-name: EndPoint
+        name:
+          type: string
+          x-go-name: Name
+        port:
+          type: integer
+          format: uint32
+          x-go-name: Port
+        protocol:
+          type: string
+          x-go-name: Protocol
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Obsolete:
+      title: Obsolete ...
+      type: object
+      properties:
+        obsolete_from:
+          type: string
+          x-go-name: ObsoleteFrom
+        obsolete_message:
+          type: string
+          x-go-name: ObsoleteMessage
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    AccessMeta:
+      title: AccessMeta ...
+      type: object
+      properties:
+        adapter:
+          $ref: '#/components/schemas/AccessMetaType'
+        deprecated:
+          $ref: '#/components/schemas/Deprecated'
+        disable_duplicate:
+          type: boolean
+          x-go-name: DisableDuplicate
+        is_integration:
+          type: boolean
+          x-go-name: IsIntegration
+        is_internal:
+          type: boolean
+          x-go-name: IsInternal
+        obsolete:
+          $ref: '#/components/schemas/Obsolete'
+        runtime_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMetaType'
+          x-go-name: RuntimeUsers
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessMetaType'
+          x-go-name: Targets
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    AccessMetaType:
+      title: AccessMetaType ...
+      type: object
+      properties:
+        id:
+          type: string
+          x-go-name: ID
+        type:
+          type: string
+          x-go-name: Type
+        version:
+          type: string
+          x-go-name: Version
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    SchemaByTypeResponse:
+      title: SchemaByTypeResponse ...
+      type: object
+      properties:
+        data_schema:
+          $ref: '#/components/schemas/Schema'
+        view_schema:
+          $ref: '#/components/schemas/Schema'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
   securitySchemes:
     oAuth2:
       type: oauth2

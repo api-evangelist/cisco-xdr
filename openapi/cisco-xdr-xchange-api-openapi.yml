@@ -42,7 +42,7 @@ paths:
     get:
       tags:
       - Xchange
-      summary: Handler to return xchange object's information using xchange ID or unique name.
+      summary: Handler to return xchange object's information using xchange ID or unique name
       description: 'Allowed Role(s): admin, user, sat
 
         Allowed User(s): Who have atleast VIEW permission to given workflow'
@@ -126,7 +126,7 @@ paths:
     get:
       tags:
       - Xchange
-      summary: Handler to return xchange's release notes of all the published versions using xchange ID.
+      summary: Handler to return xchange's release notes of all the published versions using…
       description: 'Allowed Role(s): admin, user, sat
 
         Allowed User(s): Who have atleast VIEW permission to given workflow'
@@ -214,7 +214,7 @@ paths:
     post:
       tags:
       - Xchange
-      summary: Handler to return xchange objects.
+      summary: Handler to return xchange objects
       description: 'Allowed Role(s): admin, user, sat
 
         Allowed User(s): Who have atleast VIEW permission to given xchange_workflow or xchange_pack'
@@ -320,7 +320,7 @@ paths:
     post:
       tags:
       - Xchange
-      summary: Handler to replace the featured xchanges.
+      summary: Handler to replace the featured xchanges
       description: 'Allowed Role(s): admin, user, sat
 
         Allowed User(s): Who have atleast VIEW permission to given xchange_workflow or xchange_pack'
@@ -397,6 +397,21 @@ paths:
       x-codegen-request-body-name: xchange_info
 components:
   schemas:
+    XchangeGetAllPaginationResponse:
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/XChange'
+          x-go-name: Results
+        total_count:
+          type: integer
+          format: uint32
+          x-go-name: TotalCount
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     XChange:
       title: XChange ...
       type: object
@@ -478,64 +493,19 @@ components:
           type: string
           x-go-name: ViewSchemaID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    LHObjType:
-      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
-    State:
-      type: string
-      description: DefinitionState
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    Status:
-      title: Status ...
+    InstallInfo:
+      title: InstallInfo ...
       type: object
       properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    ReleaseNote:
-      type: object
-      properties:
-        created_on:
+        installed_time:
           type: string
           format: date-time
-          x-go-name: CreatedOn
-        rlease_note:
+          x-go-name: InstalledTime
+        status:
+          $ref: '#/components/schemas/Status'
+        version:
           type: string
-          x-go-name: RleaseNote
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    StatusDetails:
-      type: object
-      properties:
-        code:
-          type: string
-          x-go-name: Code
-        description:
-          type: string
-          x-go-name: Description
-        message:
-          type: string
-          x-go-name: Message
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    RatingInfo:
-      type: object
-      properties:
-        avg_rating:
-          type: number
-          format: double
-          x-go-name: AverageRating
-        rating_updated_on:
-          type: string
-          format: date-time
-          x-go-name: RatingUpdatedOn
-        total_no_of_ratings:
-          type: integer
-          format: uint32
-          x-go-name: TotalNoOfRatings
+          x-go-name: InstalledVersion
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     XchangeGetResponse:
       title: XchangeGetResponse ...
@@ -597,6 +567,19 @@ components:
           type: string
           x-go-name: ViewSchemaID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     XChangeIDOrder:
       type: object
       properties:
@@ -608,6 +591,43 @@ components:
           type: string
           x-go-name: XChangeID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    RatingInfo:
+      type: object
+      properties:
+        avg_rating:
+          type: number
+          format: double
+          x-go-name: AverageRating
+        rating_updated_on:
+          type: string
+          format: date-time
+          x-go-name: RatingUpdatedOn
+        total_no_of_ratings:
+          type: integer
+          format: uint32
+          x-go-name: TotalNoOfRatings
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    LHObjType:
+      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     PublisherInfo:
       type: object
       properties:
@@ -624,47 +644,27 @@ components:
           $ref: '#/components/schemas/Status'
       description: PublisherInfo applicable for only global xchange tenant
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    PaginationLink:
+    Status:
+      title: Status ...
       type: object
       properties:
-        next:
-          type: string
-          x-go-name: Next
-        prev:
-          type: string
-          x-go-name: Prev
-        self:
-          type: string
-          x-go-name: Self
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    XchangeGetAllPaginationResponse:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    ReleaseNote:
       type: object
       properties:
-        _links:
-          $ref: '#/components/schemas/PaginationLink'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/XChange'
-          x-go-name: Results
-        total_count:
-          type: integer
-          format: uint32
-          x-go-name: TotalCount
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    InstallInfo:
-      title: InstallInfo ...
-      type: object
-      properties:
-        installed_time:
+        created_on:
           type: string
           format: date-time
-          x-go-name: InstalledTime
-        status:
-          $ref: '#/components/schemas/Status'
-        version:
+          x-go-name: CreatedOn
+        rlease_note:
           type: string
-          x-go-name: InstalledVersion
+          x-go-name: RleaseNote
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
   securitySchemes:
     oAuth2:

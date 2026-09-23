@@ -42,7 +42,7 @@ paths:
     get:
       tags:
       - EventsRateLimit
-      summary: Handler to return EventsRateLimit information.
+      summary: Handler to return EventsRateLimit information
       description: 'Allowed Role(s): admin, user, sat'
       operationId: getEventsRateLimit
       responses:

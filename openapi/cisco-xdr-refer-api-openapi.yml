@@ -55,14 +55,14 @@ security:
   - ao
 tags:
 - name: Refer
-  description: 'This set of routes allow to get relevant Reference links and quickly pivot pursuing your investigation on a specific product interface. '
+  description: This set of routes allow to get relevant Reference links and quickly pivot pursuing your investigation on a specific product interface.
 paths:
   /iroh/iroh-enrich/refer/observables:
     post:
       x-no-doc: false
       tags:
       - Refer
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `enrich/observables/refer:read`
+      description: 'required scopes: `enrich/observables/refer:read`
 
 
         Get observable references'
@@ -190,32 +190,59 @@ paths:
                 $ref: '#/components/schemas/Observable'
         description: An Observable list
         required: true
+      summary: Create iroh iroh enrich refer observables
+      x-summary-source: derived
+      operationId: postIrohIrohEnrichReferObservables
+      x-operation-id-source: derived
 components:
   schemas:
-    EnvelopedRefs:
-      example:
-        data:
-        - module: Talos Intelligence
-          module_instance_id: 03ce55b5-225d-48ae-9654-c120654de377
-          module_type_id: 2460c99b-2f01-523b-a65d-30a3c6603245
-          id: ref-talos-search-domain-ilo.brenz.pl
-          title: Search for this domain
-          description: Lookup this domain on Talos Intelligence
-          categories:
-          - Talos Intelligence
-          - Search
-          url: https://www.talosintelligence.com/reputation_center/lookup?search=ilo.brenz.pl
+    ErrorMessage:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Ref'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorMessage'
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - fatal
+          - warning
+          - error
+        module:
+          type: string
       additionalProperties: false
+      required:
+      - module_instance_id
+      - module_type_id
+      - code
+      - message
+      - type
+    NormalizedError-500:
+      example:
+        error: unknown server error
+        error_description: An unknown error has occurred during the enrichment
+        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_code:
+          type: string
+        error_uri:
+          type: string
+        trace_id:
+          type: string
+        schema.core.AnythingSchema@3c6f0b88: {}
+      additionalProperties: {}
     Ref:
       type: object
       properties:
@@ -249,6 +276,30 @@ components:
       - id
       - url
       - module_instance_id
+    EnvelopedRefs:
+      example:
+        data:
+        - module: Talos Intelligence
+          module_instance_id: 03ce55b5-225d-48ae-9654-c120654de377
+          module_type_id: 2460c99b-2f01-523b-a65d-30a3c6603245
+          id: ref-talos-search-domain-ilo.brenz.pl
+          title: Search for this domain
+          description: Lookup this domain on Talos Intelligence
+          categories:
+          - Talos Intelligence
+          - Search
+          url: https://www.talosintelligence.com/reputation_center/lookup?search=ilo.brenz.pl
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ref'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+      additionalProperties: false
     Observable:
       example:
         value: 1.2.3.4
@@ -332,25 +383,6 @@ components:
       required:
       - value
       - type
-    NormalizedError-500:
-      example:
-        error: unknown server error
-        error_description: An unknown error has occurred during the enrichment
-        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
-      type: object
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
-        error_code:
-          type: string
-        error_uri:
-          type: string
-        trace_id:
-          type: string
-        schema.core.AnythingSchema@3c6f0b88: {}
-      additionalProperties: {}
     NormalizedError-401:
       example:
         error: invalid_request
@@ -369,34 +401,6 @@ components:
           type: string
         schema.core.AnythingSchema@3c6f0b88: {}
       additionalProperties: {}
-    ErrorMessage:
-      type: object
-      properties:
-        module_instance_id:
-          type: string
-        module_type_id:
-          type: string
-        module_instance_state:
-          type: string
-        code:
-          type: string
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - fatal
-          - warning
-          - error
-        module:
-          type: string
-      additionalProperties: false
-      required:
-      - module_instance_id
-      - module_type_id
-      - code
-      - message
-      - type
   securitySchemes:
     iroh:
       type: apiKey

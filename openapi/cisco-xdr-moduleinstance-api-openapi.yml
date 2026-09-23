@@ -81,10 +81,7 @@ paths:
             application/transit+msgpack:
               schema:
                 $ref: '#/components/schemas/ModuleInstanceResponse'
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-instance:read`
-
-
-        '
+      description: 'required scopes: `integration/module-instance:read`'
       parameters:
       - in: path
         name: id
@@ -93,6 +90,8 @@ paths:
         schema:
           type: string
       summary: Get a `ModuleInstance`
+      operationId: getIrohIrohIntModuleInstanceById
+      x-operation-id-source: derived
     patch:
       x-no-doc: false
       tags:
@@ -116,10 +115,7 @@ paths:
             application/transit+msgpack:
               schema:
                 $ref: '#/components/schemas/ModuleInstanceResponse'
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-instance:write`
-
-
-        '
+      description: 'required scopes: `integration/module-instance:write`'
       parameters:
       - in: path
         name: id
@@ -146,14 +142,13 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchModuleInstanceParams'
         required: true
+      operationId: patchIrohIrohIntModuleInstanceById
+      x-operation-id-source: derived
     delete:
       x-no-doc: false
       tags:
       - ModuleInstance
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-instance:write`
-
-
-        '
+      description: 'required scopes: `integration/module-instance:write`'
       parameters:
       - in: path
         name: id
@@ -165,6 +160,8 @@ paths:
       responses:
         default:
           description: ''
+      operationId: deleteIrohIrohIntModuleInstanceById
+      x-operation-id-source: derived
   /iroh/iroh-int/module-instance:
     get:
       x-no-doc: false
@@ -199,10 +196,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ModuleInstanceResponse'
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-instance:read`
-
-
-        '
+      description: 'required scopes: `integration/module-instance:read`'
       parameters:
       - in: query
         name: module_type_id
@@ -252,6 +246,8 @@ paths:
           type: integer
           format: int64
       summary: List `ModuleInstance`s
+      operationId: getIrohIrohIntModuleInstance
+      x-operation-id-source: derived
     post:
       x-no-doc: false
       tags:
@@ -275,10 +271,7 @@ paths:
             application/transit+msgpack:
               schema:
                 $ref: '#/components/schemas/ModuleInstanceResponse'
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `integration/module-instance:write`
-
-
-        '
+      description: 'required scopes: `integration/module-instance:write`'
       summary: Create a `ModuleInstance`
       requestBody:
         content:
@@ -298,8 +291,63 @@ paths:
             schema:
               $ref: '#/components/schemas/NewModuleInstanceParams'
         required: true
+      operationId: postIrohIrohIntModuleInstance
+      x-operation-id-source: derived
 components:
   schemas:
+    PartialModuleInstanceSettings:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+        - $ref: '#/components/schemas/PartialModuleInstanceSettings'
+    ModuleInstanceExternalReference:
+      type: object
+      properties:
+        label:
+          type: string
+        link:
+          type: string
+        external_id:
+          type: string
+        class:
+          description: Class to distinguish external references
+          type: string
+      additionalProperties: false
+      required:
+      - label
+    ModuleInstanceSettings:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+        - $ref: '#/components/schemas/ModuleInstanceSettings'
     ModuleInstanceResponse:
       type: object
       properties:
@@ -347,83 +395,6 @@ components:
       - enabled
       - visibility
       - created_at
-    ModuleInstanceExternalReference:
-      type: object
-      properties:
-        label:
-          type: string
-        link:
-          type: string
-        external_id:
-          type: string
-        class:
-          description: Class to distinguish external references
-          type: string
-      additionalProperties: false
-      required:
-      - label
-    ModuleInstanceSettings:
-      type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-        - type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-        - $ref: '#/components/schemas/ModuleInstanceSettings'
-    PartialModuleInstanceSettings:
-      type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-        - type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-        - $ref: '#/components/schemas/PartialModuleInstanceSettings'
-    PatchModuleInstanceParams:
-      type: object
-      properties:
-        name:
-          type: string
-        module_type_id:
-          type: string
-        parent_id:
-          type:
-          - string
-          - 'null'
-        external_references:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ModuleInstanceExternalReference'
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        settings:
-          $ref: '#/components/schemas/PartialModuleInstanceSettings'
-      additionalProperties: false
     NewModuleInstanceParams:
       type: object
       properties:
@@ -452,6 +423,30 @@ components:
       - name
       - module_type_id
       - visibility
+    PatchModuleInstanceParams:
+      type: object
+      properties:
+        name:
+          type: string
+        module_type_id:
+          type: string
+        parent_id:
+          type:
+          - string
+          - 'null'
+        external_references:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModuleInstanceExternalReference'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        settings:
+          $ref: '#/components/schemas/PartialModuleInstanceSettings'
+      additionalProperties: false
   securitySchemes:
     iroh:
       type: apiKey

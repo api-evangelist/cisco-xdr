@@ -112,10 +112,12 @@ paths:
           description: ''
       tags:
       - Iroh
+      operationId: getIrohIrohAuthLogin
+      x-operation-id-source: derived
   /iroh/iroh-auth/logout:
     get:
       x-no-doc: false
-      summary: Log out of IROH-Auth, redirect to /login with the same parameters. Useful if you want to enforce user IdP selection.
+      summary: Log out of IROH-Auth, redirect to /login with the same parameters.
       parameters:
       - in: query
         name: redirect_after_login
@@ -149,10 +151,12 @@ paths:
           description: ''
       tags:
       - Iroh
+      operationId: getIrohIrohAuthLogout
+      x-operation-id-source: derived
   /iroh/iroh-auth/handle-org-access-request:
     get:
       x-no-doc: false
-      summary: Given a code, proceed with the org access request approval process.
+      summary: Given a code, proceed with the org access request approval process
       description: The role is embedded in the encrypted code. The query param is accepted as a legacy fallback for in-flight links.
       parameters:
       - in: query
@@ -173,6 +177,8 @@ paths:
           description: ''
       tags:
       - Iroh
+      operationId: getIrohIrohAuthHandleOrgAccessRequest
+      x-operation-id-source: derived
 components:
   securitySchemes:
     iroh:

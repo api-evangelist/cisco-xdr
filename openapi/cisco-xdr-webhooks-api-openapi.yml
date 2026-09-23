@@ -215,7 +215,7 @@ paths:
     get:
       tags:
       - Webhooks
-      summary: readWebhookByID Handler to return Webhook information.
+      summary: readWebhookByID Handler to return Webhook information
       description: 'Allowed Role(s): admin, user, sat'
       operationId: readWebhookByID
       parameters:
@@ -556,44 +556,6 @@ paths:
           content: {}
 components:
   schemas:
-    WebhookPutRequest:
-      title: WebhookPutRequest ...
-      required:
-      - properties
-      - title
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of Webhook
-          x-go-name: Description
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Properties of webhook
-          x-go-name: Properties
-        title:
-          type: string
-          description: Title of Webhook
-          x-go-name: Title
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    State:
-      type: string
-      description: DefinitionState
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    Status:
-      title: Status ...
-      type: object
-      properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     WebhookGetAllResponse:
       title: WebhookGetAllResponse ...
       type: object
@@ -648,6 +610,29 @@ components:
           type: string
           x-go-name: ViewSchemaID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    WebhookPutRequest:
+      title: WebhookPutRequest ...
+      required:
+      - properties
+      - title
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Webhook
+          x-go-name: Description
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of webhook
+          x-go-name: Properties
+        title:
+          type: string
+          description: Title of Webhook
+          x-go-name: Title
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     StatusDetails:
       type: object
       properties:
@@ -661,47 +646,6 @@ components:
           type: string
           x-go-name: Message
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    WebhookPostRequest:
-      required:
-      - properties
-      - title
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of Webhook
-          x-go-name: Description
-        name:
-          type: string
-          description: Name of Webhook
-          x-go-name: Name
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Properties of webhook
-          x-go-name: Properties
-        schema_id:
-          type: string
-          description: ViewSchemaID of webhook
-          x-go-name: ViewSchemaID
-        title:
-          type: string
-          description: Title of Webhook
-          x-go-name: Title
-        type:
-          type: string
-          description: Type
-          x-go-name: Type
-        unique_name:
-          type: string
-          description: Uniquename
-          x-go-name: UniqueName
-      description: 'WebhookPostRequest struct for webhooks post api
-
-        Either ViewSchemaID or Type or both can be provided to create an Webhook.'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     WebhookGetResponse:
       title: WebhookGetResponse ...
       type: object
@@ -765,6 +709,62 @@ components:
           type: string
           x-go-name: Version
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    WebhookPostRequest:
+      required:
+      - properties
+      - title
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Webhook
+          x-go-name: Description
+        name:
+          type: string
+          description: Name of Webhook
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of webhook
+          x-go-name: Properties
+        schema_id:
+          type: string
+          description: ViewSchemaID of webhook
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          description: Title of Webhook
+          x-go-name: Title
+        type:
+          type: string
+          description: Type
+          x-go-name: Type
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+      description: 'WebhookPostRequest struct for webhooks post api
+
+        Either ViewSchemaID or Type or both can be provided to create an Webhook.'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
   securitySchemes:
     oAuth2:
       type: oauth2

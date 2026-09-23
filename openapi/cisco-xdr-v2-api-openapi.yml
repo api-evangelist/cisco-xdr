@@ -2401,6 +2401,8 @@ paths:
                   - red
                   - white
         required: true
+      operationId: postV2Casebook
+      x-operation-id-source: derived
   /v2/casebook/external_id/{external-id}:
     get:
       responses:
@@ -4052,6 +4054,8 @@ paths:
       - JWT-Bearer: []
       - oauth2: []
       - JWT-Bearer: []
+      operationId: getV2CasebookExternalIdByExternalId
+      x-operation-id-source: derived
   /v2/casebook/search:
     get:
       responses:
@@ -5792,6 +5796,8 @@ paths:
       - JWT-Bearer: []
       - oauth2: []
       - JWT-Bearer: []
+      operationId: getV2CasebookSearch
+      x-operation-id-source: derived
   /v2/casebook/{casebook-id}:
     get:
       responses:
@@ -7320,6 +7326,8 @@ paths:
       - JWT-Bearer: []
       - oauth2: []
       - JWT-Bearer: []
+      operationId: getV2CasebookByCasebookId
+      x-operation-id-source: derived
     put:
       responses:
         '405':
@@ -9702,6 +9710,8 @@ paths:
                   - red
                   - white
         required: true
+      operationId: putV2CasebookByCasebookId
+      x-operation-id-source: derived
     delete:
       responses:
         '204':
@@ -10169,6 +10179,8 @@ paths:
       - JWT-Bearer: []
       - oauth2: []
       - JWT-Bearer: []
+      operationId: deleteV2CasebookByCasebookId
+      x-operation-id-source: derived
     patch:
       responses:
         '405':
@@ -12551,6 +12563,8 @@ paths:
                   - red
                   - white
         required: true
+      operationId: patchV2CasebookByCasebookId
+      x-operation-id-source: derived
   /v2/casebook/{casebook-id}/summary:
     get:
       responses:
@@ -15298,11 +15312,13 @@ paths:
           type: string
       tags:
       - v2
-      summary: Returns a casebook and it's related incidents.
+      summary: Returns a casebook and it's related incidents
       security:
       - JWT-Bearer: []
       - oauth2: []
       - JWT-Bearer: []
+      operationId: getV2CasebookByCasebookIdSummary
+      x-operation-id-source: derived
   /v2/casebook/{casebook-id}/observables:
     post:
       responses:
@@ -17218,6 +17234,8 @@ paths:
               - operation
               - observables
         required: true
+      operationId: postV2CasebookByCasebookIdObservables
+      x-operation-id-source: derived
   /v2/casebook/{casebook-id}/bundle:
     post:
       responses:
@@ -18805,6 +18823,8 @@ paths:
               - operation
               - bundle
         required: true
+      operationId: postV2CasebookByCasebookIdBundle
+      x-operation-id-source: derived
   /v2/casebook/{casebook-id}/texts:
     post:
       responses:
@@ -20436,6 +20456,8 @@ paths:
               - operation
               - texts
         required: true
+      operationId: postV2CasebookByCasebookIdTexts
+      x-operation-id-source: derived
   /v2/investigation:
     post:
       responses:
@@ -21490,6 +21512,8 @@ paths:
               required:
               - observables
         required: true
+      operationId: postV2Investigation
+      x-operation-id-source: derived
   /v2/investigation/bundle:
     post:
       responses:
@@ -71740,6 +71764,8 @@ paths:
               required:
               - bundle
         required: true
+      operationId: postV2InvestigationBundle
+      x-operation-id-source: derived
   /v2/investigation/snapshot:
     post:
       responses:
@@ -72334,6 +72360,8 @@ paths:
                 - actions
                 - timestamp
         required: true
+      operationId: postV2InvestigationSnapshot
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/snapshot:
     get:
       responses:
@@ -72828,6 +72856,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2InvestigationByInvestigationIdSnapshot
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/errors:
     get:
       responses:
@@ -72849,6 +72879,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2InvestigationByInvestigationIdErrors
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/entities:
     get:
       responses:
@@ -74026,6 +74058,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2InvestigationByInvestigationIdEntities
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/events:
     get:
       responses:
@@ -92892,6 +92926,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2InvestigationByInvestigationIdEvents
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/verdicts:
     get:
       responses:
@@ -93949,6 +93985,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2InvestigationByInvestigationIdVerdicts
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/graph:
     get:
       responses:
@@ -96290,6 +96328,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2InvestigationByInvestigationIdGraph
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/indicators:
     get:
       responses:
@@ -96991,6 +97031,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2InvestigationByInvestigationIdIndicators
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/observables:
     get:
       responses:
@@ -98732,6 +98774,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2InvestigationByInvestigationIdObservables
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/overview:
     get:
       responses:
@@ -99669,6 +99713,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2InvestigationByInvestigationIdOverview
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/status:
     get:
       responses:
@@ -100346,6 +100392,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2InvestigationByInvestigationIdStatus
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/summary:
     get:
       responses:
@@ -104979,6 +105027,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2InvestigationByInvestigationIdSummary
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/targets:
     get:
       responses:
@@ -107320,6 +107370,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2InvestigationByInvestigationIdTargets
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/bundle:
     post:
       responses:
@@ -157492,6 +157544,8 @@ paths:
               required:
               - bundle
         required: true
+      operationId: postV2InvestigationByInvestigationIdBundle
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/observable/add:
     post:
       responses:
@@ -158468,6 +158522,8 @@ paths:
               required:
               - observables
         required: true
+      operationId: postV2InvestigationByInvestigationIdObservableAdd
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/observable/remove:
     post:
       responses:
@@ -158961,7 +159017,7 @@ paths:
           default: 61399c06-5ea8-44ae-8256-cfcf4437ca5a
       tags:
       - v2
-      summary: Remove observables from an investigation.
+      summary: Remove observables from an investigation
       security:
       - JWT-Bearer: []
       - oauth2: []
@@ -159328,6 +159384,8 @@ paths:
               required:
               - observables
         required: true
+      operationId: postV2InvestigationByInvestigationIdObservableRemove
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/task:
     post:
       responses:
@@ -159808,6 +159866,8 @@ paths:
           application/edn:
             schema: {}
         required: true
+      operationId: postV2InvestigationByInvestigationIdTask
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/edit:
     put:
       responses:
@@ -160301,7 +160361,7 @@ paths:
           default: 61399c06-5ea8-44ae-8256-cfcf4437ca5a
       tags:
       - v2
-      summary: Saves an investigation in place.
+      summary: Saves an investigation in place
       security:
       - JWT-Bearer: []
       - oauth2: []
@@ -160364,6 +160424,8 @@ paths:
               required:
               - title
         required: true
+      operationId: putV2InvestigationByInvestigationIdEdit
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/copy:
     post:
       responses:
@@ -160857,7 +160919,7 @@ paths:
           default: 61399c06-5ea8-44ae-8256-cfcf4437ca5a
       tags:
       - v2
-      summary: Create a copy of an investigation.
+      summary: Create a copy of an investigation
       security:
       - JWT-Bearer: []
       - oauth2: []
@@ -160920,6 +160982,8 @@ paths:
                   minLength: 0
                   maxLength: 5000
         required: true
+      operationId: postV2InvestigationByInvestigationIdCopy
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/delete:
     delete:
       responses:
@@ -161412,6 +161476,10 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      summary: Delete investigation by investigation id delete
+      x-summary-source: derived
+      operationId: deleteV2InvestigationByInvestigationIdDelete
+      x-operation-id-source: derived
   /v2/investigation/{investigation-id}/save-as:
     post:
       responses:
@@ -161905,7 +161973,7 @@ paths:
           default: 61399c06-5ea8-44ae-8256-cfcf4437ca5a
       tags:
       - v2
-      summary: Saves an investigation as a new entity.
+      summary: Saves an investigation as a new entity
       security:
       - JWT-Bearer: []
       - oauth2: []
@@ -161968,6 +162036,8 @@ paths:
               required:
               - title
         required: true
+      operationId: postV2InvestigationByInvestigationIdSaveAs
+      x-operation-id-source: derived
   /v2/incident:
     post:
       responses:
@@ -164642,6 +164712,8 @@ paths:
               - incident_time
               - status
         required: true
+      operationId: postV2Incident
+      x-operation-id-source: derived
   /v2/incident/delete:
     post:
       responses:
@@ -165168,6 +165240,8 @@ paths:
               required:
               - incident_ids
         required: true
+      operationId: postV2IncidentDelete
+      x-operation-id-source: derived
   /v2/incident/search:
     get:
       responses:
@@ -167147,6 +167221,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentSearch
+      x-operation-id-source: derived
   /v2/incident/search/count:
     get:
       responses:
@@ -167934,6 +168010,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentSearchCount
+      x-operation-id-source: derived
   /v2/incident/{incident-id}:
     get:
       responses:
@@ -169605,10 +169683,12 @@ paths:
           type: string
       tags:
       - v2
-      summary: Get one incident.
+      summary: Get one incident
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentId
+      x-operation-id-source: derived
     put:
       responses:
         '405':
@@ -171279,7 +171359,7 @@ paths:
           type: string
       tags:
       - v2
-      summary: Update one incident.
+      summary: Update one incident
       security:
       - JWT-Bearer: []
       - oauth2: []
@@ -172290,6 +172370,8 @@ paths:
               - incident_time
               - status
         required: true
+      operationId: putV2IncidentByIncidentId
+      x-operation-id-source: derived
     delete:
       responses:
         '204':
@@ -172752,10 +172834,12 @@ paths:
           type: string
       tags:
       - v2
-      summary: Delete one incident.
+      summary: Delete one incident
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: deleteV2IncidentByIncidentId
+      x-operation-id-source: derived
     patch:
       responses:
         '405':
@@ -174426,7 +174510,7 @@ paths:
           type: string
       tags:
       - v2
-      summary: Patch one incident.
+      summary: Patch one incident
       security:
       - JWT-Bearer: []
       - oauth2: []
@@ -175413,6 +175497,8 @@ paths:
                   - red
                   - white
         required: true
+      operationId: patchV2IncidentByIncidentId
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/actions-taken:
     post:
       responses:
@@ -176583,6 +176669,8 @@ paths:
                 - observable
                 description: An action reported by a data source or XDR Automation.
         required: true
+      operationId: postV2IncidentByIncidentIdActionsTaken
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/link/{entity-type}/{entity-id}:
     post:
       responses:
@@ -177512,6 +177600,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: postV2IncidentByIncidentIdLinkByEntityTypeByEntityId
+      x-operation-id-source: derived
     delete:
       responses:
         '204':
@@ -177996,6 +178086,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: deleteV2IncidentByIncidentIdLinkByEntityTypeByEntityId
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/update-context:
     post:
       responses:
@@ -178459,7 +178551,7 @@ paths:
           type: string
       tags:
       - v2
-      summary: Process an incident update by invalidating the cache and finding reputations as well as resolving assets.
+      summary: Process an incident update by invalidating the cache and finding reputations as…
       security:
       - JWT-Bearer: []
       - oauth2: []
@@ -179494,6 +179586,8 @@ paths:
               - observables
               - targets
         required: true
+      operationId: postV2IncidentByIncidentIdUpdateContext
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/report:
     get:
       responses:
@@ -180716,6 +180810,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdReport
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/report/{section-id}:
     get:
       responses:
@@ -181389,6 +181485,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdReportBySectionId
+      x-operation-id-source: derived
     post:
       responses:
         '405':
@@ -182112,6 +182210,8 @@ paths:
               required:
               - content
         required: true
+      operationId: postV2IncidentByIncidentIdReportBySectionId
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/report/{section-id}/regenerate:
     post:
       responses:
@@ -182785,6 +182885,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: postV2IncidentByIncidentIdReportBySectionIdRegenerate
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/summary:
     get:
       responses:
@@ -191660,10 +191762,12 @@ paths:
           type: string
       tags:
       - v2
-      summary: Full Incident Summary. Equivalent Data to v1 summary endpoints.
+      summary: Full Incident Summary. Equivalent Data to v1 summary endpoints
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdSummary
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/mitre:
     get:
       responses:
@@ -192807,6 +192911,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdMitre
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/targets:
     get:
       responses:
@@ -195146,6 +195252,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdTargets
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/observables:
     get:
       responses:
@@ -196881,10 +196989,12 @@ paths:
           type: string
       tags:
       - v2
-      summary: Returns a list of observables linked to this incident.
+      summary: Returns a list of observables linked to this incident
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdObservables
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/indicators:
     get:
       responses:
@@ -197580,10 +197690,12 @@ paths:
           type: string
       tags:
       - v2
-      summary: Returns a list of indicators linked to this incident.
+      summary: Returns a list of indicators linked to this incident
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdIndicators
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/entities:
     get:
       responses:
@@ -198755,11 +198867,13 @@ paths:
           type: string
       tags:
       - v2
-      summary: Returns a list of entities associated with this incident.
+      summary: Returns a list of entities associated with this incident
       security:
       - JWT-Bearer: []
       - oauth2: []
       - JWT-Bearer: []
+      operationId: getV2IncidentByIncidentIdEntities
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/events:
     get:
       responses:
@@ -217600,11 +217714,13 @@ paths:
           type: string
       tags:
       - v2
-      summary: Returns a list of events linked to this incident.
+      summary: Returns a list of events linked to this incident
       security:
       - JWT-Bearer: []
       - oauth2: []
       - JWT-Bearer: []
+      operationId: getV2IncidentByIncidentIdEvents
+      x-operation-id-source: derived
     post:
       responses:
         '405':
@@ -236444,7 +236560,7 @@ paths:
           type: string
       tags:
       - v2
-      summary: Returns a list of events linked to this incident.
+      summary: Returns a list of events linked to this incident
       security:
       - JWT-Bearer: []
       - oauth2: []
@@ -236503,6 +236619,8 @@ paths:
                   description: sighting_ids for requested events
                   example:
                   - 0a38949f-d192-4d30-91ae-e593c1f57c14
+      operationId: postV2IncidentByIncidentIdEvents
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/status:
     get:
       responses:
@@ -237090,10 +237208,12 @@ paths:
           type: string
       tags:
       - v2
-      summary: Returns the underlying incident's investigation status with surrounding threat context.
+      summary: Returns the underlying incident's investigation status with surrounding threat…
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdStatus
+      x-operation-id-source: derived
     post:
       responses:
         '405':
@@ -238764,7 +238884,7 @@ paths:
           type: string
       tags:
       - v2
-      summary: Update an incident status.
+      summary: Update an incident status
       security:
       - JWT-Bearer: []
       - oauth2: []
@@ -238915,6 +239035,8 @@ paths:
               required:
               - status
         required: true
+      operationId: postV2IncidentByIncidentIdStatus
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/event-filters:
     get:
       responses:
@@ -239523,6 +239645,8 @@ paths:
       - JWT-Bearer: []
       - oauth2: []
       - JWT-Bearer: []
+      operationId: getV2IncidentByIncidentIdEventFilters
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/verdicts:
     get:
       responses:
@@ -240574,11 +240698,13 @@ paths:
           type: string
       tags:
       - v2
-      summary: Returns a list of events linked to this incident.
+      summary: Returns a list of events linked to this incident
       security:
       - JWT-Bearer: []
       - oauth2: []
       - JWT-Bearer: []
+      operationId: getV2IncidentByIncidentIdVerdicts
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/graph:
     get:
       responses:
@@ -242914,10 +243040,12 @@ paths:
           type: string
       tags:
       - v2
-      summary: Returns a graph representation of this incident.
+      summary: Returns a graph representation of this incident
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdGraph
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/linked-casebooks:
     get:
       responses:
@@ -244453,6 +244581,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdLinkedCasebooks
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/linked-incidents:
     get:
       responses:
@@ -246136,6 +246266,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdLinkedIncidents
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/primary-investigation:
     get:
       responses:
@@ -246695,6 +246827,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdPrimaryInvestigation
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/errors:
     get:
       responses:
@@ -247282,6 +247416,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdErrors
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/overview:
     get:
       responses:
@@ -248245,6 +248381,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdOverview
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/recommend:
     get:
       responses:
@@ -256356,10 +256494,12 @@ paths:
           type: string
       tags:
       - v2
-      summary: Recommend actions for an incident.
+      summary: Recommend actions for an incident
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdRecommend
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/export:
     get:
       responses:
@@ -286126,6 +286266,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2IncidentByIncidentIdExport
+      x-operation-id-source: derived
   /v2/incident/{incident-id}/import:
     post:
       responses:
@@ -286633,6 +286775,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: postV2IncidentByIncidentIdImport
+      x-operation-id-source: derived
   /v2/sighting/{sighting-id}/findings:
     get:
       responses:
@@ -287116,6 +287260,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2SightingBySightingIdFindings
+      x-operation-id-source: derived
   /v2/report/incident-status-by-assignment:
     get:
       responses:
@@ -287605,6 +287751,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportIncidentStatusByAssignment
+      x-operation-id-source: derived
   /v2/report/mitre-attack-incidents:
     get:
       responses:
@@ -288098,6 +288246,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportMitreAttackIncidents
+      x-operation-id-source: derived
   /v2/report/top-seen-techniques:
     get:
       responses:
@@ -288587,6 +288737,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportTopSeenTechniques
+      x-operation-id-source: derived
   /v2/report/detection-sources-histogram:
     get:
       responses:
@@ -289083,6 +289235,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportDetectionSourcesHistogram
+      x-operation-id-source: derived
   /v2/report/top-targeted-devices:
     get:
       responses:
@@ -289572,6 +289726,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportTopTargetedDevices
+      x-operation-id-source: derived
   /v2/report/top-targeted-users:
     get:
       responses:
@@ -290061,6 +290217,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportTopTargetedUsers
+      x-operation-id-source: derived
   /v2/report/top-targeted-assets:
     get:
       responses:
@@ -290550,6 +290708,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportTopTargetedAssets
+      x-operation-id-source: derived
   /v2/report/team-mean-time-to-engage:
     get:
       responses:
@@ -291084,6 +291244,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportTeamMeanTimeToEngage
+      x-operation-id-source: derived
   /v2/report/user-mean-time-to-engage:
     get:
       responses:
@@ -291618,6 +291780,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportUserMeanTimeToEngage
+      x-operation-id-source: derived
   /v2/report/team-mean-time-to-contain:
     get:
       responses:
@@ -292152,6 +292316,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportTeamMeanTimeToContain
+      x-operation-id-source: derived
   /v2/report/user-mean-time-to-contain:
     get:
       responses:
@@ -292686,6 +292852,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportUserMeanTimeToContain
+      x-operation-id-source: derived
   /v2/report/team-mean-time-to-resolve:
     get:
       responses:
@@ -293223,6 +293391,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportTeamMeanTimeToResolve
+      x-operation-id-source: derived
   /v2/report/user-mean-time-to-resolve:
     get:
       responses:
@@ -293760,6 +293930,8 @@ paths:
       security:
       - JWT-Bearer: []
       - oauth2: []
+      operationId: getV2ReportUserMeanTimeToResolve
+      x-operation-id-source: derived
 components:
   securitySchemes:
     JWT-Bearer:

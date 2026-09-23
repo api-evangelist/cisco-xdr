@@ -133,7 +133,7 @@ paths:
     put:
       tags:
       - ShareObjectPermissions
-      summary: '# ShareObjectPermissions Handler to update object permissions of users and groups'
+      summary: '# ShareObjectPermissions Handler to update object permissions of users and…'
       description: 'Allowed Role(s): admin, user
 
         Allowed User(s): Who have MANAGE permission to given enitiy'
@@ -346,6 +346,23 @@ paths:
       x-codegen-request-body-name: request_body
 components:
   schemas:
+    ShareObjectPermissions:
+      title: ShareObjectPermissions ...
+      type: object
+      properties:
+        groups:
+          type: array
+          description: List of groups permissions
+          items:
+            $ref: '#/components/schemas/GroupPermission'
+          x-go-name: GroupPermissions
+        users:
+          type: array
+          description: List of users permissions
+          items:
+            $ref: '#/components/schemas/UserPermission'
+          x-go-name: UserPermissions
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     UserPermission:
       title: UserPermission ...
       required:
@@ -381,23 +398,6 @@ components:
           items:
             type: string
           x-go-name: Permissions
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    ShareObjectPermissions:
-      title: ShareObjectPermissions ...
-      type: object
-      properties:
-        groups:
-          type: array
-          description: List of groups permissions
-          items:
-            $ref: '#/components/schemas/GroupPermission'
-          x-go-name: GroupPermissions
-        users:
-          type: array
-          description: List of users permissions
-          items:
-            $ref: '#/components/schemas/UserPermission'
-          x-go-name: UserPermissions
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
   securitySchemes:
     oAuth2:

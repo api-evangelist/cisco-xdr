@@ -116,7 +116,7 @@ paths:
     post:
       tags:
       - TableTypes
-      summary: Handler to create Table Type.
+      summary: Handler to create Table Type
       description: 'Allowed Role(s): admin'
       operationId: tableTypeCreateRequest
       requestBody:
@@ -212,7 +212,7 @@ paths:
     get:
       tags:
       - TableTypes
-      summary: Handler to return Table type's information using ID.
+      summary: Handler to return Table type's information using ID
       description: 'Allowed Role(s): admin, user, sat'
       operationId: getTableTypeById
       parameters:
@@ -293,7 +293,7 @@ paths:
     put:
       tags:
       - TableTypes
-      summary: Handler to Update Table Type.
+      summary: Handler to Update Table Type
       description: 'Allowed Role(s): admin'
       operationId: tableTypePutRequest
       parameters:
@@ -397,7 +397,7 @@ paths:
     delete:
       tags:
       - TableTypes
-      summary: Handler to delete Table type using ID.
+      summary: Handler to delete Table type using ID
       description: 'Allowed Role(s): admin'
       operationId: delTableTypeById
       parameters:
@@ -485,6 +485,74 @@ paths:
           content: {}
 components:
   schemas:
+    CreateTableTypeGetResponse:
+      title: CreateTableTypeGetResponse ...
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        data_type:
+          type: string
+          x-go-name: DataType
+        description:
+          type: string
+          x-go-name: Description
+        display_name:
+          type: string
+          x-go-name: Name
+        has_tables:
+          type: boolean
+          x-go-name: HasTables
+        id:
+          type: string
+          x-go-name: TableTypeID
+        inherits:
+          type: string
+          x-go-name: Inherits
+        max_column_size:
+          type: integer
+          format: int64
+          x-go-name: MaxColumnSize
+        max_columns:
+          type: integer
+          format: int64
+          x-go-name: MaxColumns
+        max_rows:
+          type: integer
+          format: int64
+          x-go-name: MaxRows
+        max_table_size:
+          type: integer
+          format: int64
+          x-go-name: MaxTableSize
+        owner:
+          type: string
+          x-go-name: Owner
+        row_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: RowSchema
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     TableTypeSchemaResponse:
       title: TableTypeSchemaResponse ...
       type: object
@@ -591,74 +659,6 @@ components:
           x-go-name: UniqueName
       x-go-name: TableTypePostRequest
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    CreateTableTypeGetResponse:
-      title: CreateTableTypeGetResponse ...
-      type: object
-      properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        data_type:
-          type: string
-          x-go-name: DataType
-        description:
-          type: string
-          x-go-name: Description
-        display_name:
-          type: string
-          x-go-name: Name
-        has_tables:
-          type: boolean
-          x-go-name: HasTables
-        id:
-          type: string
-          x-go-name: TableTypeID
-        inherits:
-          type: string
-          x-go-name: Inherits
-        max_column_size:
-          type: integer
-          format: int64
-          x-go-name: MaxColumnSize
-        max_columns:
-          type: integer
-          format: int64
-          x-go-name: MaxColumns
-        max_rows:
-          type: integer
-          format: int64
-          x-go-name: MaxRows
-        max_table_size:
-          type: integer
-          format: int64
-          x-go-name: MaxTableSize
-        owner:
-          type: string
-          x-go-name: Owner
-        row_schema:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: RowSchema
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
   securitySchemes:
     oAuth2:
       type: oauth2

@@ -81,10 +81,7 @@ paths:
             application/transit+msgpack:
               schema:
                 $ref: '#/components/schemas/Feedback'
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `feedback:read`
-
-
-        '
+      description: 'required scopes: `feedback:read`'
       parameters:
       - in: path
         name: id
@@ -93,6 +90,8 @@ paths:
         schema:
           type: string
       summary: Get a `Feedback`
+      operationId: getIrohIrohFeedbackFeedbackById
+      x-operation-id-source: derived
   /iroh/iroh-feedback/feedback:
     post:
       x-no-doc: false
@@ -117,10 +116,7 @@ paths:
             application/transit+msgpack:
               schema:
                 $ref: '#/components/schemas/Feedback'
-      description: '[required scopes](/iroh/doc/iroh-auth/#scopes): `feedback:write`
-
-
-        '
+      description: 'required scopes: `feedback:write`'
       summary: Create a `Feedback`
       requestBody:
         content:
@@ -140,6 +136,8 @@ paths:
             schema:
               $ref: '#/components/schemas/NewFeedbackParams'
         required: true
+      operationId: postIrohIrohFeedbackFeedback
+      x-operation-id-source: derived
 components:
   schemas:
     Feedback:

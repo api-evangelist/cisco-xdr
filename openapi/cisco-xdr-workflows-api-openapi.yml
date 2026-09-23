@@ -42,7 +42,7 @@ paths:
     post:
       tags:
       - Workflows
-      summary: Handler to get all workflows.
+      summary: Handler to get all workflows
       description: 'Allowed Role(s): admin, user, sat
 
         Allowed User(s): Who have atleast VIEW permission to given workflow
@@ -181,7 +181,7 @@ paths:
     post:
       tags:
       - Workflows
-      summary: Handler to start workflow execution.
+      summary: Handler to start workflow execution
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have RUN permission to given workflow'
@@ -343,7 +343,7 @@ paths:
     post:
       tags:
       - Workflows
-      summary: Handler to get all workflows.
+      summary: Handler to get all workflows
       description: 'Allowed Role(s): admin, user, sat
 
         Allowed User(s): Who have atleast VIEW permission to given workflow
@@ -489,7 +489,7 @@ paths:
     get:
       tags:
       - Workflows
-      summary: Handler to get all workflows.
+      summary: Handler to get all workflows
       description: 'Allowed Role(s): admin, user, sat
 
         Allowed User(s): Who have atleast VIEW permission to given workflow'
@@ -580,7 +580,7 @@ paths:
     post:
       tags:
       - Workflows
-      summary: Handler to create a workflow definition.
+      summary: Handler to create a workflow definition
       description: 'Allowed Role(s): admin
 
 
@@ -753,7 +753,7 @@ paths:
     post:
       tags:
       - Workflows
-      summary: Handler to start workflow execution.
+      summary: Handler to start workflow execution
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have RUN permission to given workflow'
@@ -903,7 +903,7 @@ paths:
     get:
       tags:
       - Workflows
-      summary: Handler to return required input parameters for the workflow.
+      summary: Handler to return required input parameters for the workflow
       description: 'Allowed Role(s): admin, user
 
         Allowed User(s): Who have RUN permission to given workflow'
@@ -993,7 +993,7 @@ paths:
     get:
       tags:
       - Workflows
-      summary: Handler to get a summary of workflows.
+      summary: Handler to get a summary of workflows
       description: 'Including total number of workflows, total number of validated workflows and total number of draft workflows
 
         Allowed Role(s): admin, user, sat
@@ -1070,7 +1070,7 @@ paths:
     get:
       tags:
       - Workflows
-      summary: Handler to return workflow information using workflow ID.
+      summary: Handler to return workflow information using workflow ID
       description: 'Allowed Role(s): admin, user, sat
 
         Allowed User(s): Who have atleast VIEW permission to given workflow'
@@ -1153,7 +1153,7 @@ paths:
     put:
       tags:
       - Workflows
-      summary: Handler to update the workflow.
+      summary: Handler to update the workflow
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have MODIFY/MANAGE permission to given workflow'
@@ -1259,7 +1259,7 @@ paths:
     delete:
       tags:
       - Workflows
-      summary: Handler to delete workflow using ID.
+      summary: Handler to delete workflow using ID
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have MANAGE permission to given workflow'
@@ -1360,7 +1360,7 @@ paths:
     post:
       tags:
       - Workflows
-      summary: Handler to add new action to workflow.
+      summary: Handler to add new action to workflow
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have MODIFY/MANAGE permission to given workflow'
@@ -1467,7 +1467,7 @@ paths:
     get:
       tags:
       - Workflows
-      summary: Handler to return Workflow's action information using action ID.
+      summary: Handler to return Workflow's action information using action ID
       description: 'Allowed Role(s): admin, user, sat
 
         Allowed User(s): Who have atleast VIEW permission to given workflow'
@@ -1558,7 +1558,7 @@ paths:
     put:
       tags:
       - Workflows
-      summary: Handler to update an Action.
+      summary: Handler to update an Action
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have MODIFY/MANAGE permission to given workflow'
@@ -1672,7 +1672,7 @@ paths:
     delete:
       tags:
       - Workflows
-      summary: Handler to delete an action from workflow byId.
+      summary: Handler to delete an action from workflow byId
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have MANAGE permission to given workflow'
@@ -1777,7 +1777,7 @@ paths:
     patch:
       tags:
       - Workflows
-      summary: Handler to move actions in workflow.
+      summary: Handler to move actions in workflow
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have MODIFY/MANAGE permission to given workflow'
@@ -1892,7 +1892,7 @@ paths:
     post:
       tags:
       - Workflows
-      summary: Handler to duplicate action.
+      summary: Handler to duplicate action
       operationId: duplicateActionById
       parameters:
       - name: workflow_id
@@ -1995,7 +1995,7 @@ paths:
     put:
       tags:
       - Workflows
-      summary: Handler to Lock the workflow.
+      summary: Handler to Lock the workflow
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have MODIFY/MANAGE permission to given workflow'
@@ -2110,7 +2110,7 @@ paths:
     get:
       tags:
       - Workflows
-      summary: Handler to return references for the workflow.
+      summary: Handler to return references for the workflow
       description: 'Allowed Role(s): admin, user, sat
 
         Allowed User(s): Who have VIEW permission to given workflow'
@@ -2205,7 +2205,7 @@ paths:
     get:
       tags:
       - Workflows
-      summary: Handler to return rules for the workflow.
+      summary: Handler to return rules for the workflow
       description: 'Allowed Role(s): admin, user, sat
 
         Allowed User(s): Who have VIEW permission to given workflow'
@@ -2293,7 +2293,7 @@ paths:
     put:
       tags:
       - Workflows
-      summary: Handler to unlock a locked workflow. Param {workflow_id} accepts both an id and unique_name of the workflow
+      summary: Handler to unlock a locked workflow.
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have MODIFY/MANAGE permission to given workflow'
@@ -2399,7 +2399,7 @@ paths:
     post:
       tags:
       - Workflows
-      summary: Handler to validate workflow.
+      summary: Handler to validate workflow
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have MODIFY/MANAGE permission to given workflow'
@@ -2497,7 +2497,7 @@ paths:
     delete:
       tags:
       - Workflows
-      summary: Handler to unintsall a workflow installed through exchange.
+      summary: Handler to unintsall a workflow installed through exchange
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have MANAGE permission to given workflow'
@@ -2624,7 +2624,7 @@ paths:
     post:
       tags:
       - Workflows
-      summary: Handler to create a workflow definition from a given template.
+      summary: Handler to create a workflow definition from a given template
       description: 'Allowed Role(s): admin
 
 
@@ -2709,7 +2709,7 @@ paths:
     put:
       tags:
       - Workflows
-      summary: Handler to update the workflow.
+      summary: Handler to update the workflow
       description: 'Allowed Role(s): admin
 
         Allowed User(s): Who have MODIFY/MANAGE permission to given workflow'
@@ -2814,256 +2814,54 @@ paths:
       x-codegen-request-body-name: request_body
 components:
   schemas:
-    ActionTableInfo:
-      title: ActionTableInfo ..
+    startWorklfowPostRequestPayload:
       type: object
       properties:
-        table_id:
-          type: string
-          x-go-name: TableID
-        table_obj_type:
-          $ref: '#/components/schemas/LHObjType'
-        table_type_id:
-          type: string
-          x-go-name: TableTypeID
-        table_type_obj_type:
-          $ref: '#/components/schemas/LHObjType'
-        variable_id:
-          type: string
-          x-go-name: VariableID
-        variable_scope:
-          type: string
-          x-go-name: VariableScope
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    workflowObjRefResponse:
-      title: WorkflowObjRefResponse response model.
-      type: object
-      properties:
-        actions:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: 'in: body'
-          x-go-name: Actions
-      x-go-name: WorkflowObjRefResponse
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    OutputInfo:
-      title: OutputInfo ..
-      type: object
-      properties:
-        items:
-          $ref: '#/components/schemas/ActionOutputVariable'
-        name:
-          type: string
-          x-go-name: Name
-        type:
-          type: string
-          x-go-name: Type
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    AddActionPostRequest:
-      title: AddActionPostRequest ...
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/ActionDefinitionPostRequest'
-        previous_action:
-          $ref: '#/components/schemas/ActionDefinitionPatchRequest'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    VariableContent:
-      title: VariableContent ...
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of variable
-          x-go-name: Description
-        display_on_wizard:
-          type: boolean
-          description: 'Should the variable be shown on wizard
+        input_variables:
+          type: array
+          description: 'Input Variables information to start the workflow.
 
-            Used in input scope variables, if it is true, then variable is displayed on wizard'
-          x-go-name: DisplayOnWizard
-        is_invisible:
-          type: boolean
-          x-go-name: IsInvisible
-        is_required:
-          type: boolean
-          description: 'Is the variable Required
 
-            Used in input string and secure string variable, if it is true, then string can''t be emptly'
-          x-go-name: IsRequired
-        name:
-          type: string
-          description: Name of variable
-          x-go-name: Name
-        scope:
-          type: string
-          description: Scope of variable. Scope can be 'input', 'global', 'local', 'static' or 'workflow'
-          x-go-name: Scope
-        type:
-          type: string
-          description: Type of variable. Type can be 'datatype.boolean', 'datatype.string', 'datatype.number' or 'datatype.table'
-          x-go-name: Type
-        value:
+            in: body'
+          items:
+            $ref: '#/components/schemas/VariableStartPutRequest'
+          x-go-name: Variables
+        intent_config:
           type: object
           properties: {}
-          description: Value of variable. Value can be a string, boolean, number or array
-          x-go-name: Value
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    VariableGetAllResponse:
-      type: object
-      properties:
-        base_type:
+          description: 'Intent config to start the workflow.
+
+
+            in: body'
+          x-go-name: WFIntentConfig
+        runtime_user_id:
           type: string
-          x-go-name: BaseType
-        created_by:
+          description: 'The runtime user ID to submit.
+
+
+            in: body'
+          x-go-name: WFRuntimeUserID
+        start_point:
           type: string
-          x-go-name: CreatedBy
-        created_on:
+          description: 'The workflow start point.
+
+
+            in: body'
+          x-go-name: WFStartPoint
+        target_id:
           type: string
-          format: date-time
-          x-go-name: CreatedOn
-        id:
-          type: string
-          x-go-name: VariableID
-        owner:
-          type: string
-          x-go-name: Owner
-        properties:
-          $ref: '#/components/schemas/VariableContent'
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-      description: VariableGetAllResponse model for variables
+          description: 'The target ID to submit.
+
+
+            in: body'
+          x-go-name: WFTargetID
+      description: StartWorklfowPostRequestPayload model
+      x-go-name: StartWorklfowPostRequestPayload
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    Status:
-      title: Status ...
+    ActionDefinitionGetResponse:
+      title: ActionDefinitionGetResponse ...
       type: object
       properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    Variable:
-      title: Variable ...
-      required:
-      - schema_id
-      type: object
-      properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        id:
-          type: string
-          description: ID of variable
-          x-go-name: VariableID
-        object_type:
-          $ref: '#/components/schemas/LHObjType'
-        owner:
-          type: string
-          x-go-name: Owner
-        properties:
-          $ref: '#/components/schemas/VariableContent'
-        schema_id:
-          type: string
-          description: View schema ID of variable, the value can be TargetTypeID for Table variables
-          x-go-name: ViewSchemaID
-        table_id:
-          type: string
-          description: ID of table
-          x-go-name: TableID
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-        variable_def_id:
-          type: string
-          description: ID of variable
-          x-go-name: VariableDefID
-        version:
-          type: string
-          x-go-name: Version
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    StartWorkflowResponse:
-      type: object
-      properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        definition_id:
-          type: string
-          x-go-name: DefinitionID
-        id:
-          type: string
-          x-go-name: InstanceID
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: Properties
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-        status:
-          $ref: '#/components/schemas/Status'
-        type:
-          type: string
-          x-go-name: Type
-        version:
-          type: string
-          x-go-name: Version
-      description: StartWorkflowResponse model
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    ActionDefinitionGetAllPropsResponse:
-      title: ActionDefinitionGetAllPropsResponse ...
-      type: object
-      properties:
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionDefinitionGetAllPropsResponse'
-          x-go-name: Actions
         adapter_id:
           type: string
           x-go-name: AdapterID
@@ -3073,8 +2871,18 @@ components:
         blocks:
           type: array
           items:
-            $ref: '#/components/schemas/ActionDefinitionGetAllPropsResponse'
+            $ref: '#/components/schemas/ActionDefinitionGetResponse'
           x-go-name: Branches
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
         id:
           type: string
           x-go-name: DefinitionID
@@ -3099,6 +2907,12 @@ components:
             type: object
             properties: {}
           x-go-name: Properties
+        property_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: PropertySchema
         schema_id:
           type: string
           x-go-name: ViewSchemaID
@@ -3119,92 +2933,43 @@ components:
         unique_name:
           type: string
           x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
         valid:
           type: boolean
           x-go-name: Valid
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    ActionOutputVariable:
-      title: ActionOutputVariable ..
+    GitInfo:
       type: object
       properties:
-        item_type:
+        commit_hash:
           type: string
-          x-go-name: ItemType
-        output_variable:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/OutputInfo'
-          x-go-name: Output
-        type:
+          x-go-name: CommitHash
+        commit_message:
           type: string
-          x-go-name: Type
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    WorkflowDefinitionPutResponse:
-      type: object
-      properties:
-        invalid_actions:
-          type: array
-          items:
-            type: string
-          x-go-name: InvalidActions
-        valid_actions:
-          type: array
-          items:
-            type: string
-          x-go-name: ValidActions
-        workflow:
-          $ref: '#/components/schemas/workflowDefinitionGetResponse'
-      description: WorkflowDefinitionPutResponse model for workflow put request API
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    CourseOfAction:
-      title: WorkflowMetaData ...
-      required:
-      - observable_types
-      type: object
-      properties:
-        actuator:
+          x-go-name: CommitMessage
+        commited_by:
           type: string
-          description: 'Actuator.
+          x-go-name: CommitedBy
+        commited_on:
+          type: string
+          format: date-time
+          x-go-name: CommitedOn
+        file_name:
+          type: string
+          x-go-name: FileName
+        target_id:
+          type: string
+          x-go-name: TargetID
+      description: 'nolint: misspell
 
-            in: body'
-          x-go-name: Actuator
-        observable_types:
-          type: array
-          description: 'list of observable types to get for.
-
-            in: body'
-          items:
-            type: string
-          x-go-name: ObservableTypes
+        GitInfo maintains information about the last Git Import'
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    StartWorklfowConfigResponse:
-      title: StartWorklfowConfigResponse ...
-      type: object
-      properties:
-        id:
-          type: string
-          x-go-name: DefinitionID
-        input_variables:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariableGetAllResponse'
-          x-go-name: InputVariables
-        intent_config:
-          type: object
-          properties: {}
-          x-go-name: WFIntentConfig
-        type_of_target_needed:
-          type: string
-          x-go-name: TargetType
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        wf_start_points:
-          type: array
-          items:
-            $ref: '#/components/schemas/StartPointOption'
-          x-go-name: WFStartPoints
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     WFRuleResponse:
       type: object
       properties:
@@ -3243,253 +3008,75 @@ components:
           type: string
           x-go-name: Type
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    GitInfo:
+    ActionDefinitionPutRequest:
+      title: ActionDefinitionPutRequest ...
       type: object
       properties:
-        commit_hash:
+        description:
           type: string
-          x-go-name: CommitHash
-        commit_message:
+          description: Description of an Action
+          x-go-name: Description
+        invalid_properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: InvalidProperties of an Action
+          x-go-name: InvalidProperties
+        name:
           type: string
-          x-go-name: CommitMessage
-        commited_by:
+          description: Name of an Action
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of an Action
+          x-go-name: Properties
+        title:
           type: string
-          x-go-name: CommitedBy
-        commited_on:
-          type: string
-          format: date-time
-          x-go-name: CommitedOn
-        file_name:
-          type: string
-          x-go-name: FileName
-        target_id:
-          type: string
-          x-go-name: TargetID
-      description: 'nolint: misspell
-
-        GitInfo maintains information about the last Git Import'
+          description: Title of an Action
+          x-go-name: Title
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    TriggerType:
+      title: TriggerType ...
+      type: string
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    WorkflowDefinitionPutRequest:
-      title: WorkflowDefinitionPutRequest ...
+    ActionDefinitionPatchRequest:
+      title: ActionDefinitionPatchRequest ...
       type: object
       properties:
-        categories:
-          type: array
-          description: Categories associated with the workflow
-          items:
-            type: string
-          x-go-name: Categories
-        description:
+        block_num:
+          type: integer
+          format: int32
+          x-go-name: BlockNum
+        id:
           type: string
-          description: Description of the workflow
-          x-go-name: Description
-        metadata:
-          $ref: '#/components/schemas/WorkflowMetadata'
-        name:
-          type: string
-          description: Name of the workflow
-          x-go-name: Name
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Properties of the workflow
-          x-go-name: Properties
-        title:
-          type: string
-          description: Title of the workflow
-          x-go-name: Title
-        triggers:
-          type: array
-          description: Triggers of the workflow
-          items:
-            $ref: '#/components/schemas/Trigger'
-          x-go-name: WFTriggers
-        unique_name:
-          type: string
-          description: Uniquename
-          x-go-name: UniqueName
-        valid:
-          type: boolean
-          description: Is valid
-          x-go-name: Valid
-        variables:
-          type: array
-          description: 'WFVariables of the workflow
-
-
-            in: body'
-          items:
-            $ref: '#/components/schemas/Variable'
-          x-go-name: WFVariables
+          x-go-name: DefinitionID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    WorkflowDefinitionPutRequestV2:
-      title: WorkflowDefinitionPutRequestV2 ...
+    WorkflowLock:
       type: object
       properties:
-        categories:
-          type: array
-          description: Categories associated with the workflow
-          items:
-            type: string
-          x-go-name: Categories
-        description:
-          type: string
-          description: Description of the workflow
-          x-go-name: Description
-        metadata:
-          $ref: '#/components/schemas/WorkflowMetadata'
-        name:
-          type: string
-          description: Name of the workflow
-          x-go-name: Name
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Properties of the workflow
-          x-go-name: Properties
-        title:
-          type: string
-          description: Title of the workflow
-          x-go-name: Title
-        triggers:
-          type: array
-          description: Triggers of the workflow
-          items:
-            $ref: '#/components/schemas/Trigger'
-          x-go-name: WFTriggers
-        unique_name:
-          type: string
-          description: Uniquename
-          x-go-name: UniqueName
-        valid:
+        locked:
           type: boolean
-          description: Is valid
-          x-go-name: Valid
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    StatusDetails:
-      type: object
-      properties:
-        code:
+          x-go-name: Locked
+        locked_by:
           type: string
-          x-go-name: Code
-        description:
-          type: string
-          x-go-name: Description
+          x-go-name: LockedBy
         message:
           type: string
           x-go-name: Message
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    ColumnMapInfo:
-      title: ColumnMapInfo will be one entry in column map
+    WorkflowMetaData:
+      title: WorkflowMetaData ...
+      required:
+      - coa
       type: object
       properties:
-        columns:
-          type: array
-          items:
-            $ref: '#/components/schemas/ColumnData'
-          x-go-name: Columns
-        parent_action_ids:
-          type: object
-          additionalProperties:
-            type: string
-          x-go-name: ParentMap
-        persist_output_as_table:
-          type: boolean
-          x-go-name: PersistOutput
-        table_type_columns:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/ColumnData'
-          x-go-name: TblTypeColumns
-        table_type_id:
-          type: string
-          x-go-name: TableTypeID
-      description: '{
-
-        "table_type_id": "16bsMd7aS2mqII9n5bIe8EGIl39",
-
-        "table_type_columns": {
-
-        "<referenced_table_type_id>": [
-
-        {
-
-        "name": "id",
-
-        "type": "number"
-
-        },
-
-        {
-
-        "name": "name",
-
-        "type": "string"
-
-        }
-
-        ]
-
-        },
-
-        "parent_action_ids": {
-
-        "<parent_action_id/reference workflow/global var id>" : "<referenced_table_type_id>"
-
-        },
-
-        "columns": [
-
-        {
-
-        "name": "id",
-
-        "type": "number"
-
-        },
-
-        {
-
-        "name": "name",
-
-        "type": "string"
-
-        }
-
-        ]
-
-        }'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    ActionPatchRequest:
-      title: ActionPatchRequest ...
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/ActionDefinitionPatchRequest'
-        previous_action:
-          $ref: '#/components/schemas/ActionDefinitionPatchRequest'
+        coa:
+          $ref: '#/components/schemas/CourseOfAction'
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    ColumnData:
-      title: ColumnData ..
-      type: object
-      properties:
-        name:
-          type: string
-          x-go-name: Name
-        type:
-          type: string
-          x-go-name: Type
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    RuleType:
-      title: RuleType ...
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     workflowDefinitionPostRequest:
       title: WorkflowDefinitionPostRequest ...
       required:
@@ -3628,624 +3215,6 @@ components:
           type: boolean
           x-go-name: WorkflowValid
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    StartPointOption:
-      title: StartPointOption ..
-      type: object
-      properties:
-        name:
-          type: string
-          x-go-name: Name
-        value:
-          type: string
-          x-go-name: Value
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    TriggerType:
-      title: TriggerType ...
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    Trigger:
-      title: Trigger ...
-      type: object
-      properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        description:
-          type: string
-          x-go-name: Description
-        disabled:
-          type: boolean
-          x-go-name: Disabled
-        id:
-          type: string
-          x-go-name: TriggerID
-        invalid_actions:
-          type: array
-          items:
-            type: string
-          x-go-name: InvalidActions
-        name:
-          type: string
-          x-go-name: Name
-        owner:
-          type: string
-          x-go-name: Owner
-        ref_id:
-          type: string
-          x-go-name: RefID
-        status:
-          $ref: '#/components/schemas/TriggerStatus'
-        type:
-          $ref: '#/components/schemas/TriggerType'
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-        valid_actions:
-          type: array
-          items:
-            type: string
-          x-go-name: ValidActions
-        workflow_id:
-          type: string
-          x-go-name: WorkflowID
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    State:
-      type: string
-      description: DefinitionState
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    ActionDefinitionGetResponse:
-      title: ActionDefinitionGetResponse ...
-      type: object
-      properties:
-        adapter_id:
-          type: string
-          x-go-name: AdapterID
-        base_type:
-          type: string
-          x-go-name: BaseType
-        blocks:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionDefinitionGetResponse'
-          x-go-name: Branches
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        description:
-          type: string
-          x-go-name: Description
-        id:
-          type: string
-          x-go-name: DefinitionID
-        invalid_properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: InvalidProperties
-        name:
-          type: string
-          x-go-name: Name
-        output_schema:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: OutputSchema
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: Properties
-        property_schema:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: PropertySchema
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-        skip_execution:
-          type: boolean
-          x-go-name: SkipExecution
-        status:
-          $ref: '#/components/schemas/Status'
-        subworkflow_valid:
-          type: boolean
-          x-go-name: SubWorkflowValid
-        title:
-          type: string
-          x-go-name: Title
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-        valid:
-          type: boolean
-          x-go-name: Valid
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    WorkflowsPostRequest:
-      title: WorkflowsPostRequest ...
-      type: object
-      properties:
-        categories:
-          type: array
-          description: 'list of categories to get for.
-
-            in: body'
-          items:
-            type: string
-          x-go-name: Categories
-        exclude_rule_types:
-          type: array
-          description: 'flag to be used in conjunction with rule_types. specify rule_types to be excluded.
-
-            "none" if workflows should have atleast 1 rule_type
-
-            allowed values: none, schedule.rule_schedule, amqp.rule_event, email.rule_event, approval_task.rule_event,
-
-            webhook.rule_event, kafka.rule_event, incident.rule_event, playbook_assignment.rule_event
-
-            in: body'
-          items:
-            type: string
-          x-go-name: ExcludeRuleTypes
-        owner:
-          type: array
-          description: 'list of owner IDs to filter by
-
-            in: body'
-          items:
-            type: string
-          x-go-name: Owner
-        rule_types:
-          type: array
-          description: 'list of rule_types to filter by. "none" if workflows with no rule_type needed
-
-            allowed values: none, schedule.rule_schedule, amqp.rule_event, email.rule_event, approval_task.rule_event,
-
-            webhook.rule_event, kafka.rule_event, incident.rule_event, playbook_assignment.rule_event
-
-            in: body'
-          items:
-            type: string
-          x-go-name: RuleTypes
-        wf_metadata:
-          $ref: '#/components/schemas/WorkflowMetaData'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    WorkflowMetaData:
-      title: WorkflowMetaData ...
-      required:
-      - coa
-      type: object
-      properties:
-        coa:
-          $ref: '#/components/schemas/CourseOfAction'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    WorkflowValidationGetResponse:
-      title: WorkflowValidationGetResponse ...
-      type: object
-      properties:
-        invalid_action_ids:
-          type: array
-          items:
-            type: string
-          x-go-name: InvalidStepIDs
-        total_actions:
-          type: integer
-          format: uint32
-          x-go-name: TotalSteps
-        total_valid:
-          type: integer
-          format: uint32
-          x-go-name: TotalValid
-        total_variables:
-          type: integer
-          format: int64
-          x-go-name: TotalVariables
-        workflow_valid:
-          type: boolean
-          x-go-name: WorkflowValid
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    workflowSummaryResponse:
-      title: An WorkflowSummaryResponse model.
-      type: object
-      properties:
-        invalid:
-          type: integer
-          format: int64
-          x-go-name: Invalid
-        total:
-          type: integer
-          format: int64
-          x-go-name: Total
-        valid:
-          type: integer
-          format: int64
-          x-go-name: Valid
-      x-go-name: WorkflowSummaryResponse
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    ActionDefinitionPutResponse:
-      title: ActionDefinitionPutResponse ...
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/ActionDefinitionGetResponse'
-        invalid_actions:
-          type: array
-          items:
-            type: string
-          x-go-name: InvalidActions
-        valid_actions:
-          type: array
-          items:
-            type: string
-          x-go-name: ValidActions
-        workflow_valid:
-          type: boolean
-          x-go-name: WorkflowValid
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    ActionDefinitionPutRequest:
-      title: ActionDefinitionPutRequest ...
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of an Action
-          x-go-name: Description
-        invalid_properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: InvalidProperties of an Action
-          x-go-name: InvalidProperties
-        name:
-          type: string
-          description: Name of an Action
-          x-go-name: Name
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Properties of an Action
-          x-go-name: Properties
-        title:
-          type: string
-          description: Title of an Action
-          x-go-name: Title
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    workflowDefinitionGetResponse:
-      title: WorkflowDefinitionGetResponse ...
-      type: object
-      properties:
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActionDefinitionGetAllPropsResponse'
-          x-go-name: Actions
-        base_type:
-          type: string
-          x-go-name: BaseType
-        categories:
-          type: array
-          items:
-            type: string
-          x-go-name: Categories
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        description:
-          type: string
-          x-go-name: Description
-        dynamic_map:
-          $ref: '#/components/schemas/DynamicMap'
-        id:
-          type: string
-          x-go-name: DefinitionID
-        invalid_properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: InvalidProperties
-        metadata:
-          $ref: '#/components/schemas/WorkflowMetadata'
-        name:
-          type: string
-          x-go-name: Name
-        owner:
-          type: string
-          x-go-name: Owner
-        permissions:
-          type: array
-          items:
-            type: string
-          x-go-name: Permissions
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: Properties
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-        started_on:
-          type: string
-          format: date-time
-          x-go-name: LastInstStartedOn
-        status:
-          $ref: '#/components/schemas/Status'
-        template_type:
-          type: string
-          x-go-name: TemplateType
-        title:
-          type: string
-          x-go-name: Title
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-        valid:
-          type: boolean
-          x-go-name: Valid
-        variables:
-          type: array
-          items:
-            $ref: '#/components/schemas/Variable'
-          x-go-name: WFVariables
-        version:
-          type: string
-          x-go-name: Version
-        workflow_valid:
-          type: boolean
-          x-go-name: WorkflowValid
-      x-go-name: WorkflowDefinitionGetResponse
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    TriggerStatus:
-      title: TriggerStatus ...
-      type: object
-      properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        error_msg:
-          type: string
-          x-go-name: ErrorMsg
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    startWorklfowPostRequestPayload:
-      type: object
-      properties:
-        input_variables:
-          type: array
-          description: 'Input Variables information to start the workflow.
-
-
-            in: body'
-          items:
-            $ref: '#/components/schemas/VariableStartPutRequest'
-          x-go-name: Variables
-        intent_config:
-          type: object
-          properties: {}
-          description: 'Intent config to start the workflow.
-
-
-            in: body'
-          x-go-name: WFIntentConfig
-        runtime_user_id:
-          type: string
-          description: 'The runtime user ID to submit.
-
-
-            in: body'
-          x-go-name: WFRuntimeUserID
-        start_point:
-          type: string
-          description: 'The workflow start point.
-
-
-            in: body'
-          x-go-name: WFStartPoint
-        target_id:
-          type: string
-          description: 'The target ID to submit.
-
-
-            in: body'
-          x-go-name: WFTargetID
-      description: StartWorklfowPostRequestPayload model
-      x-go-name: StartWorklfowPostRequestPayload
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    LHObjType:
-      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
-    ActionDefinitionPatchRequest:
-      title: ActionDefinitionPatchRequest ...
-      type: object
-      properties:
-        block_num:
-          type: integer
-          format: int32
-          x-go-name: BlockNum
-        id:
-          type: string
-          x-go-name: DefinitionID
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    VariableStartPutRequest:
-      title: VariableStartPutRequest model for variables. Either id or name in the properties needs to be specified.
-      type: object
-      properties:
-        id:
-          type: string
-          description: Variable ID
-          x-go-name: VariableID
-        properties:
-          $ref: '#/components/schemas/VariableContent'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    templateDefinitionPostRequest:
-      title: TemplateDefinitionPostRequest ...
-      required:
-      - base_type
-      - properties
-      - type
-      type: object
-      properties:
-        base_type:
-          type: string
-          description: BaseType
-          x-go-name: BaseType
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Properties of the template
-          x-go-name: Properties
-        type:
-          type: string
-          description: Type
-          x-go-name: Type
-      description: Type should be provided to create a Workflow.
-      x-go-name: TemplateDefinitionPostRequest
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    ActionDefinitionPostRequest:
-      title: ActionDefinitionPostRequest ...
-      type: object
-      properties:
-        block_num:
-          type: integer
-          format: int32
-          x-go-name: BlockNum
-        description:
-          type: string
-          x-go-name: Description
-        name:
-          type: string
-          x-go-name: Name
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: Properties
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-        title:
-          type: string
-          x-go-name: Title
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        valid:
-          type: boolean
-          x-go-name: Valid
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    WorkflowGetAllPaginationResponse:
-      type: object
-      properties:
-        _links:
-          $ref: '#/components/schemas/PaginationLink'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkflowDefinitionGetAllResponse'
-          x-go-name: Results
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    PaginationLink:
-      type: object
-      properties:
-        next:
-          type: string
-          x-go-name: Next
-        prev:
-          type: string
-          x-go-name: Prev
-        self:
-          type: string
-          x-go-name: Self
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    WorkflowMetadata:
-      type: object
-      properties:
-        coa:
-          $ref: '#/components/schemas/CourseOfAction'
-        flags:
-          type: array
-          items:
-            type: string
-          x-go-name: Flags
-        git_info:
-          $ref: '#/components/schemas/GitInfo'
-        lock:
-          $ref: '#/components/schemas/WorkflowLock'
-      description: WorkflowMetadata maintains miscellaneous metadata for the workflow
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    WorkflowLock:
-      type: object
-      properties:
-        locked:
-          type: boolean
-          x-go-name: Locked
-        locked_by:
-          type: string
-          x-go-name: LockedBy
-        message:
-          type: string
-          x-go-name: Message
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     DynamicMap:
       title: 'DynamicMap will have two individual map
 
@@ -4356,6 +3325,1037 @@ components:
           x-go-name: ColumnMap
       description: DynamicMap ..
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    StartWorklfowConfigResponse:
+      title: StartWorklfowConfigResponse ...
+      type: object
+      properties:
+        id:
+          type: string
+          x-go-name: DefinitionID
+        input_variables:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableGetAllResponse'
+          x-go-name: InputVariables
+        intent_config:
+          type: object
+          properties: {}
+          x-go-name: WFIntentConfig
+        type_of_target_needed:
+          type: string
+          x-go-name: TargetType
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        wf_start_points:
+          type: array
+          items:
+            $ref: '#/components/schemas/StartPointOption'
+          x-go-name: WFStartPoints
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    ActionDefinitionGetAllPropsResponse:
+      title: ActionDefinitionGetAllPropsResponse ...
+      type: object
+      properties:
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionDefinitionGetAllPropsResponse'
+          x-go-name: Actions
+        adapter_id:
+          type: string
+          x-go-name: AdapterID
+        base_type:
+          type: string
+          x-go-name: BaseType
+        blocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionDefinitionGetAllPropsResponse'
+          x-go-name: Branches
+        id:
+          type: string
+          x-go-name: DefinitionID
+        invalid_properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: InvalidProperties
+        name:
+          type: string
+          x-go-name: Name
+        output_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: OutputSchema
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        skip_execution:
+          type: boolean
+          x-go-name: SkipExecution
+        status:
+          $ref: '#/components/schemas/Status'
+        subworkflow_valid:
+          type: boolean
+          x-go-name: SubWorkflowValid
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        valid:
+          type: boolean
+          x-go-name: Valid
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    OutputInfo:
+      title: OutputInfo ..
+      type: object
+      properties:
+        items:
+          $ref: '#/components/schemas/ActionOutputVariable'
+        name:
+          type: string
+          x-go-name: Name
+        type:
+          type: string
+          x-go-name: Type
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    WorkflowDefinitionPutResponse:
+      type: object
+      properties:
+        invalid_actions:
+          type: array
+          items:
+            type: string
+          x-go-name: InvalidActions
+        valid_actions:
+          type: array
+          items:
+            type: string
+          x-go-name: ValidActions
+        workflow:
+          $ref: '#/components/schemas/workflowDefinitionGetResponse'
+      description: WorkflowDefinitionPutResponse model for workflow put request API
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    ColumnData:
+      title: ColumnData ..
+      type: object
+      properties:
+        name:
+          type: string
+          x-go-name: Name
+        type:
+          type: string
+          x-go-name: Type
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    VariableGetAllResponse:
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        id:
+          type: string
+          x-go-name: VariableID
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          $ref: '#/components/schemas/VariableContent'
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      description: VariableGetAllResponse model for variables
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    AddActionPostRequest:
+      title: AddActionPostRequest ...
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/ActionDefinitionPostRequest'
+        previous_action:
+          $ref: '#/components/schemas/ActionDefinitionPatchRequest'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    RuleType:
+      title: RuleType ...
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    WorkflowGetAllPaginationResponse:
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowDefinitionGetAllResponse'
+          x-go-name: Results
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    CourseOfAction:
+      title: WorkflowMetaData ...
+      required:
+      - observable_types
+      type: object
+      properties:
+        actuator:
+          type: string
+          description: 'Actuator.
+
+            in: body'
+          x-go-name: Actuator
+        observable_types:
+          type: array
+          description: 'list of observable types to get for.
+
+            in: body'
+          items:
+            type: string
+          x-go-name: ObservableTypes
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    VariableContent:
+      title: VariableContent ...
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of variable
+          x-go-name: Description
+        display_on_wizard:
+          type: boolean
+          description: 'Should the variable be shown on wizard
+
+            Used in input scope variables, if it is true, then variable is displayed on wizard'
+          x-go-name: DisplayOnWizard
+        is_invisible:
+          type: boolean
+          x-go-name: IsInvisible
+        is_required:
+          type: boolean
+          description: 'Is the variable Required
+
+            Used in input string and secure string variable, if it is true, then string can''t be emptly'
+          x-go-name: IsRequired
+        name:
+          type: string
+          description: Name of variable
+          x-go-name: Name
+        scope:
+          type: string
+          description: Scope of variable. Scope can be 'input', 'global', 'local', 'static' or 'workflow'
+          x-go-name: Scope
+        type:
+          type: string
+          description: Type of variable. Type can be 'datatype.boolean', 'datatype.string', 'datatype.number' or 'datatype.table'
+          x-go-name: Type
+        value:
+          type: object
+          properties: {}
+          description: Value of variable. Value can be a string, boolean, number or array
+          x-go-name: Value
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TriggerStatus:
+      title: TriggerStatus ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        error_msg:
+          type: string
+          x-go-name: ErrorMsg
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    VariableStartPutRequest:
+      title: VariableStartPutRequest model for variables. Either id or name in the properties needs to be specified.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Variable ID
+          x-go-name: VariableID
+        properties:
+          $ref: '#/components/schemas/VariableContent'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    ColumnMapInfo:
+      title: ColumnMapInfo will be one entry in column map
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnData'
+          x-go-name: Columns
+        parent_action_ids:
+          type: object
+          additionalProperties:
+            type: string
+          x-go-name: ParentMap
+        persist_output_as_table:
+          type: boolean
+          x-go-name: PersistOutput
+        table_type_columns:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/ColumnData'
+          x-go-name: TblTypeColumns
+        table_type_id:
+          type: string
+          x-go-name: TableTypeID
+      description: '{
+
+        "table_type_id": "16bsMd7aS2mqII9n5bIe8EGIl39",
+
+        "table_type_columns": {
+
+        "<referenced_table_type_id>": [
+
+        {
+
+        "name": "id",
+
+        "type": "number"
+
+        },
+
+        {
+
+        "name": "name",
+
+        "type": "string"
+
+        }
+
+        ]
+
+        },
+
+        "parent_action_ids": {
+
+        "<parent_action_id/reference workflow/global var id>" : "<referenced_table_type_id>"
+
+        },
+
+        "columns": [
+
+        {
+
+        "name": "id",
+
+        "type": "number"
+
+        },
+
+        {
+
+        "name": "name",
+
+        "type": "string"
+
+        }
+
+        ]
+
+        }'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    workflowSummaryResponse:
+      title: An WorkflowSummaryResponse model.
+      type: object
+      properties:
+        invalid:
+          type: integer
+          format: int64
+          x-go-name: Invalid
+        total:
+          type: integer
+          format: int64
+          x-go-name: Total
+        valid:
+          type: integer
+          format: int64
+          x-go-name: Valid
+      x-go-name: WorkflowSummaryResponse
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    workflowDefinitionGetResponse:
+      title: WorkflowDefinitionGetResponse ...
+      type: object
+      properties:
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActionDefinitionGetAllPropsResponse'
+          x-go-name: Actions
+        base_type:
+          type: string
+          x-go-name: BaseType
+        categories:
+          type: array
+          items:
+            type: string
+          x-go-name: Categories
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
+        dynamic_map:
+          $ref: '#/components/schemas/DynamicMap'
+        id:
+          type: string
+          x-go-name: DefinitionID
+        invalid_properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: InvalidProperties
+        metadata:
+          $ref: '#/components/schemas/WorkflowMetadata'
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        permissions:
+          type: array
+          items:
+            type: string
+          x-go-name: Permissions
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        started_on:
+          type: string
+          format: date-time
+          x-go-name: LastInstStartedOn
+        status:
+          $ref: '#/components/schemas/Status'
+        template_type:
+          type: string
+          x-go-name: TemplateType
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        valid:
+          type: boolean
+          x-go-name: Valid
+        variables:
+          type: array
+          items:
+            $ref: '#/components/schemas/Variable'
+          x-go-name: WFVariables
+        version:
+          type: string
+          x-go-name: Version
+        workflow_valid:
+          type: boolean
+          x-go-name: WorkflowValid
+      x-go-name: WorkflowDefinitionGetResponse
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    Variable:
+      title: Variable ...
+      required:
+      - schema_id
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        id:
+          type: string
+          description: ID of variable
+          x-go-name: VariableID
+        object_type:
+          $ref: '#/components/schemas/LHObjType'
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          $ref: '#/components/schemas/VariableContent'
+        schema_id:
+          type: string
+          description: View schema ID of variable, the value can be TargetTypeID for Table variables
+          x-go-name: ViewSchemaID
+        table_id:
+          type: string
+          description: ID of table
+          x-go-name: TableID
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        variable_def_id:
+          type: string
+          description: ID of variable
+          x-go-name: VariableDefID
+        version:
+          type: string
+          x-go-name: Version
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    templateDefinitionPostRequest:
+      title: TemplateDefinitionPostRequest ...
+      required:
+      - base_type
+      - properties
+      - type
+      type: object
+      properties:
+        base_type:
+          type: string
+          description: BaseType
+          x-go-name: BaseType
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of the template
+          x-go-name: Properties
+        type:
+          type: string
+          description: Type
+          x-go-name: Type
+      description: Type should be provided to create a Workflow.
+      x-go-name: TemplateDefinitionPostRequest
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    WorkflowsPostRequest:
+      title: WorkflowsPostRequest ...
+      type: object
+      properties:
+        categories:
+          type: array
+          description: 'list of categories to get for.
+
+            in: body'
+          items:
+            type: string
+          x-go-name: Categories
+        exclude_rule_types:
+          type: array
+          description: 'flag to be used in conjunction with rule_types. specify rule_types to be excluded.
+
+            "none" if workflows should have atleast 1 rule_type
+
+            allowed values: none, schedule.rule_schedule, amqp.rule_event, email.rule_event, approval_task.rule_event,
+
+            webhook.rule_event, kafka.rule_event, incident.rule_event, playbook_assignment.rule_event
+
+            in: body'
+          items:
+            type: string
+          x-go-name: ExcludeRuleTypes
+        owner:
+          type: array
+          description: 'list of owner IDs to filter by
+
+            in: body'
+          items:
+            type: string
+          x-go-name: Owner
+        rule_types:
+          type: array
+          description: 'list of rule_types to filter by. "none" if workflows with no rule_type needed
+
+            allowed values: none, schedule.rule_schedule, amqp.rule_event, email.rule_event, approval_task.rule_event,
+
+            webhook.rule_event, kafka.rule_event, incident.rule_event, playbook_assignment.rule_event
+
+            in: body'
+          items:
+            type: string
+          x-go-name: RuleTypes
+        wf_metadata:
+          $ref: '#/components/schemas/WorkflowMetaData'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    LHObjType:
+      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
+    ActionDefinitionPostRequest:
+      title: ActionDefinitionPostRequest ...
+      type: object
+      properties:
+        block_num:
+          type: integer
+          format: int32
+          x-go-name: BlockNum
+        description:
+          type: string
+          x-go-name: Description
+        name:
+          type: string
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        valid:
+          type: boolean
+          x-go-name: Valid
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    WorkflowDefinitionPutRequest:
+      title: WorkflowDefinitionPutRequest ...
+      type: object
+      properties:
+        categories:
+          type: array
+          description: Categories associated with the workflow
+          items:
+            type: string
+          x-go-name: Categories
+        description:
+          type: string
+          description: Description of the workflow
+          x-go-name: Description
+        metadata:
+          $ref: '#/components/schemas/WorkflowMetadata'
+        name:
+          type: string
+          description: Name of the workflow
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of the workflow
+          x-go-name: Properties
+        title:
+          type: string
+          description: Title of the workflow
+          x-go-name: Title
+        triggers:
+          type: array
+          description: Triggers of the workflow
+          items:
+            $ref: '#/components/schemas/Trigger'
+          x-go-name: WFTriggers
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+        valid:
+          type: boolean
+          description: Is valid
+          x-go-name: Valid
+        variables:
+          type: array
+          description: 'WFVariables of the workflow
+
+
+            in: body'
+          items:
+            $ref: '#/components/schemas/Variable'
+          x-go-name: WFVariables
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    workflowObjRefResponse:
+      title: WorkflowObjRefResponse response model.
+      type: object
+      properties:
+        actions:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: 'in: body'
+          x-go-name: Actions
+      x-go-name: WorkflowObjRefResponse
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    WorkflowMetadata:
+      type: object
+      properties:
+        coa:
+          $ref: '#/components/schemas/CourseOfAction'
+        flags:
+          type: array
+          items:
+            type: string
+          x-go-name: Flags
+        git_info:
+          $ref: '#/components/schemas/GitInfo'
+        lock:
+          $ref: '#/components/schemas/WorkflowLock'
+      description: WorkflowMetadata maintains miscellaneous metadata for the workflow
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Trigger:
+      title: Trigger ...
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
+        disabled:
+          type: boolean
+          x-go-name: Disabled
+        id:
+          type: string
+          x-go-name: TriggerID
+        invalid_actions:
+          type: array
+          items:
+            type: string
+          x-go-name: InvalidActions
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        ref_id:
+          type: string
+          x-go-name: RefID
+        status:
+          $ref: '#/components/schemas/TriggerStatus'
+        type:
+          $ref: '#/components/schemas/TriggerType'
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        valid_actions:
+          type: array
+          items:
+            type: string
+          x-go-name: ValidActions
+        workflow_id:
+          type: string
+          x-go-name: WorkflowID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    WorkflowDefinitionPutRequestV2:
+      title: WorkflowDefinitionPutRequestV2 ...
+      type: object
+      properties:
+        categories:
+          type: array
+          description: Categories associated with the workflow
+          items:
+            type: string
+          x-go-name: Categories
+        description:
+          type: string
+          description: Description of the workflow
+          x-go-name: Description
+        metadata:
+          $ref: '#/components/schemas/WorkflowMetadata'
+        name:
+          type: string
+          description: Name of the workflow
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of the workflow
+          x-go-name: Properties
+        title:
+          type: string
+          description: Title of the workflow
+          x-go-name: Title
+        triggers:
+          type: array
+          description: Triggers of the workflow
+          items:
+            $ref: '#/components/schemas/Trigger'
+          x-go-name: WFTriggers
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+        valid:
+          type: boolean
+          description: Is valid
+          x-go-name: Valid
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    StartWorkflowResponse:
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        definition_id:
+          type: string
+          x-go-name: DefinitionID
+        id:
+          type: string
+          x-go-name: InstanceID
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        status:
+          $ref: '#/components/schemas/Status'
+        type:
+          type: string
+          x-go-name: Type
+        version:
+          type: string
+          x-go-name: Version
+      description: StartWorkflowResponse model
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    ActionOutputVariable:
+      title: ActionOutputVariable ..
+      type: object
+      properties:
+        item_type:
+          type: string
+          x-go-name: ItemType
+        output_variable:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/OutputInfo'
+          x-go-name: Output
+        type:
+          type: string
+          x-go-name: Type
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    StartPointOption:
+      title: StartPointOption ..
+      type: object
+      properties:
+        name:
+          type: string
+          x-go-name: Name
+        value:
+          type: string
+          x-go-name: Value
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    ActionTableInfo:
+      title: ActionTableInfo ..
+      type: object
+      properties:
+        table_id:
+          type: string
+          x-go-name: TableID
+        table_obj_type:
+          $ref: '#/components/schemas/LHObjType'
+        table_type_id:
+          type: string
+          x-go-name: TableTypeID
+        table_type_obj_type:
+          $ref: '#/components/schemas/LHObjType'
+        variable_id:
+          type: string
+          x-go-name: VariableID
+        variable_scope:
+          type: string
+          x-go-name: VariableScope
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    WorkflowValidationGetResponse:
+      title: WorkflowValidationGetResponse ...
+      type: object
+      properties:
+        invalid_action_ids:
+          type: array
+          items:
+            type: string
+          x-go-name: InvalidStepIDs
+        total_actions:
+          type: integer
+          format: uint32
+          x-go-name: TotalSteps
+        total_valid:
+          type: integer
+          format: uint32
+          x-go-name: TotalValid
+        total_variables:
+          type: integer
+          format: int64
+          x-go-name: TotalVariables
+        workflow_valid:
+          type: boolean
+          x-go-name: WorkflowValid
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    ActionPatchRequest:
+      title: ActionPatchRequest ...
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/ActionDefinitionPatchRequest'
+        previous_action:
+          $ref: '#/components/schemas/ActionDefinitionPatchRequest'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    ActionDefinitionPutResponse:
+      title: ActionDefinitionPutResponse ...
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/ActionDefinitionGetResponse'
+        invalid_actions:
+          type: array
+          items:
+            type: string
+          x-go-name: InvalidActions
+        valid_actions:
+          type: array
+          items:
+            type: string
+          x-go-name: ValidActions
+        workflow_valid:
+          type: boolean
+          x-go-name: WorkflowValid
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
   securitySchemes:
     oAuth2:
       type: oauth2

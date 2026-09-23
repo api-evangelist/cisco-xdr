@@ -42,7 +42,7 @@ paths:
     get:
       tags:
       - Tenants
-      summary: Handler returning tenant and its sub tenants.
+      summary: Handler returning tenant and its sub tenants
       description: 'Allowed Role(s): admin'
       operationId: getAllTenants
       responses:
@@ -89,7 +89,7 @@ paths:
     get:
       tags:
       - Tenants
-      summary: ReadTenantByID Handler to return tenant infomration.
+      summary: ReadTenantByID Handler to return tenant infomration
       description: 'Allowed Role(s): admin'
       operationId: getTenantById
       parameters:
@@ -156,7 +156,7 @@ paths:
     put:
       tags:
       - Tenants
-      summary: Handler to update a Tenant.
+      summary: Handler to update a Tenant
       description: 'Allowed Role(s): admin'
       operationId: tenantUpdateRequest
       parameters:
@@ -261,7 +261,7 @@ paths:
     post:
       tags:
       - Tenants
-      summary: Handler to create a Tenant.
+      summary: Handler to create a Tenant
       description: 'Allowed Role(s): admin, user'
       operationId: TenantPostRequest
       responses:
@@ -343,47 +343,22 @@ paths:
           content: {}
 components:
   schemas:
-    TierName:
-      title: TierName ...
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    EntitlementSummary:
+    Tier:
       type: object
       properties:
-        techvals:
-          $ref: '#/components/schemas/TechVals'
-        tier:
-          $ref: '#/components/schemas/Tier'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    State:
-      type: string
-      description: DefinitionState
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    Status:
-      title: Status ...
-      type: object
-      properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    TechVals:
-      type: object
-      properties:
-        data-maximal-size-in-GB:
+        enforce?:
+          type: boolean
+          x-go-name: Enforce
+        quantity:
           type: integer
           format: uint64
-          x-go-name: DataMaximalSizeInGB
-        data-retention-in-days:
-          type: integer
-          format: uint64
-          x-go-name: DataRetentionInDays
-        modules:
-          $ref: '#/components/schemas/TechValsModules'
-      description: TechVals organization or tenant data retention information
+          x-go-name: Quantity
+        title:
+          $ref: '#/components/schemas/TierName'
+        unit:
+          type: string
+          x-go-name: Unit
+      description: Tier organization or tenant tier level information
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     StatusDetails:
       type: object
@@ -397,6 +372,14 @@ components:
         message:
           type: string
           x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    EntitlementSummary:
+      type: object
+      properties:
+        techvals:
+          $ref: '#/components/schemas/TechVals'
+        tier:
+          $ref: '#/components/schemas/Tier'
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     Tenant:
       title: Tenant ...
@@ -476,26 +459,43 @@ components:
           type: boolean
           x-go-name: Enabled
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    TierName:
+      title: TierName ...
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TechVals:
+      type: object
+      properties:
+        data-maximal-size-in-GB:
+          type: integer
+          format: uint64
+          x-go-name: DataMaximalSizeInGB
+        data-retention-in-days:
+          type: integer
+          format: uint64
+          x-go-name: DataRetentionInDays
+        modules:
+          $ref: '#/components/schemas/TechValsModules'
+      description: TechVals organization or tenant data retention information
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     TechValsModules:
       title: TechValsModules ...
       type: string
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    Tier:
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Status:
+      title: Status ...
       type: object
       properties:
-        enforce?:
-          type: boolean
-          x-go-name: Enforce
-        quantity:
-          type: integer
-          format: uint64
-          x-go-name: Quantity
-        title:
-          $ref: '#/components/schemas/TierName'
-        unit:
-          type: string
-          x-go-name: Unit
-      description: Tier organization or tenant tier level information
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
   securitySchemes:
     oAuth2:

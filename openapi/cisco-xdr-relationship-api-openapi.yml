@@ -9,7 +9,12 @@ info:
     name: 'Cisco Security Business Group -- Advanced Threat '
     url: http://github.com/threatgrid/ctia
     email: cisco-intel-api-support@cisco.com
-  description: "A Threat Intelligence API service\n\n  This API provides a mechanism for making Judgements on the Disposition\n  of Observables, which are then distilled into a final Verdict.  A\n  Disposition is a statement regarding the malicious, or otherwise,\n  nature of an Observable.\n\n  The Judgements can be grouped into Indicators, which can be associated\n  with Campaigns, Actors and TTPs.  Feedback can be given on specific\n  Judgements, indicating agreement or disagreement, or clarification.\n\n  When an Observable with a malicious Verdict is seen, it can be recorded as\n  a Sighting, and the Relations that Observable had with other Observables can\n  be recorded as well.\n\n  We support a pre-defined set of Observable Types.  Each Observable Type has a\n  specific form of natural identifier, its ID, which is almost always\n  the default way it is represented when observed in the wild.\n\n  * Ipv4/IPv6  -- 192.168.1.1\n  * Domain/Hostname -- foo.com, www.bar.com\n  * SHA256  -- the sha256 checksum of a file, or other data blob\n  * MD5 -- the md5 checksum of a file, or other data blob\n  * SHA1 -- the sha1 checksum of a file, or other data blob\n  * URL -- A minimal form of the URL\n\n  The Verdict is derived from all of the Judgements on that Observable which\n  have not yet expired.  The highest priority Judgement becomes the\n  active verdict.  If there is more than one Judgement with that\n  priority, than Clean disposition has priority over all others, then\n  Malicious disposition, and so on down to Unknown.\n\n  <a href='/doc/README.md'>CTIA Documentation</a>"
+  description: 'A Threat Intelligence API service
+
+
+    This API provides a mechanism for making Judgements on the Disposition
+
+    of Observables, which are then distilled into a final Verdict.'
   x-provenance:
     method: harvested
     authored_by: Cisco XDR (CTIA)
@@ -89,6 +94,8 @@ paths:
               $ref: '#/components/schemas/NewRelationship'
         description: a new Relationship
         required: true
+      operationId: postCtiaRelationship
+      x-operation-id-source: derived
   /ctia/relationship/{id}:
     put:
       tags:
@@ -146,6 +153,8 @@ paths:
               $ref: '#/components/schemas/NewRelationship'
         description: an updated Relationship
         required: true
+      operationId: putCtiaRelationshipById
+      x-operation-id-source: derived
     get:
       tags:
       - Relationship
@@ -200,6 +209,8 @@ paths:
             - timestamp
             - relationship_type
       description: Requires capability read-relationship.
+      operationId: getCtiaRelationshipById
+      x-operation-id-source: derived
     delete:
       tags:
       - Relationship
@@ -222,6 +233,8 @@ paths:
           type: boolean
       summary: Delete one Relationship
       description: Requires capability delete-relationship.
+      operationId: deleteCtiaRelationshipById
+      x-operation-id-source: derived
   /ctia/relationship/external_id/{external_id}:
     get:
       tags:
@@ -336,6 +349,8 @@ paths:
           type: string
       summary: List Relationship by external id
       description: Requires capability read-relationship.
+      operationId: getCtiaRelationshipExternalIdByExternalId
+      x-operation-id-source: derived
   /ctia/relationship/search:
     get:
       tags:
@@ -538,6 +553,8 @@ paths:
         schema:
           type: string
           format: date-time
+      operationId: getCtiaRelationshipSearch
+      x-operation-id-source: derived
     delete:
       tags:
       - Relationship
@@ -566,7 +583,7 @@ paths:
               schema:
                 type: integer
                 format: int64
-      summary: Delete Relationship entities matching given Lucene/ES query string or/and field filters
+      summary: Delete Relationship entities matching given Lucene/ES query string or/and field…
       parameters:
       - in: query
         name: tlp
@@ -665,6 +682,8 @@ paths:
         schema:
           type: string
           format: date-time
+      operationId: deleteCtiaRelationshipSearch
+      x-operation-id-source: derived
   /ctia/relationship/search/count:
     get:
       tags:
@@ -781,6 +800,8 @@ paths:
         schema:
           type: string
           format: date-time
+      operationId: getCtiaRelationshipSearchCount
+      x-operation-id-source: derived
   /ctia/relationship/metric/histogram:
     get:
       tags:
@@ -946,6 +967,8 @@ paths:
         schema:
           type: string
           format: date-time
+      operationId: getCtiaRelationshipMetricHistogram
+      x-operation-id-source: derived
   /ctia/relationship/metric/topn:
     get:
       tags:
@@ -1090,6 +1113,8 @@ paths:
         schema:
           type: string
           format: date-time
+      operationId: getCtiaRelationshipMetricTopn
+      x-operation-id-source: derived
   /ctia/relationship/metric/cardinality:
     get:
       tags:
@@ -1212,33 +1237,43 @@ paths:
         schema:
           type: string
           format: date-time
+      operationId: getCtiaRelationshipMetricCardinality
+      x-operation-id-source: derived
 components:
   schemas:
-    MetricResultFilters:
-      type: object
-      properties:
-        from:
-          type: string
-          format: date-time
-        to:
-          type: string
-          format: date-time
-      additionalProperties: {}
-      required:
-      - from
-      - to
-    NewRelationship:
-      description: a new Relationship
+    Relationship:
+      example:
+        description: string
+        schema_version: 1.3.30
+        revision: 10
+        target_ref: string
+        type: relationship
+        source: string
+        external_ids:
+        - string
+        short_description: string
+        title: string
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        source_uri: string
+        source_ref: string
+        language: string
+        id: string
+        tlp: green
+        timestamp: '2016-01-01T01:01:01.000Z'
+        relationship_type: attributed-to
+      description: Represents a relationship between two entities.
       type: object
       properties:
         description:
           example: string
           description: A description of object, which may be detailed.
           type: string
-        authorized_groups:
-          type: array
-          items:
-            type: string
         schema_version:
           type: string
         revision:
@@ -1250,18 +1285,11 @@ components:
           example: string
           description: A URI leading to an entity.
           type: string
-        authorized_users:
-          type: array
-          items:
-            type: string
         type:
           example: relationship
           type: string
           enum:
           - relationship
-        created:
-          type: string
-          format: date-time
         source:
           example: string
           description: Represents the source of the intelligence that led to the creation of the entity.
@@ -1273,9 +1301,6 @@ components:
           type: array
           items:
             type: string
-        modified:
-          type: string
-          format: date-time
         short_description:
           example: string
           description: A single line, short summary of the object.
@@ -1313,7 +1338,7 @@ components:
           type: string
         id:
           example: string
-          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          description: Globally unique URI identifying this object.
           type: string
         tlp:
           example: green
@@ -1330,64 +1355,15 @@ components:
           - green
           - red
           - amber
-        client_id:
-          type: string
-        groups:
-          type: array
-          items:
-            type: string
         timestamp:
           example: '2016-01-01T01:01:01.000Z'
           description: The time this object was created at, or last modified.
           type: string
           format: date-time
-        owner:
-          type: string
         relationship_type:
           example: attributed-to
           type: string
       additionalProperties: false
-      required:
-      - target_ref
-      - source_ref
-      - relationship_type
-    ExternalReference:
-      example:
-        source_name: string
-        description: string
-        url: string
-        hashes:
-        - string
-        external_id: string
-      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
-      type: object
-      properties:
-        source_name:
-          example: string
-          description: The source within which the external-reference is defined (system, registry, organization, etc.)
-          type: string
-        description:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        url:
-          example: string
-          description: A URL reference to an external resource.
-          type: string
-        hashes:
-          example:
-          - string
-          description: Specifies a dictionary of hashes for the contents of the url.
-          type: array
-          items:
-            type: string
-        external_id:
-          example: string
-          description: An identifier for the external reference content.
-          type: string
-      additionalProperties: false
-      required:
-      - source_name
     PartialRelationship:
       example:
         description: string
@@ -1533,39 +1509,71 @@ components:
           example: attributed-to
           type: string
       additionalProperties: false
-    Relationship:
+    ExternalReference:
       example:
+        source_name: string
         description: string
-        schema_version: 1.3.30
-        revision: 10
-        target_ref: string
-        type: relationship
-        source: string
-        external_ids:
+        url: string
+        hashes:
         - string
-        short_description: string
-        title: string
-        external_references:
-        - source_name: string
-          description: string
-          url: string
-          hashes:
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
+      type: object
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
           - string
-          external_id: string
-        source_uri: string
-        source_ref: string
-        language: string
-        id: string
-        tlp: green
-        timestamp: '2016-01-01T01:01:01.000Z'
-        relationship_type: attributed-to
-      description: Represents a relationship between two entities.
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: false
+      required:
+      - source_name
+    MetricResultData:
+      type: object
+      additionalProperties: {}
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
+    NewRelationship:
+      description: a new Relationship
       type: object
       properties:
         description:
           example: string
           description: A description of object, which may be detailed.
           type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
         schema_version:
           type: string
         revision:
@@ -1577,11 +1585,18 @@ components:
           example: string
           description: A URI leading to an entity.
           type: string
+        authorized_users:
+          type: array
+          items:
+            type: string
         type:
           example: relationship
           type: string
           enum:
           - relationship
+        created:
+          type: string
+          format: date-time
         source:
           example: string
           description: Represents the source of the intelligence that led to the creation of the entity.
@@ -1593,6 +1608,9 @@ components:
           type: array
           items:
             type: string
+        modified:
+          type: string
+          format: date-time
         short_description:
           example: string
           description: A single line, short summary of the object.
@@ -1630,7 +1648,7 @@ components:
           type: string
         id:
           example: string
-          description: Globally unique URI identifying this object.
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
           type: string
         tlp:
           example: green
@@ -1647,18 +1665,27 @@ components:
           - green
           - red
           - amber
+        client_id:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
         timestamp:
           example: '2016-01-01T01:01:01.000Z'
           description: The time this object was created at, or last modified.
           type: string
           format: date-time
+        owner:
+          type: string
         relationship_type:
           example: attributed-to
           type: string
       additionalProperties: false
-    MetricResultData:
-      type: object
-      additionalProperties: {}
+      required:
+      - target_ref
+      - source_ref
+      - relationship_type
     MetricResult:
       type: object
       properties:

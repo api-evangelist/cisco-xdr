@@ -42,7 +42,7 @@ paths:
     get:
       tags:
       - RuntimeUsers
-      summary: Handler to get all runtimeusers.
+      summary: Handler to get all runtimeusers
       description: 'Allowed Role(s): admin, user, sat'
       operationId: listRuntimeUsers
       parameters:
@@ -124,7 +124,7 @@ paths:
     post:
       tags:
       - RuntimeUsers
-      summary: Handler to create a runtimeuser.
+      summary: Handler to create a runtimeuser
       description: 'Allowed Role(s): admin
 
 
@@ -223,7 +223,7 @@ paths:
     get:
       tags:
       - RuntimeUsers
-      summary: readRuntimeUserByID Handler to return information about runtime user.
+      summary: readRuntimeUserByID Handler to return information about runtime user
       description: 'Allowed Role(s): admin, user, sat'
       operationId: getRuntimeUserById
       parameters:
@@ -304,7 +304,7 @@ paths:
     delete:
       tags:
       - RuntimeUsers
-      summary: deleteRuntimeUser Handler to delete runtime user using definition ID.
+      summary: deleteRuntimeUser Handler to delete runtime user using definition ID
       description: 'Allowed Role(s): admin'
       operationId: deleteRuntimeUserById
       parameters:
@@ -393,7 +393,7 @@ paths:
     patch:
       tags:
       - RuntimeUsers
-      summary: updateRuntimeUser Handler to update runtime user.
+      summary: updateRuntimeUser Handler to update runtime user
       description: 'Allowed Role(s): admin'
       operationId: runtimeUserUpdateRequest
       parameters:
@@ -482,6 +482,47 @@ paths:
       x-codegen-request-body-name: request_body
 components:
   schemas:
+    DefAccessMeta:
+      title: DefAccessMeta ...
+      type: object
+      properties:
+        is_integration:
+          type: boolean
+          x-go-name: IsIntegration
+        is_internal:
+          type: boolean
+          x-go-name: IsInternal
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    RuntimeUserDefinitionPostRequest:
+      title: RuntimeUserDefinitionPostRequest ...
+      type: object
+      properties:
+        description:
+          type: string
+          x-go-name: Description
+        name:
+          type: string
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+      description: Either ViewSchemaID or Type or both can be provided to create a Runtime User.
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     RuntimeUserDefinitionGetAllResponse:
       title: RuntimeUserDefinitionGetAllResponse ...
       type: object
@@ -526,31 +567,18 @@ components:
           format: date-time
           x-go-name: UpdatedOn
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    DefAccessMeta:
-      title: DefAccessMeta ...
+    StatusDetails:
       type: object
       properties:
-        is_integration:
-          type: boolean
-          x-go-name: IsIntegration
-        is_internal:
-          type: boolean
-          x-go-name: IsInternal
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    State:
-      type: string
-      description: DefinitionState
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    Status:
-      title: Status ...
-      type: object
-      properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     RuntimeUserDefinitionGetResponse:
       title: RuntimeUserDefinitionGetResponse ...
@@ -617,49 +645,6 @@ components:
           type: boolean
           x-go-name: Valid
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    StatusDetails:
-      type: object
-      properties:
-        code:
-          type: string
-          x-go-name: Code
-        description:
-          type: string
-          x-go-name: Description
-        message:
-          type: string
-          x-go-name: Message
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    RuntimeUserDefinitionPostRequest:
-      title: RuntimeUserDefinitionPostRequest ...
-      type: object
-      properties:
-        description:
-          type: string
-          x-go-name: Description
-        name:
-          type: string
-          x-go-name: Name
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: Properties
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-        title:
-          type: string
-          x-go-name: Title
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-      description: Either ViewSchemaID or Type or both can be provided to create a Runtime User.
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     RuntimeUserDefinitionPatchRequest:
       title: RuntimeUserDefinitionPatchRequest ...
       type: object
@@ -684,6 +669,21 @@ components:
           description: Title of runtime user
           x-go-name: Title
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
   securitySchemes:
     oAuth2:
       type: oauth2

@@ -42,7 +42,7 @@ paths:
     get:
       tags:
       - Variables
-      summary: Handler to get all Variables.
+      summary: Handler to get all Variables
       description: 'Allowed Role(s) for Global variables: admin
 
         Allowed Role(s) for ENV variables: admin, user, sat'
@@ -118,7 +118,7 @@ paths:
     post:
       tags:
       - Variables
-      summary: Handler to create a Variable.
+      summary: Handler to create a Variable
       description: 'Allowed Role(s) for Global variables: admin
 
         Allowed Role(s) for ENV variables: admin
@@ -219,7 +219,7 @@ paths:
     get:
       tags:
       - Variables
-      summary: Handler to return information about Variable.
+      summary: Handler to return information about Variable
       description: 'Allowed Role(s) for Global variables: admin, user, sat
 
         Allowed Role(s) for ENV variables: admin, user, sat'
@@ -302,7 +302,7 @@ paths:
     put:
       tags:
       - Variables
-      summary: Handler to update Variable.
+      summary: Handler to update Variable
       description: 'Allowed Role(s) for Global variables: admin
 
         Allowed Role(s) for ENV variables: admin'
@@ -408,7 +408,7 @@ paths:
     delete:
       tags:
       - Variables
-      summary: Handler to delete Variable byId.
+      summary: Handler to delete Variable byId
       description: 'Allowed Role(s) for Global variables: admin
 
         Allowed Role(s) for ENV variables: admin'
@@ -582,86 +582,6 @@ paths:
           content: {}
 components:
   schemas:
-    VariableContent:
-      title: VariableContent ...
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of variable
-          x-go-name: Description
-        display_on_wizard:
-          type: boolean
-          description: 'Should the variable be shown on wizard
-
-            Used in input scope variables, if it is true, then variable is displayed on wizard'
-          x-go-name: DisplayOnWizard
-        is_invisible:
-          type: boolean
-          x-go-name: IsInvisible
-        is_required:
-          type: boolean
-          description: 'Is the variable Required
-
-            Used in input string and secure string variable, if it is true, then string can''t be emptly'
-          x-go-name: IsRequired
-        name:
-          type: string
-          description: Name of variable
-          x-go-name: Name
-        scope:
-          type: string
-          description: Scope of variable. Scope can be 'input', 'global', 'local', 'static' or 'workflow'
-          x-go-name: Scope
-        type:
-          type: string
-          description: Type of variable. Type can be 'datatype.boolean', 'datatype.string', 'datatype.number' or 'datatype.table'
-          x-go-name: Type
-        value:
-          type: object
-          properties: {}
-          description: Value of variable. Value can be a string, boolean, number or array
-          x-go-name: Value
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    VariableGetAllResponse:
-      type: object
-      properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        id:
-          type: string
-          x-go-name: VariableID
-        owner:
-          type: string
-          x-go-name: Owner
-        properties:
-          $ref: '#/components/schemas/VariableContent'
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-      description: VariableGetAllResponse model for variables
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     VariablePostRequest:
       type: object
       properties:
@@ -722,6 +642,86 @@ components:
           x-go-name: UpdatedOn
       description: VariableGetResponse model for variables
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    VariableGetAllResponse:
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        id:
+          type: string
+          x-go-name: VariableID
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          $ref: '#/components/schemas/VariableContent'
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      description: VariableGetAllResponse model for variables
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    VariableContent:
+      title: VariableContent ...
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of variable
+          x-go-name: Description
+        display_on_wizard:
+          type: boolean
+          description: 'Should the variable be shown on wizard
+
+            Used in input scope variables, if it is true, then variable is displayed on wizard'
+          x-go-name: DisplayOnWizard
+        is_invisible:
+          type: boolean
+          x-go-name: IsInvisible
+        is_required:
+          type: boolean
+          description: 'Is the variable Required
+
+            Used in input string and secure string variable, if it is true, then string can''t be emptly'
+          x-go-name: IsRequired
+        name:
+          type: string
+          description: Name of variable
+          x-go-name: Name
+        scope:
+          type: string
+          description: Scope of variable. Scope can be 'input', 'global', 'local', 'static' or 'workflow'
+          x-go-name: Scope
+        type:
+          type: string
+          description: Type of variable. Type can be 'datatype.boolean', 'datatype.string', 'datatype.number' or 'datatype.table'
+          x-go-name: Type
+        value:
+          type: object
+          properties: {}
+          description: Value of variable. Value can be a string, boolean, number or array
+          x-go-name: Value
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     VariablePutRequest:
       title: VariablePutRequest represents a payload for modifying an existing variable by its ID.
       type: object

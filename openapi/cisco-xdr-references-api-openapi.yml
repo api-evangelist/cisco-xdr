@@ -144,6 +144,19 @@ paths:
           content: {}
 components:
   schemas:
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     ObjectReference:
       type: object
       properties:
@@ -169,6 +182,20 @@ components:
           type: string
           x-go-name: Version
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    AllReferences:
+      type: object
+      properties:
+        used_by:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectReference'
+          x-go-name: UsedBy
+        uses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectReference'
+          x-go-name: Uses
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     State:
       type: string
       description: DefinitionState
@@ -184,33 +211,6 @@ components:
         state:
           $ref: '#/components/schemas/State'
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    StatusDetails:
-      type: object
-      properties:
-        code:
-          type: string
-          x-go-name: Code
-        description:
-          type: string
-          x-go-name: Description
-        message:
-          type: string
-          x-go-name: Message
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    AllReferences:
-      type: object
-      properties:
-        used_by:
-          type: array
-          items:
-            $ref: '#/components/schemas/ObjectReference'
-          x-go-name: UsedBy
-        uses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ObjectReference'
-          x-go-name: Uses
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
   securitySchemes:
     oAuth2:
       type: oauth2
