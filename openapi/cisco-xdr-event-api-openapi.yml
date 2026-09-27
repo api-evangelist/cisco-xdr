@@ -947,12 +947,58 @@ paths:
     - url: https://visibility.amp.cisco.com/
 components:
   schemas:
+    EventBucket:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+        owner:
+          type: string
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartialEvent'
+      additionalProperties: false
+      required:
+      - count
+      - from
+      - to
+      - owner
+      - events
+    Response116834EventsEntity:
+      type: object
+      additionalProperties: {}
     Response116834EventsFieldsChange:
       type: object
       properties:
         before: {}
         after: {}
       additionalProperties: false
+    Update:
+      type: object
+      properties:
+        field:
+          type: string
+        action:
+          type: string
+          enum:
+          - added
+          - deleted
+          - modified
+        change:
+          $ref: '#/components/schemas/Response116834EventsFieldsChange'
+      additionalProperties: false
+      required:
+      - field
+      - action
+      - change
     PartialEvent:
       type: object
       properties:
@@ -992,52 +1038,26 @@ components:
         owner:
           type: string
       additionalProperties: false
-    EventBucket:
+    Cursor:
       type: object
       properties:
-        count:
+        limit:
           type: integer
           format: int64
-        from:
-          type: string
-          format: date-time
-        to:
-          type: string
-          format: date-time
-        owner:
-          type: string
-        events:
+        search_after:
           type: array
           items:
-            $ref: '#/components/schemas/PartialEvent'
+            x-oneOf:
+            - type: string
+            - type: number
+              format: double
+            - type: string
+        offset:
+          type: integer
+          format: int64
       additionalProperties: false
       required:
-      - count
-      - from
-      - to
-      - owner
-      - events
-    Update:
-      type: object
-      properties:
-        field:
-          type: string
-        action:
-          type: string
-          enum:
-          - added
-          - deleted
-          - modified
-        change:
-          $ref: '#/components/schemas/Response116834EventsFieldsChange'
-      additionalProperties: false
-      required:
-      - field
-      - action
-      - change
-    Response116834EventsEntity:
-      type: object
-      additionalProperties: {}
+      - limit
     NotificationRequestEventData:
       type: object
       properties:
@@ -1051,133 +1071,76 @@ components:
       required:
       - event_type
       - notification_request_id
-    PrivateIntelIncidentData:
+    PIAMProvisioningEventData:
       type: object
       properties:
-        event_type:
-          type: string
-          enum:
-          - private-intel/incident/created
-          - private-intel/incident/deleted
-          - private-intel/incident/updated
-        incident_id:
-          type: string
-        updated_fields:
+        licensed:
+          type: boolean
+        entitlements:
           type: array
           items:
-            $ref: '#/components/schemas/UpdatedField'
-        incident:
-          $ref: '#/components/schemas/Incident'
-      additionalProperties: false
-      required:
-      - event_type
-      - incident_id
-    IncidentLastActivityChangeEventData:
-      type: object
-      properties:
-        event_type:
-          type: string
-          enum:
-          - private-intel/incident/last-activity-change
-        incident_id:
-          example: string
-          description: Globally unique URI identifying this object.
-          type: string
-        last_activity_at:
-          type: string
-          format: date-time
-      additionalProperties: false
-      required:
-      - event_type
-      - incident_id
-      - last_activity_at
-    UserEventData:
-      type: object
-      properties:
-        user_id:
-          type: string
-        new_user:
-          $ref: '#/components/schemas/User'
-        old_user:
-          $ref: '#/components/schemas/User'
-        event_type:
-          type: string
-          enum:
-          - user/updated
-          - user/deleted
-          - user/created
-      additionalProperties: false
-      required:
-      - user_id
-      - new_user
-      - old_user
-      - event_type
-    OrgData:
-      type: object
-      properties:
-        event_type:
-          type: string
-          enum:
-          - org/deleting
+            type: string
         org_id:
           type: string
-        delete_date:
+        external_tenant_id:
           type: string
-          format: date-time
-      additionalProperties: false
-      required:
-      - event_type
-      - org_id
-      - delete_date
-    EventSign:
-      type: object
-      properties:
-        value:
+        product_type:
           type: string
-        alg:
+        region:
+          type: string
+        provisioning_status:
           type: string
           enum:
-          - rsassa-pss+sha512
-          - rsassa-pss+sha256
-          - eddsa
-          - rsassa-pkcs15+sha384
-          - ecdsa+sha384
-          - ecdsa+sha512
-          - rsassa-pkcs15+sha512
-          - ecdsa+sha256
-          - rsassa-pss+sha384
-          - rsassa-pkcs15+sha256
-        kid:
+          - IN_PROGRESS
+          - NEW
+          - ERROR
+          - FINISHED
+        product_instance_id:
+          type: string
+        enterprise_id:
+          type: string
+        scc_event_id:
+          type: string
+        event_type:
+          type: string
+          enum:
+          - scc-tenant/created
+          - scc-tenant/updated
+        metadata:
+          $ref: '#/components/schemas/EventDataMetadata'
+        product_name:
           type: string
       additionalProperties: false
       required:
-      - value
-      - alg
-      - kid
-    GenericSearch:
-      type: object
-      additionalProperties: {}
-    SearchEventsResultPaging:
+      - licensed
+      - entitlements
+      - org_id
+      - external_tenant_id
+      - product_type
+      - product_instance_id
+      - enterprise_id
+      - scc_event_id
+      - event_type
+      - metadata
+      - product_name
+    UpdatedField:
       type: object
       properties:
-        total-hits:
-          type: integer
-          format: int64
-        previous:
-          $ref: '#/components/schemas/Cursor'
-        next:
-          $ref: '#/components/schemas/Cursor'
-        sort:
-          type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: number
-              format: double
-            - type: string
+        field:
+          type: string
+        action:
+          type: string
+          enum:
+          - added
+          - deleted
+          - modified
+        value:
+          $ref: '#/components/schemas/EventDataUpdatedFieldsValue'
       additionalProperties: false
       required:
-      - total-hits
+      - field
+      - action
+      - value
     PrivateIntelNoteEventData:
       type: object
       properties:
@@ -1213,6 +1176,446 @@ components:
       - note_id
       - note_class
       - related_entities
+    EventEmiter:
+      type: object
+      properties:
+        user_id:
+          type: string
+        org_id:
+          type: string
+        client_id:
+          type: string
+      additionalProperties: false
+      required:
+      - user_id
+      - org_id
+    EventDataAdditionalNoteRelatedEntities:
+      example:
+        entity_type: string
+        entity_id: string
+      type: object
+      properties:
+        entity_type:
+          example: string
+          type: string
+        entity_id:
+          example: string
+          description: A URI leading to an entity.
+          type: string
+      additionalProperties: {}
+      required:
+      - entity_type
+      - entity_id
+    ModuleInstanceEventData:
+      type: object
+      properties:
+        event_type:
+          type: string
+          enum:
+          - module-instance/restricted
+          - module-instance/reactivated
+          - module-instance/updated
+          - module-instance/created
+          - module-instance/deleted
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_visibility:
+          type: string
+          enum:
+          - global
+          - org
+          - user
+        state_changed?:
+          type: boolean
+      additionalProperties: false
+      required:
+      - event_type
+      - module_instance_id
+      - module_type_id
+      - module_instance_visibility
+    HighImpactIncidentEventData:
+      type: object
+      properties:
+        event_type:
+          type: string
+          enum:
+          - private-intel/incident/high-impact/created
+        incident_id:
+          type: string
+      additionalProperties: false
+      required:
+      - event_type
+      - incident_id
+    IncidentLastActivityChangeEventData:
+      type: object
+      properties:
+        event_type:
+          type: string
+          enum:
+          - private-intel/incident/last-activity-change
+        incident_id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        last_activity_at:
+          type: string
+          format: date-time
+      additionalProperties: false
+      required:
+      - event_type
+      - incident_id
+      - last_activity_at
+    PIAMEntitlementData:
+      type: object
+      properties:
+        event_type:
+          type: string
+          enum:
+          - piam-entitlements/updated
+        org_id:
+          type: string
+      additionalProperties: false
+      required:
+      - event_type
+      - org_id
+    AutomationData:
+      type: object
+      properties:
+        workflow_started_by:
+          type: string
+        workflow_id:
+          type: string
+        workflow_result_code:
+          type: string
+        playbook_task_id:
+          type: string
+        workflow_outcome:
+          type: string
+        workflow_url:
+          type: string
+        workflow_name:
+          type: string
+        incident_id:
+          type: string
+        playbook_task_title:
+          type: string
+        workflow_result:
+          type: string
+        event_type:
+          type: string
+          enum:
+          - auto/workflow/completed
+          - auto/workflow/errored
+          - auto/workflow/started
+        workflow_origin:
+          type: string
+        workflow_timestamp:
+          type: string
+      additionalProperties: false
+      required:
+      - workflow_started_by
+      - workflow_id
+      - workflow_result_code
+      - workflow_outcome
+      - workflow_url
+      - workflow_name
+      - incident_id
+      - workflow_result
+      - event_type
+      - workflow_timestamp
+    Event:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        data:
+          x-oneOf:
+          - $ref: '#/components/schemas/ModuleInstanceEventData'
+          - $ref: '#/components/schemas/HighImpactIncidentEventData'
+          - $ref: '#/components/schemas/IncidentEnrichmentEventData'
+          - $ref: '#/components/schemas/IncidentStatusChangeEventData'
+          - $ref: '#/components/schemas/IncidentLastActivityChangeEventData'
+          - $ref: '#/components/schemas/PrivateIntelNoteEventData'
+          - $ref: '#/components/schemas/PrivateIntelIncidentData'
+          - $ref: '#/components/schemas/PIAMEntitlementData'
+          - $ref: '#/components/schemas/EntitlementData'
+          - $ref: '#/components/schemas/AutomationData'
+          - $ref: '#/components/schemas/NotificationRequestEventData'
+          - $ref: '#/components/schemas/OrgData'
+          - $ref: '#/components/schemas/PIAMProvisioningEventData'
+          - $ref: '#/components/schemas/UserEventData'
+        issuer:
+          type: string
+        id:
+          type: string
+        acknowledged_at:
+          type: string
+          format: date-time
+        emiter:
+          $ref: '#/components/schemas/EventEmiter'
+        sign:
+          $ref: '#/components/schemas/EventSign'
+      additionalProperties: false
+      required:
+      - data
+      - id
+      - emiter
+    IncidentTime:
+      example:
+        opened: '2016-01-01T01:01:01.000Z'
+        discovered: '2016-01-01T01:01:01.000Z'
+        reported: '2016-01-01T01:01:01.000Z'
+        remediated: '2016-01-01T01:01:01.000Z'
+        closed: '2016-01-01T01:01:01.000Z'
+        rejected: '2016-01-01T01:01:01.000Z'
+        contained: '2016-01-01T01:01:01.000Z'
+      description: Relevant time values associated with this Incident.
+      type: object
+      properties:
+        opened:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time the incident was first opened.
+          type: string
+          format: date-time
+        discovered:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time the incident was first discovered.
+          type: string
+          format: date-time
+        reported:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time the incident was first reported.
+          type: string
+          format: date-time
+        remediated:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time that the remediation of the damage from the incident was completed.
+          type: string
+          format: date-time
+        closed:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time that the incident was last closed.
+          type: string
+          format: date-time
+        rejected:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time that the incident was first rejected.
+          type: string
+          format: date-time
+        contained:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time that the incident was first contained.
+          type: string
+          format: date-time
+      additionalProperties: false
+      required:
+      - opened
+    EventDataUpdatedFieldsValue:
+      type: object
+      properties:
+        before: {}
+        after: {}
+      additionalProperties: false
+    SearchEventsResultPaging:
+      type: object
+      properties:
+        total-hits:
+          type: integer
+          format: int64
+        previous:
+          $ref: '#/components/schemas/Cursor'
+        next:
+          $ref: '#/components/schemas/Cursor'
+        sort:
+          type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: number
+              format: double
+            - type: string
+      additionalProperties: false
+      required:
+      - total-hits
+    EntitlementData:
+      type: object
+      properties:
+        event_type:
+          type: string
+          enum:
+          - entitlements/updated
+        org_id:
+          type: string
+      additionalProperties: false
+      required:
+      - event_type
+      - org_id
+    EventSign:
+      type: object
+      properties:
+        value:
+          type: string
+        alg:
+          type: string
+          enum:
+          - rsassa-pss+sha512
+          - rsassa-pss+sha256
+          - eddsa
+          - rsassa-pkcs15+sha384
+          - ecdsa+sha384
+          - ecdsa+sha512
+          - rsassa-pkcs15+sha512
+          - ecdsa+sha256
+          - rsassa-pss+sha384
+          - rsassa-pkcs15+sha256
+        kid:
+          type: string
+      additionalProperties: false
+      required:
+      - value
+      - alg
+      - kid
+    GenericSearch:
+      type: object
+      additionalProperties: {}
+    IdPMapping:
+      type: object
+      properties:
+        idp:
+          type: string
+        user-identity-id:
+          type: string
+        organization-id:
+          type: string
+        cco-id:
+          type: string
+        enabled?:
+          type: boolean
+      additionalProperties: {}
+      required:
+      - idp
+      - user-identity-id
+    IncidentEnrichmentEventData:
+      type: object
+      properties:
+        event_type:
+          type: string
+          enum:
+          - private-intel/incident/asset-enrichment/succeeded
+        incident_id:
+          type: string
+      additionalProperties: false
+      required:
+      - event_type
+      - incident_id
+    IncidentStatusChangeEventData:
+      type: object
+      properties:
+        event_type:
+          type: string
+          enum:
+          - private-intel/incident/status-changed
+        incident_id:
+          example: string
+          description: Globally unique URI identifying this object.
+          type: string
+        status_from:
+          example: Closed
+          description: The `status` field represents the current state of an incident within the incident management process. Its values help in tracking and reporting the progress of the incident from its discovery to its resolution.
+          type: string
+          enum:
+          - New
+          - Closed
+          - 'Open: Recovered'
+          - 'Closed: Other'
+          - 'Hold: Internal'
+          - 'Hold: Legal'
+          - 'Closed: Under Review'
+          - Rejected
+          - Open
+          - 'Closed: Merged'
+          - Restoration Achieved
+          - Incident Reported
+          - 'Closed: Suspected'
+          - Stalled
+          - 'Open: Contained'
+          - 'Closed: Near-Miss'
+          - 'Hold: External'
+          - Containment Achieved
+          - 'New: Processing'
+          - 'Closed: Confirmed Threat'
+          - 'Closed: False Positive'
+          - 'Open: Reported'
+          - 'Open: Investigating'
+          - Hold
+          - 'New: Presented'
+        status_to:
+          example: Closed
+          description: The `status` field represents the current state of an incident within the incident management process. Its values help in tracking and reporting the progress of the incident from its discovery to its resolution.
+          type: string
+          enum:
+          - New
+          - Closed
+          - 'Open: Recovered'
+          - 'Closed: Other'
+          - 'Hold: Internal'
+          - 'Hold: Legal'
+          - 'Closed: Under Review'
+          - Rejected
+          - Open
+          - 'Closed: Merged'
+          - Restoration Achieved
+          - Incident Reported
+          - 'Closed: Suspected'
+          - Stalled
+          - 'Open: Contained'
+          - 'Closed: Near-Miss'
+          - 'Hold: External'
+          - Containment Achieved
+          - 'New: Processing'
+          - 'Closed: Confirmed Threat'
+          - 'Closed: False Positive'
+          - 'Open: Reported'
+          - 'Open: Investigating'
+          - Hold
+          - 'New: Presented'
+        external_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+      required:
+      - event_type
+      - incident_id
+      - status_from
+      - status_to
+      - external_ids
+    PrivateIntelIncidentData:
+      type: object
+      properties:
+        event_type:
+          type: string
+          enum:
+          - private-intel/incident/created
+          - private-intel/incident/deleted
+          - private-intel/incident/updated
+        incident_id:
+          type: string
+        updated_fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdatedField'
+        incident:
+          $ref: '#/components/schemas/Incident'
+      additionalProperties: false
+      required:
+      - event_type
+      - incident_id
     User:
       type: object
       properties:
@@ -1304,198 +1707,17 @@ components:
       - user-id
       - enabled?
       - created-at
-    ModuleInstanceEventData:
+    EventDataRelatedEntities:
       type: object
       properties:
-        event_type:
+        entity_type:
           type: string
-          enum:
-          - module-instance/restricted
-          - module-instance/reactivated
-          - module-instance/updated
-          - module-instance/created
-          - module-instance/deleted
-        module_instance_id:
-          type: string
-        module_type_id:
-          type: string
-        module_instance_visibility:
-          type: string
-          enum:
-          - global
-          - org
-          - user
-        state_changed?:
-          type: boolean
-      additionalProperties: false
-      required:
-      - event_type
-      - module_instance_id
-      - module_type_id
-      - module_instance_visibility
-    Cursor:
-      type: object
-      properties:
-        limit:
-          type: integer
-          format: int64
-        search_after:
-          type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: number
-              format: double
-            - type: string
-        offset:
-          type: integer
-          format: int64
-      additionalProperties: false
-      required:
-      - limit
-    PIAMProvisioningEventData:
-      type: object
-      properties:
-        licensed:
-          type: boolean
-        entitlements:
-          type: array
-          items:
-            type: string
-        org_id:
-          type: string
-        external_tenant_id:
-          type: string
-        product_type:
-          type: string
-        region:
-          type: string
-        provisioning_status:
-          type: string
-          enum:
-          - IN_PROGRESS
-          - NEW
-          - ERROR
-          - FINISHED
-        product_instance_id:
-          type: string
-        enterprise_id:
-          type: string
-        scc_event_id:
-          type: string
-        event_type:
-          type: string
-          enum:
-          - scc-tenant/created
-          - scc-tenant/updated
-        metadata:
-          $ref: '#/components/schemas/EventDataMetadata'
-        product_name:
+        entity_id:
           type: string
       additionalProperties: false
       required:
-      - licensed
-      - entitlements
-      - org_id
-      - external_tenant_id
-      - product_type
-      - product_instance_id
-      - enterprise_id
-      - scc_event_id
-      - event_type
-      - metadata
-      - product_name
-    SCIMInfos:
-      type: object
-      properties:
-        id:
-          type: string
-        access-token:
-          type: string
-        group-id:
-          type: string
-      additionalProperties: {}
-      required:
-      - id
-      - access-token
-      - group-id
-    UpdatedField:
-      type: object
-      properties:
-        field:
-          type: string
-        action:
-          type: string
-          enum:
-          - added
-          - deleted
-          - modified
-        value:
-          $ref: '#/components/schemas/EventDataUpdatedFieldsValue'
-      additionalProperties: false
-      required:
-      - field
-      - action
-      - value
-    Event:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        data:
-          x-oneOf:
-          - $ref: '#/components/schemas/ModuleInstanceEventData'
-          - $ref: '#/components/schemas/HighImpactIncidentEventData'
-          - $ref: '#/components/schemas/IncidentEnrichmentEventData'
-          - $ref: '#/components/schemas/IncidentStatusChangeEventData'
-          - $ref: '#/components/schemas/IncidentLastActivityChangeEventData'
-          - $ref: '#/components/schemas/PrivateIntelNoteEventData'
-          - $ref: '#/components/schemas/PrivateIntelIncidentData'
-          - $ref: '#/components/schemas/PIAMEntitlementData'
-          - $ref: '#/components/schemas/EntitlementData'
-          - $ref: '#/components/schemas/AutomationData'
-          - $ref: '#/components/schemas/NotificationRequestEventData'
-          - $ref: '#/components/schemas/OrgData'
-          - $ref: '#/components/schemas/PIAMProvisioningEventData'
-          - $ref: '#/components/schemas/UserEventData'
-        issuer:
-          type: string
-        id:
-          type: string
-        acknowledged_at:
-          type: string
-          format: date-time
-        emiter:
-          $ref: '#/components/schemas/EventEmiter'
-        sign:
-          $ref: '#/components/schemas/EventSign'
-      additionalProperties: false
-      required:
-      - data
-      - id
-      - emiter
-    MetaData:
-      example:
-        keyword: string
-      description: metadata associated to the incident.
-      type: object
-      additionalProperties:
-        example: string
-        description: custom field relevant to attach meta data to.
-        x-oneOf:
-        - example: string
-          type: string
-        - example: 10.0
-          type: number
-          format: double
-        - example: '2016-01-01T01:01:01.000Z'
-          type: string
-          format: date-time
-        - example: keyword
-          type: string
-        - example: true
-          type: boolean
+      - entity_type
+      - entity_id
     EventDataAdditionalNoteExternalReferences:
       example:
         source_name: string
@@ -1533,265 +1755,6 @@ components:
       additionalProperties: {}
       required:
       - source_name
-    SearchEventsResult:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-        paging:
-          $ref: '#/components/schemas/SearchEventsResultPaging'
-      additionalProperties: false
-      required:
-      - data
-      - paging
-    EntitlementData:
-      type: object
-      properties:
-        event_type:
-          type: string
-          enum:
-          - entitlements/updated
-        org_id:
-          type: string
-      additionalProperties: false
-      required:
-      - event_type
-      - org_id
-    EventDataAdditional:
-      type: object
-      properties:
-        note:
-          $ref: '#/components/schemas/EventDataAdditionalNote'
-      additionalProperties: false
-      required:
-      - note
-    EventEmiter:
-      type: object
-      properties:
-        user_id:
-          type: string
-        org_id:
-          type: string
-        client_id:
-          type: string
-      additionalProperties: false
-      required:
-      - user_id
-      - org_id
-    EventDataUpdatedFieldsValue:
-      type: object
-      properties:
-        before: {}
-        after: {}
-      additionalProperties: false
-    HighImpactIncidentEventData:
-      type: object
-      properties:
-        event_type:
-          type: string
-          enum:
-          - private-intel/incident/high-impact/created
-        incident_id:
-          type: string
-      additionalProperties: false
-      required:
-      - event_type
-      - incident_id
-    IncidentScores:
-      example:
-        asset: 10.0
-      description: Used to indicate the severity or impact score of the threat represented by the incident.
-      type: object
-      additionalProperties:
-        example: 10.0
-        description: "Field is used to indicate the severity or impact of the threat represented by the incident.\nIt's an open-type dictionary object with score types and numeric value of the score.\n\nFor example, systems can have the following score types:\n\n- `asset` - assesses the potential damage or harm that the threat can cause to the affected asset(s). The scale ranges from 0 to 10, with 10 indicating the highest potential harm. \n\n- `global` - assesses the overall impact or significance of the threat to the organization or wider community. The scale ranges from 0 to 1000, with 1000 indicating the highest impact.\n\n- `ttp` - a measure of the threat actor's proficiency in utilizing TTPs. Typically, ranges from 0-100, with a higher score indicating a greater threat or concern."
-        type: number
-        format: double
-    EventDataMetadata:
-      type: object
-      properties:
-        cii_api_url:
-          type: string
-        cii_environment:
-          type: string
-      additionalProperties: {}
-    ExternalReference:
-      example:
-        source_name: string
-        description: string
-        url: string
-        hashes:
-        - string
-        external_id: string
-      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
-      type: object
-      properties:
-        source_name:
-          example: string
-          description: The source within which the external-reference is defined (system, registry, organization, etc.)
-          type: string
-        description:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        url:
-          example: string
-          description: A URL reference to an external resource.
-          type: string
-        hashes:
-          example:
-          - string
-          description: Specifies a dictionary of hashes for the contents of the url.
-          type: array
-          items:
-            type: string
-        external_id:
-          example: string
-          description: An identifier for the external reference content.
-          type: string
-      additionalProperties: false
-      required:
-      - source_name
-    IncidentEnrichmentEventData:
-      type: object
-      properties:
-        event_type:
-          type: string
-          enum:
-          - private-intel/incident/asset-enrichment/succeeded
-        incident_id:
-          type: string
-      additionalProperties: false
-      required:
-      - event_type
-      - incident_id
-    IncidentTime:
-      example:
-        opened: '2016-01-01T01:01:01.000Z'
-        discovered: '2016-01-01T01:01:01.000Z'
-        reported: '2016-01-01T01:01:01.000Z'
-        remediated: '2016-01-01T01:01:01.000Z'
-        closed: '2016-01-01T01:01:01.000Z'
-        rejected: '2016-01-01T01:01:01.000Z'
-        contained: '2016-01-01T01:01:01.000Z'
-      description: Relevant time values associated with this Incident.
-      type: object
-      properties:
-        opened:
-          example: '2016-01-01T01:01:01.000Z'
-          description: Time the incident was first opened.
-          type: string
-          format: date-time
-        discovered:
-          example: '2016-01-01T01:01:01.000Z'
-          description: Time the incident was first discovered.
-          type: string
-          format: date-time
-        reported:
-          example: '2016-01-01T01:01:01.000Z'
-          description: Time the incident was first reported.
-          type: string
-          format: date-time
-        remediated:
-          example: '2016-01-01T01:01:01.000Z'
-          description: Time that the remediation of the damage from the incident was completed.
-          type: string
-          format: date-time
-        closed:
-          example: '2016-01-01T01:01:01.000Z'
-          description: Time that the incident was last closed.
-          type: string
-          format: date-time
-        rejected:
-          example: '2016-01-01T01:01:01.000Z'
-          description: Time that the incident was first rejected.
-          type: string
-          format: date-time
-        contained:
-          example: '2016-01-01T01:01:01.000Z'
-          description: Time that the incident was first contained.
-          type: string
-          format: date-time
-      additionalProperties: false
-      required:
-      - opened
-    AutomationData:
-      type: object
-      properties:
-        workflow_started_by:
-          type: string
-        workflow_id:
-          type: string
-        workflow_result_code:
-          type: string
-        playbook_task_id:
-          type: string
-        workflow_outcome:
-          type: string
-        workflow_url:
-          type: string
-        workflow_name:
-          type: string
-        incident_id:
-          type: string
-        playbook_task_title:
-          type: string
-        workflow_result:
-          type: string
-        event_type:
-          type: string
-          enum:
-          - auto/workflow/completed
-          - auto/workflow/errored
-          - auto/workflow/started
-        workflow_origin:
-          type: string
-        workflow_timestamp:
-          type: string
-      additionalProperties: false
-      required:
-      - workflow_started_by
-      - workflow_id
-      - workflow_result_code
-      - workflow_outcome
-      - workflow_url
-      - workflow_name
-      - incident_id
-      - workflow_result
-      - event_type
-      - workflow_timestamp
-    PIAMEntitlementData:
-      type: object
-      properties:
-        event_type:
-          type: string
-          enum:
-          - piam-entitlements/updated
-        org_id:
-          type: string
-      additionalProperties: false
-      required:
-      - event_type
-      - org_id
-    EventDataAdditionalNoteRelatedEntities:
-      example:
-        entity_type: string
-        entity_id: string
-      type: object
-      properties:
-        entity_type:
-          example: string
-          type: string
-        entity_id:
-          example: string
-          description: A URI leading to an entity.
-          type: string
-      additionalProperties: {}
-      required:
-      - entity_type
-      - entity_id
     EventDataAdditionalNote:
       type: object
       properties:
@@ -1900,107 +1863,134 @@ components:
       - type
       - id
       - related_entities
-    IncidentStatusChangeEventData:
+    OrgData:
       type: object
       properties:
         event_type:
           type: string
           enum:
-          - private-intel/incident/status-changed
-        incident_id:
-          example: string
-          description: Globally unique URI identifying this object.
+          - org/deleting
+        org_id:
           type: string
-        status_from:
-          example: Closed
-          description: The `status` field represents the current state of an incident within the incident management process. Its values help in tracking and reporting the progress of the incident from its discovery to its resolution.
+        delete_date:
           type: string
-          enum:
-          - New
-          - Closed
-          - 'Open: Recovered'
-          - 'Closed: Other'
-          - 'Hold: Internal'
-          - 'Hold: Legal'
-          - 'Closed: Under Review'
-          - Rejected
-          - Open
-          - 'Closed: Merged'
-          - Restoration Achieved
-          - Incident Reported
-          - 'Closed: Suspected'
-          - Stalled
-          - 'Open: Contained'
-          - 'Closed: Near-Miss'
-          - 'Hold: External'
-          - Containment Achieved
-          - 'New: Processing'
-          - 'Closed: Confirmed Threat'
-          - 'Closed: False Positive'
-          - 'Open: Reported'
-          - 'Open: Investigating'
-          - Hold
-          - 'New: Presented'
-        status_to:
-          example: Closed
-          description: The `status` field represents the current state of an incident within the incident management process. Its values help in tracking and reporting the progress of the incident from its discovery to its resolution.
-          type: string
-          enum:
-          - New
-          - Closed
-          - 'Open: Recovered'
-          - 'Closed: Other'
-          - 'Hold: Internal'
-          - 'Hold: Legal'
-          - 'Closed: Under Review'
-          - Rejected
-          - Open
-          - 'Closed: Merged'
-          - Restoration Achieved
-          - Incident Reported
-          - 'Closed: Suspected'
-          - Stalled
-          - 'Open: Contained'
-          - 'Closed: Near-Miss'
-          - 'Hold: External'
-          - Containment Achieved
-          - 'New: Processing'
-          - 'Closed: Confirmed Threat'
-          - 'Closed: False Positive'
-          - 'Open: Reported'
-          - 'Open: Investigating'
-          - Hold
-          - 'New: Presented'
-        external_ids:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
+          format: date-time
       additionalProperties: false
       required:
       - event_type
-      - incident_id
-      - status_from
-      - status_to
-      - external_ids
-    IdPMapping:
+      - org_id
+      - delete_date
+    IncidentScores:
+      example:
+        asset: 10.0
+      description: Used to indicate the severity or impact score of the threat represented by the incident.
+      type: object
+      additionalProperties:
+        example: 10.0
+        description: "Field is used to indicate the severity or impact of the threat represented by the incident.\nIt's an open-type dictionary object with score types and numeric value of the score.\n\nFor example, systems can have the following score types:\n\n- `asset` - assesses the potential damage or harm that the threat can cause to the affected asset(s). The scale ranges from 0 to 10, with 10 indicating the highest potential harm. \n\n- `global` - assesses the overall impact or significance of the threat to the organization or wider community. The scale ranges from 0 to 1000, with 1000 indicating the highest impact.\n\n- `ttp` - a measure of the threat actor's proficiency in utilizing TTPs. Typically, ranges from 0-100, with a higher score indicating a greater threat or concern."
+        type: number
+        format: double
+    ExternalReference:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
       type: object
       properties:
-        idp:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
           type: string
-        user-identity-id:
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
           type: string
-        organization-id:
+        url:
+          example: string
+          description: A URL reference to an external resource.
           type: string
-        cco-id:
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
           type: string
-        enabled?:
-          type: boolean
+      additionalProperties: false
+      required:
+      - source_name
+    EventDataMetadata:
+      type: object
+      properties:
+        cii_api_url:
+          type: string
+        cii_environment:
+          type: string
+      additionalProperties: {}
+    UserEventData:
+      type: object
+      properties:
+        user_id:
+          type: string
+        new_user:
+          $ref: '#/components/schemas/User'
+        old_user:
+          $ref: '#/components/schemas/User'
+        event_type:
+          type: string
+          enum:
+          - user/updated
+          - user/deleted
+          - user/created
+      additionalProperties: false
+      required:
+      - user_id
+      - new_user
+      - old_user
+      - event_type
+    SCIMInfos:
+      type: object
+      properties:
+        id:
+          type: string
+        access-token:
+          type: string
+        group-id:
+          type: string
       additionalProperties: {}
       required:
-      - idp
-      - user-identity-id
+      - id
+      - access-token
+      - group-id
+    MetaData:
+      example:
+        keyword: string
+      description: metadata associated to the incident.
+      type: object
+      additionalProperties:
+        example: string
+        description: custom field relevant to attach meta data to.
+        x-oneOf:
+        - example: string
+          type: string
+        - example: 10.0
+          type: number
+          format: double
+        - example: '2016-01-01T01:01:01.000Z'
+          type: string
+          format: date-time
+        - example: keyword
+          type: string
+        - example: true
+          type: boolean
     Incident:
       type: object
       properties:
@@ -2241,17 +2231,27 @@ components:
       - status
       - id
       - confidence
-    EventDataRelatedEntities:
+    SearchEventsResult:
       type: object
       properties:
-        entity_type:
-          type: string
-        entity_id:
-          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        paging:
+          $ref: '#/components/schemas/SearchEventsResultPaging'
       additionalProperties: false
       required:
-      - entity_type
-      - entity_id
+      - data
+      - paging
+    EventDataAdditional:
+      type: object
+      properties:
+        note:
+          $ref: '#/components/schemas/EventDataAdditionalNote'
+      additionalProperties: false
+      required:
+      - note
   securitySchemes:
     JWT:
       type: apiKey

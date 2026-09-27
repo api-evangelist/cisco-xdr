@@ -704,6 +704,11 @@ apis:
   name: Cisco XDR Vulnerability API
   description: The Vulnerability API from Cisco XDR — 9 operation(s) for vulnerability.
   tags:
+  - Vulnerabilities
+  - Security
+  - XDR
+  - Threat Detection
+  tags_raw:
   - Vulnerability
   - Security
   - XDR
@@ -1003,40 +1008,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-triggers-api-openapi.yml
-- aid: cisco-xdr:cisco-xdr-v1-api
-  name: Cisco XDR V1 API
-  description: The v1 API from Cisco XDR — 4 operation(s) for v1.
-  humanURL: https://developer.cisco.com/docs/cisco-xdr/
-  baseURL: https://private.intel.amp.cisco.com
-  tags:
-  - v1
-  properties:
-  - type: OpenAPI
-    url: openapi/cisco-xdr-v1-api-openapi.yml
-- aid: cisco-xdr:cisco-xdr-v2-api
-  name: Cisco XDR V2 API
-  description: The v2 API from Cisco XDR — 75 operation(s) for v2.
-  humanURL: https://developer.cisco.com/docs/cisco-xdr/
-  baseURL: https://private.intel.amp.cisco.com
-  tags:
-  - v2
-  tags_raw:
-  - v2
-  properties:
-  - type: OpenAPI
-    url: openapi/cisco-xdr-v2-api-openapi.yml
-- aid: cisco-xdr:cisco-xdr-v3-api
-  name: Cisco XDR V3 API
-  description: The v3 API from Cisco XDR — 10 operation(s) for v3.
-  humanURL: https://developer.cisco.com/docs/cisco-xdr/
-  baseURL: https://private.intel.amp.cisco.com
-  tags:
-  - v3
-  tags_raw:
-  - v3
-  properties:
-  - type: OpenAPI
-    url: openapi/cisco-xdr-v3-api-openapi.yml
 - aid: cisco-xdr:cisco-xdr-variables-api
   name: Cisco XDR Variables API
   description: The Variables API from Cisco XDR — 3 operation(s) for variables.
@@ -1100,14 +1071,107 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/cisco-xdr-xchange-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-incident-overview-api
+  name: Cisco XDR Incident Overview API
+  description: The Incident Overview API from Cisco XDR — 16 operation(s) for incident overview.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Incident Overview
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-incident-overview-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-incident-report-api
+  name: Cisco XDR Incident Report API
+  description: The Incident Report API from Cisco XDR — 3 operation(s) for incident report.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Incident Report
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-incident-report-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-incident-routes-using-entities-api
+  name: Cisco XDR Incident Routes using Entities API
+  description: >-
+    The Incident Routes using Entities API from Cisco XDR — 5 operation(s) for incident routes using entities.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Incident Routes using Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-incident-routes-using-entities-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-incident-summary-api
+  name: Cisco XDR Incident Summary API
+  description: The Incident Summary API from Cisco XDR — 1 operation(s) for incident summary.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Incident Summary
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-incident-summary-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-investigation-creation-api
+  name: Cisco XDR Investigation Creation API
+  description: >-
+    The Investigation Creation API from Cisco XDR — 4 operation(s) for investigation creation.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Investigation Creation
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-investigation-creation-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-investigation-data-api
+  name: Cisco XDR Investigation Data API
+  description: The Investigation Data API from Cisco XDR — 11 operation(s) for investigation data.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Investigation Data
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-investigation-data-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-investigation-routes-using-entities-api
+  name: Cisco XDR Investigation Routes using Entities API
+  description: >-
+    The Investigation Routes using Entities API from Cisco XDR — 3 operation(s) for investigation routes
+    using entities.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Investigation Routes using Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-investigation-routes-using-entities-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-investigation-save-update-api
+  name: Cisco XDR Investigation Save/Update API
+  description: >-
+    The Investigation Save/Update API from Cisco XDR — 8 operation(s) for investigation save/update.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Investigation Save/Update
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-investigation-save-update-api-openapi.yml
+- aid: cisco-xdr:cisco-xdr-report-api
+  name: Cisco XDR Report API
+  description: The Report API from Cisco XDR — 13 operation(s) for report.
+  humanURL: https://developer.cisco.com/docs/cisco-xdr/
+  baseURL: https://private.intel.amp.cisco.com
+  tags:
+  - Report
+  properties:
+  - type: OpenAPI
+    url: openapi/cisco-xdr-report-api-openapi.yml
 - aid: cisco-xdr:cisco-xdr-graph-ql-api
   name: Cisco XDR Graph QL API
   description: The Graph QL API from Cisco XDR — 1 operation(s) for graph ql.
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
-  - GraphQL
-  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI

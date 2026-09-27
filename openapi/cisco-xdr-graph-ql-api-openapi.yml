@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: CTIA Graph QL API
+  title: CTIA GraphQL API
   version: 4178275a824512c2fd3a2acdb0e8277233919054 v2.71.0
   license:
     name: All Rights Reserved
@@ -90,6 +90,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    RelayGraphQLResponse:
+      type: object
+      properties:
+        data: {}
+        errors:
+          type: array
+          items: {}
+      additionalProperties: false
+      required:
+      - data
     RelayGraphQLQuery:
       description: a Relay compatible GraphQL body
       type: object
@@ -104,16 +114,6 @@ components:
       additionalProperties: false
       required:
       - query
-    RelayGraphQLResponse:
-      type: object
-      properties:
-        data: {}
-        errors:
-          type: array
-          items: {}
-      additionalProperties: false
-      required:
-      - data
   securitySchemes:
     JWT:
       type: apiKey

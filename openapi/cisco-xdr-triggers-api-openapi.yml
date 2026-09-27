@@ -523,36 +523,38 @@ paths:
           content: {}
 components:
   schemas:
-    TriggerStatus:
-      title: TriggerStatus ...
+    TriggerPutRequest:
+      required:
+      - type
       type: object
       properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        error_msg:
-          type: string
-          x-go-name: ErrorMsg
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    StatusDetails:
-      type: object
-      properties:
-        code:
-          type: string
-          x-go-name: Code
         description:
           type: string
+          description: Description of Trigger
           x-go-name: Description
-        message:
+        disabled:
+          type: boolean
+          description: Disabled
+          x-go-name: Disabled
+        name:
           type: string
-          x-go-name: Message
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    TriggerType:
-      title: TriggerType ...
+          description: Name of Trigger
+          x-go-name: Name
+        ref_id:
+          type: string
+          description: RefID, ID of an Event or ID of an schedule
+          x-go-name: RefID
+        type:
+          $ref: '#/components/schemas/TriggerType'
+        version:
+          type: string
+          description: Version of Trigger
+          x-go-name: Version
+      description: TriggerPutRequest struct for triggers post api
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    State:
       type: string
+      description: DefinitionState
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     Trigger:
       title: Trigger ...
@@ -614,6 +616,20 @@ components:
           type: string
           x-go-name: WorkflowID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    TriggerStatus:
+      title: TriggerStatus ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        error_msg:
+          type: string
+          x-go-name: ErrorMsg
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     TriggerPostRequest:
       required:
       - name
@@ -649,38 +665,22 @@ components:
           x-go-name: Version
       description: TriggerPostRequest struct for triggers post api
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    TriggerPutRequest:
-      required:
-      - type
+    StatusDetails:
       type: object
       properties:
+        code:
+          type: string
+          x-go-name: Code
         description:
           type: string
-          description: Description of Trigger
           x-go-name: Description
-        disabled:
-          type: boolean
-          description: Disabled
-          x-go-name: Disabled
-        name:
+        message:
           type: string
-          description: Name of Trigger
-          x-go-name: Name
-        ref_id:
-          type: string
-          description: RefID, ID of an Event or ID of an schedule
-          x-go-name: RefID
-        type:
-          $ref: '#/components/schemas/TriggerType'
-        version:
-          type: string
-          description: Version of Trigger
-          x-go-name: Version
-      description: TriggerPutRequest struct for triggers post api
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    State:
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TriggerType:
+      title: TriggerType ...
       type: string
-      description: DefinitionState
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
   securitySchemes:
     oAuth2:

@@ -474,83 +474,6 @@ paths:
           content: {}
 components:
   schemas:
-    EventPutRequest:
-      title: EventPutRequest ...
-      required:
-      - properties
-      - title
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of Event
-          x-go-name: Description
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Properties of event
-          x-go-name: Properties
-        title:
-          type: string
-          description: Title of Event
-          x-go-name: Title
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    EventPostRequest:
-      required:
-      - properties
-      - title
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of Event
-          x-go-name: Description
-        name:
-          type: string
-          description: Name of Event
-          x-go-name: Name
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Properties of event
-          x-go-name: Properties
-        schema_id:
-          type: string
-          description: ViewSchemaID of Schedule
-          x-go-name: ViewSchemaID
-        title:
-          type: string
-          description: Title of Event
-          x-go-name: Title
-        type:
-          type: string
-          description: Type
-          x-go-name: Type
-        unique_name:
-          type: string
-          description: Uniquename
-          x-go-name: UniqueName
-      description: 'EventPostRequest struct for events post api
-
-        Either ViewSchemaID or Type or both can be provided to create an Event.'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    StatusDetails:
-      type: object
-      properties:
-        code:
-          type: string
-          x-go-name: Code
-        description:
-          type: string
-          x-go-name: Description
-        message:
-          type: string
-          x-go-name: Message
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     Event:
       title: Event ...
       required:
@@ -618,10 +541,87 @@ components:
           format: date-time
           x-go-name: UpdatedOn
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    EventPostRequest:
+      required:
+      - properties
+      - title
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Event
+          x-go-name: Description
+        name:
+          type: string
+          description: Name of Event
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of event
+          x-go-name: Properties
+        schema_id:
+          type: string
+          description: ViewSchemaID of Schedule
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          description: Title of Event
+          x-go-name: Title
+        type:
+          type: string
+          description: Type
+          x-go-name: Type
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+      description: 'EventPostRequest struct for events post api
+
+        Either ViewSchemaID or Type or both can be provided to create an Event.'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     State:
       type: string
       description: DefinitionState
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    EventPutRequest:
+      title: EventPutRequest ...
+      required:
+      - properties
+      - title
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Event
+          x-go-name: Description
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of event
+          x-go-name: Properties
+        title:
+          type: string
+          description: Title of Event
+          x-go-name: Title
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     Status:
       title: Status ...
       type: object

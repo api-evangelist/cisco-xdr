@@ -636,14 +636,6 @@ paths:
           content: {}
 components:
   schemas:
-    RulePriorityPatchRequest:
-      title: RulePriorityPatchRequest ...
-      type: object
-      properties:
-        id:
-          type: string
-          x-go-name: RuleID
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     Rule:
       title: Rule ...
       required:
@@ -713,33 +705,76 @@ components:
           format: date-time
           x-go-name: UpdatedOn
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    RuleStatus:
-      title: RuleStatus ...
+    GetAllRulesPaginatedResponse:
+      title: An GetAllRulesPaginatedResponse model.
       type: object
       properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        error_msg:
-          type: string
-          x-go-name: ErrorMsg
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetAllRuleResponse'
+          x-go-name: Results
+        total_count:
+          type: integer
+          format: int32
+          x-go-name: TotalCount
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    State:
+      type: string
+      description: DefinitionState
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    StatusDetails:
+    PaginationLink:
       type: object
       properties:
-        code:
+        next:
           type: string
-          x-go-name: Code
-        description:
+          x-go-name: Next
+        prev:
           type: string
-          x-go-name: Description
-        message:
+          x-go-name: Prev
+        self:
           type: string
-          x-go-name: Message
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    PrevRulePriorityPatchRequest:
+      title: PrevRulePriorityPatchRequest ...
+      type: object
+      properties:
+        id:
+          type: string
+          x-go-name: RuleID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    RuleType:
+      title: RuleType ...
+      type: string
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    RulesPostRequest:
+      title: RulesPostRequest ...
+      type: object
+      properties:
+        group_by_priority_order:
+          type: string
+          description: 'Flag for Group by, values: "true"/"false". Only supports incident rule types
+
+            in: body'
+          x-go-name: GroupByPriorityOrder
+        standalone:
+          type: string
+          description: 'Flag for standalone rules, values: "true"/"false"
+
+            in: body'
+          x-go-name: Standalone
+        types:
+          type: array
+          description: 'list of types to get for.
+
+            in: body'
+          items:
+            type: string
+          x-go-name: Types
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     RulePostRequest:
       required:
       - properties
@@ -781,34 +816,6 @@ components:
 
         Either ViewSchemaID or Type or both can be provided to create an Rule.'
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    GetAllRulesPaginatedResponse:
-      title: An GetAllRulesPaginatedResponse model.
-      type: object
-      properties:
-        _links:
-          $ref: '#/components/schemas/PaginationLink'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetAllRuleResponse'
-          x-go-name: Results
-        total_count:
-          type: integer
-          format: int32
-          x-go-name: TotalCount
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    RuleType:
-      title: RuleType ...
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    PrevRulePriorityPatchRequest:
-      title: PrevRulePriorityPatchRequest ...
-      type: object
-      properties:
-        id:
-          type: string
-          x-go-name: RuleID
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     RulePutRequest:
       required:
       - properties
@@ -836,19 +843,6 @@ components:
           x-go-name: Title
       description: RulePutRequest struct for rule put api
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    PaginationLink:
-      type: object
-      properties:
-        next:
-          type: string
-          x-go-name: Next
-        prev:
-          type: string
-          x-go-name: Prev
-        self:
-          type: string
-          x-go-name: Self
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     RulePatchRequest:
       type: object
       properties:
@@ -861,9 +855,40 @@ components:
           x-go-name: Type
       description: RulePatchRequest struct for rule patch api
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    State:
-      type: string
-      description: DefinitionState
+    RulePriorityPatchRequest:
+      title: RulePriorityPatchRequest ...
+      type: object
+      properties:
+        id:
+          type: string
+          x-go-name: RuleID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    RuleStatus:
+      title: RuleStatus ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        error_msg:
+          type: string
+          x-go-name: ErrorMsg
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     GetAllRuleResponse:
       title: An GetAllRuleResponse model.
@@ -935,31 +960,6 @@ components:
         version:
           type: string
           x-go-name: Version
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    RulesPostRequest:
-      title: RulesPostRequest ...
-      type: object
-      properties:
-        group_by_priority_order:
-          type: string
-          description: 'Flag for Group by, values: "true"/"false". Only supports incident rule types
-
-            in: body'
-          x-go-name: GroupByPriorityOrder
-        standalone:
-          type: string
-          description: 'Flag for standalone rules, values: "true"/"false"
-
-            in: body'
-          x-go-name: Standalone
-        types:
-          type: array
-          description: 'list of types to get for.
-
-            in: body'
-          items:
-            type: string
-          x-go-name: Types
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
   securitySchemes:
     oAuth2:

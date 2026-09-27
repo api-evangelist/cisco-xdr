@@ -1,0 +1,3355 @@
+openapi: 3.2.0
+info:
+  title: Conure Incident Report API
+  version: conure-218-1-ee422dee
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: XDR High Priority Incident and Investigation API
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+tags:
+- name: Incident Report
+paths:
+  /v2/incident/{incident-id}/report:
+    get:
+      responses:
+        '405':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  timeline:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - timeline
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                  executive:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - executive
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                  events:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - events
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                  incident:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - incident
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                required:
+                - timeline
+                - executive
+                - events
+                - incident
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  timeline:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - timeline
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                  executive:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - executive
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                  events:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - events
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                  incident:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - incident
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                required:
+                - timeline
+                - executive
+                - events
+                - incident
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  timeline:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - timeline
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                  executive:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - executive
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                  events:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - events
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                  incident:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - incident
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                required:
+                - timeline
+                - executive
+                - events
+                - incident
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  timeline:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - timeline
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                  executive:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - executive
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                  events:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - events
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                  incident:
+                    type: object
+                    properties:
+                      ai_generated:
+                        type: boolean
+                      content:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      created_at:
+                        type: string
+                        format: date-time
+                      error:
+                        type:
+                        - string
+                        - 'null'
+                        minLength: 0
+                        maxLength: 2500
+                      failed:
+                        type: boolean
+                      generating:
+                        type: boolean
+                      section_id:
+                        type: string
+                        enum:
+                        - incident
+                      user_id:
+                        type: string
+                      updated_at:
+                        type:
+                        - string
+                        - 'null'
+                        format: date-time
+                    required:
+                    - ai_generated
+                    - content
+                    - created_at
+                    - error
+                    - failed
+                    - generating
+                    - section_id
+                    - user_id
+                    - updated_at
+                required:
+                - timeline
+                - executive
+                - events
+                - incident
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+        '406':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+      parameters:
+      - in: path
+        name: incident-id
+        description: ''
+        required: true
+        example: incident-0a38949f-d192-4d30-91ae-e593c1f57c14
+        schema:
+          type: string
+      - in: query
+        name: timezone
+        description: ''
+        required: false
+        example: Antarctica/McMurdo
+        schema:
+          type: string
+      tags:
+      - Incident Report
+      summary: Incident Report
+      security:
+      - JWT-Bearer: []
+      - oauth2: []
+      operationId: getV2IncidentByIncidentIdReport
+      x-operation-id-source: derived
+  /v2/incident/{incident-id}/report/{section-id}:
+    get:
+      responses:
+        '405':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ai_generated:
+                    type: boolean
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  created_at:
+                    type: string
+                    format: date-time
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  failed:
+                    type: boolean
+                  generating:
+                    type: boolean
+                  section_id:
+                    type: string
+                    enum:
+                    - timeline
+                    - executive
+                    - events
+                    - incident
+                  user_id:
+                    type: string
+                  updated_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                required:
+                - ai_generated
+                - content
+                - created_at
+                - error
+                - failed
+                - generating
+                - section_id
+                - user_id
+                - updated_at
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  ai_generated:
+                    type: boolean
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  created_at:
+                    type: string
+                    format: date-time
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  failed:
+                    type: boolean
+                  generating:
+                    type: boolean
+                  section_id:
+                    type: string
+                    enum:
+                    - timeline
+                    - executive
+                    - events
+                    - incident
+                  user_id:
+                    type: string
+                  updated_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                required:
+                - ai_generated
+                - content
+                - created_at
+                - error
+                - failed
+                - generating
+                - section_id
+                - user_id
+                - updated_at
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  ai_generated:
+                    type: boolean
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  created_at:
+                    type: string
+                    format: date-time
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  failed:
+                    type: boolean
+                  generating:
+                    type: boolean
+                  section_id:
+                    type: string
+                    enum:
+                    - timeline
+                    - executive
+                    - events
+                    - incident
+                  user_id:
+                    type: string
+                  updated_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                required:
+                - ai_generated
+                - content
+                - created_at
+                - error
+                - failed
+                - generating
+                - section_id
+                - user_id
+                - updated_at
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  ai_generated:
+                    type: boolean
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  created_at:
+                    type: string
+                    format: date-time
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  failed:
+                    type: boolean
+                  generating:
+                    type: boolean
+                  section_id:
+                    type: string
+                    enum:
+                    - timeline
+                    - executive
+                    - events
+                    - incident
+                  user_id:
+                    type: string
+                  updated_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                required:
+                - ai_generated
+                - content
+                - created_at
+                - error
+                - failed
+                - generating
+                - section_id
+                - user_id
+                - updated_at
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+        '406':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+      parameters:
+      - in: path
+        name: incident-id
+        description: ''
+        required: true
+        example: incident-0a38949f-d192-4d30-91ae-e593c1f57c14
+        schema:
+          type: string
+      - in: path
+        name: section-id
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - timeline
+          - executive
+          - events
+          - incident
+      - in: query
+        name: timezone
+        description: ''
+        required: false
+        example: Antarctica/McMurdo
+        schema:
+          type: string
+      tags:
+      - Incident Report
+      summary: Incident Report Section
+      security:
+      - JWT-Bearer: []
+      - oauth2: []
+      operationId: getV2IncidentByIncidentIdReportBySectionId
+      x-operation-id-source: derived
+    post:
+      responses:
+        '405':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ai_generated:
+                    type: boolean
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  created_at:
+                    type: string
+                    format: date-time
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  failed:
+                    type: boolean
+                  generating:
+                    type: boolean
+                  section_id:
+                    type: string
+                    enum:
+                    - timeline
+                    - executive
+                    - events
+                    - incident
+                  user_id:
+                    type: string
+                  updated_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                required:
+                - ai_generated
+                - content
+                - created_at
+                - error
+                - failed
+                - generating
+                - section_id
+                - user_id
+                - updated_at
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  ai_generated:
+                    type: boolean
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  created_at:
+                    type: string
+                    format: date-time
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  failed:
+                    type: boolean
+                  generating:
+                    type: boolean
+                  section_id:
+                    type: string
+                    enum:
+                    - timeline
+                    - executive
+                    - events
+                    - incident
+                  user_id:
+                    type: string
+                  updated_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                required:
+                - ai_generated
+                - content
+                - created_at
+                - error
+                - failed
+                - generating
+                - section_id
+                - user_id
+                - updated_at
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  ai_generated:
+                    type: boolean
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  created_at:
+                    type: string
+                    format: date-time
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  failed:
+                    type: boolean
+                  generating:
+                    type: boolean
+                  section_id:
+                    type: string
+                    enum:
+                    - timeline
+                    - executive
+                    - events
+                    - incident
+                  user_id:
+                    type: string
+                  updated_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                required:
+                - ai_generated
+                - content
+                - created_at
+                - error
+                - failed
+                - generating
+                - section_id
+                - user_id
+                - updated_at
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  ai_generated:
+                    type: boolean
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  created_at:
+                    type: string
+                    format: date-time
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  failed:
+                    type: boolean
+                  generating:
+                    type: boolean
+                  section_id:
+                    type: string
+                    enum:
+                    - timeline
+                    - executive
+                    - events
+                    - incident
+                  user_id:
+                    type: string
+                  updated_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                required:
+                - ai_generated
+                - content
+                - created_at
+                - error
+                - failed
+                - generating
+                - section_id
+                - user_id
+                - updated_at
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+        '406':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+      parameters:
+      - in: path
+        name: incident-id
+        description: ''
+        required: true
+        example: incident-0a38949f-d192-4d30-91ae-e593c1f57c14
+        schema:
+          type: string
+      - in: path
+        name: section-id
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - timeline
+          - executive
+          - events
+          - incident
+      - in: query
+        name: timezone
+        description: ''
+        required: false
+        example: Antarctica/McMurdo
+        schema:
+          type: string
+      tags:
+      - Incident Report
+      summary: Update Report Section
+      security:
+      - JWT-Bearer: []
+      - oauth2: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type:
+                  - string
+                  - 'null'
+                  minLength: 0
+                  maxLength: 2500
+              required:
+              - content
+          application/transit+msgpack:
+            schema:
+              type: object
+              properties:
+                content:
+                  type:
+                  - string
+                  - 'null'
+                  minLength: 0
+                  maxLength: 2500
+              required:
+              - content
+          application/transit+json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type:
+                  - string
+                  - 'null'
+                  minLength: 0
+                  maxLength: 2500
+              required:
+              - content
+          application/edn:
+            schema:
+              type: object
+              properties:
+                content:
+                  type:
+                  - string
+                  - 'null'
+                  minLength: 0
+                  maxLength: 2500
+              required:
+              - content
+        required: true
+      operationId: postV2IncidentByIncidentIdReportBySectionId
+      x-operation-id-source: derived
+  /v2/incident/{incident-id}/report/{section-id}/regenerate:
+    post:
+      responses:
+        '405':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ai_generated:
+                    type: boolean
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  created_at:
+                    type: string
+                    format: date-time
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  failed:
+                    type: boolean
+                  generating:
+                    type: boolean
+                  section_id:
+                    type: string
+                    enum:
+                    - timeline
+                    - executive
+                    - events
+                    - incident
+                  user_id:
+                    type: string
+                  updated_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                required:
+                - ai_generated
+                - content
+                - created_at
+                - error
+                - failed
+                - generating
+                - section_id
+                - user_id
+                - updated_at
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  ai_generated:
+                    type: boolean
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  created_at:
+                    type: string
+                    format: date-time
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  failed:
+                    type: boolean
+                  generating:
+                    type: boolean
+                  section_id:
+                    type: string
+                    enum:
+                    - timeline
+                    - executive
+                    - events
+                    - incident
+                  user_id:
+                    type: string
+                  updated_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                required:
+                - ai_generated
+                - content
+                - created_at
+                - error
+                - failed
+                - generating
+                - section_id
+                - user_id
+                - updated_at
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  ai_generated:
+                    type: boolean
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  created_at:
+                    type: string
+                    format: date-time
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  failed:
+                    type: boolean
+                  generating:
+                    type: boolean
+                  section_id:
+                    type: string
+                    enum:
+                    - timeline
+                    - executive
+                    - events
+                    - incident
+                  user_id:
+                    type: string
+                  updated_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                required:
+                - ai_generated
+                - content
+                - created_at
+                - error
+                - failed
+                - generating
+                - section_id
+                - user_id
+                - updated_at
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  ai_generated:
+                    type: boolean
+                  content:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  created_at:
+                    type: string
+                    format: date-time
+                  error:
+                    type:
+                    - string
+                    - 'null'
+                    minLength: 0
+                    maxLength: 2500
+                  failed:
+                    type: boolean
+                  generating:
+                    type: boolean
+                  section_id:
+                    type: string
+                    enum:
+                    - timeline
+                    - executive
+                    - events
+                    - incident
+                  user_id:
+                    type: string
+                  updated_at:
+                    type:
+                    - string
+                    - 'null'
+                    format: date-time
+                required:
+                - ai_generated
+                - content
+                - created_at
+                - error
+                - failed
+                - generating
+                - section_id
+                - user_id
+                - updated_at
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+        '406':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+      parameters:
+      - in: path
+        name: incident-id
+        description: ''
+        required: true
+        example: incident-0a38949f-d192-4d30-91ae-e593c1f57c14
+        schema:
+          type: string
+      - in: path
+        name: section-id
+        description: ''
+        required: true
+        schema:
+          type: string
+          enum:
+          - timeline
+          - executive
+          - events
+          - incident
+      - in: query
+        name: timezone
+        description: ''
+        required: false
+        example: Antarctica/McMurdo
+        schema:
+          type: string
+      tags:
+      - Incident Report
+      summary: Regenerate a Report Section
+      security:
+      - JWT-Bearer: []
+      - oauth2: []
+      operationId: postV2IncidentByIncidentIdReportBySectionIdRegenerate
+      x-operation-id-source: derived
+components:
+  securitySchemes:
+    JWT-Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            event:read: Get event information for an org. Needed to get full report information.
+            private-intel:read: Read data from private intel. Needed to get investigation data.
+            private-intel: Full private intel integration scope.
+            asset: Get Data from Device Insights. Needed during running investigations.
+            enrich:read: Fetch Data about observables. Needed for investigations.
+            integration:read: Get module information. Needed to create a new investigation.
+            investigation: Run investigations. Needed for investigations.
+            casebook: Full casebook management access. Allows read, write to casebooks.
+            casebook:read: Read Casebook access
+            global-intel:read: Read data from public intel. Needed to fetch global incident data and investigations.
+            private-intel:write: Private intel write scope.
+            ao: Execute and read workflows
+            playbook:read: Get playbook state. Needed to get full report information.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+x-id:
+- reitit.swagger/default

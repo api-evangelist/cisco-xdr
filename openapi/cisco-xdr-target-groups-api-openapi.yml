@@ -488,22 +488,6 @@ paths:
           content: {}
 components:
   schemas:
-    Expression:
-      title: Expression ....
-      type: object
-      properties:
-        left_operand:
-          type: object
-          properties: {}
-          x-go-name: LeftOperand
-        operator:
-          type: string
-          x-go-name: Operator
-        right_operand:
-          type: object
-          properties: {}
-          x-go-name: RightOperand
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/base-microservice/longhornparser/models
     TargetGroupProperties:
       title: 'TargetGroupProperties represents the specific target group attributes information
 
@@ -688,6 +672,22 @@ components:
           x-go-name: UniqueName
       description: Either ViewSchemaID or Type or both can be provided to create a TargetGroup.
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    Expression:
+      title: Expression ....
+      type: object
+      properties:
+        left_operand:
+          type: object
+          properties: {}
+          x-go-name: LeftOperand
+        operator:
+          type: string
+          x-go-name: Operator
+        right_operand:
+          type: object
+          properties: {}
+          x-go-name: RightOperand
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/base-microservice/longhornparser/models
   securitySchemes:
     oAuth2:
       type: oauth2

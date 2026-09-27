@@ -311,22 +311,10 @@ paths:
       x-codegen-request-body-name: request_body
 components:
   schemas:
-    RatingLoginUserRequest:
-      title: RatingLoginUserRequest ...
-      required:
-      - ref_id
-      - ref_type
-      type: object
-      properties:
-        ref_id:
-          type: string
-          description: ref id
-          x-go-name: RefID
-        ref_type:
-          type: string
-          description: ref type
-          x-go-name: RefType
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    LHObjType:
+      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
     RatingResponse:
       title: A RatingResponse model.
       type: object
@@ -405,10 +393,22 @@ components:
           x-go-name: RefType
       description: The rating create request model.
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    LHObjType:
-      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
+    RatingLoginUserRequest:
+      title: RatingLoginUserRequest ...
+      required:
+      - ref_id
+      - ref_type
+      type: object
+      properties:
+        ref_id:
+          type: string
+          description: ref id
+          x-go-name: RefID
+        ref_type:
+          type: string
+          description: ref type
+          x-go-name: RefType
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
   securitySchemes:
     oAuth2:
       type: oauth2

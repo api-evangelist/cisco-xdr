@@ -424,6 +424,160 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    AppLinkMeta:
+      type: object
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        meta:
+          $ref: '#/components/schemas/NewModuleTypeParamsAppLinkMetaMeta'
+      additionalProperties: false
+      required:
+      - title
+      - url
+    NewModuleTypeParamsAppLinkMetaMetaXQueryParams:
+      type: object
+      additionalProperties:
+        type: string
+    ModuleTypePatchPatchIntegration:
+      type: object
+      properties:
+        client_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          uniqueItems: true
+      additionalProperties: false
+    NewModuleTypePatchPatch:
+      type: object
+      properties:
+        description:
+          type:
+          - string
+          - 'null'
+        properties:
+          $ref: '#/components/schemas/NewModuleTypePatchPatchProperties'
+        app_link:
+          type:
+          - string
+          - 'null'
+        product_categories:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ProductCategory'
+        capabilities:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Capability'
+        integration_id:
+          description: id of the integration this record belongs to
+          type:
+          - string
+          - 'null'
+        app_link_meta:
+          $ref: '#/components/schemas/NewModuleTypePatchPatchAppLinkMeta'
+        tips:
+          type:
+          - string
+          - 'null'
+        logo_dark:
+          type:
+          - string
+          - 'null'
+        logo:
+          type:
+          - string
+          - 'null'
+        org_id:
+          type: string
+        ocsf-product-uid:
+          type:
+          - string
+          - 'null'
+        integration:
+          $ref: '#/components/schemas/NewModuleTypePatchPatchIntegration'
+        disable_automatic_health_check:
+          type:
+          - boolean
+          - 'null'
+        configuration_spec:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ConfigurationSpecField'
+        short_description:
+          type:
+          - string
+          - 'null'
+        title:
+          type: string
+        external_references:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ModuleTypeExternalReference'
+        max_nb_instances:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        parent_id:
+          type:
+          - string
+          - 'null'
+        record:
+          type:
+          - string
+          - 'null'
+        user_id:
+          type: string
+        client_id:
+          type: string
+        default_name:
+          type: string
+        flags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        visibility:
+          type: string
+          enum:
+          - global
+          - org
+        former_title:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Integration:
+      type: object
+      properties:
+        client_ids:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+      additionalProperties: false
     ModuleType:
       type: object
       properties:
@@ -518,32 +672,6 @@ components:
       - enabled
       - visibility
       - created_at
-    NewModuleTypePatchPatchAppLinkMetaMetaXQueryParams:
-      type: object
-      additionalProperties:
-        type:
-        - string
-        - 'null'
-    ModuleTypeProperties:
-      type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-          - $ref: '#/components/schemas/ModuleTypeProperties'
-        - type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-            - $ref: '#/components/schemas/ModuleTypeProperties'
     NewModuleTypePatchPatchIntegration:
       type: object
       properties:
@@ -554,24 +682,6 @@ components:
           items:
             type: string
           uniqueItems: true
-      additionalProperties: false
-    NewModuleTypePatchPatchAppLinkMeta:
-      type: object
-      properties:
-        title:
-          type: string
-        url:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        logo:
-          type:
-          - string
-          - 'null'
-        meta:
-          $ref: '#/components/schemas/NewModuleTypePatchPatchAppLinkMetaMeta'
       additionalProperties: false
     ModuleTypePatchPatch:
       type: object
@@ -686,85 +796,6 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    ModuleTypePatchPatchAppLinkMetaMeta:
-      type: object
-      properties:
-        x_okta_bookmark_id:
-          type:
-          - string
-          - 'null'
-        x_query_params:
-          $ref: '#/components/schemas/ModuleTypePatchPatchAppLinkMetaMetaXQueryParams'
-      additionalProperties: false
-    AppLinkMeta:
-      type: object
-      properties:
-        title:
-          type: string
-        url:
-          type: string
-        description:
-          type: string
-        logo:
-          type: string
-        meta:
-          $ref: '#/components/schemas/NewModuleTypeParamsAppLinkMetaMeta'
-      additionalProperties: false
-      required:
-      - title
-      - url
-    ModuleTypePatch:
-      type: object
-      properties:
-        merge_status:
-          type: string
-          enum:
-          - merged
-          - rejected
-          - pending
-        patch:
-          $ref: '#/components/schemas/ModuleTypePatchPatch'
-        module_type_id:
-          type: string
-        org_id:
-          type: string
-        merged_at:
-          type: string
-          format: date-time
-        merge_message:
-          description: A message to help you create module type patch that will be approved, or understand why it was rejected.
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-        id:
-          type: string
-        user_id:
-          type: string
-        client_id:
-          type: string
-        merged_by:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-      additionalProperties: false
-      required:
-      - merge_status
-      - patch
-      - module_type_id
-      - org_id
-      - updated_at
-      - id
-      - user_id
-      - client_id
-      - created_at
-    ModuleTypePatchPatchAppLinkMetaMetaXQueryParams:
-      type: object
-      additionalProperties:
-        type:
-        - string
-        - 'null'
     ProductCategory:
       type: object
       properties:
@@ -787,17 +818,6 @@ components:
       required:
       - id
       - description
-    ModuleTypePatchPatchIntegration:
-      type: object
-      properties:
-        client_ids:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          uniqueItems: true
-      additionalProperties: false
     ModuleTypePatchPatchAppLinkMeta:
       type: object
       properties:
@@ -816,6 +836,55 @@ components:
         meta:
           $ref: '#/components/schemas/ModuleTypePatchPatchAppLinkMetaMeta'
       additionalProperties: false
+    NewModuleTypePatchPatchConfigurationSpecOptions:
+      type: object
+      properties:
+        value:
+          type: string
+        label:
+          type: string
+      additionalProperties: false
+      required:
+      - value
+      - label
+    NewModuleTypePatchPatchAppLinkMeta:
+      type: object
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        logo:
+          type:
+          - string
+          - 'null'
+        meta:
+          $ref: '#/components/schemas/NewModuleTypePatchPatchAppLinkMetaMeta'
+      additionalProperties: false
+    NewModuleTypePatchPatchProperties:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+          - $ref: '#/components/schemas/ModuleTypeProperties'
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+            - $ref: '#/components/schemas/ModuleTypeProperties'
     ConfigurationSpecField:
       type: object
       properties:
@@ -868,6 +937,77 @@ components:
       - key
       - type
       - label
+    NewModuleTypePatchPatchAppLinkMetaMeta:
+      type: object
+      properties:
+        x_okta_bookmark_id:
+          type:
+          - string
+          - 'null'
+        x_query_params:
+          $ref: '#/components/schemas/NewModuleTypePatchPatchAppLinkMetaMetaXQueryParams'
+      additionalProperties: false
+    ModuleTypePatchPatchProperties:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+          - $ref: '#/components/schemas/ModuleTypeProperties'
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+            - $ref: '#/components/schemas/ModuleTypeProperties'
+    ModuleTypePatchPatchAppLinkMetaMetaXQueryParams:
+      type: object
+      additionalProperties:
+        type:
+        - string
+        - 'null'
+    ModuleTypePatchPatchAppLinkMetaMeta:
+      type: object
+      properties:
+        x_okta_bookmark_id:
+          type:
+          - string
+          - 'null'
+        x_query_params:
+          $ref: '#/components/schemas/ModuleTypePatchPatchAppLinkMetaMetaXQueryParams'
+      additionalProperties: false
+    NewModuleTypePatch:
+      type: object
+      properties:
+        module_type_id:
+          type: string
+        patch:
+          $ref: '#/components/schemas/NewModuleTypePatchPatch'
+      additionalProperties: false
+      required:
+      - module_type_id
+      - patch
+    NewModuleTypeParamsAppLinkMetaMeta:
+      type: object
+      properties:
+        x_okta_bookmark_id:
+          type: string
+        x_query_params:
+          $ref: '#/components/schemas/NewModuleTypeParamsAppLinkMetaMetaXQueryParams'
+      additionalProperties: false
+    NewModuleTypePatchPatchAppLinkMetaMetaXQueryParams:
+      type: object
+      additionalProperties:
+        type:
+        - string
+        - 'null'
     Capability:
       type: object
       properties:
@@ -895,35 +1035,72 @@ components:
       required:
       - id
       - description
-    NewModuleTypePatchPatchAppLinkMetaMeta:
+    ModuleTypePatch:
       type: object
       properties:
-        x_okta_bookmark_id:
-          type:
-          - string
-          - 'null'
-        x_query_params:
-          $ref: '#/components/schemas/NewModuleTypePatchPatchAppLinkMetaMetaXQueryParams'
-      additionalProperties: false
-    NewModuleTypeParamsAppLinkMetaMeta:
-      type: object
-      properties:
-        x_okta_bookmark_id:
+        merge_status:
           type: string
-        x_query_params:
-          $ref: '#/components/schemas/NewModuleTypeParamsAppLinkMetaMetaXQueryParams'
-      additionalProperties: false
-    NewModuleTypePatchPatchConfigurationSpecOptions:
-      type: object
-      properties:
-        value:
+          enum:
+          - merged
+          - rejected
+          - pending
+        patch:
+          $ref: '#/components/schemas/ModuleTypePatchPatch'
+        module_type_id:
           type: string
-        label:
+        org_id:
           type: string
+        merged_at:
+          type: string
+          format: date-time
+        merge_message:
+          description: A message to help you create module type patch that will be approved, or understand why it was rejected.
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        id:
+          type: string
+        user_id:
+          type: string
+        client_id:
+          type: string
+        merged_by:
+          type: string
+        created_at:
+          type: string
+          format: date-time
       additionalProperties: false
       required:
-      - value
-      - label
+      - merge_status
+      - patch
+      - module_type_id
+      - org_id
+      - updated_at
+      - id
+      - user_id
+      - client_id
+      - created_at
+    ModuleTypeProperties:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+          - $ref: '#/components/schemas/ModuleTypeProperties'
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+            - $ref: '#/components/schemas/ModuleTypeProperties'
     ModuleTypeExternalReference:
       type: object
       properties:
@@ -940,183 +1117,6 @@ components:
           description: Class to distinguish external references
           type: string
       additionalProperties: false
-    Integration:
-      type: object
-      properties:
-        client_ids:
-          type: array
-          items:
-            type: string
-          uniqueItems: true
-      additionalProperties: false
-    ModuleTypePatchPatchProperties:
-      type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-          - $ref: '#/components/schemas/ModuleTypeProperties'
-        - type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-            - $ref: '#/components/schemas/ModuleTypeProperties'
-    NewModuleTypeParamsAppLinkMetaMetaXQueryParams:
-      type: object
-      additionalProperties:
-        type: string
-    NewModuleTypePatchPatchProperties:
-      type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-          - $ref: '#/components/schemas/ModuleTypeProperties'
-        - type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-            - $ref: '#/components/schemas/ModuleTypeProperties'
-    NewModuleTypePatchPatch:
-      type: object
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-        properties:
-          $ref: '#/components/schemas/NewModuleTypePatchPatchProperties'
-        app_link:
-          type:
-          - string
-          - 'null'
-        product_categories:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ProductCategory'
-        capabilities:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Capability'
-        integration_id:
-          description: id of the integration this record belongs to
-          type:
-          - string
-          - 'null'
-        app_link_meta:
-          $ref: '#/components/schemas/NewModuleTypePatchPatchAppLinkMeta'
-        tips:
-          type:
-          - string
-          - 'null'
-        logo_dark:
-          type:
-          - string
-          - 'null'
-        logo:
-          type:
-          - string
-          - 'null'
-        org_id:
-          type: string
-        ocsf-product-uid:
-          type:
-          - string
-          - 'null'
-        integration:
-          $ref: '#/components/schemas/NewModuleTypePatchPatchIntegration'
-        disable_automatic_health_check:
-          type:
-          - boolean
-          - 'null'
-        configuration_spec:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ConfigurationSpecField'
-        short_description:
-          type:
-          - string
-          - 'null'
-        title:
-          type: string
-        external_references:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ModuleTypeExternalReference'
-        max_nb_instances:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        parent_id:
-          type:
-          - string
-          - 'null'
-        record:
-          type:
-          - string
-          - 'null'
-        user_id:
-          type: string
-        client_id:
-          type: string
-        default_name:
-          type: string
-        flags:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        visibility:
-          type: string
-          enum:
-          - global
-          - org
-        former_title:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    NewModuleTypePatch:
-      type: object
-      properties:
-        module_type_id:
-          type: string
-        patch:
-          $ref: '#/components/schemas/NewModuleTypePatchPatch'
-      additionalProperties: false
-      required:
-      - module_type_id
-      - patch
   securitySchemes:
     iroh:
       type: apiKey

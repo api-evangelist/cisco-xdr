@@ -161,27 +161,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    SessionTokenExchangeResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-        expires_in:
-          type: integer
-          format: int64
-        token_type:
-          type: string
-          enum:
-          - bearer
-        scope:
-          type: string
-        needs_renewal:
-          type: boolean
-      additionalProperties: false
-      required:
-      - access_token
-      - expires_in
-      - token_type
     SessionStatusResponse:
       type: object
       properties:
@@ -205,6 +184,27 @@ components:
       - org-id
       - scopes
       - needs-renewal
+    SessionTokenExchangeResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+          format: int64
+        token_type:
+          type: string
+          enum:
+          - bearer
+        scope:
+          type: string
+        needs_renewal:
+          type: boolean
+      additionalProperties: false
+      required:
+      - access_token
+      - expires_in
+      - token_type
   securitySchemes:
     iroh:
       type: apiKey

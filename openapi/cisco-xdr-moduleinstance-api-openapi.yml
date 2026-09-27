@@ -295,25 +295,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PartialModuleInstanceSettings:
-      type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-        - type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-        - $ref: '#/components/schemas/PartialModuleInstanceSettings'
     ModuleInstanceExternalReference:
       type: object
       properties:
@@ -329,25 +310,30 @@ components:
       additionalProperties: false
       required:
       - label
-    ModuleInstanceSettings:
+    PatchModuleInstanceParams:
       type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-        - type: array
+      properties:
+        name:
+          type: string
+        module_type_id:
+          type: string
+        parent_id:
+          type:
+          - string
+          - 'null'
+        external_references:
+          type:
+          - array
+          - 'null'
           items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-        - $ref: '#/components/schemas/ModuleInstanceSettings'
+            $ref: '#/components/schemas/ModuleInstanceExternalReference'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        settings:
+          $ref: '#/components/schemas/PartialModuleInstanceSettings'
+      additionalProperties: false
     ModuleInstanceResponse:
       type: object
       properties:
@@ -395,6 +381,44 @@ components:
       - enabled
       - visibility
       - created_at
+    ModuleInstanceSettings:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+        - $ref: '#/components/schemas/ModuleInstanceSettings'
+    PartialModuleInstanceSettings:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+        - $ref: '#/components/schemas/PartialModuleInstanceSettings'
     NewModuleInstanceParams:
       type: object
       properties:
@@ -423,30 +447,6 @@ components:
       - name
       - module_type_id
       - visibility
-    PatchModuleInstanceParams:
-      type: object
-      properties:
-        name:
-          type: string
-        module_type_id:
-          type: string
-        parent_id:
-          type:
-          - string
-          - 'null'
-        external_references:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ModuleInstanceExternalReference'
-        enabled:
-          type:
-          - boolean
-          - 'null'
-        settings:
-          $ref: '#/components/schemas/PartialModuleInstanceSettings'
-      additionalProperties: false
   securitySchemes:
     iroh:
       type: apiKey

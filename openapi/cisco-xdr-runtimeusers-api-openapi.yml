@@ -523,6 +523,10 @@ components:
           x-go-name: UniqueName
       description: Either ViewSchemaID or Type or both can be provided to create a Runtime User.
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     RuntimeUserDefinitionGetAllResponse:
       title: RuntimeUserDefinitionGetAllResponse ...
       type: object
@@ -567,19 +571,30 @@ components:
           format: date-time
           x-go-name: UpdatedOn
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    StatusDetails:
+    RuntimeUserDefinitionPatchRequest:
+      title: RuntimeUserDefinitionPatchRequest ...
       type: object
       properties:
-        code:
-          type: string
-          x-go-name: Code
         description:
           type: string
+          description: Description of runtime user
           x-go-name: Description
-        message:
+        name:
           type: string
-          x-go-name: Message
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+          description: Name of runtime user
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of runtime user
+          x-go-name: Properties
+        title:
+          type: string
+          description: Title of runtime user
+          x-go-name: Title
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     RuntimeUserDefinitionGetResponse:
       title: RuntimeUserDefinitionGetResponse ...
       type: object
@@ -645,33 +660,18 @@ components:
           type: boolean
           x-go-name: Valid
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    RuntimeUserDefinitionPatchRequest:
-      title: RuntimeUserDefinitionPatchRequest ...
+    StatusDetails:
       type: object
       properties:
+        code:
+          type: string
+          x-go-name: Code
         description:
           type: string
-          description: Description of runtime user
           x-go-name: Description
-        name:
+        message:
           type: string
-          description: Name of runtime user
-          x-go-name: Name
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Properties of runtime user
-          x-go-name: Properties
-        title:
-          type: string
-          description: Title of runtime user
-          x-go-name: Title
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    State:
-      type: string
-      description: DefinitionState
+          x-go-name: Message
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     Status:
       title: Status ...

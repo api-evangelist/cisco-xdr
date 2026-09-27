@@ -1,0 +1,4289 @@
+openapi: 3.2.0
+info:
+  title: Conure Incident Summary API
+  version: conure-218-1-ee422dee
+  license:
+    name: All Rights Reserved
+    url: https://www.cisco.com
+  contact:
+    name: Cisco Security Business Group -- Advanced Threat
+    email: cisco-intel-api-support@cisco.com
+  description: XDR High Priority Incident and Investigation API
+  x-provenance:
+    method: harvested
+    authored_by: Cisco XDR
+    harvested_by: API Evangelist
+    harvested_on: '2026-08-19'
+    first_party: true
+    provider_published: true
+    source_host: visibility.amp.cisco.com
+    note: Anonymously fetchable Swagger 2.0 for nine IROH services plus the CTIA threat-intelligence API. The host returns real 404s on invented paths, so the 200s are genuine.
+  x-evidence:
+  - type: source
+    url: https://visibility.amp.cisco.com/iroh/iroh-int/swagger.json
+  - type: source
+    url: https://private.intel.amp.cisco.com/swagger.json
+tags:
+- name: Incident Summary
+paths:
+  /v1/incident-summary/search:
+    get:
+      responses:
+        '405':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Method Not Allowed
+                required:
+                - message
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - unspecified status
+                required:
+                - message
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Too many requests
+                required:
+                - message
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Unauthorized
+                required:
+                - message
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - exception
+                    - default exception
+                    - sql exception
+                    - JSON too large
+                    - schema
+                    - external_request
+                  exception:
+                    type: string
+                    example: SqlException
+                  data:
+                    example:
+                      example: Bad Request
+                    description: Any specific error information passed by custom errors.
+                  uri:
+                    type: string
+                    example: /global/v1/incident/?/incident-summary
+                    description: The URI the error was seen at
+                required:
+                - message
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    assignees:
+                      type: array
+                      items:
+                        type: string
+                    categories:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - Attrition
+                        - Denial of Service
+                        - Exercise
+                        - Exercise/Network Defense Testing
+                        - Explained Anomaly
+                        - Forensics
+                        - Improper Usage
+                        - Intelligence
+                        - Investigating
+                        - Investigation
+                        - Malicious Code
+                        - Malicious Logic
+                        - Non-Compliant
+                        - Reconnaissance
+                        - Root Level
+                        - Scans/Probes/Attempted Access
+                        - Unauthorized Access
+                        - Unsuccessful
+                        - User Level
+                        - eDiscovery
+                    confidence:
+                      type: string
+                      enum:
+                      - High
+                      - Info
+                      - Low
+                      - Medium
+                      - None
+                      - Unknown
+                    detection_sources:
+                      type: array
+                      items:
+                        type: string
+                    detection_status:
+                      title: DetectionStatusType
+                      type: string
+                      enum:
+                      - active
+                      - inactive_merged
+                      - inactive_expired
+                      - inactive_oversized
+                      - inactive_user_closed
+                      description: Whether the incident is actively receiving detection data updates
+                    discovery_method:
+                      type: string
+                      enum:
+                      - SecureX Threat Hunting
+                      - Agent Disclosure
+                      - Antivirus
+                      - Audit
+                      - Customer
+                      - External - Fraud Detection
+                      - Financial Audit
+                      - HIPS
+                      - IT Audit
+                      - Incident Response
+                      - Internal - Fraud Detection
+                      - Law Enforcement
+                      - Log Review
+                      - Monitoring Service
+                      - NIDS
+                      - Security Alarm
+                      - Unknown
+                      - Unrelated Party
+                      - User
+                    incident_time:
+                      type: object
+                      properties:
+                        opened:
+                          type: string
+                        closed:
+                          type: string
+                        discovered:
+                          type: string
+                        rejected:
+                          type: string
+                        remediated:
+                          type: string
+                        reported:
+                          type: string
+                      required:
+                      - opened
+                    intended_effect:
+                      type: string
+                      enum:
+                      - Account Takeover
+                      - Advantage
+                      - Advantage - Economic
+                      - Advantage - Military
+                      - Advantage - Political
+                      - Brand Damage
+                      - Competitive Advantage
+                      - Degradation of Service
+                      - Denial and Deception
+                      - Destruction
+                      - Disruption
+                      - Embarrassment
+                      - Exposure
+                      - Extortion
+                      - Fraud
+                      - Harassment
+                      - ICS Control
+                      - Theft
+                      - Theft - Credential Theft
+                      - Theft - Identity Theft
+                      - Theft - Intellectual Property
+                      - Theft - Theft of Proprietary Information
+                      - Traffic Diversion
+                      - Unauthorized Access
+                    meta:
+                      type: object
+                      properties:
+                        ai_description:
+                          type: boolean
+                        helios_report_generated:
+                          type: boolean
+                    promotion_method:
+                      type: string
+                      enum:
+                      - Automated
+                      - Manual
+                    scores:
+                      type: object
+                      properties:
+                        asset:
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          maximum: 10
+                        global:
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          maximum: 1000
+                        ml_score:
+                          type: number
+                          format: double
+                        ttp:
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          maximum: 100
+                    severity:
+                      type: string
+                      enum:
+                      - Critical
+                      - High
+                      - Info
+                      - Low
+                      - Medium
+                      - None
+                      - Unknown
+                    short_id:
+                      type: string
+                    status:
+                      title: IncidentStatusType
+                      type: string
+                      enum:
+                      - New
+                      - Closed
+                      - 'Open: Recovered'
+                      - 'Closed: Other'
+                      - 'Hold: Internal'
+                      - 'Hold: Legal'
+                      - 'Closed: Under Review'
+                      - Rejected
+                      - Open
+                      - 'Closed: Merged'
+                      - Restoration Achieved
+                      - Incident Reported
+                      - 'Closed: Suspected'
+                      - Stalled
+                      - 'Open: Contained'
+                      - 'Closed: Near-Miss'
+                      - 'Hold: External'
+                      - Containment Achieved
+                      - 'New: Processing'
+                      - 'Closed: Confirmed Threat'
+                      - 'Closed: False Positive'
+                      - 'Open: Reported'
+                      - 'Open: Investigating'
+                      - Hold
+                      - 'New: Presented'
+                      description: The status of the incident
+                    tactics:
+                      type: array
+                      items:
+                        type: string
+                    techniques:
+                      type: array
+                      items:
+                        type: string
+                    description:
+                      type: string
+                    short_description:
+                      type: string
+                    source:
+                      type: string
+                    source_uri:
+                      type: string
+                    title:
+                      type: string
+                    language:
+                      type: string
+                    external_references:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          source_name:
+                            type: string
+                          hashes:
+                            type: array
+                            items:
+                              type: string
+                          url:
+                            type: string
+                          description:
+                            type: string
+                          external_id:
+                            type: string
+                        required:
+                        - source_name
+                    external_ids:
+                      type: array
+                      items:
+                        type: string
+                    tlp:
+                      type: string
+                      enum:
+                      - amber
+                      - green
+                      - red
+                      - white
+                    id:
+                      type: string
+                    client_id:
+                      type: string
+                    modified:
+                      type: string
+                      format: date-time
+                      x-anyOf:
+                      - type: string
+                        format: date-time
+                      - type: string
+                    created:
+                      type: string
+                      format: date-time
+                      x-anyOf:
+                      - type: string
+                        format: date-time
+                      - type: string
+                    owner:
+                      type:
+                      - string
+                      - 'null'
+                      x-anyOf:
+                      - type: string
+                      - type: boolean
+                    groups:
+                      type: array
+                      items:
+                        type: string
+                    schema_version:
+                      type: string
+                    revision:
+                      title: PositiveInteger
+                      type: integer
+                      format: int64
+                      minimum: 0
+                      description: A integer greater than 0.
+                      example: 2
+                    type:
+                      type: string
+                      enum:
+                      - incident
+                    timestamp:
+                      type: string
+                      format: date-time
+                      x-anyOf:
+                      - type: string
+                        format: date-time
+                      - type: string
+                    summary:
+                      type: object
+                      properties:
+                        eventsCount:
+                          title: PositiveInteger
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          description: A integer greater than 0.
+                          example: 2
+                        firstEventDate:
+                          type:
+                          - string
+                          - 'null'
+                          x-anyOf:
+                          - type: string
+                          - type: string
+                            format: date-time
+                        lastEventDate:
+                          type:
+                          - string
+                          - 'null'
+                          x-anyOf:
+                          - type: string
+                          - type: string
+                            format: date-time
+                        indicators:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  producer:
+                                    type: string
+                                  source:
+                                    type:
+                                    - string
+                                    - 'null'
+                                  internal:
+                                    type: boolean
+                                  id:
+                                    type: string
+                                  value:
+                                    type: string
+                                  tags:
+                                    type:
+                                    - array
+                                    - 'null'
+                                    items:
+                                      type: string
+                                required:
+                                - count
+                                - producer
+                                - source
+                                - internal
+                                - id
+                                - value
+                                - tags
+                          required:
+                          - totalCount
+                          - data
+                        mitreData:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  value:
+                                    type: string
+                                    enum:
+                                    - TA0004
+                                    - TA0010
+                                    - TA0005
+                                    - TA0001
+                                    - TA0009
+                                    - TA0002
+                                    - TA0040
+                                    - TA0043
+                                    - TA0011
+                                    - TA0008
+                                    - TA0042
+                                    - TA0006
+                                    - TA0007
+                                    - TA0003
+                                  title:
+                                    type: string
+                                    enum:
+                                    - Privilege Escalation
+                                    - Exfiltration
+                                    - Defense Evasion
+                                    - Initial Access
+                                    - Collection
+                                    - Execution
+                                    - Impact
+                                    - Reconnaissance
+                                    - Command and Control
+                                    - Lateral Movement
+                                    - Resource Development
+                                    - Credential Access
+                                    - Discovery
+                                    - Persistence
+                                  phase_name:
+                                    type: string
+                                    enum:
+                                    - privilege-escalation
+                                    - exfiltration
+                                    - defense-evasion
+                                    - initial-access
+                                    - collection
+                                    - execution
+                                    - impact
+                                    - reconnaissance
+                                    - command-and-control
+                                    - lateral-movement
+                                    - resource-development
+                                    - credential-access
+                                    - discovery
+                                    - persistence
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                required:
+                                - value
+                                - title
+                                - phase_name
+                                - count
+                          required:
+                          - totalCount
+                          - data
+                        observables:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  type:
+                                    type: string
+                                  value:
+                                    type: string
+                                required:
+                                - count
+                                - type
+                                - value
+                          required:
+                          - totalCount
+                          - data
+                        severity:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  value:
+                                    type: string
+                                required:
+                                - count
+                                - value
+                          required:
+                          - totalCount
+                          - data
+                        source:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  value:
+                                    type: string
+                                required:
+                                - count
+                                - value
+                          required:
+                          - totalCount
+                          - data
+                        targets:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  type:
+                                    type: string
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  value:
+                                    type: string
+                                  asset_value:
+                                    title: PositiveInteger
+                                    type:
+                                    - integer
+                                    - 'null'
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  observableType:
+                                    type: string
+                                  observables:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        type:
+                                          title: ObservableType
+                                          type: string
+                                          enum:
+                                          - none
+                                          - file_path
+                                          - mac_address
+                                          - trend_micro_id
+                                          - cybereason_id
+                                          - process_args
+                                          - s1_agent_id
+                                          - device
+                                          - hostname
+                                          - certificate_common_name
+                                          - serial_number
+                                          - meraki_network_id
+                                          - url
+                                          - jamf_management_id
+                                          - certificate_serial
+                                          - intune_id
+                                          - meraki_org_id
+                                          - cisco_cm_id
+                                          - registry_key
+                                          - process_path
+                                          - darktrace_id
+                                          - process_username
+                                          - cortex_agent_id
+                                          - orbital_node_id
+                                          - process_uid
+                                          - ngfw_name
+                                          - user
+                                          - certificate_issuer
+                                          - ipv6
+                                          - email
+                                          - cisco_uc_id
+                                          - cvm_id
+                                          - sha256
+                                          - crowdstrike_id
+                                          - google_cloud_id
+                                          - google_chromebook_id
+                                          - acudid
+                                          - sha1
+                                          - registry_name
+                                          - md5
+                                          - service_now_id
+                                          - ip
+                                          - domain
+                                          - email_subject
+                                          - imei
+                                          - ngfw_id
+                                          - amp_computer_guid
+                                          - ms_machine_id
+                                          - secure_access_id
+                                          - mutex
+                                          - processor_id
+                                          - swc_device_id
+                                          - registry_path
+                                          - odns_identity
+                                          - odns_identity_label
+                                          - cisco_mid
+                                          - process_name
+                                          - pki_serial
+                                          - meraki_node_sn
+                                          - email_messageid
+                                          - imsi
+                                          - user_agent
+                                          - process_hash
+                                          - file_name
+                                          description: The type of the observable
+                                          example: domain
+                                        value:
+                                          title: Observable.Value
+                                          type: string
+                                          example: ilo.brenz.pl
+                                          description: The value of the observable.
+                                      required:
+                                      - type
+                                      - value
+                                    uniqueItems: true
+                                  asset_id:
+                                    type:
+                                    - string
+                                    - 'null'
+                                  properties:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        name:
+                                          type: string
+                                        value:
+                                          type: string
+                                          x-anyOf:
+                                          - type: string
+                                          - type: integer
+                                            format: int64
+                                          - type: array
+                                            items:
+                                              type: string
+                                      required:
+                                      - name
+                                      - value
+                                    uniqueItems: true
+                                required:
+                                - type
+                                - count
+                                - value
+                                - observableType
+                                - observables
+                                - asset_id
+                                - properties
+                          required:
+                          - totalCount
+                          - data
+                        top_assets:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                              count:
+                                title: PositiveInteger
+                                type: integer
+                                format: int64
+                                minimum: 0
+                                description: A integer greater than 0.
+                                example: 2
+                              value:
+                                type: string
+                              asset_value:
+                                title: PositiveInteger
+                                type:
+                                - integer
+                                - 'null'
+                                format: int64
+                                minimum: 0
+                                description: A integer greater than 0.
+                                example: 2
+                              observableType:
+                                type: string
+                              observables:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      title: ObservableType
+                                      type: string
+                                      enum:
+                                      - none
+                                      - file_path
+                                      - mac_address
+                                      - trend_micro_id
+                                      - cybereason_id
+                                      - process_args
+                                      - s1_agent_id
+                                      - device
+                                      - hostname
+                                      - certificate_common_name
+                                      - serial_number
+                                      - meraki_network_id
+                                      - url
+                                      - jamf_management_id
+                                      - certificate_serial
+                                      - intune_id
+                                      - meraki_org_id
+                                      - cisco_cm_id
+                                      - registry_key
+                                      - process_path
+                                      - darktrace_id
+                                      - process_username
+                                      - cortex_agent_id
+                                      - orbital_node_id
+                                      - process_uid
+                                      - ngfw_name
+                                      - user
+                                      - certificate_issuer
+                                      - ipv6
+                                      - email
+                                      - cisco_uc_id
+                                      - cvm_id
+                                      - sha256
+                                      - crowdstrike_id
+                                      - google_cloud_id
+                                      - google_chromebook_id
+                                      - acudid
+                                      - sha1
+                                      - registry_name
+                                      - md5
+                                      - service_now_id
+                                      - ip
+                                      - domain
+                                      - email_subject
+                                      - imei
+                                      - ngfw_id
+                                      - amp_computer_guid
+                                      - ms_machine_id
+                                      - secure_access_id
+                                      - mutex
+                                      - processor_id
+                                      - swc_device_id
+                                      - registry_path
+                                      - odns_identity
+                                      - odns_identity_label
+                                      - cisco_mid
+                                      - process_name
+                                      - pki_serial
+                                      - meraki_node_sn
+                                      - email_messageid
+                                      - imsi
+                                      - user_agent
+                                      - process_hash
+                                      - file_name
+                                      description: The type of the observable
+                                      example: domain
+                                    value:
+                                      title: Observable.Value
+                                      type: string
+                                      example: ilo.brenz.pl
+                                      description: The value of the observable.
+                                  required:
+                                  - type
+                                  - value
+                                uniqueItems: true
+                              asset_id:
+                                type:
+                                - string
+                                - 'null'
+                              properties:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    value:
+                                      type: string
+                                      x-anyOf:
+                                      - type: string
+                                      - type: integer
+                                        format: int64
+                                      - type: array
+                                        items:
+                                          type: string
+                                  required:
+                                  - name
+                                  - value
+                                uniqueItems: true
+                            required:
+                            - type
+                            - count
+                            - value
+                            - observableType
+                            - observables
+                            - asset_id
+                            - properties
+                          maxItems: 5
+                      required:
+                      - eventsCount
+                      - firstEventDate
+                      - lastEventDate
+                      - indicators
+                      - mitreData
+                      - observables
+                      - severity
+                      - source
+                      - targets
+                      - top_assets
+                  required:
+                  - confidence
+                  - incident_time
+                  - status
+                  - id
+                  - groups
+                  - schema_version
+                  - type
+                  - summary
+            application/transit+msgpack:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    assignees:
+                      type: array
+                      items:
+                        type: string
+                    categories:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - Attrition
+                        - Denial of Service
+                        - Exercise
+                        - Exercise/Network Defense Testing
+                        - Explained Anomaly
+                        - Forensics
+                        - Improper Usage
+                        - Intelligence
+                        - Investigating
+                        - Investigation
+                        - Malicious Code
+                        - Malicious Logic
+                        - Non-Compliant
+                        - Reconnaissance
+                        - Root Level
+                        - Scans/Probes/Attempted Access
+                        - Unauthorized Access
+                        - Unsuccessful
+                        - User Level
+                        - eDiscovery
+                    confidence:
+                      type: string
+                      enum:
+                      - High
+                      - Info
+                      - Low
+                      - Medium
+                      - None
+                      - Unknown
+                    detection_sources:
+                      type: array
+                      items:
+                        type: string
+                    detection_status:
+                      title: DetectionStatusType
+                      type: string
+                      enum:
+                      - active
+                      - inactive_merged
+                      - inactive_expired
+                      - inactive_oversized
+                      - inactive_user_closed
+                      description: Whether the incident is actively receiving detection data updates
+                    discovery_method:
+                      type: string
+                      enum:
+                      - SecureX Threat Hunting
+                      - Agent Disclosure
+                      - Antivirus
+                      - Audit
+                      - Customer
+                      - External - Fraud Detection
+                      - Financial Audit
+                      - HIPS
+                      - IT Audit
+                      - Incident Response
+                      - Internal - Fraud Detection
+                      - Law Enforcement
+                      - Log Review
+                      - Monitoring Service
+                      - NIDS
+                      - Security Alarm
+                      - Unknown
+                      - Unrelated Party
+                      - User
+                    incident_time:
+                      type: object
+                      properties:
+                        opened:
+                          type: string
+                        closed:
+                          type: string
+                        discovered:
+                          type: string
+                        rejected:
+                          type: string
+                        remediated:
+                          type: string
+                        reported:
+                          type: string
+                      required:
+                      - opened
+                    intended_effect:
+                      type: string
+                      enum:
+                      - Account Takeover
+                      - Advantage
+                      - Advantage - Economic
+                      - Advantage - Military
+                      - Advantage - Political
+                      - Brand Damage
+                      - Competitive Advantage
+                      - Degradation of Service
+                      - Denial and Deception
+                      - Destruction
+                      - Disruption
+                      - Embarrassment
+                      - Exposure
+                      - Extortion
+                      - Fraud
+                      - Harassment
+                      - ICS Control
+                      - Theft
+                      - Theft - Credential Theft
+                      - Theft - Identity Theft
+                      - Theft - Intellectual Property
+                      - Theft - Theft of Proprietary Information
+                      - Traffic Diversion
+                      - Unauthorized Access
+                    meta:
+                      type: object
+                      properties:
+                        ai_description:
+                          type: boolean
+                        helios_report_generated:
+                          type: boolean
+                    promotion_method:
+                      type: string
+                      enum:
+                      - Automated
+                      - Manual
+                    scores:
+                      type: object
+                      properties:
+                        asset:
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          maximum: 10
+                        global:
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          maximum: 1000
+                        ml_score:
+                          type: number
+                          format: double
+                        ttp:
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          maximum: 100
+                    severity:
+                      type: string
+                      enum:
+                      - Critical
+                      - High
+                      - Info
+                      - Low
+                      - Medium
+                      - None
+                      - Unknown
+                    short_id:
+                      type: string
+                    status:
+                      title: IncidentStatusType
+                      type: string
+                      enum:
+                      - New
+                      - Closed
+                      - 'Open: Recovered'
+                      - 'Closed: Other'
+                      - 'Hold: Internal'
+                      - 'Hold: Legal'
+                      - 'Closed: Under Review'
+                      - Rejected
+                      - Open
+                      - 'Closed: Merged'
+                      - Restoration Achieved
+                      - Incident Reported
+                      - 'Closed: Suspected'
+                      - Stalled
+                      - 'Open: Contained'
+                      - 'Closed: Near-Miss'
+                      - 'Hold: External'
+                      - Containment Achieved
+                      - 'New: Processing'
+                      - 'Closed: Confirmed Threat'
+                      - 'Closed: False Positive'
+                      - 'Open: Reported'
+                      - 'Open: Investigating'
+                      - Hold
+                      - 'New: Presented'
+                      description: The status of the incident
+                    tactics:
+                      type: array
+                      items:
+                        type: string
+                    techniques:
+                      type: array
+                      items:
+                        type: string
+                    description:
+                      type: string
+                    short_description:
+                      type: string
+                    source:
+                      type: string
+                    source_uri:
+                      type: string
+                    title:
+                      type: string
+                    language:
+                      type: string
+                    external_references:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          source_name:
+                            type: string
+                          hashes:
+                            type: array
+                            items:
+                              type: string
+                          url:
+                            type: string
+                          description:
+                            type: string
+                          external_id:
+                            type: string
+                        required:
+                        - source_name
+                    external_ids:
+                      type: array
+                      items:
+                        type: string
+                    tlp:
+                      type: string
+                      enum:
+                      - amber
+                      - green
+                      - red
+                      - white
+                    id:
+                      type: string
+                    client_id:
+                      type: string
+                    modified:
+                      type: string
+                      format: date-time
+                      x-anyOf:
+                      - type: string
+                        format: date-time
+                      - type: string
+                    created:
+                      type: string
+                      format: date-time
+                      x-anyOf:
+                      - type: string
+                        format: date-time
+                      - type: string
+                    owner:
+                      type:
+                      - string
+                      - 'null'
+                      x-anyOf:
+                      - type: string
+                      - type: boolean
+                    groups:
+                      type: array
+                      items:
+                        type: string
+                    schema_version:
+                      type: string
+                    revision:
+                      title: PositiveInteger
+                      type: integer
+                      format: int64
+                      minimum: 0
+                      description: A integer greater than 0.
+                      example: 2
+                    type:
+                      type: string
+                      enum:
+                      - incident
+                    timestamp:
+                      type: string
+                      format: date-time
+                      x-anyOf:
+                      - type: string
+                        format: date-time
+                      - type: string
+                    summary:
+                      type: object
+                      properties:
+                        eventsCount:
+                          title: PositiveInteger
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          description: A integer greater than 0.
+                          example: 2
+                        firstEventDate:
+                          type:
+                          - string
+                          - 'null'
+                          x-anyOf:
+                          - type: string
+                          - type: string
+                            format: date-time
+                        lastEventDate:
+                          type:
+                          - string
+                          - 'null'
+                          x-anyOf:
+                          - type: string
+                          - type: string
+                            format: date-time
+                        indicators:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  producer:
+                                    type: string
+                                  source:
+                                    type:
+                                    - string
+                                    - 'null'
+                                  internal:
+                                    type: boolean
+                                  id:
+                                    type: string
+                                  value:
+                                    type: string
+                                  tags:
+                                    type:
+                                    - array
+                                    - 'null'
+                                    items:
+                                      type: string
+                                required:
+                                - count
+                                - producer
+                                - source
+                                - internal
+                                - id
+                                - value
+                                - tags
+                          required:
+                          - totalCount
+                          - data
+                        mitreData:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  value:
+                                    type: string
+                                    enum:
+                                    - TA0004
+                                    - TA0010
+                                    - TA0005
+                                    - TA0001
+                                    - TA0009
+                                    - TA0002
+                                    - TA0040
+                                    - TA0043
+                                    - TA0011
+                                    - TA0008
+                                    - TA0042
+                                    - TA0006
+                                    - TA0007
+                                    - TA0003
+                                  title:
+                                    type: string
+                                    enum:
+                                    - Privilege Escalation
+                                    - Exfiltration
+                                    - Defense Evasion
+                                    - Initial Access
+                                    - Collection
+                                    - Execution
+                                    - Impact
+                                    - Reconnaissance
+                                    - Command and Control
+                                    - Lateral Movement
+                                    - Resource Development
+                                    - Credential Access
+                                    - Discovery
+                                    - Persistence
+                                  phase_name:
+                                    type: string
+                                    enum:
+                                    - privilege-escalation
+                                    - exfiltration
+                                    - defense-evasion
+                                    - initial-access
+                                    - collection
+                                    - execution
+                                    - impact
+                                    - reconnaissance
+                                    - command-and-control
+                                    - lateral-movement
+                                    - resource-development
+                                    - credential-access
+                                    - discovery
+                                    - persistence
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                required:
+                                - value
+                                - title
+                                - phase_name
+                                - count
+                          required:
+                          - totalCount
+                          - data
+                        observables:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  type:
+                                    type: string
+                                  value:
+                                    type: string
+                                required:
+                                - count
+                                - type
+                                - value
+                          required:
+                          - totalCount
+                          - data
+                        severity:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  value:
+                                    type: string
+                                required:
+                                - count
+                                - value
+                          required:
+                          - totalCount
+                          - data
+                        source:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  value:
+                                    type: string
+                                required:
+                                - count
+                                - value
+                          required:
+                          - totalCount
+                          - data
+                        targets:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  type:
+                                    type: string
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  value:
+                                    type: string
+                                  asset_value:
+                                    title: PositiveInteger
+                                    type:
+                                    - integer
+                                    - 'null'
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  observableType:
+                                    type: string
+                                  observables:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        type:
+                                          title: ObservableType
+                                          type: string
+                                          enum:
+                                          - none
+                                          - file_path
+                                          - mac_address
+                                          - trend_micro_id
+                                          - cybereason_id
+                                          - process_args
+                                          - s1_agent_id
+                                          - device
+                                          - hostname
+                                          - certificate_common_name
+                                          - serial_number
+                                          - meraki_network_id
+                                          - url
+                                          - jamf_management_id
+                                          - certificate_serial
+                                          - intune_id
+                                          - meraki_org_id
+                                          - cisco_cm_id
+                                          - registry_key
+                                          - process_path
+                                          - darktrace_id
+                                          - process_username
+                                          - cortex_agent_id
+                                          - orbital_node_id
+                                          - process_uid
+                                          - ngfw_name
+                                          - user
+                                          - certificate_issuer
+                                          - ipv6
+                                          - email
+                                          - cisco_uc_id
+                                          - cvm_id
+                                          - sha256
+                                          - crowdstrike_id
+                                          - google_cloud_id
+                                          - google_chromebook_id
+                                          - acudid
+                                          - sha1
+                                          - registry_name
+                                          - md5
+                                          - service_now_id
+                                          - ip
+                                          - domain
+                                          - email_subject
+                                          - imei
+                                          - ngfw_id
+                                          - amp_computer_guid
+                                          - ms_machine_id
+                                          - secure_access_id
+                                          - mutex
+                                          - processor_id
+                                          - swc_device_id
+                                          - registry_path
+                                          - odns_identity
+                                          - odns_identity_label
+                                          - cisco_mid
+                                          - process_name
+                                          - pki_serial
+                                          - meraki_node_sn
+                                          - email_messageid
+                                          - imsi
+                                          - user_agent
+                                          - process_hash
+                                          - file_name
+                                          description: The type of the observable
+                                          example: domain
+                                        value:
+                                          title: Observable.Value
+                                          type: string
+                                          example: ilo.brenz.pl
+                                          description: The value of the observable.
+                                      required:
+                                      - type
+                                      - value
+                                    uniqueItems: true
+                                  asset_id:
+                                    type:
+                                    - string
+                                    - 'null'
+                                  properties:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        name:
+                                          type: string
+                                        value:
+                                          type: string
+                                          x-anyOf:
+                                          - type: string
+                                          - type: integer
+                                            format: int64
+                                          - type: array
+                                            items:
+                                              type: string
+                                      required:
+                                      - name
+                                      - value
+                                    uniqueItems: true
+                                required:
+                                - type
+                                - count
+                                - value
+                                - observableType
+                                - observables
+                                - asset_id
+                                - properties
+                          required:
+                          - totalCount
+                          - data
+                        top_assets:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                              count:
+                                title: PositiveInteger
+                                type: integer
+                                format: int64
+                                minimum: 0
+                                description: A integer greater than 0.
+                                example: 2
+                              value:
+                                type: string
+                              asset_value:
+                                title: PositiveInteger
+                                type:
+                                - integer
+                                - 'null'
+                                format: int64
+                                minimum: 0
+                                description: A integer greater than 0.
+                                example: 2
+                              observableType:
+                                type: string
+                              observables:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      title: ObservableType
+                                      type: string
+                                      enum:
+                                      - none
+                                      - file_path
+                                      - mac_address
+                                      - trend_micro_id
+                                      - cybereason_id
+                                      - process_args
+                                      - s1_agent_id
+                                      - device
+                                      - hostname
+                                      - certificate_common_name
+                                      - serial_number
+                                      - meraki_network_id
+                                      - url
+                                      - jamf_management_id
+                                      - certificate_serial
+                                      - intune_id
+                                      - meraki_org_id
+                                      - cisco_cm_id
+                                      - registry_key
+                                      - process_path
+                                      - darktrace_id
+                                      - process_username
+                                      - cortex_agent_id
+                                      - orbital_node_id
+                                      - process_uid
+                                      - ngfw_name
+                                      - user
+                                      - certificate_issuer
+                                      - ipv6
+                                      - email
+                                      - cisco_uc_id
+                                      - cvm_id
+                                      - sha256
+                                      - crowdstrike_id
+                                      - google_cloud_id
+                                      - google_chromebook_id
+                                      - acudid
+                                      - sha1
+                                      - registry_name
+                                      - md5
+                                      - service_now_id
+                                      - ip
+                                      - domain
+                                      - email_subject
+                                      - imei
+                                      - ngfw_id
+                                      - amp_computer_guid
+                                      - ms_machine_id
+                                      - secure_access_id
+                                      - mutex
+                                      - processor_id
+                                      - swc_device_id
+                                      - registry_path
+                                      - odns_identity
+                                      - odns_identity_label
+                                      - cisco_mid
+                                      - process_name
+                                      - pki_serial
+                                      - meraki_node_sn
+                                      - email_messageid
+                                      - imsi
+                                      - user_agent
+                                      - process_hash
+                                      - file_name
+                                      description: The type of the observable
+                                      example: domain
+                                    value:
+                                      title: Observable.Value
+                                      type: string
+                                      example: ilo.brenz.pl
+                                      description: The value of the observable.
+                                  required:
+                                  - type
+                                  - value
+                                uniqueItems: true
+                              asset_id:
+                                type:
+                                - string
+                                - 'null'
+                              properties:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    value:
+                                      type: string
+                                      x-anyOf:
+                                      - type: string
+                                      - type: integer
+                                        format: int64
+                                      - type: array
+                                        items:
+                                          type: string
+                                  required:
+                                  - name
+                                  - value
+                                uniqueItems: true
+                            required:
+                            - type
+                            - count
+                            - value
+                            - observableType
+                            - observables
+                            - asset_id
+                            - properties
+                          maxItems: 5
+                      required:
+                      - eventsCount
+                      - firstEventDate
+                      - lastEventDate
+                      - indicators
+                      - mitreData
+                      - observables
+                      - severity
+                      - source
+                      - targets
+                      - top_assets
+                  required:
+                  - confidence
+                  - incident_time
+                  - status
+                  - id
+                  - groups
+                  - schema_version
+                  - type
+                  - summary
+            application/transit+json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    assignees:
+                      type: array
+                      items:
+                        type: string
+                    categories:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - Attrition
+                        - Denial of Service
+                        - Exercise
+                        - Exercise/Network Defense Testing
+                        - Explained Anomaly
+                        - Forensics
+                        - Improper Usage
+                        - Intelligence
+                        - Investigating
+                        - Investigation
+                        - Malicious Code
+                        - Malicious Logic
+                        - Non-Compliant
+                        - Reconnaissance
+                        - Root Level
+                        - Scans/Probes/Attempted Access
+                        - Unauthorized Access
+                        - Unsuccessful
+                        - User Level
+                        - eDiscovery
+                    confidence:
+                      type: string
+                      enum:
+                      - High
+                      - Info
+                      - Low
+                      - Medium
+                      - None
+                      - Unknown
+                    detection_sources:
+                      type: array
+                      items:
+                        type: string
+                    detection_status:
+                      title: DetectionStatusType
+                      type: string
+                      enum:
+                      - active
+                      - inactive_merged
+                      - inactive_expired
+                      - inactive_oversized
+                      - inactive_user_closed
+                      description: Whether the incident is actively receiving detection data updates
+                    discovery_method:
+                      type: string
+                      enum:
+                      - SecureX Threat Hunting
+                      - Agent Disclosure
+                      - Antivirus
+                      - Audit
+                      - Customer
+                      - External - Fraud Detection
+                      - Financial Audit
+                      - HIPS
+                      - IT Audit
+                      - Incident Response
+                      - Internal - Fraud Detection
+                      - Law Enforcement
+                      - Log Review
+                      - Monitoring Service
+                      - NIDS
+                      - Security Alarm
+                      - Unknown
+                      - Unrelated Party
+                      - User
+                    incident_time:
+                      type: object
+                      properties:
+                        opened:
+                          type: string
+                        closed:
+                          type: string
+                        discovered:
+                          type: string
+                        rejected:
+                          type: string
+                        remediated:
+                          type: string
+                        reported:
+                          type: string
+                      required:
+                      - opened
+                    intended_effect:
+                      type: string
+                      enum:
+                      - Account Takeover
+                      - Advantage
+                      - Advantage - Economic
+                      - Advantage - Military
+                      - Advantage - Political
+                      - Brand Damage
+                      - Competitive Advantage
+                      - Degradation of Service
+                      - Denial and Deception
+                      - Destruction
+                      - Disruption
+                      - Embarrassment
+                      - Exposure
+                      - Extortion
+                      - Fraud
+                      - Harassment
+                      - ICS Control
+                      - Theft
+                      - Theft - Credential Theft
+                      - Theft - Identity Theft
+                      - Theft - Intellectual Property
+                      - Theft - Theft of Proprietary Information
+                      - Traffic Diversion
+                      - Unauthorized Access
+                    meta:
+                      type: object
+                      properties:
+                        ai_description:
+                          type: boolean
+                        helios_report_generated:
+                          type: boolean
+                    promotion_method:
+                      type: string
+                      enum:
+                      - Automated
+                      - Manual
+                    scores:
+                      type: object
+                      properties:
+                        asset:
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          maximum: 10
+                        global:
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          maximum: 1000
+                        ml_score:
+                          type: number
+                          format: double
+                        ttp:
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          maximum: 100
+                    severity:
+                      type: string
+                      enum:
+                      - Critical
+                      - High
+                      - Info
+                      - Low
+                      - Medium
+                      - None
+                      - Unknown
+                    short_id:
+                      type: string
+                    status:
+                      title: IncidentStatusType
+                      type: string
+                      enum:
+                      - New
+                      - Closed
+                      - 'Open: Recovered'
+                      - 'Closed: Other'
+                      - 'Hold: Internal'
+                      - 'Hold: Legal'
+                      - 'Closed: Under Review'
+                      - Rejected
+                      - Open
+                      - 'Closed: Merged'
+                      - Restoration Achieved
+                      - Incident Reported
+                      - 'Closed: Suspected'
+                      - Stalled
+                      - 'Open: Contained'
+                      - 'Closed: Near-Miss'
+                      - 'Hold: External'
+                      - Containment Achieved
+                      - 'New: Processing'
+                      - 'Closed: Confirmed Threat'
+                      - 'Closed: False Positive'
+                      - 'Open: Reported'
+                      - 'Open: Investigating'
+                      - Hold
+                      - 'New: Presented'
+                      description: The status of the incident
+                    tactics:
+                      type: array
+                      items:
+                        type: string
+                    techniques:
+                      type: array
+                      items:
+                        type: string
+                    description:
+                      type: string
+                    short_description:
+                      type: string
+                    source:
+                      type: string
+                    source_uri:
+                      type: string
+                    title:
+                      type: string
+                    language:
+                      type: string
+                    external_references:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          source_name:
+                            type: string
+                          hashes:
+                            type: array
+                            items:
+                              type: string
+                          url:
+                            type: string
+                          description:
+                            type: string
+                          external_id:
+                            type: string
+                        required:
+                        - source_name
+                    external_ids:
+                      type: array
+                      items:
+                        type: string
+                    tlp:
+                      type: string
+                      enum:
+                      - amber
+                      - green
+                      - red
+                      - white
+                    id:
+                      type: string
+                    client_id:
+                      type: string
+                    modified:
+                      type: string
+                      format: date-time
+                      x-anyOf:
+                      - type: string
+                        format: date-time
+                      - type: string
+                    created:
+                      type: string
+                      format: date-time
+                      x-anyOf:
+                      - type: string
+                        format: date-time
+                      - type: string
+                    owner:
+                      type:
+                      - string
+                      - 'null'
+                      x-anyOf:
+                      - type: string
+                      - type: boolean
+                    groups:
+                      type: array
+                      items:
+                        type: string
+                    schema_version:
+                      type: string
+                    revision:
+                      title: PositiveInteger
+                      type: integer
+                      format: int64
+                      minimum: 0
+                      description: A integer greater than 0.
+                      example: 2
+                    type:
+                      type: string
+                      enum:
+                      - incident
+                    timestamp:
+                      type: string
+                      format: date-time
+                      x-anyOf:
+                      - type: string
+                        format: date-time
+                      - type: string
+                    summary:
+                      type: object
+                      properties:
+                        eventsCount:
+                          title: PositiveInteger
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          description: A integer greater than 0.
+                          example: 2
+                        firstEventDate:
+                          type:
+                          - string
+                          - 'null'
+                          x-anyOf:
+                          - type: string
+                          - type: string
+                            format: date-time
+                        lastEventDate:
+                          type:
+                          - string
+                          - 'null'
+                          x-anyOf:
+                          - type: string
+                          - type: string
+                            format: date-time
+                        indicators:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  producer:
+                                    type: string
+                                  source:
+                                    type:
+                                    - string
+                                    - 'null'
+                                  internal:
+                                    type: boolean
+                                  id:
+                                    type: string
+                                  value:
+                                    type: string
+                                  tags:
+                                    type:
+                                    - array
+                                    - 'null'
+                                    items:
+                                      type: string
+                                required:
+                                - count
+                                - producer
+                                - source
+                                - internal
+                                - id
+                                - value
+                                - tags
+                          required:
+                          - totalCount
+                          - data
+                        mitreData:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  value:
+                                    type: string
+                                    enum:
+                                    - TA0004
+                                    - TA0010
+                                    - TA0005
+                                    - TA0001
+                                    - TA0009
+                                    - TA0002
+                                    - TA0040
+                                    - TA0043
+                                    - TA0011
+                                    - TA0008
+                                    - TA0042
+                                    - TA0006
+                                    - TA0007
+                                    - TA0003
+                                  title:
+                                    type: string
+                                    enum:
+                                    - Privilege Escalation
+                                    - Exfiltration
+                                    - Defense Evasion
+                                    - Initial Access
+                                    - Collection
+                                    - Execution
+                                    - Impact
+                                    - Reconnaissance
+                                    - Command and Control
+                                    - Lateral Movement
+                                    - Resource Development
+                                    - Credential Access
+                                    - Discovery
+                                    - Persistence
+                                  phase_name:
+                                    type: string
+                                    enum:
+                                    - privilege-escalation
+                                    - exfiltration
+                                    - defense-evasion
+                                    - initial-access
+                                    - collection
+                                    - execution
+                                    - impact
+                                    - reconnaissance
+                                    - command-and-control
+                                    - lateral-movement
+                                    - resource-development
+                                    - credential-access
+                                    - discovery
+                                    - persistence
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                required:
+                                - value
+                                - title
+                                - phase_name
+                                - count
+                          required:
+                          - totalCount
+                          - data
+                        observables:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  type:
+                                    type: string
+                                  value:
+                                    type: string
+                                required:
+                                - count
+                                - type
+                                - value
+                          required:
+                          - totalCount
+                          - data
+                        severity:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  value:
+                                    type: string
+                                required:
+                                - count
+                                - value
+                          required:
+                          - totalCount
+                          - data
+                        source:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  value:
+                                    type: string
+                                required:
+                                - count
+                                - value
+                          required:
+                          - totalCount
+                          - data
+                        targets:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  type:
+                                    type: string
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  value:
+                                    type: string
+                                  asset_value:
+                                    title: PositiveInteger
+                                    type:
+                                    - integer
+                                    - 'null'
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  observableType:
+                                    type: string
+                                  observables:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        type:
+                                          title: ObservableType
+                                          type: string
+                                          enum:
+                                          - none
+                                          - file_path
+                                          - mac_address
+                                          - trend_micro_id
+                                          - cybereason_id
+                                          - process_args
+                                          - s1_agent_id
+                                          - device
+                                          - hostname
+                                          - certificate_common_name
+                                          - serial_number
+                                          - meraki_network_id
+                                          - url
+                                          - jamf_management_id
+                                          - certificate_serial
+                                          - intune_id
+                                          - meraki_org_id
+                                          - cisco_cm_id
+                                          - registry_key
+                                          - process_path
+                                          - darktrace_id
+                                          - process_username
+                                          - cortex_agent_id
+                                          - orbital_node_id
+                                          - process_uid
+                                          - ngfw_name
+                                          - user
+                                          - certificate_issuer
+                                          - ipv6
+                                          - email
+                                          - cisco_uc_id
+                                          - cvm_id
+                                          - sha256
+                                          - crowdstrike_id
+                                          - google_cloud_id
+                                          - google_chromebook_id
+                                          - acudid
+                                          - sha1
+                                          - registry_name
+                                          - md5
+                                          - service_now_id
+                                          - ip
+                                          - domain
+                                          - email_subject
+                                          - imei
+                                          - ngfw_id
+                                          - amp_computer_guid
+                                          - ms_machine_id
+                                          - secure_access_id
+                                          - mutex
+                                          - processor_id
+                                          - swc_device_id
+                                          - registry_path
+                                          - odns_identity
+                                          - odns_identity_label
+                                          - cisco_mid
+                                          - process_name
+                                          - pki_serial
+                                          - meraki_node_sn
+                                          - email_messageid
+                                          - imsi
+                                          - user_agent
+                                          - process_hash
+                                          - file_name
+                                          description: The type of the observable
+                                          example: domain
+                                        value:
+                                          title: Observable.Value
+                                          type: string
+                                          example: ilo.brenz.pl
+                                          description: The value of the observable.
+                                      required:
+                                      - type
+                                      - value
+                                    uniqueItems: true
+                                  asset_id:
+                                    type:
+                                    - string
+                                    - 'null'
+                                  properties:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        name:
+                                          type: string
+                                        value:
+                                          type: string
+                                          x-anyOf:
+                                          - type: string
+                                          - type: integer
+                                            format: int64
+                                          - type: array
+                                            items:
+                                              type: string
+                                      required:
+                                      - name
+                                      - value
+                                    uniqueItems: true
+                                required:
+                                - type
+                                - count
+                                - value
+                                - observableType
+                                - observables
+                                - asset_id
+                                - properties
+                          required:
+                          - totalCount
+                          - data
+                        top_assets:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                              count:
+                                title: PositiveInteger
+                                type: integer
+                                format: int64
+                                minimum: 0
+                                description: A integer greater than 0.
+                                example: 2
+                              value:
+                                type: string
+                              asset_value:
+                                title: PositiveInteger
+                                type:
+                                - integer
+                                - 'null'
+                                format: int64
+                                minimum: 0
+                                description: A integer greater than 0.
+                                example: 2
+                              observableType:
+                                type: string
+                              observables:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      title: ObservableType
+                                      type: string
+                                      enum:
+                                      - none
+                                      - file_path
+                                      - mac_address
+                                      - trend_micro_id
+                                      - cybereason_id
+                                      - process_args
+                                      - s1_agent_id
+                                      - device
+                                      - hostname
+                                      - certificate_common_name
+                                      - serial_number
+                                      - meraki_network_id
+                                      - url
+                                      - jamf_management_id
+                                      - certificate_serial
+                                      - intune_id
+                                      - meraki_org_id
+                                      - cisco_cm_id
+                                      - registry_key
+                                      - process_path
+                                      - darktrace_id
+                                      - process_username
+                                      - cortex_agent_id
+                                      - orbital_node_id
+                                      - process_uid
+                                      - ngfw_name
+                                      - user
+                                      - certificate_issuer
+                                      - ipv6
+                                      - email
+                                      - cisco_uc_id
+                                      - cvm_id
+                                      - sha256
+                                      - crowdstrike_id
+                                      - google_cloud_id
+                                      - google_chromebook_id
+                                      - acudid
+                                      - sha1
+                                      - registry_name
+                                      - md5
+                                      - service_now_id
+                                      - ip
+                                      - domain
+                                      - email_subject
+                                      - imei
+                                      - ngfw_id
+                                      - amp_computer_guid
+                                      - ms_machine_id
+                                      - secure_access_id
+                                      - mutex
+                                      - processor_id
+                                      - swc_device_id
+                                      - registry_path
+                                      - odns_identity
+                                      - odns_identity_label
+                                      - cisco_mid
+                                      - process_name
+                                      - pki_serial
+                                      - meraki_node_sn
+                                      - email_messageid
+                                      - imsi
+                                      - user_agent
+                                      - process_hash
+                                      - file_name
+                                      description: The type of the observable
+                                      example: domain
+                                    value:
+                                      title: Observable.Value
+                                      type: string
+                                      example: ilo.brenz.pl
+                                      description: The value of the observable.
+                                  required:
+                                  - type
+                                  - value
+                                uniqueItems: true
+                              asset_id:
+                                type:
+                                - string
+                                - 'null'
+                              properties:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    value:
+                                      type: string
+                                      x-anyOf:
+                                      - type: string
+                                      - type: integer
+                                        format: int64
+                                      - type: array
+                                        items:
+                                          type: string
+                                  required:
+                                  - name
+                                  - value
+                                uniqueItems: true
+                            required:
+                            - type
+                            - count
+                            - value
+                            - observableType
+                            - observables
+                            - asset_id
+                            - properties
+                          maxItems: 5
+                      required:
+                      - eventsCount
+                      - firstEventDate
+                      - lastEventDate
+                      - indicators
+                      - mitreData
+                      - observables
+                      - severity
+                      - source
+                      - targets
+                      - top_assets
+                  required:
+                  - confidence
+                  - incident_time
+                  - status
+                  - id
+                  - groups
+                  - schema_version
+                  - type
+                  - summary
+            application/edn:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    assignees:
+                      type: array
+                      items:
+                        type: string
+                    categories:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - Attrition
+                        - Denial of Service
+                        - Exercise
+                        - Exercise/Network Defense Testing
+                        - Explained Anomaly
+                        - Forensics
+                        - Improper Usage
+                        - Intelligence
+                        - Investigating
+                        - Investigation
+                        - Malicious Code
+                        - Malicious Logic
+                        - Non-Compliant
+                        - Reconnaissance
+                        - Root Level
+                        - Scans/Probes/Attempted Access
+                        - Unauthorized Access
+                        - Unsuccessful
+                        - User Level
+                        - eDiscovery
+                    confidence:
+                      type: string
+                      enum:
+                      - High
+                      - Info
+                      - Low
+                      - Medium
+                      - None
+                      - Unknown
+                    detection_sources:
+                      type: array
+                      items:
+                        type: string
+                    detection_status:
+                      title: DetectionStatusType
+                      type: string
+                      enum:
+                      - active
+                      - inactive_merged
+                      - inactive_expired
+                      - inactive_oversized
+                      - inactive_user_closed
+                      description: Whether the incident is actively receiving detection data updates
+                    discovery_method:
+                      type: string
+                      enum:
+                      - SecureX Threat Hunting
+                      - Agent Disclosure
+                      - Antivirus
+                      - Audit
+                      - Customer
+                      - External - Fraud Detection
+                      - Financial Audit
+                      - HIPS
+                      - IT Audit
+                      - Incident Response
+                      - Internal - Fraud Detection
+                      - Law Enforcement
+                      - Log Review
+                      - Monitoring Service
+                      - NIDS
+                      - Security Alarm
+                      - Unknown
+                      - Unrelated Party
+                      - User
+                    incident_time:
+                      type: object
+                      properties:
+                        opened:
+                          type: string
+                        closed:
+                          type: string
+                        discovered:
+                          type: string
+                        rejected:
+                          type: string
+                        remediated:
+                          type: string
+                        reported:
+                          type: string
+                      required:
+                      - opened
+                    intended_effect:
+                      type: string
+                      enum:
+                      - Account Takeover
+                      - Advantage
+                      - Advantage - Economic
+                      - Advantage - Military
+                      - Advantage - Political
+                      - Brand Damage
+                      - Competitive Advantage
+                      - Degradation of Service
+                      - Denial and Deception
+                      - Destruction
+                      - Disruption
+                      - Embarrassment
+                      - Exposure
+                      - Extortion
+                      - Fraud
+                      - Harassment
+                      - ICS Control
+                      - Theft
+                      - Theft - Credential Theft
+                      - Theft - Identity Theft
+                      - Theft - Intellectual Property
+                      - Theft - Theft of Proprietary Information
+                      - Traffic Diversion
+                      - Unauthorized Access
+                    meta:
+                      type: object
+                      properties:
+                        ai_description:
+                          type: boolean
+                        helios_report_generated:
+                          type: boolean
+                    promotion_method:
+                      type: string
+                      enum:
+                      - Automated
+                      - Manual
+                    scores:
+                      type: object
+                      properties:
+                        asset:
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          maximum: 10
+                        global:
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          maximum: 1000
+                        ml_score:
+                          type: number
+                          format: double
+                        ttp:
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          maximum: 100
+                    severity:
+                      type: string
+                      enum:
+                      - Critical
+                      - High
+                      - Info
+                      - Low
+                      - Medium
+                      - None
+                      - Unknown
+                    short_id:
+                      type: string
+                    status:
+                      title: IncidentStatusType
+                      type: string
+                      enum:
+                      - New
+                      - Closed
+                      - 'Open: Recovered'
+                      - 'Closed: Other'
+                      - 'Hold: Internal'
+                      - 'Hold: Legal'
+                      - 'Closed: Under Review'
+                      - Rejected
+                      - Open
+                      - 'Closed: Merged'
+                      - Restoration Achieved
+                      - Incident Reported
+                      - 'Closed: Suspected'
+                      - Stalled
+                      - 'Open: Contained'
+                      - 'Closed: Near-Miss'
+                      - 'Hold: External'
+                      - Containment Achieved
+                      - 'New: Processing'
+                      - 'Closed: Confirmed Threat'
+                      - 'Closed: False Positive'
+                      - 'Open: Reported'
+                      - 'Open: Investigating'
+                      - Hold
+                      - 'New: Presented'
+                      description: The status of the incident
+                    tactics:
+                      type: array
+                      items:
+                        type: string
+                    techniques:
+                      type: array
+                      items:
+                        type: string
+                    description:
+                      type: string
+                    short_description:
+                      type: string
+                    source:
+                      type: string
+                    source_uri:
+                      type: string
+                    title:
+                      type: string
+                    language:
+                      type: string
+                    external_references:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          source_name:
+                            type: string
+                          hashes:
+                            type: array
+                            items:
+                              type: string
+                          url:
+                            type: string
+                          description:
+                            type: string
+                          external_id:
+                            type: string
+                        required:
+                        - source_name
+                    external_ids:
+                      type: array
+                      items:
+                        type: string
+                    tlp:
+                      type: string
+                      enum:
+                      - amber
+                      - green
+                      - red
+                      - white
+                    id:
+                      type: string
+                    client_id:
+                      type: string
+                    modified:
+                      type: string
+                      format: date-time
+                      x-anyOf:
+                      - type: string
+                        format: date-time
+                      - type: string
+                    created:
+                      type: string
+                      format: date-time
+                      x-anyOf:
+                      - type: string
+                        format: date-time
+                      - type: string
+                    owner:
+                      type:
+                      - string
+                      - 'null'
+                      x-anyOf:
+                      - type: string
+                      - type: boolean
+                    groups:
+                      type: array
+                      items:
+                        type: string
+                    schema_version:
+                      type: string
+                    revision:
+                      title: PositiveInteger
+                      type: integer
+                      format: int64
+                      minimum: 0
+                      description: A integer greater than 0.
+                      example: 2
+                    type:
+                      type: string
+                      enum:
+                      - incident
+                    timestamp:
+                      type: string
+                      format: date-time
+                      x-anyOf:
+                      - type: string
+                        format: date-time
+                      - type: string
+                    summary:
+                      type: object
+                      properties:
+                        eventsCount:
+                          title: PositiveInteger
+                          type: integer
+                          format: int64
+                          minimum: 0
+                          description: A integer greater than 0.
+                          example: 2
+                        firstEventDate:
+                          type:
+                          - string
+                          - 'null'
+                          x-anyOf:
+                          - type: string
+                          - type: string
+                            format: date-time
+                        lastEventDate:
+                          type:
+                          - string
+                          - 'null'
+                          x-anyOf:
+                          - type: string
+                          - type: string
+                            format: date-time
+                        indicators:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  producer:
+                                    type: string
+                                  source:
+                                    type:
+                                    - string
+                                    - 'null'
+                                  internal:
+                                    type: boolean
+                                  id:
+                                    type: string
+                                  value:
+                                    type: string
+                                  tags:
+                                    type:
+                                    - array
+                                    - 'null'
+                                    items:
+                                      type: string
+                                required:
+                                - count
+                                - producer
+                                - source
+                                - internal
+                                - id
+                                - value
+                                - tags
+                          required:
+                          - totalCount
+                          - data
+                        mitreData:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  value:
+                                    type: string
+                                    enum:
+                                    - TA0004
+                                    - TA0010
+                                    - TA0005
+                                    - TA0001
+                                    - TA0009
+                                    - TA0002
+                                    - TA0040
+                                    - TA0043
+                                    - TA0011
+                                    - TA0008
+                                    - TA0042
+                                    - TA0006
+                                    - TA0007
+                                    - TA0003
+                                  title:
+                                    type: string
+                                    enum:
+                                    - Privilege Escalation
+                                    - Exfiltration
+                                    - Defense Evasion
+                                    - Initial Access
+                                    - Collection
+                                    - Execution
+                                    - Impact
+                                    - Reconnaissance
+                                    - Command and Control
+                                    - Lateral Movement
+                                    - Resource Development
+                                    - Credential Access
+                                    - Discovery
+                                    - Persistence
+                                  phase_name:
+                                    type: string
+                                    enum:
+                                    - privilege-escalation
+                                    - exfiltration
+                                    - defense-evasion
+                                    - initial-access
+                                    - collection
+                                    - execution
+                                    - impact
+                                    - reconnaissance
+                                    - command-and-control
+                                    - lateral-movement
+                                    - resource-development
+                                    - credential-access
+                                    - discovery
+                                    - persistence
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                required:
+                                - value
+                                - title
+                                - phase_name
+                                - count
+                          required:
+                          - totalCount
+                          - data
+                        observables:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  type:
+                                    type: string
+                                  value:
+                                    type: string
+                                required:
+                                - count
+                                - type
+                                - value
+                          required:
+                          - totalCount
+                          - data
+                        severity:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  value:
+                                    type: string
+                                required:
+                                - count
+                                - value
+                          required:
+                          - totalCount
+                          - data
+                        source:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  value:
+                                    type: string
+                                required:
+                                - count
+                                - value
+                          required:
+                          - totalCount
+                          - data
+                        targets:
+                          type: object
+                          properties:
+                            totalCount:
+                              title: PositiveInteger
+                              type: integer
+                              format: int64
+                              minimum: 0
+                              description: A integer greater than 0.
+                              example: 2
+                            data:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  type:
+                                    type: string
+                                  count:
+                                    title: PositiveInteger
+                                    type: integer
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  value:
+                                    type: string
+                                  asset_value:
+                                    title: PositiveInteger
+                                    type:
+                                    - integer
+                                    - 'null'
+                                    format: int64
+                                    minimum: 0
+                                    description: A integer greater than 0.
+                                    example: 2
+                                  observableType:
+                                    type: string
+                                  observables:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        type:
+                                          title: ObservableType
+                                          type: string
+                                          enum:
+                                          - none
+                                          - file_path
+                                          - mac_address
+                                          - trend_micro_id
+                                          - cybereason_id
+                                          - process_args
+                                          - s1_agent_id
+                                          - device
+                                          - hostname
+                                          - certificate_common_name
+                                          - serial_number
+                                          - meraki_network_id
+                                          - url
+                                          - jamf_management_id
+                                          - certificate_serial
+                                          - intune_id
+                                          - meraki_org_id
+                                          - cisco_cm_id
+                                          - registry_key
+                                          - process_path
+                                          - darktrace_id
+                                          - process_username
+                                          - cortex_agent_id
+                                          - orbital_node_id
+                                          - process_uid
+                                          - ngfw_name
+                                          - user
+                                          - certificate_issuer
+                                          - ipv6
+                                          - email
+                                          - cisco_uc_id
+                                          - cvm_id
+                                          - sha256
+                                          - crowdstrike_id
+                                          - google_cloud_id
+                                          - google_chromebook_id
+                                          - acudid
+                                          - sha1
+                                          - registry_name
+                                          - md5
+                                          - service_now_id
+                                          - ip
+                                          - domain
+                                          - email_subject
+                                          - imei
+                                          - ngfw_id
+                                          - amp_computer_guid
+                                          - ms_machine_id
+                                          - secure_access_id
+                                          - mutex
+                                          - processor_id
+                                          - swc_device_id
+                                          - registry_path
+                                          - odns_identity
+                                          - odns_identity_label
+                                          - cisco_mid
+                                          - process_name
+                                          - pki_serial
+                                          - meraki_node_sn
+                                          - email_messageid
+                                          - imsi
+                                          - user_agent
+                                          - process_hash
+                                          - file_name
+                                          description: The type of the observable
+                                          example: domain
+                                        value:
+                                          title: Observable.Value
+                                          type: string
+                                          example: ilo.brenz.pl
+                                          description: The value of the observable.
+                                      required:
+                                      - type
+                                      - value
+                                    uniqueItems: true
+                                  asset_id:
+                                    type:
+                                    - string
+                                    - 'null'
+                                  properties:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        name:
+                                          type: string
+                                        value:
+                                          type: string
+                                          x-anyOf:
+                                          - type: string
+                                          - type: integer
+                                            format: int64
+                                          - type: array
+                                            items:
+                                              type: string
+                                      required:
+                                      - name
+                                      - value
+                                    uniqueItems: true
+                                required:
+                                - type
+                                - count
+                                - value
+                                - observableType
+                                - observables
+                                - asset_id
+                                - properties
+                          required:
+                          - totalCount
+                          - data
+                        top_assets:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                              count:
+                                title: PositiveInteger
+                                type: integer
+                                format: int64
+                                minimum: 0
+                                description: A integer greater than 0.
+                                example: 2
+                              value:
+                                type: string
+                              asset_value:
+                                title: PositiveInteger
+                                type:
+                                - integer
+                                - 'null'
+                                format: int64
+                                minimum: 0
+                                description: A integer greater than 0.
+                                example: 2
+                              observableType:
+                                type: string
+                              observables:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    type:
+                                      title: ObservableType
+                                      type: string
+                                      enum:
+                                      - none
+                                      - file_path
+                                      - mac_address
+                                      - trend_micro_id
+                                      - cybereason_id
+                                      - process_args
+                                      - s1_agent_id
+                                      - device
+                                      - hostname
+                                      - certificate_common_name
+                                      - serial_number
+                                      - meraki_network_id
+                                      - url
+                                      - jamf_management_id
+                                      - certificate_serial
+                                      - intune_id
+                                      - meraki_org_id
+                                      - cisco_cm_id
+                                      - registry_key
+                                      - process_path
+                                      - darktrace_id
+                                      - process_username
+                                      - cortex_agent_id
+                                      - orbital_node_id
+                                      - process_uid
+                                      - ngfw_name
+                                      - user
+                                      - certificate_issuer
+                                      - ipv6
+                                      - email
+                                      - cisco_uc_id
+                                      - cvm_id
+                                      - sha256
+                                      - crowdstrike_id
+                                      - google_cloud_id
+                                      - google_chromebook_id
+                                      - acudid
+                                      - sha1
+                                      - registry_name
+                                      - md5
+                                      - service_now_id
+                                      - ip
+                                      - domain
+                                      - email_subject
+                                      - imei
+                                      - ngfw_id
+                                      - amp_computer_guid
+                                      - ms_machine_id
+                                      - secure_access_id
+                                      - mutex
+                                      - processor_id
+                                      - swc_device_id
+                                      - registry_path
+                                      - odns_identity
+                                      - odns_identity_label
+                                      - cisco_mid
+                                      - process_name
+                                      - pki_serial
+                                      - meraki_node_sn
+                                      - email_messageid
+                                      - imsi
+                                      - user_agent
+                                      - process_hash
+                                      - file_name
+                                      description: The type of the observable
+                                      example: domain
+                                    value:
+                                      title: Observable.Value
+                                      type: string
+                                      example: ilo.brenz.pl
+                                      description: The value of the observable.
+                                  required:
+                                  - type
+                                  - value
+                                uniqueItems: true
+                              asset_id:
+                                type:
+                                - string
+                                - 'null'
+                              properties:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    value:
+                                      type: string
+                                      x-anyOf:
+                                      - type: string
+                                      - type: integer
+                                        format: int64
+                                      - type: array
+                                        items:
+                                          type: string
+                                  required:
+                                  - name
+                                  - value
+                                uniqueItems: true
+                            required:
+                            - type
+                            - count
+                            - value
+                            - observableType
+                            - observables
+                            - asset_id
+                            - properties
+                          maxItems: 5
+                      required:
+                      - eventsCount
+                      - firstEventDate
+                      - lastEventDate
+                      - indicators
+                      - mitreData
+                      - observables
+                      - severity
+                      - source
+                      - targets
+                      - top_assets
+                  required:
+                  - confidence
+                  - incident_time
+                  - status
+                  - id
+                  - groups
+                  - schema_version
+                  - type
+                  - summary
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Found
+                required:
+                - message
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message: {}
+                required:
+                - message
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Forbidden
+                required:
+                - message
+        '406':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/transit+msgpack:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/transit+json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+            application/edn:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    enum:
+                    - Not Acceptable
+                required:
+                - message
+      parameters:
+      - in: query
+        name: sort_by
+        description: 'Sort result on fields.
+
+
+          The following fields are supported:
+
+          id, language, revision, schema_version, source, source_uri, timestamp, title, tlp
+
+
+          Fields can be combined with '','' and sort order can be
+
+          specified by '':asc'' and '':desc''. For example:
+
+          - id # sort by id ascending
+
+          - id:desc # sort by id descending
+
+          - id,language:desc # sort by id ascending, then language descending'
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: sort_order
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      - description: A integer greater than 0.
+        name: offset
+        title: PositiveInteger
+        example: 2
+        required: false
+        in: query
+        schema:
+          type: integer
+          format: int64
+          minimum: 0
+      - description: A integer greater than 0.
+        name: limit
+        title: PositiveInteger
+        example: 2
+        required: false
+        in: query
+        schema:
+          type: integer
+          format: int64
+          minimum: 0
+      - in: query
+        name: search_after
+        description: ''
+        required: false
+        x-anyOf:
+        - type: array
+          items:
+            type: string
+        - type: string
+        allowEmptyValue: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: fields
+        description: ''
+        required: false
+        x-anyOf:
+        - type: array
+          items:
+            type: array
+            items:
+              type: string
+              enum:
+              - assignees
+              - confidence
+              - detection_sources
+              - discovery_method
+              - id
+              - incident_time.opened
+              - incident_time.discovered
+              - incident_time.reported
+              - incident_time.remediated
+              - incident_time.closed
+              - incident_time.rejected
+              - intended_effect
+              - language
+              - meta
+              - promotion_method
+              - revision
+              - schema_version
+              - source
+              - source_uri
+              - status
+              - timestamp
+              - title
+              - tlp
+        - type: string
+        allowEmptyValue: true
+        schema:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+              enum:
+              - assignees
+              - confidence
+              - detection_sources
+              - discovery_method
+              - id
+              - incident_time.opened
+              - incident_time.discovered
+              - incident_time.reported
+              - incident_time.remediated
+              - incident_time.closed
+              - incident_time.rejected
+              - intended_effect
+              - language
+              - meta
+              - promotion_method
+              - revision
+              - schema_version
+              - source
+              - source_uri
+              - status
+              - timestamp
+              - title
+              - tlp
+      - in: query
+        name: tlp
+        description: ''
+        required: false
+        schema:
+          type: string
+          enum:
+          - amber
+          - green
+          - red
+          - white
+      - in: query
+        name: from
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: to
+        description: ''
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: language
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: id
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: search_fields
+        description: ''
+        required: false
+        x-anyOf:
+        - type: array
+          items:
+            type: string
+            enum:
+            - id
+            - short_description
+            - title
+            - source
+            - description
+        - type: string
+        allowEmptyValue: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - id
+            - short_description
+            - title
+            - source
+            - description
+      - in: query
+        name: source
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: simple_query
+        description: Query String with simple query format
+        required: false
+        schema:
+          type: string
+      - description: A integer greater than 0.
+        name: revision
+        title: PositiveInteger
+        example: 2
+        required: false
+        in: query
+        schema:
+          type: integer
+          format: int64
+          minimum: 0
+      - in: query
+        name: assignees
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: categories
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: confidence
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: detection_sources
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: discovery_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: high_impact
+        description: ''
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: intended_effect
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: promotion_method
+        description: ''
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: status
+        description: The status of the incident
+        required: false
+        title: IncidentStatusType
+        schema:
+          type: string
+          enum:
+          - New
+          - Closed
+          - 'Open: Recovered'
+          - 'Closed: Other'
+          - 'Hold: Internal'
+          - 'Hold: Legal'
+          - 'Closed: Under Review'
+          - Rejected
+          - Open
+          - 'Closed: Merged'
+          - Restoration Achieved
+          - Incident Reported
+          - 'Closed: Suspected'
+          - Stalled
+          - 'Open: Contained'
+          - 'Closed: Near-Miss'
+          - 'Hold: External'
+          - Containment Achieved
+          - 'New: Processing'
+          - 'Closed: Confirmed Threat'
+          - 'Closed: False Positive'
+          - 'Open: Reported'
+          - 'Open: Investigating'
+          - Hold
+          - 'New: Presented'
+      tags:
+      - Incident Summary
+      summary: Incident Summary Search
+      security:
+      - JWT-Bearer: []
+      - oauth2: []
+      operationId: getV1IncidentSummarySearch
+      x-operation-id-source: derived
+components:
+  securitySchemes:
+    JWT-Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes:
+            event:read: Get event information for an org. Needed to get full report information.
+            private-intel:read: Read data from private intel. Needed to get investigation data.
+            private-intel: Full private intel integration scope.
+            asset: Get Data from Device Insights. Needed during running investigations.
+            enrich:read: Fetch Data about observables. Needed for investigations.
+            integration:read: Get module information. Needed to create a new investigation.
+            investigation: Run investigations. Needed for investigations.
+            casebook: Full casebook management access. Allows read, write to casebooks.
+            casebook:read: Read Casebook access
+            global-intel:read: Read data from public intel. Needed to fetch global incident data and investigations.
+            private-intel:write: Private intel write scope.
+            ao: Execute and read workflows
+            playbook:read: Get playbook state. Needed to get full report information.
+          authorizationUrl: https://visibility.amp.cisco.com/iroh/oauth2/authorize
+          tokenUrl: https://visibility.amp.cisco.com/iroh/oauth2/token
+x-id:
+- reitit.swagger/default

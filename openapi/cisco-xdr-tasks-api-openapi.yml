@@ -577,38 +577,52 @@ paths:
       x-codegen-request-body-name: request_body
 components:
   schemas:
-    TakeActionRequest:
-      title: An TakeActionRequest model.
+    RelativeTime:
+      title: RelativeTime ...
       type: object
       properties:
-        message:
-          type: string
-          description: Response message
-          x-go-name: Message
-        prompt_response:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Prompt response
-          x-go-name: PromptResponse
-        response:
-          type: string
-          description: Response
-          x-go-name: Response
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    GetAllTasksResponse:
-      title: An GetAllTasksResponse model.
+        duration:
+          type: integer
+          format: int64
+          x-go-name: Duration
+        time_units:
+          $ref: '#/components/schemas/TimeUnit'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    TaskDateInfo:
+      title: TaskDateInfo ...
       type: object
       properties:
-        _links:
-          $ref: '#/components/schemas/PaginationLink'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetAllTaskResponse'
-          x-go-name: Results
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+        is_relative_time:
+          type: boolean
+          x-go-name: IsRelativeTime
+        is_specified_date:
+          type: boolean
+          x-go-name: IsSpecifiedDate
+        relative_time:
+          $ref: '#/components/schemas/RelativeTime'
+        specified_date:
+          type: string
+          x-go-name: SpecifiedDate
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    DueTaskDateInfo:
+      title: DueTaskDateInfo ...
+      type: object
+      properties:
+        is_relative_time:
+          type: boolean
+          x-go-name: IsRelativeTime
+        is_specified_date:
+          type: boolean
+          x-go-name: IsSpecifiedDate
+        relative_time:
+          $ref: '#/components/schemas/RelativeTime'
+        set_due_date:
+          type: boolean
+          x-go-name: SetDueDate
+        specified_date:
+          type: string
+          x-go-name: SpecifiedDate
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     FormElementType:
       type: string
       description: FormElementType contains the FromElement type enum
@@ -633,6 +647,93 @@ components:
           properties: {}
           x-go-name: DropDown
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TaskPatchRequest:
+      title: An TaskPatchRequest model.
+      type: object
+      properties:
+        approval_choices:
+          type: array
+          description: Approval choices of task
+          items:
+            type: string
+          x-go-name: ApprovalChoices
+        assignees:
+          type: array
+          description: List of assignees of the task
+          items:
+            type: string
+          x-go-name: Assignees
+        description:
+          type: string
+          description: Task description
+          x-go-name: Description
+        display_name:
+          type: string
+          description: Task name
+          x-go-name: Name
+        due_date:
+          $ref: '#/components/schemas/DueTaskDateInfo'
+        expiration_date:
+          $ref: '#/components/schemas/TaskDateInfo'
+        expiration_status:
+          type: string
+          description: Task expiration status
+          x-go-name: ExpirationStatus
+        minimum_approvals:
+          type: integer
+          description: Minimum Approvals for the task
+          format: uint32
+          x-go-name: MinimumApprovals
+        priority:
+          type: string
+          description: Task priority
+          x-go-name: Priority
+        subject_line:
+          type: string
+          description: Task subject line
+          x-go-name: SubjectLine
+        task_message:
+          type: string
+          description: Approval message of task
+          x-go-name: ApprovalMessage
+        task_owner:
+          type: string
+          description: Task owner
+          x-go-name: TaskOwner
+        task_requestor:
+          type: string
+          description: Task requestor
+          x-go-name: TaskRequestor
+        title:
+          type: string
+          description: Task title
+          x-go-name: Title
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    GetAllTasksResponse:
+      title: An GetAllTasksResponse model.
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetAllTaskResponse'
+          x-go-name: Results
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     GetTaskResponse:
       title: An GetTaskResponse model.
       type: object
@@ -740,83 +841,6 @@ components:
           type: string
           x-go-name: WFInstanceID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    AssigneeResponse:
-      title: AssigneeResponse ...
-      type: object
-      properties:
-        assignee:
-          type: string
-          x-go-name: Assignee
-        message:
-          type: string
-          x-go-name: Message
-        response:
-          type: string
-          x-go-name: Response
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    TaskPriority:
-      type: string
-      description: TaskPriority contains the Priority enum
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    TaskDateInfo:
-      title: TaskDateInfo ...
-      type: object
-      properties:
-        is_relative_time:
-          type: boolean
-          x-go-name: IsRelativeTime
-        is_specified_date:
-          type: boolean
-          x-go-name: IsSpecifiedDate
-        relative_time:
-          $ref: '#/components/schemas/RelativeTime'
-        specified_date:
-          type: string
-          x-go-name: SpecifiedDate
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    PaginationLink:
-      type: object
-      properties:
-        next:
-          type: string
-          x-go-name: Next
-        prev:
-          type: string
-          x-go-name: Prev
-        self:
-          type: string
-          x-go-name: Self
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    Status:
-      title: Status ...
-      type: object
-      properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    DueTaskDateInfo:
-      title: DueTaskDateInfo ...
-      type: object
-      properties:
-        is_relative_time:
-          type: boolean
-          x-go-name: IsRelativeTime
-        is_specified_date:
-          type: boolean
-          x-go-name: IsSpecifiedDate
-        relative_time:
-          $ref: '#/components/schemas/RelativeTime'
-        set_due_date:
-          type: boolean
-          x-go-name: SetDueDate
-        specified_date:
-          type: string
-          x-go-name: SpecifiedDate
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     GetAllTaskResponse:
       title: An GetAllTaskResponse model.
       type: object
@@ -913,10 +937,60 @@ components:
           type: string
           x-go-name: WFInstanceID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    TaskPriority:
+      type: string
+      description: TaskPriority contains the Priority enum
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     TimeUnit:
       title: TimeUnit ...
       type: string
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    AssigneeResponse:
+      title: AssigneeResponse ...
+      type: object
+      properties:
+        assignee:
+          type: string
+          x-go-name: Assignee
+        message:
+          type: string
+          x-go-name: Message
+        response:
+          type: string
+          x-go-name: Response
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    LHTime:
+      type: object
+      description: LHTime embeds time.Time
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     TasksSummaryResponse:
       title: An TasksSummaryResponse model.
       type: object
@@ -950,100 +1024,26 @@ components:
           format: int64
           x-go-name: Total
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    TaskPatchRequest:
-      title: An TaskPatchRequest model.
+    TakeActionRequest:
+      title: An TakeActionRequest model.
       type: object
       properties:
-        approval_choices:
-          type: array
-          description: Approval choices of task
-          items:
-            type: string
-          x-go-name: ApprovalChoices
-        assignees:
-          type: array
-          description: List of assignees of the task
-          items:
-            type: string
-          x-go-name: Assignees
-        description:
-          type: string
-          description: Task description
-          x-go-name: Description
-        display_name:
-          type: string
-          description: Task name
-          x-go-name: Name
-        due_date:
-          $ref: '#/components/schemas/DueTaskDateInfo'
-        expiration_date:
-          $ref: '#/components/schemas/TaskDateInfo'
-        expiration_status:
-          type: string
-          description: Task expiration status
-          x-go-name: ExpirationStatus
-        minimum_approvals:
-          type: integer
-          description: Minimum Approvals for the task
-          format: uint32
-          x-go-name: MinimumApprovals
-        priority:
-          type: string
-          description: Task priority
-          x-go-name: Priority
-        subject_line:
-          type: string
-          description: Task subject line
-          x-go-name: SubjectLine
-        task_message:
-          type: string
-          description: Approval message of task
-          x-go-name: ApprovalMessage
-        task_owner:
-          type: string
-          description: Task owner
-          x-go-name: TaskOwner
-        task_requestor:
-          type: string
-          description: Task requestor
-          x-go-name: TaskRequestor
-        title:
-          type: string
-          description: Task title
-          x-go-name: Title
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    StatusDetails:
-      type: object
-      properties:
-        code:
-          type: string
-          x-go-name: Code
-        description:
-          type: string
-          x-go-name: Description
         message:
           type: string
+          description: Response message
           x-go-name: Message
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    LHTime:
-      type: object
-      description: LHTime embeds time.Time
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    RelativeTime:
-      title: RelativeTime ...
-      type: object
-      properties:
-        duration:
-          type: integer
-          format: int64
-          x-go-name: Duration
-        time_units:
-          $ref: '#/components/schemas/TimeUnit'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    State:
-      type: string
-      description: DefinitionState
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+        prompt_response:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Prompt response
+          x-go-name: PromptResponse
+        response:
+          type: string
+          description: Response
+          x-go-name: Response
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
   securitySchemes:
     oAuth2:
       type: oauth2

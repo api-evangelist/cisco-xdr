@@ -201,136 +201,17 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ErrorMessage:
+    EnvelopedHealthDataDataQuotasKeyword8148663:
       type: object
       properties:
-        module_instance_id:
+        description:
           type: string
-        module_type_id:
-          type: string
-        module_instance_state:
-          type: string
-        code:
-          type: string
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - fatal
-          - warning
-          - error
-        module:
-          type: string
+        values:
+          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663Values'
       additionalProperties: false
       required:
-      - module_instance_id
-      - module_type_id
-      - code
-      - message
-      - type
-    NormalizedError-500:
-      example:
-        error: unknown server error
-        error_description: An unknown error has occurred during the enrichment
-        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
-      type: object
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
-        error_code:
-          type: string
-        error_uri:
-          type: string
-        trace_id:
-          type: string
-        schema.core.AnythingSchema@3c6f0b88: {}
-      additionalProperties: {}
-    ModuleHealthStatus:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - unknown
-          - ok
-          - error
-        quotas:
-          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotas'
-      additionalProperties: false
-      required:
-      - status
-    EnvelopedHealthDataDataQuotasKeyword8148663Values:
-      type: object
-      properties:
-        bucket_unit:
-          type: string
-          enum:
-          - day
-          - hour
-          - week
-          - month
-          - minute
-        bucket_limit:
-          type: number
-          format: double
-        current_bucket_consumption:
-          type: number
-          format: double
-        current_bucket_start_time:
-          type: string
-          format: date-time
-        current_bucket_end_time:
-          type: string
-          format: date-time
-        current_bucket_limit_reached:
-          type: boolean
-        current_bucket_limit_reached_at:
-          type: string
-          format: date-time
-      additionalProperties: false
-    HealthStatus:
-      type: object
-      properties:
-        module:
-          type: string
-        module_instance_id:
-          type: string
-        module_type_id:
-          type: string
-        module_instance_state:
-          type: string
-        data:
-          $ref: '#/components/schemas/ModuleHealthStatus'
-      additionalProperties: false
-      required:
-      - module
-      - module_instance_id
-      - module_type_id
-      - data
-    EnvelopedSingleHealth:
-      example:
-        data:
-          module: SecureX Global Threat Intelligence
-          module_instance_id: 60852826-5ba1-4e8e-b2d7-f827186c100b
-          module_type_id: 87563e81-ddc5-5f61-b4f8-dbe71252c922
-          data:
-            status: ok
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/HealthStatus'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorMessage'
-      additionalProperties: false
-    EnvelopedHealthDataDataQuotas:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663'
+      - description
+      - values
     EnvelopedHealth:
       example:
         data:
@@ -375,17 +256,38 @@ components:
           items:
             $ref: '#/components/schemas/ErrorMessage'
       additionalProperties: false
-    EnvelopedHealthDataDataQuotasKeyword8148663:
+    EnvelopedHealthDataDataQuotas:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663'
+    ErrorMessage:
       type: object
       properties:
-        description:
+        module_instance_id:
           type: string
-        values:
-          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663Values'
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - fatal
+          - warning
+          - error
+        module:
+          type: string
       additionalProperties: false
       required:
-      - description
-      - values
+      - module_instance_id
+      - module_type_id
+      - code
+      - message
+      - type
     NormalizedError-401:
       example:
         error: invalid_request
@@ -404,6 +306,104 @@ components:
           type: string
         schema.core.AnythingSchema@3c6f0b88: {}
       additionalProperties: {}
+    HealthStatus:
+      type: object
+      properties:
+        module:
+          type: string
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        data:
+          $ref: '#/components/schemas/ModuleHealthStatus'
+      additionalProperties: false
+      required:
+      - module
+      - module_instance_id
+      - module_type_id
+      - data
+    EnvelopedHealthDataDataQuotasKeyword8148663Values:
+      type: object
+      properties:
+        bucket_unit:
+          type: string
+          enum:
+          - day
+          - hour
+          - week
+          - month
+          - minute
+        bucket_limit:
+          type: number
+          format: double
+        current_bucket_consumption:
+          type: number
+          format: double
+        current_bucket_start_time:
+          type: string
+          format: date-time
+        current_bucket_end_time:
+          type: string
+          format: date-time
+        current_bucket_limit_reached:
+          type: boolean
+        current_bucket_limit_reached_at:
+          type: string
+          format: date-time
+      additionalProperties: false
+    NormalizedError-500:
+      example:
+        error: unknown server error
+        error_description: An unknown error has occurred during the enrichment
+        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_code:
+          type: string
+        error_uri:
+          type: string
+        trace_id:
+          type: string
+        schema.core.AnythingSchema@3c6f0b88: {}
+      additionalProperties: {}
+    EnvelopedSingleHealth:
+      example:
+        data:
+          module: SecureX Global Threat Intelligence
+          module_instance_id: 60852826-5ba1-4e8e-b2d7-f827186c100b
+          module_type_id: 87563e81-ddc5-5f61-b4f8-dbe71252c922
+          data:
+            status: ok
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/HealthStatus'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+      additionalProperties: false
+    ModuleHealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - unknown
+          - ok
+          - error
+        quotas:
+          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotas'
+      additionalProperties: false
+      required:
+      - status
   securitySchemes:
     iroh:
       type: apiKey
