@@ -485,57 +485,6 @@ paths:
           content: {}
 components:
   schemas:
-    tableTypePostRequest:
-      title: TableTypePostRequest ...
-      type: object
-      properties:
-        columns:
-          type: array
-          description: Specify columns for table type
-          items:
-            type: object
-            additionalProperties:
-              type: object
-              properties: {}
-          x-go-name: ConsoleCols
-        description:
-          type: string
-          description: Description of the Table Type
-          x-go-name: Description
-        display_name:
-          type: string
-          description: Name of the Table Type
-          x-go-name: Name
-        inherits:
-          type: string
-          description: Inherits
-          x-go-name: Inherits
-        max_column_size:
-          type: integer
-          description: Define column size
-          format: int32
-          x-go-name: MaxColumnSize
-        max_columns:
-          type: integer
-          description: Define Max columns for Table Type
-          format: int32
-          x-go-name: MaxColumns
-        max_rows:
-          type: integer
-          description: Define MaxRows for Table Type
-          format: int32
-          x-go-name: MaxRows
-        max_table_size:
-          type: integer
-          description: Define the table size
-          format: int32
-          x-go-name: MaxTableSize
-        unique_name:
-          type: string
-          description: Uniquename
-          x-go-name: UniqueName
-      x-go-name: TableTypePostRequest
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     TableTypeSchemaResponse:
       title: TableTypeSchemaResponse ...
       type: object
@@ -591,6 +540,57 @@ components:
           format: date-time
           x-go-name: UpdatedOn
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    tableTypePostRequest:
+      title: TableTypePostRequest ...
+      type: object
+      properties:
+        columns:
+          type: array
+          description: Specify columns for table type
+          items:
+            type: object
+            additionalProperties:
+              type: object
+              properties: {}
+          x-go-name: ConsoleCols
+        description:
+          type: string
+          description: Description of the Table Type
+          x-go-name: Description
+        display_name:
+          type: string
+          description: Name of the Table Type
+          x-go-name: Name
+        inherits:
+          type: string
+          description: Inherits
+          x-go-name: Inherits
+        max_column_size:
+          type: integer
+          description: Define column size
+          format: int32
+          x-go-name: MaxColumnSize
+        max_columns:
+          type: integer
+          description: Define Max columns for Table Type
+          format: int32
+          x-go-name: MaxColumns
+        max_rows:
+          type: integer
+          description: Define MaxRows for Table Type
+          format: int32
+          x-go-name: MaxRows
+        max_table_size:
+          type: integer
+          description: Define the table size
+          format: int32
+          x-go-name: MaxTableSize
+        unique_name:
+          type: string
+          description: Uniquename
+          x-go-name: UniqueName
+      x-go-name: TableTypePostRequest
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     CreateTableTypeGetResponse:
       title: CreateTableTypeGetResponse ...
       type: object

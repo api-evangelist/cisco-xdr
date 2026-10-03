@@ -108,6 +108,26 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    OneClickModuleCreateParams:
+      type: object
+      properties:
+        module_type_id:
+          type: string
+        settings:
+          $ref: '#/components/schemas/ModuleInstanceSettings'
+        product_tenant_id:
+          type: string
+        type:
+          description: Indicates whether this is an initial one-click request or an update request.
+          type: string
+          enum:
+          - update-to-one-click
+          - one-click
+      additionalProperties: false
+      required:
+      - module_type_id
+      - product_tenant_id
+      - type
     ModuleInstance:
       type: object
       properties:
@@ -160,21 +180,6 @@ components:
       - enabled
       - visibility
       - created_at
-    ModuleInstanceExternalReference:
-      type: object
-      properties:
-        label:
-          type: string
-        link:
-          type: string
-        external_id:
-          type: string
-        class:
-          description: Class to distinguish external references
-          type: string
-      additionalProperties: false
-      required:
-      - label
     ModuleInstanceSettings:
       type: object
       additionalProperties:
@@ -216,26 +221,21 @@ components:
       additionalProperties: false
       required:
       - created_new_module?
-    OneClickModuleCreateParams:
+    ModuleInstanceExternalReference:
       type: object
       properties:
-        module_type_id:
+        label:
           type: string
-        settings:
-          $ref: '#/components/schemas/ModuleInstanceSettings'
-        product_tenant_id:
+        link:
           type: string
-        type:
-          description: Indicates whether this is an initial one-click request or an update request.
+        external_id:
           type: string
-          enum:
-          - update-to-one-click
-          - one-click
+        class:
+          description: Class to distinguish external references
+          type: string
       additionalProperties: false
       required:
-      - module_type_id
-      - product_tenant_id
-      - type
+      - label
   securitySchemes:
     iroh:
       type: apiKey

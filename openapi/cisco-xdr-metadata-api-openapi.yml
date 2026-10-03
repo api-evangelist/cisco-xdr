@@ -124,29 +124,6 @@ paths:
       - Metadata
 components:
   schemas:
-    MetaDataHdr:
-      type: object
-      properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        meta_data_id:
-          type: string
-          x-go-name: MetaDataID
-        meta_data_key:
-          type: string
-          x-go-name: MetaDataKey
-        meta_data_name:
-          type: string
-          x-go-name: MetaDataName
-        object_type:
-          type: string
-          x-go-name: ObjectType
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-      description: MetaDataHdr common Meta Data Object fields
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     MetadataRefreshToken:
       type: object
       properties:
@@ -178,6 +155,29 @@ components:
           x-go-name: UpdatedOn
       description: model used for to return response
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    MetaDataHdr:
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        meta_data_id:
+          type: string
+          x-go-name: MetaDataID
+        meta_data_key:
+          type: string
+          x-go-name: MetaDataKey
+        meta_data_name:
+          type: string
+          x-go-name: MetaDataName
+        object_type:
+          type: string
+          x-go-name: ObjectType
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+      description: MetaDataHdr common Meta Data Object fields
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
   securitySchemes:
     oAuth2:
       type: oauth2

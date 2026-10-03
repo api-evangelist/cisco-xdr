@@ -582,6 +582,54 @@ paths:
           content: {}
 components:
   schemas:
+    VariablePutRequest:
+      title: VariablePutRequest represents a payload for modifying an existing variable by its ID.
+      type: object
+      properties:
+        properties:
+          $ref: '#/components/schemas/VariableContent'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    VariableContent:
+      title: VariableContent ...
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of variable
+          x-go-name: Description
+        display_on_wizard:
+          type: boolean
+          description: 'Should the variable be shown on wizard
+
+            Used in input scope variables, if it is true, then variable is displayed on wizard'
+          x-go-name: DisplayOnWizard
+        is_invisible:
+          type: boolean
+          x-go-name: IsInvisible
+        is_required:
+          type: boolean
+          description: 'Is the variable Required
+
+            Used in input string and secure string variable, if it is true, then string can''t be emptly'
+          x-go-name: IsRequired
+        name:
+          type: string
+          description: Name of variable
+          x-go-name: Name
+        scope:
+          type: string
+          description: Scope of variable. Scope can be 'input', 'global', 'local', 'static' or 'workflow'
+          x-go-name: Scope
+        type:
+          type: string
+          description: Type of variable. Type can be 'datatype.boolean', 'datatype.string', 'datatype.number' or 'datatype.table'
+          x-go-name: Type
+        value:
+          type: object
+          properties: {}
+          description: Value of variable. Value can be a string, boolean, number or array
+          x-go-name: Value
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     VariableGetResponse:
       type: object
       properties:
@@ -642,47 +690,6 @@ components:
 
         Either ViewSchemaID or Type or both can be provided to create a Variable.'
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    VariableContent:
-      title: VariableContent ...
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of variable
-          x-go-name: Description
-        display_on_wizard:
-          type: boolean
-          description: 'Should the variable be shown on wizard
-
-            Used in input scope variables, if it is true, then variable is displayed on wizard'
-          x-go-name: DisplayOnWizard
-        is_invisible:
-          type: boolean
-          x-go-name: IsInvisible
-        is_required:
-          type: boolean
-          description: 'Is the variable Required
-
-            Used in input string and secure string variable, if it is true, then string can''t be emptly'
-          x-go-name: IsRequired
-        name:
-          type: string
-          description: Name of variable
-          x-go-name: Name
-        scope:
-          type: string
-          description: Scope of variable. Scope can be 'input', 'global', 'local', 'static' or 'workflow'
-          x-go-name: Scope
-        type:
-          type: string
-          description: Type of variable. Type can be 'datatype.boolean', 'datatype.string', 'datatype.number' or 'datatype.table'
-          x-go-name: Type
-        value:
-          type: object
-          properties: {}
-          description: Value of variable. Value can be a string, boolean, number or array
-          x-go-name: Value
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     VariableGetAllResponse:
       type: object
       properties:
@@ -722,13 +729,6 @@ components:
           x-go-name: UpdatedOn
       description: VariableGetAllResponse model for variables
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    VariablePutRequest:
-      title: VariablePutRequest represents a payload for modifying an existing variable by its ID.
-      type: object
-      properties:
-        properties:
-          $ref: '#/components/schemas/VariableContent'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
   securitySchemes:
     oAuth2:
       type: oauth2

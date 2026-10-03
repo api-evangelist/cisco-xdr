@@ -397,10 +397,6 @@ paths:
       x-codegen-request-body-name: xchange_info
 components:
   schemas:
-    LHObjType:
-      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
     PublisherInfo:
       type: object
       properties:
@@ -430,105 +426,6 @@ components:
           type: string
           x-go-name: Self
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    XChange:
-      title: XChange ...
-      type: object
-      properties:
-        author:
-          type: string
-          x-go-name: Author
-        base_type:
-          type: string
-          x-go-name: BaseType
-        blurb:
-          type: string
-          x-go-name: Blurb
-        categories:
-          type: array
-          items:
-            type: string
-          x-go-name: Categories
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        data_schema_id:
-          type: string
-          x-go-name: DataSchemaID
-        id:
-          type: string
-          x-go-name: XChangeID
-        image:
-          type: string
-          x-go-name: Image
-        install_count:
-          type: integer
-          format: uint32
-          x-go-name: InstallCount
-        install_info:
-          $ref: '#/components/schemas/InstallInfo'
-        name:
-          type: string
-          x-go-name: Name
-        object_type:
-          $ref: '#/components/schemas/LHObjType'
-        owner:
-          type: string
-          x-go-name: Owner
-        path:
-          type: string
-          x-go-name: Path
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: Properties
-        publisher_info:
-          $ref: '#/components/schemas/PublisherInfo'
-        rating:
-          $ref: '#/components/schemas/RatingInfo'
-        title:
-          type: string
-          x-go-name: Title
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-        view_schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    State:
-      type: string
-      description: DefinitionState
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    InstallInfo:
-      title: InstallInfo ...
-      type: object
-      properties:
-        installed_time:
-          type: string
-          format: date-time
-          x-go-name: InstalledTime
-        status:
-          $ref: '#/components/schemas/Status'
-        version:
-          type: string
-          x-go-name: InstalledVersion
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     StatusDetails:
       type: object
       properties:
@@ -541,43 +438,6 @@ components:
         message:
           type: string
           x-go-name: Message
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    XChangeIDOrder:
-      type: object
-      properties:
-        display_order:
-          type: integer
-          format: int64
-          x-go-name: DisplayOrder
-        xchange_id:
-          type: string
-          x-go-name: XChangeID
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    XchangeGetAllPaginationResponse:
-      type: object
-      properties:
-        _links:
-          $ref: '#/components/schemas/PaginationLink'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/XChange'
-          x-go-name: Results
-        total_count:
-          type: integer
-          format: uint32
-          x-go-name: TotalCount
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    ReleaseNote:
-      type: object
-      properties:
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        rlease_note:
-          type: string
-          x-go-name: RleaseNote
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     Status:
       title: Status ...
@@ -666,6 +526,146 @@ components:
           type: string
           x-go-name: ViewSchemaID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    XChange:
+      title: XChange ...
+      type: object
+      properties:
+        author:
+          type: string
+          x-go-name: Author
+        base_type:
+          type: string
+          x-go-name: BaseType
+        blurb:
+          type: string
+          x-go-name: Blurb
+        categories:
+          type: array
+          items:
+            type: string
+          x-go-name: Categories
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        data_schema_id:
+          type: string
+          x-go-name: DataSchemaID
+        id:
+          type: string
+          x-go-name: XChangeID
+        image:
+          type: string
+          x-go-name: Image
+        install_count:
+          type: integer
+          format: uint32
+          x-go-name: InstallCount
+        install_info:
+          $ref: '#/components/schemas/InstallInfo'
+        name:
+          type: string
+          x-go-name: Name
+        object_type:
+          $ref: '#/components/schemas/LHObjType'
+        owner:
+          type: string
+          x-go-name: Owner
+        path:
+          type: string
+          x-go-name: Path
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        publisher_info:
+          $ref: '#/components/schemas/PublisherInfo'
+        rating:
+          $ref: '#/components/schemas/RatingInfo'
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+        view_schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    ReleaseNote:
+      type: object
+      properties:
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        rlease_note:
+          type: string
+          x-go-name: RleaseNote
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    XChangeIDOrder:
+      type: object
+      properties:
+        display_order:
+          type: integer
+          format: int64
+          x-go-name: DisplayOrder
+        xchange_id:
+          type: string
+          x-go-name: XChangeID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    InstallInfo:
+      title: InstallInfo ...
+      type: object
+      properties:
+        installed_time:
+          type: string
+          format: date-time
+          x-go-name: InstalledTime
+        status:
+          $ref: '#/components/schemas/Status'
+        version:
+          type: string
+          x-go-name: InstalledVersion
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    XchangeGetAllPaginationResponse:
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/XChange'
+          x-go-name: Results
+        total_count:
+          type: integer
+          format: uint32
+          x-go-name: TotalCount
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    LHObjType:
+      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
   securitySchemes:
     oAuth2:
       type: oauth2

@@ -267,6 +267,25 @@ paths:
       x-codegen-request-body-name: rows
 components:
   schemas:
+    UpdateTableRowPostRequest:
+      type: object
+      properties:
+        rows_to_be_added:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserTableRow'
+          x-go-name: RowsToAdd
+        rows_to_be_deleted:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserTableRow'
+          x-go-name: RowsToDelete
+        rows_to_be_updated:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserTableRow'
+          x-go-name: RowsToUpdate
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     UserTableRow:
       type: object
       properties:
@@ -305,25 +324,6 @@ components:
           type: string
           x-go-name: SuffixID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    UpdateTableRowPostRequest:
-      type: object
-      properties:
-        rows_to_be_added:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserTableRow'
-          x-go-name: RowsToAdd
-        rows_to_be_deleted:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserTableRow'
-          x-go-name: RowsToDelete
-        rows_to_be_updated:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserTableRow'
-          x-go-name: RowsToUpdate
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     TableGetResponse:
       title: TableGetResponse ...
       type: object

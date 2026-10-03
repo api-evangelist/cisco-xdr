@@ -363,24 +363,6 @@ components:
             $ref: '#/components/schemas/UserPermission'
           x-go-name: UserPermissions
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    UserPermission:
-      title: UserPermission ...
-      required:
-      - id
-      - permissions
-      type: object
-      properties:
-        id:
-          type: string
-          description: An ID of user
-          x-go-name: ID
-        permissions:
-          type: array
-          description: 'Permissions of the entity, Type of permissions can be: "view", "run", "modify", "manage"'
-          items:
-            type: string
-          x-go-name: Permissions
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     GroupPermission:
       title: GroupPermission ...
       required:
@@ -391,6 +373,24 @@ components:
         id:
           type: string
           description: An ID of group
+          x-go-name: ID
+        permissions:
+          type: array
+          description: 'Permissions of the entity, Type of permissions can be: "view", "run", "modify", "manage"'
+          items:
+            type: string
+          x-go-name: Permissions
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    UserPermission:
+      title: UserPermission ...
+      required:
+      - id
+      - permissions
+      type: object
+      properties:
+        id:
+          type: string
+          description: An ID of user
           x-go-name: ID
         permissions:
           type: array

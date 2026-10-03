@@ -201,17 +201,29 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    EnvelopedHealthDataDataQuotasKeyword8148663:
+    EnvelopedHealthDataDataQuotas:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663'
+    HealthStatus:
       type: object
       properties:
-        description:
+        module:
           type: string
-        values:
-          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663Values'
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        data:
+          $ref: '#/components/schemas/ModuleHealthStatus'
       additionalProperties: false
       required:
-      - description
-      - values
+      - module
+      - module_instance_id
+      - module_type_id
+      - data
     EnvelopedHealth:
       example:
         data:
@@ -256,10 +268,35 @@ components:
           items:
             $ref: '#/components/schemas/ErrorMessage'
       additionalProperties: false
-    EnvelopedHealthDataDataQuotas:
+    EnvelopedHealthDataDataQuotasKeyword8148663:
       type: object
-      additionalProperties:
-        $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663'
+      properties:
+        description:
+          type: string
+        values:
+          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663Values'
+      additionalProperties: false
+      required:
+      - description
+      - values
+    NormalizedError-401:
+      example:
+        error: invalid_request
+        error_description: No JWT found in HTTP Authorization header
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_code:
+          type: string
+        error_uri:
+          type: string
+        trace_id:
+          type: string
+        schema.core.AnythingSchema@3c6f0b88: {}
+      additionalProperties: {}
     ErrorMessage:
       type: object
       properties:
@@ -288,10 +325,11 @@ components:
       - code
       - message
       - type
-    NormalizedError-401:
+    NormalizedError-500:
       example:
-        error: invalid_request
-        error_description: No JWT found in HTTP Authorization header
+        error: unknown server error
+        error_description: An unknown error has occurred during the enrichment
+        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
       type: object
       properties:
         error:
@@ -306,25 +344,6 @@ components:
           type: string
         schema.core.AnythingSchema@3c6f0b88: {}
       additionalProperties: {}
-    HealthStatus:
-      type: object
-      properties:
-        module:
-          type: string
-        module_instance_id:
-          type: string
-        module_type_id:
-          type: string
-        module_instance_state:
-          type: string
-        data:
-          $ref: '#/components/schemas/ModuleHealthStatus'
-      additionalProperties: false
-      required:
-      - module
-      - module_instance_id
-      - module_type_id
-      - data
     EnvelopedHealthDataDataQuotasKeyword8148663Values:
       type: object
       properties:
@@ -354,25 +373,20 @@ components:
           type: string
           format: date-time
       additionalProperties: false
-    NormalizedError-500:
-      example:
-        error: unknown server error
-        error_description: An unknown error has occurred during the enrichment
-        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
+    ModuleHealthStatus:
       type: object
       properties:
-        error:
+        status:
           type: string
-        error_description:
-          type: string
-        error_code:
-          type: string
-        error_uri:
-          type: string
-        trace_id:
-          type: string
-        schema.core.AnythingSchema@3c6f0b88: {}
-      additionalProperties: {}
+          enum:
+          - unknown
+          - ok
+          - error
+        quotas:
+          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotas'
+      additionalProperties: false
+      required:
+      - status
     EnvelopedSingleHealth:
       example:
         data:
@@ -390,20 +404,6 @@ components:
           items:
             $ref: '#/components/schemas/ErrorMessage'
       additionalProperties: false
-    ModuleHealthStatus:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - unknown
-          - ok
-          - error
-        quotas:
-          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotas'
-      additionalProperties: false
-      required:
-      - status
   securitySchemes:
     iroh:
       type: apiKey

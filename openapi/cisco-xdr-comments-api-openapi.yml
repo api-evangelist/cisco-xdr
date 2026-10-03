@@ -261,45 +261,6 @@ paths:
       x-codegen-request-body-name: request_body
 components:
   schemas:
-    LHObjType:
-      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
-    CommentsPostRequestParams:
-      title: CommentsPostRequestParams ...
-      required:
-      - ref_id
-      - ref_object_type
-      type: object
-      properties:
-        ref_id:
-          type: string
-          description: 'commented object ID to get for.
-
-            in: body'
-          x-go-name: RefID
-        ref_object_type:
-          $ref: '#/components/schemas/LHObjType'
-        version:
-          type: string
-          description: 'commented version to get for.
-
-            in: body'
-          x-go-name: Version
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    PaginationLink:
-      type: object
-      properties:
-        next:
-          type: string
-          x-go-name: Next
-        prev:
-          type: string
-          x-go-name: Prev
-        self:
-          type: string
-          x-go-name: Self
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     GetAllCommentsResponse:
       title: An GetAllCommentsResponse model.
       type: object
@@ -316,32 +277,18 @@ components:
           format: int32
           x-go-name: TotalCount
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    CommentPostRequest:
-      title: CommentPostRequest
-      required:
-      - message
-      - ref_base_type
-      - ref_id
-      - ref_type
+    PaginationLink:
       type: object
       properties:
-        message:
+        next:
           type: string
-          description: The message.
-          x-go-name: Message
-        ref_base_type:
+          x-go-name: Next
+        prev:
           type: string
-          description: The base type of the entity.
-          x-go-name: RefBaseType
-        ref_id:
+          x-go-name: Prev
+        self:
           type: string
-          description: The ID of the entity.
-          x-go-name: RefID
-        ref_type:
-          type: string
-          description: The type of the entity.
-          x-go-name: RefType
-      description: The comment create request model.
+          x-go-name: Self
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     comment:
       title: Comment
@@ -398,6 +345,59 @@ components:
       description: This is a comment model.
       x-go-name: Comment
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    CommentsPostRequestParams:
+      title: CommentsPostRequestParams ...
+      required:
+      - ref_id
+      - ref_object_type
+      type: object
+      properties:
+        ref_id:
+          type: string
+          description: 'commented object ID to get for.
+
+            in: body'
+          x-go-name: RefID
+        ref_object_type:
+          $ref: '#/components/schemas/LHObjType'
+        version:
+          type: string
+          description: 'commented version to get for.
+
+            in: body'
+          x-go-name: Version
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    CommentPostRequest:
+      title: CommentPostRequest
+      required:
+      - message
+      - ref_base_type
+      - ref_id
+      - ref_type
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message.
+          x-go-name: Message
+        ref_base_type:
+          type: string
+          description: The base type of the entity.
+          x-go-name: RefBaseType
+        ref_id:
+          type: string
+          description: The ID of the entity.
+          x-go-name: RefID
+        ref_type:
+          type: string
+          description: The type of the entity.
+          x-go-name: RefType
+      description: The comment create request model.
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    LHObjType:
+      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
   securitySchemes:
     oAuth2:
       type: oauth2

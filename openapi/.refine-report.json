@@ -105,7 +105,7 @@
     "cisco-xdr-private-intel-api-openapi.yml"
   ],
   "archived": [
-    "deleted 6 superseded output(s) from the previous generation"
+    "deleted 3 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
@@ -195,8 +195,8 @@
     "tag 'Event' spans 2 source specs (cisco-xdr-ctia-openapi.json, cisco-xdr-iroh-event-openapi.json): per-path servers applied",
     "tag 'Incident' spans 2 source specs (cisco-xdr-ctia-openapi.json, cisco-xdr-incidents-investigations-openapi.json): per-path servers applied",
     "tag 'Sighting' spans 2 source specs (cisco-xdr-ctia-openapi.json, cisco-xdr-incidents-investigations-openapi.json): per-path servers applied",
-    "superseded outputs removed: cisco-xdr-graph-ql-api-openapi.yml, cisco-xdr-target-groups-api-openapi.yml, cisco-xdr-v1-api-openapi.yml, cisco-xdr-v2-api-openapi.yml, cisco-xdr-v3-api-openapi.yml \u2026",
-    "apis.yml register: written (+12 apis, 89 total)"
+    "superseded outputs removed: cisco-xdr-graph-ql-api-openapi.yml, cisco-xdr-target-groups-api-openapi.yml, cisco-xdr-workflow-instances-api-openapi.yml",
+    "apis.yml register: written (+3 apis, 89 total)"
   ],
   "skipped": [
     "cisco-xdr-actor-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -222,9 +222,17 @@
     "cisco-xdr-graph-ql-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-incident-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cisco-xdr-incident-overview-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cisco-xdr-incident-report-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cisco-xdr-incident-routes-using-entities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cisco-xdr-incident-summary-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-indicator-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-inspect-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-investigation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cisco-xdr-investigation-creation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cisco-xdr-investigation-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cisco-xdr-investigation-routes-using-entities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cisco-xdr-investigation-save-update-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-invite-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-iroh-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-judgement-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -246,6 +254,7 @@
     "cisco-xdr-references-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-relationship-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-remotemeta-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cisco-xdr-report-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-reputation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-response-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-rules-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -266,9 +275,6 @@
     "cisco-xdr-tenants-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-tool-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-triggers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "cisco-xdr-v1-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "cisco-xdr-v2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "cisco-xdr-v3-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-variables-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-variabletypes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "cisco-xdr-verdict-api-openapi.yml: previously refined output, superseded by openapi/_original/",

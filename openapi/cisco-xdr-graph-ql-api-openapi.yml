@@ -90,16 +90,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    RelayGraphQLResponse:
-      type: object
-      properties:
-        data: {}
-        errors:
-          type: array
-          items: {}
-      additionalProperties: false
-      required:
-      - data
     RelayGraphQLQuery:
       description: a Relay compatible GraphQL body
       type: object
@@ -114,6 +104,16 @@ components:
       additionalProperties: false
       required:
       - query
+    RelayGraphQLResponse:
+      type: object
+      properties:
+        data: {}
+        errors:
+          type: array
+          items: {}
+      additionalProperties: false
+      required:
+      - data
   securitySchemes:
     JWT:
       type: apiKey

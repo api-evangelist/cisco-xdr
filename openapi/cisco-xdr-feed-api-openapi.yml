@@ -817,71 +817,8 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ExternalReference:
-      example:
-        source_name: string
-        description: string
-        url: string
-        hashes:
-        - string
-        external_id: string
-      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
-      type: object
-      properties:
-        source_name:
-          example: string
-          description: The source within which the external-reference is defined (system, registry, organization, etc.)
-          type: string
-        description:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        url:
-          example: string
-          description: A URL reference to an external resource.
-          type: string
-        hashes:
-          example:
-          - string
-          description: Specifies a dictionary of hashes for the contents of the url.
-          type: array
-          items:
-            type: string
-        external_id:
-          example: string
-          description: An identifier for the external reference content.
-          type: string
-      additionalProperties: false
-      required:
-      - source_name
-    Feed:
-      example:
-        schema_version: 1.3.30
-        revision: 10
-        indicator_id: string
-        type: string
-        output: observables
-        external_ids:
-        - string
-        secret: string
-        title: string
-        external_references:
-        - source_name: string
-          description: string
-          url: string
-          hashes:
-          - string
-          external_id: string
-        feed_view_url: string
-        language: string
-        id: string
-        tlp: green
-        lifetime:
-          start_time: '2016-01-01T01:01:01.000Z'
-          end_time: '2016-01-01T01:01:01.000Z'
-        timestamp: '2016-01-01T01:01:01.000Z'
-        feed_type: indicator
-      description: Schema for a Feed
+    NewFeed:
+      description: a new Feed
       type: object
       properties:
         authorized_groups:
@@ -903,8 +840,10 @@ components:
           items:
             type: string
         type:
-          example: string
+          example: feed
           type: string
+          enum:
+          - feed
         created:
           type: string
           format: date-time
@@ -956,7 +895,7 @@ components:
           type: string
         id:
           example: string
-          description: Globally unique URI identifying this object.
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
           type: string
         tlp:
           example: green
@@ -996,9 +935,7 @@ components:
           type: string
       additionalProperties: false
       required:
-      - type
       - output
-      - id
       - feed_type
     Judgement:
       example:
@@ -1166,8 +1103,166 @@ components:
           - High
           - Low
       additionalProperties: false
-    NewFeed:
-      description: a new Feed
+    ExternalReference:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
+      type: object
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: false
+      required:
+      - source_name
+    Observable:
+      example:
+        value: 1.2.3.4
+        type: ip
+      description: An AssetMapping is a record that a specific Observable maps to an Asset for an indicated period of time.
+      type: object
+      properties:
+        value:
+          example: 1.2.3.4
+          description: The value of the observable.
+          type: string
+        type:
+          example: ip
+          description: The type of observable.
+          type: string
+          enum:
+          - file_path
+          - mac_address
+          - trend_micro_id
+          - cybereason_id
+          - process_args
+          - s1_agent_id
+          - device
+          - hostname
+          - certificate_common_name
+          - serial_number
+          - meraki_network_id
+          - url
+          - jamf_management_id
+          - certificate_serial
+          - intune_id
+          - meraki_org_id
+          - cisco_cm_id
+          - registry_key
+          - process_path
+          - darktrace_id
+          - process_username
+          - cortex_agent_id
+          - orbital_node_id
+          - process_uid
+          - ngfw_name
+          - user
+          - certificate_issuer
+          - ipv6
+          - email
+          - cisco_uc_id
+          - cvm_id
+          - sha256
+          - crowdstrike_id
+          - google_cloud_id
+          - google_chromebook_id
+          - acudid
+          - sha1
+          - registry_name
+          - md5
+          - service_now_id
+          - ip
+          - domain
+          - email_subject
+          - imei
+          - ngfw_id
+          - amp_computer_guid
+          - ms_machine_id
+          - secure_access_id
+          - mutex
+          - processor_id
+          - swc_device_id
+          - registry_path
+          - odns_identity
+          - odns_identity_label
+          - cisco_mid
+          - process_name
+          - pki_serial
+          - meraki_node_sn
+          - email_messageid
+          - imsi
+          - user_agent
+          - process_hash
+          - file_name
+      additionalProperties: false
+      required:
+      - value
+      - type
+    FeedView:
+      type: object
+      properties:
+        judgements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Judgement'
+        observables:
+          type: array
+          items:
+            $ref: '#/components/schemas/Observable'
+      additionalProperties: false
+    Feed:
+      example:
+        schema_version: 1.3.30
+        revision: 10
+        indicator_id: string
+        type: string
+        output: observables
+        external_ids:
+        - string
+        secret: string
+        title: string
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        feed_view_url: string
+        language: string
+        id: string
+        tlp: green
+        lifetime:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        timestamp: '2016-01-01T01:01:01.000Z'
+        feed_type: indicator
+      description: Schema for a Feed
       type: object
       properties:
         authorized_groups:
@@ -1189,10 +1284,8 @@ components:
           items:
             type: string
         type:
-          example: feed
+          example: string
           type: string
-          enum:
-          - feed
         created:
           type: string
           format: date-time
@@ -1244,7 +1337,7 @@ components:
           type: string
         id:
           example: string
-          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          description: Globally unique URI identifying this object.
           type: string
         tlp:
           example: green
@@ -1284,7 +1377,9 @@ components:
           type: string
       additionalProperties: false
       required:
+      - type
       - output
+      - id
       - feed_type
     PartialFeed:
       example:
@@ -1427,101 +1522,6 @@ components:
         owner:
           type: string
       additionalProperties: false
-    FeedView:
-      type: object
-      properties:
-        judgements:
-          type: array
-          items:
-            $ref: '#/components/schemas/Judgement'
-        observables:
-          type: array
-          items:
-            $ref: '#/components/schemas/Observable'
-      additionalProperties: false
-    Observable:
-      example:
-        value: 1.2.3.4
-        type: ip
-      description: An AssetMapping is a record that a specific Observable maps to an Asset for an indicated period of time.
-      type: object
-      properties:
-        value:
-          example: 1.2.3.4
-          description: The value of the observable.
-          type: string
-        type:
-          example: ip
-          description: The type of observable.
-          type: string
-          enum:
-          - file_path
-          - mac_address
-          - trend_micro_id
-          - cybereason_id
-          - process_args
-          - s1_agent_id
-          - device
-          - hostname
-          - certificate_common_name
-          - serial_number
-          - meraki_network_id
-          - url
-          - jamf_management_id
-          - certificate_serial
-          - intune_id
-          - meraki_org_id
-          - cisco_cm_id
-          - registry_key
-          - process_path
-          - darktrace_id
-          - process_username
-          - cortex_agent_id
-          - orbital_node_id
-          - process_uid
-          - ngfw_name
-          - user
-          - certificate_issuer
-          - ipv6
-          - email
-          - cisco_uc_id
-          - cvm_id
-          - sha256
-          - crowdstrike_id
-          - google_cloud_id
-          - google_chromebook_id
-          - acudid
-          - sha1
-          - registry_name
-          - md5
-          - service_now_id
-          - ip
-          - domain
-          - email_subject
-          - imei
-          - ngfw_id
-          - amp_computer_guid
-          - ms_machine_id
-          - secure_access_id
-          - mutex
-          - processor_id
-          - swc_device_id
-          - registry_path
-          - odns_identity
-          - odns_identity_label
-          - cisco_mid
-          - process_name
-          - pki_serial
-          - meraki_node_sn
-          - email_messageid
-          - imsi
-          - user_agent
-          - process_hash
-          - file_name
-      additionalProperties: false
-      required:
-      - value
-      - type
     ValidTime:
       example:
         start_time: '2016-01-01T01:01:01.000Z'

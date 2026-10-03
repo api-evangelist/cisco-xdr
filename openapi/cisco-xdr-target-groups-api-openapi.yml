@@ -488,6 +488,62 @@ paths:
           content: {}
 components:
   schemas:
+    targetGroupGetResponse:
+      title: TargetGroupGetResponse ...
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        criteria:
+          type: object
+          properties: {}
+          x-go-name: Criteria
+        description:
+          type: string
+          x-go-name: Description
+        id:
+          type: string
+          x-go-name: TargetGroupID
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetGroupProperties'
+          x-go-name: TargetGroupProperties
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      x-go-name: TargetGroupGetResponse
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     TargetGroupProperties:
       title: 'TargetGroupProperties represents the specific target group attributes information
 
@@ -567,62 +623,22 @@ components:
           x-go-name: UpdatedOn
       x-go-name: TargetGroupGetAllResponse
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    targetGroupGetResponse:
-      title: TargetGroupGetResponse ...
+    Expression:
+      title: Expression ....
       type: object
       properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        criteria:
+        left_operand:
           type: object
           properties: {}
-          x-go-name: Criteria
-        description:
+          x-go-name: LeftOperand
+        operator:
           type: string
-          x-go-name: Description
-        id:
-          type: string
-          x-go-name: TargetGroupID
-        name:
-          type: string
-          x-go-name: Name
-        owner:
-          type: string
-          x-go-name: Owner
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-        targets:
-          type: array
-          items:
-            $ref: '#/components/schemas/TargetGroupProperties'
-          x-go-name: TargetGroupProperties
-        title:
-          type: string
-          x-go-name: Title
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-      x-go-name: TargetGroupGetResponse
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+          x-go-name: Operator
+        right_operand:
+          type: object
+          properties: {}
+          x-go-name: RightOperand
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/base-microservice/longhornparser/models
     TargetGroupRequest:
       title: TargetGroupRequest ...
       required:
@@ -672,22 +688,6 @@ components:
           x-go-name: UniqueName
       description: Either ViewSchemaID or Type or both can be provided to create a TargetGroup.
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    Expression:
-      title: Expression ....
-      type: object
-      properties:
-        left_operand:
-          type: object
-          properties: {}
-          x-go-name: LeftOperand
-        operator:
-          type: string
-          x-go-name: Operator
-        right_operand:
-          type: object
-          properties: {}
-          x-go-name: RightOperand
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/base-microservice/longhornparser/models
   securitySchemes:
     oAuth2:
       type: oauth2

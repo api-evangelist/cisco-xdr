@@ -343,6 +343,74 @@ paths:
           content: {}
 components:
   schemas:
+    TenantPutRequest:
+      title: TenantPutRequest ...
+      type: object
+      properties:
+        description:
+          type: string
+          x-go-name: Description
+        enabled:
+          type: boolean
+          x-go-name: Enabled
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    EntitlementSummary:
+      type: object
+      properties:
+        techvals:
+          $ref: '#/components/schemas/TechVals'
+        tier:
+          $ref: '#/components/schemas/Tier'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TierName:
+      title: TierName ...
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TechValsModules:
+      title: TechValsModules ...
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Tier:
+      type: object
+      properties:
+        enforce?:
+          type: boolean
+          x-go-name: Enforce
+        quantity:
+          type: integer
+          format: uint64
+          x-go-name: Quantity
+        title:
+          $ref: '#/components/schemas/TierName'
+        unit:
+          type: string
+          x-go-name: Unit
+      description: Tier organization or tenant tier level information
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     Tenant:
       title: Tenant ...
       type: object
@@ -414,50 +482,6 @@ components:
       type: string
       description: DefinitionState
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    EntitlementSummary:
-      type: object
-      properties:
-        techvals:
-          $ref: '#/components/schemas/TechVals'
-        tier:
-          $ref: '#/components/schemas/Tier'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    TechValsModules:
-      title: TechValsModules ...
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    TierName:
-      title: TierName ...
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    TenantPutRequest:
-      title: TenantPutRequest ...
-      type: object
-      properties:
-        description:
-          type: string
-          x-go-name: Description
-        enabled:
-          type: boolean
-          x-go-name: Enabled
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    Tier:
-      type: object
-      properties:
-        enforce?:
-          type: boolean
-          x-go-name: Enforce
-        quantity:
-          type: integer
-          format: uint64
-          x-go-name: Quantity
-        title:
-          $ref: '#/components/schemas/TierName'
-        unit:
-          type: string
-          x-go-name: Unit
-      description: Tier organization or tenant tier level information
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     TechVals:
       type: object
       properties:
@@ -472,30 +496,6 @@ components:
         modules:
           $ref: '#/components/schemas/TechValsModules'
       description: TechVals organization or tenant data retention information
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    StatusDetails:
-      type: object
-      properties:
-        code:
-          type: string
-          x-go-name: Code
-        description:
-          type: string
-          x-go-name: Description
-        message:
-          type: string
-          x-go-name: Message
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    Status:
-      title: Status ...
-      type: object
-      properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
   securitySchemes:
     oAuth2:

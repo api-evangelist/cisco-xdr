@@ -606,6 +606,132 @@ paths:
           content: {}
 components:
   schemas:
+    DefAccessMeta:
+      title: DefAccessMeta ...
+      type: object
+      properties:
+        is_integration:
+          type: boolean
+          x-go-name: IsIntegration
+        is_internal:
+          type: boolean
+          x-go-name: IsInternal
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TargetMetadata:
+      type: object
+      properties:
+        sx_module_info:
+          $ref: '#/components/schemas/ModuleInfo'
+      description: TargetMetadata maintains SecureX module data info
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TargetDefinitionPutRequest:
+      title: TargetDefinitionPutRequest ...
+      required:
+      - properties
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of the target
+          x-go-name: Description
+        name:
+          type: string
+          description: Name of the target
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of the target
+          x-go-name: Properties
+        title:
+          type: string
+          description: Title of the target
+          x-go-name: Title
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    targetValidationResponse:
+      title: TargetValidationResponse ...
+      type: object
+      properties:
+        invalid_targets:
+          type: array
+          items:
+            type: string
+          x-go-name: InValidTargets
+        valid_targets:
+          type: array
+          items:
+            type: string
+          x-go-name: ValidTargets
+      x-go-name: TargetValidationResponse
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    ModuleInfo:
+      type: object
+      properties:
+        api_name:
+          type: string
+          x-go-name: APIName
+        bypass_iroh_proxy:
+          type: boolean
+          x-go-name: ByPassIROHProxy
+        external_id:
+          type: string
+          x-go-name: ExternalID
+        flags:
+          type: array
+          items:
+            type: string
+          x-go-name: Flags
+        id:
+          type: string
+          x-go-name: ModuleUniqueID
+        integrated_module:
+          type: boolean
+          x-go-name: IntegratedModule
+        module_instance_id:
+          type: string
+          x-go-name: ModuleInstanceID
+        module_type:
+          type: string
+          x-go-name: ModuleType
+        module_type_id:
+          type: string
+          x-go-name: ModuleTypeID
+        openapi_spec:
+          type: string
+          x-go-name: APISpec
+        revision:
+          type: string
+          x-go-name: Revision
+        target_url:
+          type: string
+          x-go-name: TargetURL
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     TargetDefinitionGetAllResponse:
       title: TargetDefinitionGetAllResponse ...
       type: object
@@ -664,63 +790,6 @@ components:
           type: boolean
           x-go-name: Valid
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    DefAccessMeta:
-      title: DefAccessMeta ...
-      type: object
-      properties:
-        is_integration:
-          type: boolean
-          x-go-name: IsIntegration
-        is_internal:
-          type: boolean
-          x-go-name: IsInternal
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    targetValidationResponse:
-      title: TargetValidationResponse ...
-      type: object
-      properties:
-        invalid_targets:
-          type: array
-          items:
-            type: string
-          x-go-name: InValidTargets
-        valid_targets:
-          type: array
-          items:
-            type: string
-          x-go-name: ValidTargets
-      x-go-name: TargetValidationResponse
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    State:
-      type: string
-      description: DefinitionState
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    TargetDefinitionPutRequest:
-      title: TargetDefinitionPutRequest ...
-      required:
-      - properties
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of the target
-          x-go-name: Description
-        name:
-          type: string
-          description: Name of the target
-          x-go-name: Name
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Properties of the target
-          x-go-name: Properties
-        title:
-          type: string
-          description: Title of the target
-          x-go-name: Title
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     TargetDefinitionGetResponse:
       title: TargetDefinitionGetResponse ...
       type: object
@@ -791,90 +860,6 @@ components:
           type: boolean
           x-go-name: Valid
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    TargetMetadata:
-      type: object
-      properties:
-        sx_module_info:
-          $ref: '#/components/schemas/ModuleInfo'
-      description: TargetMetadata maintains SecureX module data info
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    TargetIDsRequest:
-      title: TargetIDsRequest ...
-      type: object
-      properties:
-        target_ids:
-          type: array
-          description: Target IDs
-          items:
-            type: string
-          x-go-name: TargetIDs
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    StatusDetails:
-      type: object
-      properties:
-        code:
-          type: string
-          x-go-name: Code
-        description:
-          type: string
-          x-go-name: Description
-        message:
-          type: string
-          x-go-name: Message
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    ModuleInfo:
-      type: object
-      properties:
-        api_name:
-          type: string
-          x-go-name: APIName
-        bypass_iroh_proxy:
-          type: boolean
-          x-go-name: ByPassIROHProxy
-        external_id:
-          type: string
-          x-go-name: ExternalID
-        flags:
-          type: array
-          items:
-            type: string
-          x-go-name: Flags
-        id:
-          type: string
-          x-go-name: ModuleUniqueID
-        integrated_module:
-          type: boolean
-          x-go-name: IntegratedModule
-        module_instance_id:
-          type: string
-          x-go-name: ModuleInstanceID
-        module_type:
-          type: string
-          x-go-name: ModuleType
-        module_type_id:
-          type: string
-          x-go-name: ModuleTypeID
-        openapi_spec:
-          type: string
-          x-go-name: APISpec
-        revision:
-          type: string
-          x-go-name: Revision
-        target_url:
-          type: string
-          x-go-name: TargetURL
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    Status:
-      title: Status ...
-      type: object
-      properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     TargetDefinitionPostRequest:
       title: TargetDefinitionPostRequest ...
       required:
@@ -915,6 +900,21 @@ components:
           x-go-name: UniqueName
       description: Either ViewSchemaID or Type or both can be provided to create a Target.
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TargetIDsRequest:
+      title: TargetIDsRequest ...
+      type: object
+      properties:
+        target_ids:
+          type: array
+          description: Target IDs
+          items:
+            type: string
+          x-go-name: TargetIDs
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
   securitySchemes:
     oAuth2:
       type: oauth2
