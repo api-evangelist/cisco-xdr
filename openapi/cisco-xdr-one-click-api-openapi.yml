@@ -108,26 +108,25 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    OneClickModuleCreateParams:
+    ModuleInstanceSettings:
       type: object
-      properties:
-        module_type_id:
-          type: string
-        settings:
-          $ref: '#/components/schemas/ModuleInstanceSettings'
-        product_tenant_id:
-          type: string
-        type:
-          description: Indicates whether this is an initial one-click request or an update request.
-          type: string
-          enum:
-          - update-to-one-click
-          - one-click
-      additionalProperties: false
-      required:
-      - module_type_id
-      - product_tenant_id
-      - type
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+        - $ref: '#/components/schemas/ModuleInstanceSettings'
     ModuleInstance:
       type: object
       properties:
@@ -180,25 +179,41 @@ components:
       - enabled
       - visibility
       - created_at
-    ModuleInstanceSettings:
+    OneClickModuleCreateParams:
       type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-        - type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-        - $ref: '#/components/schemas/ModuleInstanceSettings'
+      properties:
+        module_type_id:
+          type: string
+        settings:
+          $ref: '#/components/schemas/ModuleInstanceSettings'
+        product_tenant_id:
+          type: string
+        type:
+          description: Indicates whether this is an initial one-click request or an update request.
+          type: string
+          enum:
+          - update-to-one-click
+          - one-click
+      additionalProperties: false
+      required:
+      - module_type_id
+      - product_tenant_id
+      - type
+    ModuleInstanceExternalReference:
+      type: object
+      properties:
+        label:
+          type: string
+        link:
+          type: string
+        external_id:
+          type: string
+        class:
+          description: Class to distinguish external references
+          type: string
+      additionalProperties: false
+      required:
+      - label
     OneClickModuleWrapperResult:
       type: object
       properties:
@@ -221,21 +236,6 @@ components:
       additionalProperties: false
       required:
       - created_new_module?
-    ModuleInstanceExternalReference:
-      type: object
-      properties:
-        label:
-          type: string
-        link:
-          type: string
-        external_id:
-          type: string
-        class:
-          description: Class to distinguish external references
-          type: string
-      additionalProperties: false
-      required:
-      - label
   securitySchemes:
     iroh:
       type: apiKey

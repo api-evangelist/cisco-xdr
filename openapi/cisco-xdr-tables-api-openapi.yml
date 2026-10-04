@@ -267,6 +267,22 @@ paths:
       x-codegen-request-body-name: rows
 components:
   schemas:
+    TableRow:
+      type: object
+      properties:
+        column_data:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: ColumnData
+        row_id:
+          type: string
+          x-go-name: RowID
+        suffix_id:
+          type: string
+          x-go-name: SuffixID
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     UpdateTableRowPostRequest:
       type: object
       properties:
@@ -286,44 +302,6 @@ components:
             $ref: '#/components/schemas/UserTableRow'
           x-go-name: RowsToUpdate
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    UserTableRow:
-      type: object
-      properties:
-        column_data:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: ColumnData
-        previous_row_id:
-          type: string
-          x-go-name: PreviousRowID
-        previous_suffix_id:
-          type: string
-          x-go-name: PreviousSuffixID
-        row_id:
-          type: string
-          x-go-name: RowID
-        suffix_id:
-          type: string
-          x-go-name: SuffixID
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    TableRow:
-      type: object
-      properties:
-        column_data:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: ColumnData
-        row_id:
-          type: string
-          x-go-name: RowID
-        suffix_id:
-          type: string
-          x-go-name: SuffixID
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     TableGetResponse:
       title: TableGetResponse ...
       type: object
@@ -352,6 +330,28 @@ components:
         unique_name:
           type: string
           x-go-name: UniqueName
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    UserTableRow:
+      type: object
+      properties:
+        column_data:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: ColumnData
+        previous_row_id:
+          type: string
+          x-go-name: PreviousRowID
+        previous_suffix_id:
+          type: string
+          x-go-name: PreviousSuffixID
+        row_id:
+          type: string
+          x-go-name: RowID
+        suffix_id:
+          type: string
+          x-go-name: SuffixID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
   securitySchemes:
     oAuth2:

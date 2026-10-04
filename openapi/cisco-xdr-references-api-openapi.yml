@@ -157,31 +157,6 @@ components:
           type: string
           x-go-name: Message
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    AllReferences:
-      type: object
-      properties:
-        used_by:
-          type: array
-          items:
-            $ref: '#/components/schemas/ObjectReference'
-          x-go-name: UsedBy
-        uses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ObjectReference'
-          x-go-name: Uses
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    Status:
-      title: Status ...
-      type: object
-      properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     State:
       type: string
       description: DefinitionState
@@ -211,6 +186,31 @@ components:
           type: string
           x-go-name: Version
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    AllReferences:
+      type: object
+      properties:
+        used_by:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectReference'
+          x-go-name: UsedBy
+        uses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectReference'
+          x-go-name: Uses
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    Status:
+      title: Status ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
   securitySchemes:
     oAuth2:
       type: oauth2

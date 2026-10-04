@@ -346,22 +346,23 @@ paths:
       x-codegen-request-body-name: request_body
 components:
   schemas:
-    ShareObjectPermissions:
-      title: ShareObjectPermissions ...
+    UserPermission:
+      title: UserPermission ...
+      required:
+      - id
+      - permissions
       type: object
       properties:
-        groups:
+        id:
+          type: string
+          description: An ID of user
+          x-go-name: ID
+        permissions:
           type: array
-          description: List of groups permissions
+          description: 'Permissions of the entity, Type of permissions can be: "view", "run", "modify", "manage"'
           items:
-            $ref: '#/components/schemas/GroupPermission'
-          x-go-name: GroupPermissions
-        users:
-          type: array
-          description: List of users permissions
-          items:
-            $ref: '#/components/schemas/UserPermission'
-          x-go-name: UserPermissions
+            type: string
+          x-go-name: Permissions
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     GroupPermission:
       title: GroupPermission ...
@@ -381,23 +382,22 @@ components:
             type: string
           x-go-name: Permissions
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    UserPermission:
-      title: UserPermission ...
-      required:
-      - id
-      - permissions
+    ShareObjectPermissions:
+      title: ShareObjectPermissions ...
       type: object
       properties:
-        id:
-          type: string
-          description: An ID of user
-          x-go-name: ID
-        permissions:
+        groups:
           type: array
-          description: 'Permissions of the entity, Type of permissions can be: "view", "run", "modify", "manage"'
+          description: List of groups permissions
           items:
-            type: string
-          x-go-name: Permissions
+            $ref: '#/components/schemas/GroupPermission'
+          x-go-name: GroupPermissions
+        users:
+          type: array
+          description: List of users permissions
+          items:
+            $ref: '#/components/schemas/UserPermission'
+          x-go-name: UserPermissions
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
   securitySchemes:
     oAuth2:

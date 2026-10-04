@@ -1570,65 +1570,6 @@ components:
         owner:
           type: string
       additionalProperties: false
-    MetricResultData:
-      type: object
-      additionalProperties: {}
-    ExternalReference:
-      example:
-        source_name: string
-        description: string
-        url: string
-        hashes:
-        - string
-        external_id: string
-      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
-      type: object
-      properties:
-        source_name:
-          example: string
-          description: The source within which the external-reference is defined (system, registry, organization, etc.)
-          type: string
-        description:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        url:
-          example: string
-          description: A URL reference to an external resource.
-          type: string
-        hashes:
-          example:
-          - string
-          description: Specifies a dictionary of hashes for the contents of the url.
-          type: array
-          items:
-            type: string
-        external_id:
-          example: string
-          description: An identifier for the external reference content.
-          type: string
-      additionalProperties: false
-      required:
-      - source_name
-    KillChainPhase:
-      example:
-        kill_chain_name: string
-        phase_name: string
-      description: The kill-chain-phase represents a phase in a kill chain, which describes the various phases an attacker may undertake in order to achieve their objectives.
-      type: object
-      properties:
-        kill_chain_name:
-          example: string
-          description: The name of the kill chain.
-          type: string
-        phase_name:
-          example: string
-          description: The name of the phase in the kill chain.
-          type: string
-      additionalProperties: false
-      required:
-      - kill_chain_name
-      - phase_name
     Tool:
       example:
         description: string
@@ -1772,19 +1713,43 @@ components:
           type: string
           format: date-time
       additionalProperties: false
-    MetricResultFilters:
+    ExternalReference:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
       type: object
       properties:
-        from:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
           type: string
-          format: date-time
-        to:
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
           type: string
-          format: date-time
-      additionalProperties: {}
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: false
       required:
-      - from
-      - to
+      - source_name
     MetricResult:
       type: object
       properties:
@@ -1804,6 +1769,41 @@ components:
       - data
       - type
       - filters
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
+    MetricResultData:
+      type: object
+      additionalProperties: {}
+    KillChainPhase:
+      example:
+        kill_chain_name: string
+        phase_name: string
+      description: The kill-chain-phase represents a phase in a kill chain, which describes the various phases an attacker may undertake in order to achieve their objectives.
+      type: object
+      properties:
+        kill_chain_name:
+          example: string
+          description: The name of the kill chain.
+          type: string
+        phase_name:
+          example: string
+          description: The name of the phase in the kill chain.
+          type: string
+      additionalProperties: false
+      required:
+      - kill_chain_name
+      - phase_name
   securitySchemes:
     JWT:
       type: apiKey

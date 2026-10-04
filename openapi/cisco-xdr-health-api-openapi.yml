@@ -201,10 +201,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    EnvelopedHealthDataDataQuotas:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663'
     HealthStatus:
       type: object
       properties:
@@ -224,6 +220,10 @@ components:
       - module_instance_id
       - module_type_id
       - data
+    EnvelopedHealthDataDataQuotas:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663'
     EnvelopedHealth:
       example:
         data:
@@ -268,21 +268,42 @@ components:
           items:
             $ref: '#/components/schemas/ErrorMessage'
       additionalProperties: false
-    EnvelopedHealthDataDataQuotasKeyword8148663:
+    ModuleHealthStatus:
       type: object
       properties:
-        description:
+        status:
           type: string
-        values:
-          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663Values'
+          enum:
+          - unknown
+          - ok
+          - error
+        quotas:
+          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotas'
       additionalProperties: false
       required:
-      - description
-      - values
-    NormalizedError-401:
+      - status
+    EnvelopedSingleHealth:
       example:
-        error: invalid_request
-        error_description: No JWT found in HTTP Authorization header
+        data:
+          module: SecureX Global Threat Intelligence
+          module_instance_id: 60852826-5ba1-4e8e-b2d7-f827186c100b
+          module_type_id: 87563e81-ddc5-5f61-b4f8-dbe71252c922
+          data:
+            status: ok
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/HealthStatus'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+      additionalProperties: false
+    NormalizedError-500:
+      example:
+        error: unknown server error
+        error_description: An unknown error has occurred during the enrichment
+        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
       type: object
       properties:
         error:
@@ -297,39 +318,10 @@ components:
           type: string
         schema.core.AnythingSchema@3c6f0b88: {}
       additionalProperties: {}
-    ErrorMessage:
-      type: object
-      properties:
-        module_instance_id:
-          type: string
-        module_type_id:
-          type: string
-        module_instance_state:
-          type: string
-        code:
-          type: string
-        message:
-          type: string
-        type:
-          type: string
-          enum:
-          - fatal
-          - warning
-          - error
-        module:
-          type: string
-      additionalProperties: false
-      required:
-      - module_instance_id
-      - module_type_id
-      - code
-      - message
-      - type
-    NormalizedError-500:
+    NormalizedError-401:
       example:
-        error: unknown server error
-        error_description: An unknown error has occurred during the enrichment
-        trace_id: 2e790e2c-e7fe-42ed-a18b-7413d9f1f4b0
+        error: invalid_request
+        error_description: No JWT found in HTTP Authorization header
       type: object
       properties:
         error:
@@ -373,37 +365,45 @@ components:
           type: string
           format: date-time
       additionalProperties: false
-    ModuleHealthStatus:
+    EnvelopedHealthDataDataQuotasKeyword8148663:
       type: object
       properties:
-        status:
+        description:
           type: string
-          enum:
-          - unknown
-          - ok
-          - error
-        quotas:
-          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotas'
+        values:
+          $ref: '#/components/schemas/EnvelopedHealthDataDataQuotasKeyword8148663Values'
       additionalProperties: false
       required:
-      - status
-    EnvelopedSingleHealth:
-      example:
-        data:
-          module: SecureX Global Threat Intelligence
-          module_instance_id: 60852826-5ba1-4e8e-b2d7-f827186c100b
-          module_type_id: 87563e81-ddc5-5f61-b4f8-dbe71252c922
-          data:
-            status: ok
+      - description
+      - values
+    ErrorMessage:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/HealthStatus'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorMessage'
+        module_instance_id:
+          type: string
+        module_type_id:
+          type: string
+        module_instance_state:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+          enum:
+          - fatal
+          - warning
+          - error
+        module:
+          type: string
       additionalProperties: false
+      required:
+      - module_instance_id
+      - module_type_id
+      - code
+      - message
+      - type
   securitySchemes:
     iroh:
       type: apiKey

@@ -523,6 +523,23 @@ paths:
           content: {}
 components:
   schemas:
+    StatusDetails:
+      type: object
+      properties:
+        code:
+          type: string
+          x-go-name: Code
+        description:
+          type: string
+          x-go-name: Description
+        message:
+          type: string
+          x-go-name: Message
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    State:
+      type: string
+      description: DefinitionState
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     TriggerPutRequest:
       required:
       - type
@@ -552,6 +569,24 @@ components:
           x-go-name: Version
       description: TriggerPutRequest struct for triggers post api
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    TriggerType:
+      title: TriggerType ...
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    TriggerStatus:
+      title: TriggerStatus ...
+      type: object
+      properties:
+        details:
+          $ref: '#/components/schemas/StatusDetails'
+        error_msg:
+          type: string
+          x-go-name: ErrorMsg
+        prev_state:
+          $ref: '#/components/schemas/State'
+        state:
+          $ref: '#/components/schemas/State'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     Trigger:
       title: Trigger ...
       type: object
@@ -612,19 +647,6 @@ components:
           type: string
           x-go-name: WorkflowID
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    StatusDetails:
-      type: object
-      properties:
-        code:
-          type: string
-          x-go-name: Code
-        description:
-          type: string
-          x-go-name: Description
-        message:
-          type: string
-          x-go-name: Message
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     TriggerPostRequest:
       required:
       - name
@@ -660,28 +682,6 @@ components:
           x-go-name: Version
       description: TriggerPostRequest struct for triggers post api
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    TriggerType:
-      title: TriggerType ...
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    State:
-      type: string
-      description: DefinitionState
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    TriggerStatus:
-      title: TriggerStatus ...
-      type: object
-      properties:
-        details:
-          $ref: '#/components/schemas/StatusDetails'
-        error_msg:
-          type: string
-          x-go-name: ErrorMsg
-        prev_state:
-          $ref: '#/components/schemas/State'
-        state:
-          $ref: '#/components/schemas/State'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
   securitySchemes:
     oAuth2:
       type: oauth2

@@ -163,6 +163,24 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ValidTime:
+      example:
+        start_time: '2016-01-01T01:01:01.000Z'
+        end_time: '2016-01-01T01:01:01.000Z'
+      description: Period of time when a cyber observation is valid.
+      type: object
+      properties:
+        start_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If not present, the valid time position of the indicator does not have an upper bound.
+          type: string
+          format: date-time
+        end_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
+          type: string
+          format: date-time
+      additionalProperties: false
     Verdict:
       example:
         type: verdict
@@ -296,24 +314,6 @@ components:
       required:
       - value
       - type
-    ValidTime:
-      example:
-        start_time: '2016-01-01T01:01:01.000Z'
-        end_time: '2016-01-01T01:01:01.000Z'
-      description: Period of time when a cyber observation is valid.
-      type: object
-      properties:
-        start_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: If not present, the valid time position of the indicator does not have an upper bound.
-          type: string
-          format: date-time
-        end_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
-          type: string
-          format: date-time
-      additionalProperties: false
   securitySchemes:
     JWT:
       type: apiKey

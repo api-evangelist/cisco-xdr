@@ -1145,6 +1145,158 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Response116703ExternalReferences:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
+      type: object
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: {}
+    NewInvestigationTargets:
+      example:
+        type: endpoint
+        observables:
+        - value: 1.2.3.4
+          type: ip
+        observed_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        os: string
+      description: Describes the target of the sighting and contains identifying observables for the target.
+      type: object
+      properties:
+        type:
+          example: endpoint
+          description: The sensor/actuator name that best fits a device.
+          type: string
+        observables:
+          example:
+          - value: 1.2.3.4
+            type: ip
+          type: array
+          items:
+            $ref: '#/components/schemas/NewInvestigationTargetsObservables'
+        observed_time:
+          $ref: '#/components/schemas/NewInvestigationTargetsObservedTime'
+        os:
+          example: string
+          type: string
+      additionalProperties: {}
+      required:
+      - type
+      - observables
+      - observed_time
+    NewInvestigationTargetsObservables:
+      example:
+        value: 1.2.3.4
+        type: ip
+      description: A simple, atomic value which has a consistent identity, and is stable enough to be attributed an intent or nature.  This is the classic 'indicator' which might appear in a data feed of bad IPs, or bad Domains.  These do not exist as objects within the CTIA storage model, so you never create an observable.
+      type: object
+      properties:
+        value:
+          example: 1.2.3.4
+          description: The value of the observable.
+          type: string
+        type:
+          example: ip
+          description: The type of observable.
+          type: string
+          enum:
+          - file_path
+          - mac_address
+          - trend_micro_id
+          - cybereason_id
+          - process_args
+          - s1_agent_id
+          - device
+          - hostname
+          - certificate_common_name
+          - serial_number
+          - meraki_network_id
+          - url
+          - jamf_management_id
+          - certificate_serial
+          - intune_id
+          - meraki_org_id
+          - cisco_cm_id
+          - registry_key
+          - process_path
+          - darktrace_id
+          - process_username
+          - cortex_agent_id
+          - orbital_node_id
+          - process_uid
+          - ngfw_name
+          - user
+          - certificate_issuer
+          - ipv6
+          - email
+          - cisco_uc_id
+          - cvm_id
+          - sha256
+          - crowdstrike_id
+          - google_cloud_id
+          - google_chromebook_id
+          - acudid
+          - sha1
+          - registry_name
+          - md5
+          - service_now_id
+          - ip
+          - domain
+          - email_subject
+          - imei
+          - ngfw_id
+          - amp_computer_guid
+          - ms_machine_id
+          - secure_access_id
+          - mutex
+          - processor_id
+          - swc_device_id
+          - registry_path
+          - odns_identity
+          - odns_identity_label
+          - cisco_mid
+          - process_name
+          - pki_serial
+          - meraki_node_sn
+          - email_messageid
+          - imsi
+          - user_agent
+          - process_hash
+          - file_name
+      additionalProperties: {}
+      required:
+      - value
+      - type
     PartialInvestigation:
       example:
         description: string
@@ -1338,6 +1490,520 @@ components:
           type: string
           format: date-time
       additionalProperties: {}
+    InvestigationTargetsObservedTime:
+      example:
+        start_time: '2016-01-01T01:01:01.000Z'
+        end_time: '2016-01-01T01:01:01.000Z'
+      description: Period of time when a cyber observation is valid. `start_time` must come before `end_time` (if specified).
+      type: object
+      properties:
+        start_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time of the observation. If the observation was made over a period of time, than this field indicates the start of that period.
+          type: string
+          format: date-time
+        end_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If the observation was made over a period of time, than this field indicates the end of that period.
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - start_time
+    InvestigationExternalReferences:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
+      type: object
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: {}
+      required:
+      - source_name
+    Response116703Targets:
+      example:
+        type: endpoint
+        observables:
+        - value: 1.2.3.4
+          type: ip
+        observed_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        os: string
+      description: Describes the target of the sighting and contains identifying observables for the target.
+      type: object
+      properties:
+        type:
+          example: endpoint
+          description: The sensor/actuator name that best fits a device.
+          type: string
+        observables:
+          example:
+          - value: 1.2.3.4
+            type: ip
+          type: array
+          items:
+            $ref: '#/components/schemas/Response116703TargetsObservables'
+        observed_time:
+          $ref: '#/components/schemas/Response116703TargetsObservedTime'
+        os:
+          example: string
+          type: string
+      additionalProperties: {}
+    Response116703TargetsObservables:
+      example:
+        value: 1.2.3.4
+        type: ip
+      description: A simple, atomic value which has a consistent identity, and is stable enough to be attributed an intent or nature.  This is the classic 'indicator' which might appear in a data feed of bad IPs, or bad Domains.  These do not exist as objects within the CTIA storage model, so you never create an observable.
+      type: object
+      properties:
+        value:
+          example: 1.2.3.4
+          description: The value of the observable.
+          type: string
+        type:
+          example: ip
+          description: The type of observable.
+          type: string
+          enum:
+          - file_path
+          - mac_address
+          - trend_micro_id
+          - cybereason_id
+          - process_args
+          - s1_agent_id
+          - device
+          - hostname
+          - certificate_common_name
+          - serial_number
+          - meraki_network_id
+          - url
+          - jamf_management_id
+          - certificate_serial
+          - intune_id
+          - meraki_org_id
+          - cisco_cm_id
+          - registry_key
+          - process_path
+          - darktrace_id
+          - process_username
+          - cortex_agent_id
+          - orbital_node_id
+          - process_uid
+          - ngfw_name
+          - user
+          - certificate_issuer
+          - ipv6
+          - email
+          - cisco_uc_id
+          - cvm_id
+          - sha256
+          - crowdstrike_id
+          - google_cloud_id
+          - google_chromebook_id
+          - acudid
+          - sha1
+          - registry_name
+          - md5
+          - service_now_id
+          - ip
+          - domain
+          - email_subject
+          - imei
+          - ngfw_id
+          - amp_computer_guid
+          - ms_machine_id
+          - secure_access_id
+          - mutex
+          - processor_id
+          - swc_device_id
+          - registry_path
+          - odns_identity
+          - odns_identity_label
+          - cisco_mid
+          - process_name
+          - pki_serial
+          - meraki_node_sn
+          - email_messageid
+          - imsi
+          - user_agent
+          - process_hash
+          - file_name
+      additionalProperties: {}
+    NewInvestigationTargetsObservedTime:
+      example:
+        start_time: '2016-01-01T01:01:01.000Z'
+        end_time: '2016-01-01T01:01:01.000Z'
+      description: Period of time when a cyber observation is valid. `start_time` must come before `end_time` (if specified).
+      type: object
+      properties:
+        start_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Time of the observation. If the observation was made over a period of time, than this field indicates the start of that period.
+          type: string
+          format: date-time
+        end_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If the observation was made over a period of time, than this field indicates the end of that period.
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - start_time
+    MetricResult:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MetricResultData'
+        type:
+          type: string
+          enum:
+          - histogram
+          - topn
+          - avg
+          - cardinality
+        filters:
+          $ref: '#/components/schemas/MetricResultFilters'
+      additionalProperties: false
+      required:
+      - data
+      - type
+      - filters
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
+    InvestigationTargetsObservables:
+      example:
+        value: 1.2.3.4
+        type: ip
+      description: A simple, atomic value which has a consistent identity, and is stable enough to be attributed an intent or nature.  This is the classic 'indicator' which might appear in a data feed of bad IPs, or bad Domains.  These do not exist as objects within the CTIA storage model, so you never create an observable.
+      type: object
+      properties:
+        value:
+          example: 1.2.3.4
+          description: The value of the observable.
+          type: string
+        type:
+          example: ip
+          description: The type of observable.
+          type: string
+          enum:
+          - file_path
+          - mac_address
+          - trend_micro_id
+          - cybereason_id
+          - process_args
+          - s1_agent_id
+          - device
+          - hostname
+          - certificate_common_name
+          - serial_number
+          - meraki_network_id
+          - url
+          - jamf_management_id
+          - certificate_serial
+          - intune_id
+          - meraki_org_id
+          - cisco_cm_id
+          - registry_key
+          - process_path
+          - darktrace_id
+          - process_username
+          - cortex_agent_id
+          - orbital_node_id
+          - process_uid
+          - ngfw_name
+          - user
+          - certificate_issuer
+          - ipv6
+          - email
+          - cisco_uc_id
+          - cvm_id
+          - sha256
+          - crowdstrike_id
+          - google_cloud_id
+          - google_chromebook_id
+          - acudid
+          - sha1
+          - registry_name
+          - md5
+          - service_now_id
+          - ip
+          - domain
+          - email_subject
+          - imei
+          - ngfw_id
+          - amp_computer_guid
+          - ms_machine_id
+          - secure_access_id
+          - mutex
+          - processor_id
+          - swc_device_id
+          - registry_path
+          - odns_identity
+          - odns_identity_label
+          - cisco_mid
+          - process_name
+          - pki_serial
+          - meraki_node_sn
+          - email_messageid
+          - imsi
+          - user_agent
+          - process_hash
+          - file_name
+      additionalProperties: {}
+      required:
+      - value
+      - type
+    InvestigationTargets:
+      example:
+        type: endpoint
+        observables:
+        - value: 1.2.3.4
+          type: ip
+        observed_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        os: string
+      description: Describes the target of the sighting and contains identifying observables for the target.
+      type: object
+      properties:
+        type:
+          example: endpoint
+          description: The sensor/actuator name that best fits a device.
+          type: string
+        observables:
+          example:
+          - value: 1.2.3.4
+            type: ip
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestigationTargetsObservables'
+        observed_time:
+          $ref: '#/components/schemas/InvestigationTargetsObservedTime'
+        os:
+          example: string
+          type: string
+      additionalProperties: {}
+      required:
+      - type
+      - observables
+      - observed_time
+    NewInvestigation:
+      description: a new Investigation
+      type: object
+      properties:
+        description:
+          example: string
+          description: A description of object, which may be detailed.
+          type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
+        schema_version:
+          type: string
+        revision:
+          example: 10
+          description: A monotonically increasing revision, incremented each time the object is changed.
+          type: integer
+          format: int64
+        authorized_users:
+          type: array
+          items:
+            type: string
+        type:
+          example: investigation
+          type: string
+          enum:
+          - investigation
+        created:
+          type: string
+          format: date-time
+        source:
+          example: string
+          description: Represents the source of the intelligence that led to the creation of the entity.
+          type: string
+        external_ids:
+          example:
+          - string
+          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
+          type: array
+          items:
+            type: string
+        modified:
+          type: string
+          format: date-time
+        targets:
+          example:
+          - type: endpoint
+            observables:
+            - value: 1.2.3.4
+              type: ip
+            observed_time:
+              start_time: '2016-01-01T01:01:01.000Z'
+              end_time: '2016-01-01T01:01:01.000Z'
+            os: string
+          description: Investigated target devices
+          type: array
+          items:
+            $ref: '#/components/schemas/NewInvestigationTargets'
+        actions:
+          example: string
+          description: Investigation actions encoded as JSON (an array of objects).
+          type: string
+        short_description:
+          example: string
+          description: A single line, short summary of the object.
+          type: string
+        title:
+          example: string
+          description: A short title for this object, used as primary display and reference value.
+          type: string
+        external_references:
+          example:
+          - source_name: string
+            description: string
+            url: string
+            hashes:
+            - string
+            external_id: string
+          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
+          type: array
+          items:
+            $ref: '#/components/schemas/NewInvestigationExternalReferences'
+        source_uri:
+          example: string
+          description: URI of the source of the intelligence that led to the creation of the entity.
+          type: string
+        investigated_observables:
+          example:
+          - string
+          type: array
+          items:
+            type: string
+        language:
+          example: string
+          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
+
+
+            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
+          type: string
+        id:
+          example: string
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          type: string
+        tlp:
+          example: green
+          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
+
+
+            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
+
+
+            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
+          type: string
+          enum:
+          - white
+          - green
+          - red
+          - amber
+        client_id:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+        timestamp:
+          example: '2016-01-01T01:01:01.000Z'
+          description: The time this object was created at, or last modified.
+          type: string
+          format: date-time
+        owner:
+          type: string
+        object_ids:
+          example:
+          - string
+          type: array
+          items:
+            type: string
+      additionalProperties: {}
+      required:
+      - source
+    NewInvestigationExternalReferences:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
+      type: object
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: {}
+      required:
+      - source_name
     MetricResultData:
       type: object
       additionalProperties: {}
@@ -1520,672 +2186,6 @@ components:
       - type
       - source
       - id
-    Response116703TargetsObservables:
-      example:
-        value: 1.2.3.4
-        type: ip
-      description: A simple, atomic value which has a consistent identity, and is stable enough to be attributed an intent or nature.  This is the classic 'indicator' which might appear in a data feed of bad IPs, or bad Domains.  These do not exist as objects within the CTIA storage model, so you never create an observable.
-      type: object
-      properties:
-        value:
-          example: 1.2.3.4
-          description: The value of the observable.
-          type: string
-        type:
-          example: ip
-          description: The type of observable.
-          type: string
-          enum:
-          - file_path
-          - mac_address
-          - trend_micro_id
-          - cybereason_id
-          - process_args
-          - s1_agent_id
-          - device
-          - hostname
-          - certificate_common_name
-          - serial_number
-          - meraki_network_id
-          - url
-          - jamf_management_id
-          - certificate_serial
-          - intune_id
-          - meraki_org_id
-          - cisco_cm_id
-          - registry_key
-          - process_path
-          - darktrace_id
-          - process_username
-          - cortex_agent_id
-          - orbital_node_id
-          - process_uid
-          - ngfw_name
-          - user
-          - certificate_issuer
-          - ipv6
-          - email
-          - cisco_uc_id
-          - cvm_id
-          - sha256
-          - crowdstrike_id
-          - google_cloud_id
-          - google_chromebook_id
-          - acudid
-          - sha1
-          - registry_name
-          - md5
-          - service_now_id
-          - ip
-          - domain
-          - email_subject
-          - imei
-          - ngfw_id
-          - amp_computer_guid
-          - ms_machine_id
-          - secure_access_id
-          - mutex
-          - processor_id
-          - swc_device_id
-          - registry_path
-          - odns_identity
-          - odns_identity_label
-          - cisco_mid
-          - process_name
-          - pki_serial
-          - meraki_node_sn
-          - email_messageid
-          - imsi
-          - user_agent
-          - process_hash
-          - file_name
-      additionalProperties: {}
-    NewInvestigationTargetsObservables:
-      example:
-        value: 1.2.3.4
-        type: ip
-      description: A simple, atomic value which has a consistent identity, and is stable enough to be attributed an intent or nature.  This is the classic 'indicator' which might appear in a data feed of bad IPs, or bad Domains.  These do not exist as objects within the CTIA storage model, so you never create an observable.
-      type: object
-      properties:
-        value:
-          example: 1.2.3.4
-          description: The value of the observable.
-          type: string
-        type:
-          example: ip
-          description: The type of observable.
-          type: string
-          enum:
-          - file_path
-          - mac_address
-          - trend_micro_id
-          - cybereason_id
-          - process_args
-          - s1_agent_id
-          - device
-          - hostname
-          - certificate_common_name
-          - serial_number
-          - meraki_network_id
-          - url
-          - jamf_management_id
-          - certificate_serial
-          - intune_id
-          - meraki_org_id
-          - cisco_cm_id
-          - registry_key
-          - process_path
-          - darktrace_id
-          - process_username
-          - cortex_agent_id
-          - orbital_node_id
-          - process_uid
-          - ngfw_name
-          - user
-          - certificate_issuer
-          - ipv6
-          - email
-          - cisco_uc_id
-          - cvm_id
-          - sha256
-          - crowdstrike_id
-          - google_cloud_id
-          - google_chromebook_id
-          - acudid
-          - sha1
-          - registry_name
-          - md5
-          - service_now_id
-          - ip
-          - domain
-          - email_subject
-          - imei
-          - ngfw_id
-          - amp_computer_guid
-          - ms_machine_id
-          - secure_access_id
-          - mutex
-          - processor_id
-          - swc_device_id
-          - registry_path
-          - odns_identity
-          - odns_identity_label
-          - cisco_mid
-          - process_name
-          - pki_serial
-          - meraki_node_sn
-          - email_messageid
-          - imsi
-          - user_agent
-          - process_hash
-          - file_name
-      additionalProperties: {}
-      required:
-      - value
-      - type
-    InvestigationTargetsObservedTime:
-      example:
-        start_time: '2016-01-01T01:01:01.000Z'
-        end_time: '2016-01-01T01:01:01.000Z'
-      description: Period of time when a cyber observation is valid. `start_time` must come before `end_time` (if specified).
-      type: object
-      properties:
-        start_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: Time of the observation. If the observation was made over a period of time, than this field indicates the start of that period.
-          type: string
-          format: date-time
-        end_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: If the observation was made over a period of time, than this field indicates the end of that period.
-          type: string
-          format: date-time
-      additionalProperties: {}
-      required:
-      - start_time
-    NewInvestigationTargets:
-      example:
-        type: endpoint
-        observables:
-        - value: 1.2.3.4
-          type: ip
-        observed_time:
-          start_time: '2016-01-01T01:01:01.000Z'
-          end_time: '2016-01-01T01:01:01.000Z'
-        os: string
-      description: Describes the target of the sighting and contains identifying observables for the target.
-      type: object
-      properties:
-        type:
-          example: endpoint
-          description: The sensor/actuator name that best fits a device.
-          type: string
-        observables:
-          example:
-          - value: 1.2.3.4
-            type: ip
-          type: array
-          items:
-            $ref: '#/components/schemas/NewInvestigationTargetsObservables'
-        observed_time:
-          $ref: '#/components/schemas/NewInvestigationTargetsObservedTime'
-        os:
-          example: string
-          type: string
-      additionalProperties: {}
-      required:
-      - type
-      - observables
-      - observed_time
-    MetricResultFilters:
-      type: object
-      properties:
-        from:
-          type: string
-          format: date-time
-        to:
-          type: string
-          format: date-time
-      additionalProperties: {}
-      required:
-      - from
-      - to
-    NewInvestigationExternalReferences:
-      example:
-        source_name: string
-        description: string
-        url: string
-        hashes:
-        - string
-        external_id: string
-      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
-      type: object
-      properties:
-        source_name:
-          example: string
-          description: The source within which the external-reference is defined (system, registry, organization, etc.)
-          type: string
-        description:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        url:
-          example: string
-          description: A URL reference to an external resource.
-          type: string
-        hashes:
-          example:
-          - string
-          description: Specifies a dictionary of hashes for the contents of the url.
-          type: array
-          items:
-            type: string
-        external_id:
-          example: string
-          description: An identifier for the external reference content.
-          type: string
-      additionalProperties: {}
-      required:
-      - source_name
-    InvestigationTargetsObservables:
-      example:
-        value: 1.2.3.4
-        type: ip
-      description: A simple, atomic value which has a consistent identity, and is stable enough to be attributed an intent or nature.  This is the classic 'indicator' which might appear in a data feed of bad IPs, or bad Domains.  These do not exist as objects within the CTIA storage model, so you never create an observable.
-      type: object
-      properties:
-        value:
-          example: 1.2.3.4
-          description: The value of the observable.
-          type: string
-        type:
-          example: ip
-          description: The type of observable.
-          type: string
-          enum:
-          - file_path
-          - mac_address
-          - trend_micro_id
-          - cybereason_id
-          - process_args
-          - s1_agent_id
-          - device
-          - hostname
-          - certificate_common_name
-          - serial_number
-          - meraki_network_id
-          - url
-          - jamf_management_id
-          - certificate_serial
-          - intune_id
-          - meraki_org_id
-          - cisco_cm_id
-          - registry_key
-          - process_path
-          - darktrace_id
-          - process_username
-          - cortex_agent_id
-          - orbital_node_id
-          - process_uid
-          - ngfw_name
-          - user
-          - certificate_issuer
-          - ipv6
-          - email
-          - cisco_uc_id
-          - cvm_id
-          - sha256
-          - crowdstrike_id
-          - google_cloud_id
-          - google_chromebook_id
-          - acudid
-          - sha1
-          - registry_name
-          - md5
-          - service_now_id
-          - ip
-          - domain
-          - email_subject
-          - imei
-          - ngfw_id
-          - amp_computer_guid
-          - ms_machine_id
-          - secure_access_id
-          - mutex
-          - processor_id
-          - swc_device_id
-          - registry_path
-          - odns_identity
-          - odns_identity_label
-          - cisco_mid
-          - process_name
-          - pki_serial
-          - meraki_node_sn
-          - email_messageid
-          - imsi
-          - user_agent
-          - process_hash
-          - file_name
-      additionalProperties: {}
-      required:
-      - value
-      - type
-    NewInvestigationTargetsObservedTime:
-      example:
-        start_time: '2016-01-01T01:01:01.000Z'
-        end_time: '2016-01-01T01:01:01.000Z'
-      description: Period of time when a cyber observation is valid. `start_time` must come before `end_time` (if specified).
-      type: object
-      properties:
-        start_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: Time of the observation. If the observation was made over a period of time, than this field indicates the start of that period.
-          type: string
-          format: date-time
-        end_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: If the observation was made over a period of time, than this field indicates the end of that period.
-          type: string
-          format: date-time
-      additionalProperties: {}
-      required:
-      - start_time
-    Response116703ExternalReferences:
-      example:
-        source_name: string
-        description: string
-        url: string
-        hashes:
-        - string
-        external_id: string
-      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
-      type: object
-      properties:
-        source_name:
-          example: string
-          description: The source within which the external-reference is defined (system, registry, organization, etc.)
-          type: string
-        description:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        url:
-          example: string
-          description: A URL reference to an external resource.
-          type: string
-        hashes:
-          example:
-          - string
-          description: Specifies a dictionary of hashes for the contents of the url.
-          type: array
-          items:
-            type: string
-        external_id:
-          example: string
-          description: An identifier for the external reference content.
-          type: string
-      additionalProperties: {}
-    InvestigationTargets:
-      example:
-        type: endpoint
-        observables:
-        - value: 1.2.3.4
-          type: ip
-        observed_time:
-          start_time: '2016-01-01T01:01:01.000Z'
-          end_time: '2016-01-01T01:01:01.000Z'
-        os: string
-      description: Describes the target of the sighting and contains identifying observables for the target.
-      type: object
-      properties:
-        type:
-          example: endpoint
-          description: The sensor/actuator name that best fits a device.
-          type: string
-        observables:
-          example:
-          - value: 1.2.3.4
-            type: ip
-          type: array
-          items:
-            $ref: '#/components/schemas/InvestigationTargetsObservables'
-        observed_time:
-          $ref: '#/components/schemas/InvestigationTargetsObservedTime'
-        os:
-          example: string
-          type: string
-      additionalProperties: {}
-      required:
-      - type
-      - observables
-      - observed_time
-    Response116703Targets:
-      example:
-        type: endpoint
-        observables:
-        - value: 1.2.3.4
-          type: ip
-        observed_time:
-          start_time: '2016-01-01T01:01:01.000Z'
-          end_time: '2016-01-01T01:01:01.000Z'
-        os: string
-      description: Describes the target of the sighting and contains identifying observables for the target.
-      type: object
-      properties:
-        type:
-          example: endpoint
-          description: The sensor/actuator name that best fits a device.
-          type: string
-        observables:
-          example:
-          - value: 1.2.3.4
-            type: ip
-          type: array
-          items:
-            $ref: '#/components/schemas/Response116703TargetsObservables'
-        observed_time:
-          $ref: '#/components/schemas/Response116703TargetsObservedTime'
-        os:
-          example: string
-          type: string
-      additionalProperties: {}
-    InvestigationExternalReferences:
-      example:
-        source_name: string
-        description: string
-        url: string
-        hashes:
-        - string
-        external_id: string
-      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
-      type: object
-      properties:
-        source_name:
-          example: string
-          description: The source within which the external-reference is defined (system, registry, organization, etc.)
-          type: string
-        description:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        url:
-          example: string
-          description: A URL reference to an external resource.
-          type: string
-        hashes:
-          example:
-          - string
-          description: Specifies a dictionary of hashes for the contents of the url.
-          type: array
-          items:
-            type: string
-        external_id:
-          example: string
-          description: An identifier for the external reference content.
-          type: string
-      additionalProperties: {}
-      required:
-      - source_name
-    NewInvestigation:
-      description: a new Investigation
-      type: object
-      properties:
-        description:
-          example: string
-          description: A description of object, which may be detailed.
-          type: string
-        authorized_groups:
-          type: array
-          items:
-            type: string
-        schema_version:
-          type: string
-        revision:
-          example: 10
-          description: A monotonically increasing revision, incremented each time the object is changed.
-          type: integer
-          format: int64
-        authorized_users:
-          type: array
-          items:
-            type: string
-        type:
-          example: investigation
-          type: string
-          enum:
-          - investigation
-        created:
-          type: string
-          format: date-time
-        source:
-          example: string
-          description: Represents the source of the intelligence that led to the creation of the entity.
-          type: string
-        external_ids:
-          example:
-          - string
-          description: "It is used to store a list of external identifiers that can be linked to the incident, providing a reliable and manageable way to correlate and group related events across multiple data sources. It is especially useful in larger organizations that rely on multiple security information and event management (SIEM) systems to detect security incidents. For instance, it can be used to track events across different network sensors, intrusion detection and prevention systems (IDPS), or log management platforms. \n The field can also be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. It can be used to cross-reference with other external tools such as threat intelligence feeds and vulnerability scanners."
-          type: array
-          items:
-            type: string
-        modified:
-          type: string
-          format: date-time
-        targets:
-          example:
-          - type: endpoint
-            observables:
-            - value: 1.2.3.4
-              type: ip
-            observed_time:
-              start_time: '2016-01-01T01:01:01.000Z'
-              end_time: '2016-01-01T01:01:01.000Z'
-            os: string
-          description: Investigated target devices
-          type: array
-          items:
-            $ref: '#/components/schemas/NewInvestigationTargets'
-        actions:
-          example: string
-          description: Investigation actions encoded as JSON (an array of objects).
-          type: string
-        short_description:
-          example: string
-          description: A single line, short summary of the object.
-          type: string
-        title:
-          example: string
-          description: A short title for this object, used as primary display and reference value.
-          type: string
-        external_references:
-          example:
-          - source_name: string
-            description: string
-            url: string
-            hashes:
-            - string
-            external_id: string
-          description: "Specifies a list of external references which refers to non-CTIM information.\n\nSimilar to `external_ids` field with major differences:\n\n- `external_ids` field is used to store a list of external identifiers that can be used to link entities across different data sources. These identifiers are typically standardized and well-known, such as CVE IDs, US-CERT advisories, or other industry-standard threat intelligence feeds. The `external_ids` field can be used to facilitate automation and orchestration workflows, where additional information can be shared among incident management systems. \n\n- `external_references` field, on the other hand, is used to provide a more general mechanism for linking entities to external sources of information. The `external_references` field can include references to blog posts, articles, external documents, threat intelligence reports, and other sources of information that may not have a standardized format or identifier."
-          type: array
-          items:
-            $ref: '#/components/schemas/NewInvestigationExternalReferences'
-        source_uri:
-          example: string
-          description: URI of the source of the intelligence that led to the creation of the entity.
-          type: string
-        investigated_observables:
-          example:
-          - string
-          type: array
-          items:
-            type: string
-        language:
-          example: string
-          description: 'The `language` field is used to specify the primary language of the affected system or the target of an attack. It can be used to provide additional context and information about the entity. The primary purpose of this field is to help analysts filter and prioritize entities based on their knowledge and expertise of different languages.
-
-
-            For example, if an incident involves an attack on a system in a country where a specific language is predominant, the `language` field can be used to indicate that language, which can help analysts to quickly identify and respond to incidents that may be geographically or culturally relevant. This information can be used to prioritize incidents based on their potential impact. The `language` field can also be used to help with correlation of incidents across different systems and regions, as well as to help with data analysis and reporting.'
-          type: string
-        id:
-          example: string
-          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
-          type: string
-        tlp:
-          example: green
-          description: 'TLP stands for [Traffic Light Protocol](https://www.us-cert.gov/tlp), which indicates precisely how a resource is intended to be shared, replicated, copied, etc.
-
-
-            It is used to indicate the sensitivity of the information contained within the message. This allows recipients to determine the appropriate handling and dissemination of the information based on their clearance level and need-to-know.
-
-
-            For example, an entity containing information about a critical vulnerability in a widely-used software might be marked as `red`, indicating that it should only be shared with a small group of highly trusted individuals who need to know in order to take appropriate action. On the other hand, a message containing more general information about security threats might be marked as `amber` or `green`, indicating that it can be shared more broadly within an organization.'
-          type: string
-          enum:
-          - white
-          - green
-          - red
-          - amber
-        client_id:
-          type: string
-        groups:
-          type: array
-          items:
-            type: string
-        timestamp:
-          example: '2016-01-01T01:01:01.000Z'
-          description: The time this object was created at, or last modified.
-          type: string
-          format: date-time
-        owner:
-          type: string
-        object_ids:
-          example:
-          - string
-          type: array
-          items:
-            type: string
-      additionalProperties: {}
-      required:
-      - source
-    MetricResult:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/MetricResultData'
-        type:
-          type: string
-          enum:
-          - histogram
-          - topn
-          - avg
-          - cardinality
-        filters:
-          $ref: '#/components/schemas/MetricResultFilters'
-      additionalProperties: false
-      required:
-      - data
-      - type
-      - filters
   securitySchemes:
     JWT:
       type: apiKey

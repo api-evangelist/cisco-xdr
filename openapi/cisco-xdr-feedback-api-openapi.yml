@@ -140,42 +140,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    NewFeedbackParams:
-      type: object
-      properties:
-        experience:
-          description: Experience rating from 1 to 5
-          type: integer
-          format: int64
-          enum:
-          - 1
-          - 4
-          - 3
-          - 2
-          - 5
-        user_email:
-          description: The email address to contact
-          type: string
-        bug:
-          description: True if the feedback describes a bug
-          type: boolean
-        source:
-          description: The product related to this feedback. Can be one of "threat-response", "securex", "ciscoxdr" (case-sensitive), or a different non-blank string, denoting some other product or aspect.
-          type: string
-        contact_allowed:
-          description: True if the user accepts to be contacted by email
-          type: boolean
-        user_name:
-          description: The contact name
-          type: string
-        text:
-          description: The description of the feedback (bug, new feature)
-          type: string
-      additionalProperties: false
-      required:
-      - bug
-      - contact_allowed
-      - text
     Feedback:
       type: object
       properties:
@@ -241,6 +205,42 @@ components:
       - user_id
       - client_id
       - created_at
+      - text
+    NewFeedbackParams:
+      type: object
+      properties:
+        experience:
+          description: Experience rating from 1 to 5
+          type: integer
+          format: int64
+          enum:
+          - 1
+          - 4
+          - 3
+          - 2
+          - 5
+        user_email:
+          description: The email address to contact
+          type: string
+        bug:
+          description: True if the feedback describes a bug
+          type: boolean
+        source:
+          description: The product related to this feedback. Can be one of "threat-response", "securex", "ciscoxdr" (case-sensitive), or a different non-blank string, denoting some other product or aspect.
+          type: string
+        contact_allowed:
+          description: True if the user accepts to be contacted by email
+          type: boolean
+        user_name:
+          description: The contact name
+          type: string
+        text:
+          description: The description of the feedback (bug, new feature)
+          type: string
+      additionalProperties: false
+      required:
+      - bug
+      - contact_allowed
       - text
   securitySchemes:
     iroh:

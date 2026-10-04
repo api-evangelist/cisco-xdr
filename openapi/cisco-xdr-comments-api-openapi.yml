@@ -261,35 +261,10 @@ paths:
       x-codegen-request-body-name: request_body
 components:
   schemas:
-    GetAllCommentsResponse:
-      title: An GetAllCommentsResponse model.
-      type: object
-      properties:
-        _links:
-          $ref: '#/components/schemas/PaginationLink'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/comment'
-          x-go-name: Results
-        total_count:
-          type: integer
-          format: int32
-          x-go-name: TotalCount
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    PaginationLink:
-      type: object
-      properties:
-        next:
-          type: string
-          x-go-name: Next
-        prev:
-          type: string
-          x-go-name: Prev
-        self:
-          type: string
-          x-go-name: Self
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    LHObjType:
+      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
     comment:
       title: Comment
       type: object
@@ -345,6 +320,22 @@ components:
       description: This is a comment model.
       x-go-name: Comment
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    GetAllCommentsResponse:
+      title: An GetAllCommentsResponse model.
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/comment'
+          x-go-name: Results
+        total_count:
+          type: integer
+          format: int32
+          x-go-name: TotalCount
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     CommentsPostRequestParams:
       title: CommentsPostRequestParams ...
       required:
@@ -394,10 +385,19 @@ components:
           x-go-name: RefType
       description: The comment create request model.
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    LHObjType:
-      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
   securitySchemes:
     oAuth2:
       type: oauth2

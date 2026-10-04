@@ -488,6 +488,85 @@ paths:
           content: {}
 components:
   schemas:
+    targetGroupGetAllResponse:
+      title: TargetGroupGetAllResponse ...
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        description:
+          type: string
+          x-go-name: Description
+        id:
+          type: string
+          x-go-name: TargetGroupID
+        name:
+          type: string
+          x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      x-go-name: TargetGroupGetAllResponse
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    TargetGroupProperties:
+      title: 'TargetGroupProperties represents the specific target group attributes information
+
+        It holds the data/view schema id of targettype, target Ids and criteria for Target group'
+      type: object
+      properties:
+        criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+          x-go-name: Criteria
+        data_target_type:
+          type: string
+          x-go-name: DataTargetType
+        include_all_targets:
+          type: boolean
+          x-go-name: IncludeAllTargets
+        matched_target_ids:
+          type: array
+          items:
+            type: string
+          x-go-name: MatchedTargetIDs
+        selected_target_ids:
+          type: array
+          items:
+            type: string
+          x-go-name: SelectedTargetIDs
+        view_target_type:
+          type: string
+          x-go-name: ViewTargetType
+      description: nolint:lll
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     targetGroupGetResponse:
       title: TargetGroupGetResponse ...
       type: object
@@ -544,85 +623,6 @@ components:
           x-go-name: UpdatedOn
       x-go-name: TargetGroupGetResponse
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    TargetGroupProperties:
-      title: 'TargetGroupProperties represents the specific target group attributes information
-
-        It holds the data/view schema id of targettype, target Ids and criteria for Target group'
-      type: object
-      properties:
-        criteria:
-          type: array
-          items:
-            $ref: '#/components/schemas/Expression'
-          x-go-name: Criteria
-        data_target_type:
-          type: string
-          x-go-name: DataTargetType
-        include_all_targets:
-          type: boolean
-          x-go-name: IncludeAllTargets
-        matched_target_ids:
-          type: array
-          items:
-            type: string
-          x-go-name: MatchedTargetIDs
-        selected_target_ids:
-          type: array
-          items:
-            type: string
-          x-go-name: SelectedTargetIDs
-        view_target_type:
-          type: string
-          x-go-name: ViewTargetType
-      description: nolint:lll
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    targetGroupGetAllResponse:
-      title: TargetGroupGetAllResponse ...
-      type: object
-      properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        description:
-          type: string
-          x-go-name: Description
-        id:
-          type: string
-          x-go-name: TargetGroupID
-        name:
-          type: string
-          x-go-name: Name
-        owner:
-          type: string
-          x-go-name: Owner
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-        title:
-          type: string
-          x-go-name: Title
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-      x-go-name: TargetGroupGetAllResponse
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     Expression:
       title: Expression ....
       type: object

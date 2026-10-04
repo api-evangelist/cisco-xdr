@@ -590,9 +590,6 @@ components:
           format: date-time
           x-go-name: UpdatedOn
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    CategoryType:
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     CategoryPutRequest:
       title: CategoryPutRequest represents a payload for modifying an existing category by its ID.
       type: object
@@ -614,6 +611,9 @@ components:
           description: Properties of Category
           x-go-name: UniqueName
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    CategoryType:
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
   securitySchemes:
     oAuth2:
       type: oauth2

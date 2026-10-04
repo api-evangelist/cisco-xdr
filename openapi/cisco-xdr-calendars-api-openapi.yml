@@ -586,19 +586,6 @@ paths:
           content: {}
 components:
   schemas:
-    PaginationLink:
-      type: object
-      properties:
-        next:
-          type: string
-          x-go-name: Next
-        prev:
-          type: string
-          x-go-name: Prev
-        self:
-          type: string
-          x-go-name: Self
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     CalendarGetAllResponse:
       title: CalendarGetAllResponse ...
       type: object
@@ -642,59 +629,36 @@ components:
           format: date-time
           x-go-name: UpdatedOn
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    CalendarGetResponse:
-      title: CalendarGetResponse ...
+    CalendarPutRequest:
+      title: CalendarPutRequest ...
+      required:
+      - properties
       type: object
       properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        calendar_type:
-          type: string
-          x-go-name: CalendarType
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
         description:
           type: string
+          description: Description of Calendar
           x-go-name: Description
-        id:
-          type: string
-          x-go-name: CalendarID
         name:
           type: string
+          description: Name of Calendar
           x-go-name: Name
-        owner:
-          type: string
-          x-go-name: Owner
         properties:
           type: object
-          properties: {}
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of Calendar
           x-go-name: Properties
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
         title:
           type: string
+          description: Title of Calendar
           x-go-name: Title
-        type:
-          type: string
-          x-go-name: Type
         unique_name:
           type: string
+          description: Properties of Category
           x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     CalendarPostRequest:
       title: CalendarPostRequest ..
       required:
@@ -751,35 +715,71 @@ components:
           format: int32
           x-go-name: TotalCount
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    CalendarPutRequest:
-      title: CalendarPutRequest ...
-      required:
-      - properties
+    CalendarGetResponse:
+      title: CalendarGetResponse ...
       type: object
       properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        calendar_type:
+          type: string
+          x-go-name: CalendarType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
         description:
           type: string
-          description: Description of Calendar
           x-go-name: Description
+        id:
+          type: string
+          x-go-name: CalendarID
         name:
           type: string
-          description: Name of Calendar
           x-go-name: Name
+        owner:
+          type: string
+          x-go-name: Owner
         properties:
           type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Properties of Calendar
+          properties: {}
           x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
         title:
           type: string
-          description: Title of Calendar
           x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
         unique_name:
           type: string
-          description: Properties of Category
           x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
   securitySchemes:
     oAuth2:

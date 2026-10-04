@@ -485,8 +485,8 @@ paths:
           content: {}
 components:
   schemas:
-    TableTypeSchemaResponse:
-      title: TableTypeSchemaResponse ...
+    CreateTableTypeGetResponse:
+      title: CreateTableTypeGetResponse ...
       type: object
       properties:
         base_type:
@@ -508,21 +508,34 @@ components:
         display_name:
           type: string
           x-go-name: Name
+        has_tables:
+          type: boolean
+          x-go-name: HasTables
         id:
           type: string
-          x-go-name: SchemaID
+          x-go-name: TableTypeID
         inherits:
           type: string
           x-go-name: Inherits
+        max_column_size:
+          type: integer
+          format: int64
+          x-go-name: MaxColumnSize
+        max_columns:
+          type: integer
+          format: int64
+          x-go-name: MaxColumns
+        max_rows:
+          type: integer
+          format: int64
+          x-go-name: MaxRows
+        max_table_size:
+          type: integer
+          format: int64
+          x-go-name: MaxTableSize
         owner:
           type: string
           x-go-name: Owner
-        property_schema:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: PropertySchema
         row_schema:
           type: object
           additionalProperties:
@@ -591,8 +604,8 @@ components:
           x-go-name: UniqueName
       x-go-name: TableTypePostRequest
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    CreateTableTypeGetResponse:
-      title: CreateTableTypeGetResponse ...
+    TableTypeSchemaResponse:
+      title: TableTypeSchemaResponse ...
       type: object
       properties:
         base_type:
@@ -614,34 +627,21 @@ components:
         display_name:
           type: string
           x-go-name: Name
-        has_tables:
-          type: boolean
-          x-go-name: HasTables
         id:
           type: string
-          x-go-name: TableTypeID
+          x-go-name: SchemaID
         inherits:
           type: string
           x-go-name: Inherits
-        max_column_size:
-          type: integer
-          format: int64
-          x-go-name: MaxColumnSize
-        max_columns:
-          type: integer
-          format: int64
-          x-go-name: MaxColumns
-        max_rows:
-          type: integer
-          format: int64
-          x-go-name: MaxRows
-        max_table_size:
-          type: integer
-          format: int64
-          x-go-name: MaxTableSize
         owner:
           type: string
           x-go-name: Owner
+        property_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: PropertySchema
         row_schema:
           type: object
           additionalProperties:

@@ -589,6 +589,105 @@ components:
         properties:
           $ref: '#/components/schemas/VariableContent'
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    VariablePostRequest:
+      type: object
+      properties:
+        properties:
+          $ref: '#/components/schemas/VariableContent'
+        schema_id:
+          type: string
+          description: ViewSchemaID of variable
+          x-go-name: ViewSchemaID
+        type:
+          type: string
+          description: Type
+          x-go-name: Type
+        unique_name:
+          type: string
+          description: Properties of variable
+          x-go-name: UniqueName
+      description: 'VariablePostRequest model for variables
+
+        Either ViewSchemaID or Type or both can be provided to create a Variable.'
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    VariableGetResponse:
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        id:
+          type: string
+          x-go-name: VariableID
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          $ref: '#/components/schemas/VariableContent'
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      description: VariableGetResponse model for variables
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    VariableGetAllResponse:
+      type: object
+      properties:
+        base_type:
+          type: string
+          x-go-name: BaseType
+        created_by:
+          type: string
+          x-go-name: CreatedBy
+        created_on:
+          type: string
+          format: date-time
+          x-go-name: CreatedOn
+        id:
+          type: string
+          x-go-name: VariableID
+        owner:
+          type: string
+          x-go-name: Owner
+        properties:
+          $ref: '#/components/schemas/VariableContent'
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        type:
+          type: string
+          x-go-name: Type
+        unique_name:
+          type: string
+          x-go-name: UniqueName
+        updated_by:
+          type: string
+          x-go-name: UpdatedBy
+        updated_on:
+          type: string
+          format: date-time
+          x-go-name: UpdatedOn
+      description: VariableGetAllResponse model for variables
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     VariableContent:
       title: VariableContent ...
       type: object
@@ -630,105 +729,6 @@ components:
           description: Value of variable. Value can be a string, boolean, number or array
           x-go-name: Value
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    VariableGetResponse:
-      type: object
-      properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        id:
-          type: string
-          x-go-name: VariableID
-        owner:
-          type: string
-          x-go-name: Owner
-        properties:
-          $ref: '#/components/schemas/VariableContent'
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-      description: VariableGetResponse model for variables
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    VariablePostRequest:
-      type: object
-      properties:
-        properties:
-          $ref: '#/components/schemas/VariableContent'
-        schema_id:
-          type: string
-          description: ViewSchemaID of variable
-          x-go-name: ViewSchemaID
-        type:
-          type: string
-          description: Type
-          x-go-name: Type
-        unique_name:
-          type: string
-          description: Properties of variable
-          x-go-name: UniqueName
-      description: 'VariablePostRequest model for variables
-
-        Either ViewSchemaID or Type or both can be provided to create a Variable.'
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    VariableGetAllResponse:
-      type: object
-      properties:
-        base_type:
-          type: string
-          x-go-name: BaseType
-        created_by:
-          type: string
-          x-go-name: CreatedBy
-        created_on:
-          type: string
-          format: date-time
-          x-go-name: CreatedOn
-        id:
-          type: string
-          x-go-name: VariableID
-        owner:
-          type: string
-          x-go-name: Owner
-        properties:
-          $ref: '#/components/schemas/VariableContent'
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
-        type:
-          type: string
-          x-go-name: Type
-        unique_name:
-          type: string
-          x-go-name: UniqueName
-        updated_by:
-          type: string
-          x-go-name: UpdatedBy
-        updated_on:
-          type: string
-          format: date-time
-          x-go-name: UpdatedOn
-      description: VariableGetAllResponse model for variables
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
   securitySchemes:
     oAuth2:
       type: oauth2

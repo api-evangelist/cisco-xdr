@@ -311,6 +311,38 @@ paths:
       x-codegen-request-body-name: request_body
 components:
   schemas:
+    RatingPostRequest:
+      title: RatingPostRequest
+      required:
+      - rating
+      - ref_base_type
+      - ref_id
+      - ref_type
+      type: object
+      properties:
+        rating:
+          type: integer
+          description: The Rating.
+          format: uint8
+          x-go-name: Rating
+        ref_base_type:
+          type: string
+          description: The base type of the entity.
+          x-go-name: RefBaseType
+        ref_id:
+          type: string
+          description: The ID of the entity.
+          x-go-name: RefID
+        ref_type:
+          type: string
+          description: The type of the entity.
+          x-go-name: RefType
+      description: The rating create request model.
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    LHObjType:
+      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
+      type: string
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
     RatingResponse:
       title: A RatingResponse model.
       type: object
@@ -351,10 +383,16 @@ components:
           format: date-time
           x-go-name: UpdatedOn
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    LHObjType:
-      title: LHObjType generated on 2024-06-14T11:01:04+05:30. DO NOT EDIT.
-      type: string
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/mdb-maps/entity
+    RatingPutRequest:
+      title: RatingPutRequest
+      type: object
+      properties:
+        rating:
+          type: integer
+          format: uint8
+          x-go-name: Rating
+      description: The rating update request model.
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     RatingLoginUserRequest:
       title: RatingLoginUserRequest ...
       required:
@@ -370,44 +408,6 @@ components:
           type: string
           description: ref type
           x-go-name: RefType
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    RatingPostRequest:
-      title: RatingPostRequest
-      required:
-      - rating
-      - ref_base_type
-      - ref_id
-      - ref_type
-      type: object
-      properties:
-        rating:
-          type: integer
-          description: The Rating.
-          format: uint8
-          x-go-name: Rating
-        ref_base_type:
-          type: string
-          description: The base type of the entity.
-          x-go-name: RefBaseType
-        ref_id:
-          type: string
-          description: The ID of the entity.
-          x-go-name: RefID
-        ref_type:
-          type: string
-          description: The type of the entity.
-          x-go-name: RefType
-      description: The rating create request model.
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    RatingPutRequest:
-      title: RatingPutRequest
-      type: object
-      properties:
-        rating:
-          type: integer
-          format: uint8
-          x-go-name: Rating
-      description: The rating update request model.
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
   securitySchemes:
     oAuth2:
