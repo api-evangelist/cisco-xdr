@@ -1197,6 +1197,8 @@ apis:
   - type: OpenAPI
     url: openapi/cisco-xdr-workflow-instances-api-openapi.yml
 common:
+- type: Pricing
+  url: https://www.cisco.com/site/us/en/products/security/xdr/index.html
 - type: CapabilityMap
   url: capabilities/cisco-xdr-capability-edges.yml
   name: Cisco XDR Business Capability Map
