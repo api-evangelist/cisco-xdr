@@ -1445,6 +1445,39 @@ components:
           items:
             type: string
       additionalProperties: false
+    Activity:
+      example:
+        date_time: '2016-01-01T01:01:01.000Z'
+        description: string
+      description: Captures the specific activities or tactics associated with the entity. Examples of activities may include malicious software delivery, command and control communication, network reconnaissance, data exfiltration, etc.
+      type: object
+      properties:
+        date_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: Specifies the date and time at which the activity occured.
+          type: string
+          format: date-time
+        description:
+          example: string
+          description: A description of the activity.
+          type: string
+      additionalProperties: false
+      required:
+      - date_time
+      - description
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
+      required:
+      - from
+      - to
     NewCampaign:
       description: a new Campaign
       type: object
@@ -1608,24 +1641,25 @@ components:
       - campaign_type
       - short_description
       - title
-    ValidTime:
-      example:
-        start_time: '2016-01-01T01:01:01.000Z'
-        end_time: '2016-01-01T01:01:01.000Z'
-      description: Period of time when a cyber observation is valid.
+    MetricResult:
       type: object
       properties:
-        start_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: If not present, the valid time position of the indicator does not have an upper bound.
+        data:
+          $ref: '#/components/schemas/MetricResultData'
+        type:
           type: string
-          format: date-time
-        end_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
-          type: string
-          format: date-time
+          enum:
+          - histogram
+          - topn
+          - avg
+          - cardinality
+        filters:
+          $ref: '#/components/schemas/MetricResultFilters'
       additionalProperties: false
+      required:
+      - data
+      - type
+      - filters
     Campaign:
       example:
         description: string
@@ -1797,6 +1831,27 @@ components:
           items:
             type: string
       additionalProperties: false
+    ValidTime:
+      example:
+        start_time: '2016-01-01T01:01:01.000Z'
+        end_time: '2016-01-01T01:01:01.000Z'
+      description: Period of time when a cyber observation is valid.
+      type: object
+      properties:
+        start_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If not present, the valid time position of the indicator does not have an upper bound.
+          type: string
+          format: date-time
+        end_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
+          type: string
+          format: date-time
+      additionalProperties: false
+    MetricResultData:
+      type: object
+      additionalProperties: {}
     ExternalReference:
       example:
         source_name: string
@@ -1834,61 +1889,6 @@ components:
       additionalProperties: false
       required:
       - source_name
-    Activity:
-      example:
-        date_time: '2016-01-01T01:01:01.000Z'
-        description: string
-      description: Captures the specific activities or tactics associated with the entity. Examples of activities may include malicious software delivery, command and control communication, network reconnaissance, data exfiltration, etc.
-      type: object
-      properties:
-        date_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: Specifies the date and time at which the activity occured.
-          type: string
-          format: date-time
-        description:
-          example: string
-          description: A description of the activity.
-          type: string
-      additionalProperties: false
-      required:
-      - date_time
-      - description
-    MetricResult:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/MetricResultData'
-        type:
-          type: string
-          enum:
-          - histogram
-          - topn
-          - avg
-          - cardinality
-        filters:
-          $ref: '#/components/schemas/MetricResultFilters'
-      additionalProperties: false
-      required:
-      - data
-      - type
-      - filters
-    MetricResultFilters:
-      type: object
-      properties:
-        from:
-          type: string
-          format: date-time
-        to:
-          type: string
-          format: date-time
-      additionalProperties: {}
-      required:
-      - from
-      - to
-    MetricResultData:
-      type: object
-      additionalProperties: {}
   securitySchemes:
     JWT:
       type: apiKey

@@ -521,27 +521,14 @@ components:
           type: string
           x-go-name: Type
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
-    GetAllVariableTypesResponse:
-      title: A GetAllVariableTypesResponse model.
+    variableTypeResponse:
       type: object
       properties:
-        _links:
-          $ref: '#/components/schemas/PaginationLink'
-        results:
+        inherits:
           type: array
           items:
-            type: object
-            properties: {}
-          x-go-name: Results
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    VariableTypePutRequest:
-      required:
-      - name
-      type: object
-      properties:
-        description:
-          type: string
-          x-go-name: Description
+            type: string
+          x-go-name: Inherits
         keys:
           type: array
           items:
@@ -556,16 +543,40 @@ components:
             type: object
             properties: {}
           x-go-name: Properties
-        schema_id:
-          type: string
-          x-go-name: ViewSchemaID
+        property_schema:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: PropertySchema
         title:
           type: string
           x-go-name: Title
         type:
           type: string
           x-go-name: Type
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+        variable_type_id:
+          type: string
+          x-go-name: VariableTypeID
+        variable_type_schema_id:
+          type: string
+          x-go-name: VariableTypeSchemaID
+      description: VariableTypeResponse struct defines response for variable types
+      x-go-name: VariableTypeResponse
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    GetAllVariableTypesResponse:
+      title: A GetAllVariableTypesResponse model.
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            type: object
+            properties: {}
+          x-go-name: Results
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     VariableTypePostRequest:
       required:
       - name
@@ -616,6 +627,51 @@ components:
             in: body'
           x-go-name: Type
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    VariableTypePutRequest:
+      required:
+      - name
+      type: object
+      properties:
+        description:
+          type: string
+          x-go-name: Description
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableTypeObjectKey'
+          x-go-name: Keys
+        name:
+          type: string
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          x-go-name: Properties
+        schema_id:
+          type: string
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          x-go-name: Title
+        type:
+          type: string
+          x-go-name: Type
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     variableTypeGetResponse:
       type: object
       properties:
@@ -685,62 +741,6 @@ components:
       description: VariableTypeGetResponse model for variabletype
       x-go-name: VariableTypeGetResponse
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    variableTypeResponse:
-      type: object
-      properties:
-        inherits:
-          type: array
-          items:
-            type: string
-          x-go-name: Inherits
-        keys:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariableTypeObjectKey'
-          x-go-name: Keys
-        name:
-          type: string
-          x-go-name: Name
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: Properties
-        property_schema:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          x-go-name: PropertySchema
-        title:
-          type: string
-          x-go-name: Title
-        type:
-          type: string
-          x-go-name: Type
-        variable_type_id:
-          type: string
-          x-go-name: VariableTypeID
-        variable_type_schema_id:
-          type: string
-          x-go-name: VariableTypeSchemaID
-      description: VariableTypeResponse struct defines response for variable types
-      x-go-name: VariableTypeResponse
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    PaginationLink:
-      type: object
-      properties:
-        next:
-          type: string
-          x-go-name: Next
-        prev:
-          type: string
-          x-go-name: Prev
-        self:
-          type: string
-          x-go-name: Self
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
   securitySchemes:
     oAuth2:
       type: oauth2

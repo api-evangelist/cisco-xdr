@@ -295,61 +295,130 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PatchModuleTypeParamsAppLinkMetaMetaXQueryParams:
-      type: object
-      additionalProperties:
-        type:
-        - string
-        - 'null'
-    ProductCategory:
+    Capability:
       type: object
       properties:
         id:
           type: string
           enum:
-          - siem
-          - threat-intel
-          - email-security
-          - ndr
-          - rf-security
-          - cloud-firewall
-          - itsm
-          - edr
-          - cloud-security
-          - firewall
+          - detection_source
+          - device_insights
+          - respond
+          - observe
+          - assets
+          - incident/resolve
+          - notifications
+          - data_ingestion
+          - target_records
+          - health
+          - automate
+          - tiles
+          - refer
+          - threat_hunts
+          - deliberate
         description:
           type: string
       additionalProperties: false
       required:
       - id
       - description
-    PatchModuleTypeParamsIntegration:
+    NewModuleTypeParamsAppLinkMetaMetaXQueryParams:
+      type: object
+      additionalProperties:
+        type: string
+    NewModuleTypePatchPatchConfigurationSpecOptions:
       type: object
       properties:
-        client_ids:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          uniqueItems: true
-      additionalProperties: false
-    ModuleTypeExternalReference:
-      type: object
-      properties:
+        value:
+          type: string
         label:
-          description: If the reference is a link, the label
-          type: string
-        link:
-          description: If the reference is a link, the href
-          type: string
-        external_id:
-          description: If the reference is an external id, the id
-          type: string
-        class:
-          description: Class to distinguish external references
           type: string
       additionalProperties: false
+      required:
+      - value
+      - label
+    PatchModuleTypeParamsAppLinkMetaMeta:
+      type: object
+      properties:
+        x_okta_bookmark_id:
+          type:
+          - string
+          - 'null'
+        x_query_params:
+          $ref: '#/components/schemas/PatchModuleTypeParamsAppLinkMetaMetaXQueryParams'
+      additionalProperties: false
+    ModuleTypeProperties:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+          - $ref: '#/components/schemas/ModuleTypeProperties'
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+            - $ref: '#/components/schemas/ModuleTypeProperties'
+    ConfigurationSpecField:
+      type: object
+      properties:
+        group:
+          type: string
+        beta:
+          type: boolean
+        key:
+          type: string
+        type:
+          type: string
+          enum:
+          - remote
+          - password
+          - file
+          - string
+          - api_key
+          - integer
+          - device
+          - options
+          - boolean
+        strict-options:
+          type: boolean
+        label:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewModuleTypePatchPatchConfigurationSpecOptions'
+        default_value:
+          x-oneOf:
+          - type: string
+          - type: string
+          - type: string
+          - type: string
+          - type: string
+          - type: integer
+            format: int64
+          - type: string
+          - type: string
+          - type: boolean
+        tooltip:
+          type: string
+        required:
+          type: boolean
+        subtype:
+          type: string
+      additionalProperties: false
+      required:
+      - key
+      - type
+      - label
     PatchModuleTypeParams:
       type: object
       properties:
@@ -440,44 +509,42 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    NewModuleTypePatchPatchConfigurationSpecOptions:
+    PartialModuleTypeProperties:
+      type: object
+      additionalProperties:
+        x-oneOf:
+        - x-oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+            format: double
+          - type: string
+          - $ref: '#/components/schemas/PartialModuleTypeProperties'
+        - type: array
+          items:
+            x-oneOf:
+            - type: string
+            - type: boolean
+            - type: number
+              format: double
+            - type: string
+            - $ref: '#/components/schemas/ModuleTypeProperties'
+    ModuleTypeExternalReference:
       type: object
       properties:
-        value:
-          type: string
         label:
+          description: If the reference is a link, the label
+          type: string
+        link:
+          description: If the reference is a link, the href
+          type: string
+        external_id:
+          description: If the reference is an external id, the id
+          type: string
+        class:
+          description: Class to distinguish external references
           type: string
       additionalProperties: false
-      required:
-      - value
-      - label
-    Capability:
-      type: object
-      properties:
-        id:
-          type: string
-          enum:
-          - detection_source
-          - device_insights
-          - respond
-          - observe
-          - assets
-          - incident/resolve
-          - notifications
-          - data_ingestion
-          - target_records
-          - health
-          - automate
-          - tiles
-          - refer
-          - threat_hunts
-          - deliberate
-        description:
-          type: string
-      additionalProperties: false
-      required:
-      - id
-      - description
     NewModuleTypeParams:
       type: object
       properties:
@@ -539,79 +606,6 @@ components:
       required:
       - title
       - default_name
-    PatchModuleTypeParamsAppLinkMeta:
-      type: object
-      properties:
-        title:
-          type: string
-        url:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        logo:
-          type:
-          - string
-          - 'null'
-        meta:
-          $ref: '#/components/schemas/PatchModuleTypeParamsAppLinkMetaMeta'
-      additionalProperties: false
-    PatchModuleTypeParamsAppLinkMetaMeta:
-      type: object
-      properties:
-        x_okta_bookmark_id:
-          type:
-          - string
-          - 'null'
-        x_query_params:
-          $ref: '#/components/schemas/PatchModuleTypeParamsAppLinkMetaMetaXQueryParams'
-      additionalProperties: false
-    NewModuleTypeParamsAppLinkMetaMeta:
-      type: object
-      properties:
-        x_okta_bookmark_id:
-          type: string
-        x_query_params:
-          $ref: '#/components/schemas/NewModuleTypeParamsAppLinkMetaMetaXQueryParams'
-      additionalProperties: false
-    PartialModuleTypeProperties:
-      type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-          - $ref: '#/components/schemas/PartialModuleTypeProperties'
-        - type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-            - $ref: '#/components/schemas/ModuleTypeProperties'
-    AppLinkMeta:
-      type: object
-      properties:
-        title:
-          type: string
-        url:
-          type: string
-        description:
-          type: string
-        logo:
-          type: string
-        meta:
-          $ref: '#/components/schemas/NewModuleTypeParamsAppLinkMetaMeta'
-      additionalProperties: false
-      required:
-      - title
-      - url
     ModuleType:
       type: object
       properties:
@@ -706,6 +700,88 @@ components:
       - enabled
       - visibility
       - created_at
+    PatchModuleTypeParamsIntegration:
+      type: object
+      properties:
+        client_ids:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          uniqueItems: true
+      additionalProperties: false
+    PatchModuleTypeParamsAppLinkMeta:
+      type: object
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        logo:
+          type:
+          - string
+          - 'null'
+        meta:
+          $ref: '#/components/schemas/PatchModuleTypeParamsAppLinkMetaMeta'
+      additionalProperties: false
+    PatchModuleTypeParamsAppLinkMetaMetaXQueryParams:
+      type: object
+      additionalProperties:
+        type:
+        - string
+        - 'null'
+    NewModuleTypeParamsAppLinkMetaMeta:
+      type: object
+      properties:
+        x_okta_bookmark_id:
+          type: string
+        x_query_params:
+          $ref: '#/components/schemas/NewModuleTypeParamsAppLinkMetaMetaXQueryParams'
+      additionalProperties: false
+    ProductCategory:
+      type: object
+      properties:
+        id:
+          type: string
+          enum:
+          - siem
+          - threat-intel
+          - email-security
+          - ndr
+          - rf-security
+          - cloud-firewall
+          - itsm
+          - edr
+          - cloud-security
+          - firewall
+        description:
+          type: string
+      additionalProperties: false
+      required:
+      - id
+      - description
+    AppLinkMeta:
+      type: object
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        meta:
+          $ref: '#/components/schemas/NewModuleTypeParamsAppLinkMetaMeta'
+      additionalProperties: false
+      required:
+      - title
+      - url
     Integration:
       type: object
       properties:
@@ -715,82 +791,6 @@ components:
             type: string
           uniqueItems: true
       additionalProperties: false
-    ModuleTypeProperties:
-      type: object
-      additionalProperties:
-        x-oneOf:
-        - x-oneOf:
-          - type: string
-          - type: boolean
-          - type: number
-            format: double
-          - type: string
-          - $ref: '#/components/schemas/ModuleTypeProperties'
-        - type: array
-          items:
-            x-oneOf:
-            - type: string
-            - type: boolean
-            - type: number
-              format: double
-            - type: string
-            - $ref: '#/components/schemas/ModuleTypeProperties'
-    NewModuleTypeParamsAppLinkMetaMetaXQueryParams:
-      type: object
-      additionalProperties:
-        type: string
-    ConfigurationSpecField:
-      type: object
-      properties:
-        group:
-          type: string
-        beta:
-          type: boolean
-        key:
-          type: string
-        type:
-          type: string
-          enum:
-          - remote
-          - password
-          - file
-          - string
-          - api_key
-          - integer
-          - device
-          - options
-          - boolean
-        strict-options:
-          type: boolean
-        label:
-          type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewModuleTypePatchPatchConfigurationSpecOptions'
-        default_value:
-          x-oneOf:
-          - type: string
-          - type: string
-          - type: string
-          - type: string
-          - type: string
-          - type: integer
-            format: int64
-          - type: string
-          - type: string
-          - type: boolean
-        tooltip:
-          type: string
-        required:
-          type: boolean
-        subtype:
-          type: string
-      additionalProperties: false
-      required:
-      - key
-      - type
-      - label
   securitySchemes:
     iroh:
       type: apiKey

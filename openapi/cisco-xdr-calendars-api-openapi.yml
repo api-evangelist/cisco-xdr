@@ -586,6 +586,46 @@ paths:
           content: {}
 components:
   schemas:
+    CalendarPostRequest:
+      title: CalendarPostRequest ..
+      required:
+      - name
+      - properties
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of Calendar
+          x-go-name: Description
+        name:
+          type: string
+          description: Name of Calendar
+          x-go-name: Name
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            properties: {}
+          description: Properties of Calendar
+          x-go-name: Properties
+        schema_id:
+          type: string
+          description: ViewSchemaID of Calendar
+          x-go-name: ViewSchemaID
+        title:
+          type: string
+          description: Title of Calendar
+          x-go-name: Title
+        type:
+          type: string
+          description: Type
+          x-go-name: Type
+        unique_name:
+          type: string
+          description: Properties of Calendar
+          x-go-name: UniqueName
+      description: Either ViewSchemaID or Type or both can be provided to create a Calendar.
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     CalendarGetAllResponse:
       title: CalendarGetAllResponse ...
       type: object
@@ -629,6 +669,35 @@ components:
           format: date-time
           x-go-name: UpdatedOn
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    GetAllCalendarPaginatedResponse:
+      title: An GetAllCalendarPaginatedResponse model.
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/PaginationLink'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CalendarGetAllResponse'
+          x-go-name: Results
+        total_count:
+          type: integer
+          format: int32
+          x-go-name: TotalCount
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
+    PaginationLink:
+      type: object
+      properties:
+        next:
+          type: string
+          x-go-name: Next
+        prev:
+          type: string
+          x-go-name: Prev
+        self:
+          type: string
+          x-go-name: Self
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
     CalendarPutRequest:
       title: CalendarPutRequest ...
       required:
@@ -659,62 +728,6 @@ components:
           description: Properties of Category
           x-go-name: UniqueName
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    CalendarPostRequest:
-      title: CalendarPostRequest ..
-      required:
-      - name
-      - properties
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of Calendar
-          x-go-name: Description
-        name:
-          type: string
-          description: Name of Calendar
-          x-go-name: Name
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            properties: {}
-          description: Properties of Calendar
-          x-go-name: Properties
-        schema_id:
-          type: string
-          description: ViewSchemaID of Calendar
-          x-go-name: ViewSchemaID
-        title:
-          type: string
-          description: Title of Calendar
-          x-go-name: Title
-        type:
-          type: string
-          description: Type
-          x-go-name: Type
-        unique_name:
-          type: string
-          description: Properties of Calendar
-          x-go-name: UniqueName
-      description: Either ViewSchemaID or Type or both can be provided to create a Calendar.
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    GetAllCalendarPaginatedResponse:
-      title: An GetAllCalendarPaginatedResponse model.
-      type: object
-      properties:
-        _links:
-          $ref: '#/components/schemas/PaginationLink'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/CalendarGetAllResponse'
-          x-go-name: Results
-        total_count:
-          type: integer
-          format: int32
-          x-go-name: TotalCount
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
     CalendarGetResponse:
       title: CalendarGetResponse ...
       type: object
@@ -768,19 +781,6 @@ components:
           format: date-time
           x-go-name: UpdatedOn
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    PaginationLink:
-      type: object
-      properties:
-        next:
-          type: string
-          x-go-name: Next
-        prev:
-          type: string
-          x-go-name: Prev
-        self:
-          type: string
-          x-go-name: Self
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
   securitySchemes:
     oAuth2:
       type: oauth2

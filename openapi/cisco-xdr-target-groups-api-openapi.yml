@@ -535,38 +535,6 @@ components:
           x-go-name: UpdatedOn
       x-go-name: TargetGroupGetAllResponse
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/be-console/models
-    TargetGroupProperties:
-      title: 'TargetGroupProperties represents the specific target group attributes information
-
-        It holds the data/view schema id of targettype, target Ids and criteria for Target group'
-      type: object
-      properties:
-        criteria:
-          type: array
-          items:
-            $ref: '#/components/schemas/Expression'
-          x-go-name: Criteria
-        data_target_type:
-          type: string
-          x-go-name: DataTargetType
-        include_all_targets:
-          type: boolean
-          x-go-name: IncludeAllTargets
-        matched_target_ids:
-          type: array
-          items:
-            type: string
-          x-go-name: MatchedTargetIDs
-        selected_target_ids:
-          type: array
-          items:
-            type: string
-          x-go-name: SelectedTargetIDs
-        view_target_type:
-          type: string
-          x-go-name: ViewTargetType
-      description: nolint:lll
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
     targetGroupGetResponse:
       title: TargetGroupGetResponse ...
       type: object
@@ -623,22 +591,6 @@ components:
           x-go-name: UpdatedOn
       x-go-name: TargetGroupGetResponse
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
-    Expression:
-      title: Expression ....
-      type: object
-      properties:
-        left_operand:
-          type: object
-          properties: {}
-          x-go-name: LeftOperand
-        operator:
-          type: string
-          x-go-name: Operator
-        right_operand:
-          type: object
-          properties: {}
-          x-go-name: RightOperand
-      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/base-microservice/longhornparser/models
     TargetGroupRequest:
       title: TargetGroupRequest ...
       required:
@@ -688,6 +640,54 @@ components:
           x-go-name: UniqueName
       description: Either ViewSchemaID or Type or both can be provided to create a TargetGroup.
       x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/ao-libs/api/models
+    TargetGroupProperties:
+      title: 'TargetGroupProperties represents the specific target group attributes information
+
+        It holds the data/view schema id of targettype, target Ids and criteria for Target group'
+      type: object
+      properties:
+        criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expression'
+          x-go-name: Criteria
+        data_target_type:
+          type: string
+          x-go-name: DataTargetType
+        include_all_targets:
+          type: boolean
+          x-go-name: IncludeAllTargets
+        matched_target_ids:
+          type: array
+          items:
+            type: string
+          x-go-name: MatchedTargetIDs
+        selected_target_ids:
+          type: array
+          items:
+            type: string
+          x-go-name: SelectedTargetIDs
+        view_target_type:
+          type: string
+          x-go-name: ViewTargetType
+      description: nolint:lll
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/lib-data/models
+    Expression:
+      title: Expression ....
+      type: object
+      properties:
+        left_operand:
+          type: object
+          properties: {}
+          x-go-name: LeftOperand
+        operator:
+          type: string
+          x-go-name: Operator
+        right_operand:
+          type: object
+          properties: {}
+          x-go-name: RightOperand
+      x-go-package: bitbucket-eng-sjc1.cisco.com/bitbucket/nextg/base-microservice/longhornparser/models
   securitySchemes:
     oAuth2:
       type: oauth2

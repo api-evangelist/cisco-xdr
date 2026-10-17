@@ -1329,50 +1329,81 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    RelatedIdentity:
+    Identity:
       example:
-        identity: string
-        confidence: High
-        information_source: string
-        relationship: string
-      description: Describes a related Identity
+        description: string
+        related_identities:
+        - identity: string
+          confidence: High
+          information_source: string
+          relationship: string
+      description: Can contain information such as the name of the attacker, the group or organization they belong to, or any other identifier that can help in the attribution process.
       type: object
       properties:
-        identity:
+        description:
           example: string
-          description: The reference (URI) of the related Identity object.
+          description: Markdown string with at most 5000 characters.
           type: string
-        confidence:
-          example: High
-          description: Specifies the level of confidence in the assertion of the relationship between the two objects.
-          type: string
-          enum:
-          - Medium
-          - Info
-          - Unknown
-          - None
-          - High
-          - Low
-        information_source:
-          example: string
-          description: Specifies the source of the information about the relationship between the two components.
-          type: string
-        relationship:
-          example: string
-          type: string
+        related_identities:
+          example:
+          - identity: string
+            confidence: High
+            information_source: string
+            relationship: string
+          description: Identifies other entity Identities related to this Identity.
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedIdentity'
       additionalProperties: false
-    NewActor:
-      description: a new Actor
+    Actor:
+      example:
+        description: string
+        motivation: Ego
+        valid_time:
+          start_time: '2016-01-01T01:01:01.000Z'
+          end_time: '2016-01-01T01:01:01.000Z'
+        identity:
+          description: string
+          related_identities:
+          - identity: string
+            confidence: High
+            information_source: string
+            relationship: string
+        sophistication: Aspirant
+        schema_version: 1.3.30
+        revision: 10
+        planning_and_operational_support: string
+        type: actor
+        source: string
+        external_ids:
+        - string
+        short_description: string
+        title: string
+        external_references:
+        - source_name: string
+          description: string
+          url: string
+          hashes:
+          - string
+          external_id: string
+        source_uri: string
+        intended_effect: Account Takeover
+        language: string
+        id: string
+        tlp: green
+        aliases:
+        - string
+        timestamp: '2016-01-01T01:01:01.000Z'
+        confidence: High
+        actor_types:
+        - Cyber Espionage Operations
+      description: Describes malicious actors or adversaries related to a cyber attack.
       type: object
       properties:
         description:
           example: string
           description: A description of object, which may be detailed.
           type: string
-        authorized_groups:
-          type: array
-          items:
-            type: string
         motivation:
           example: Ego
           description: The reason or purpose behind the malicious activity attributed to this Actor. By understanding a threat actor's motivation, analysts can better predict the attacker's behavior and anticipate future malicious actions.
@@ -1402,18 +1433,11 @@ components:
           example: string
           description: "Provides information about the resources and capabilities of the attacker that could be used to assist in planning and operations related to the threat.\n\n It can be used to describe Infrastructure, Tools, Techniques, and Capabilities used by the threat actor."
           type: string
-        authorized_users:
-          type: array
-          items:
-            type: string
         type:
           example: actor
           type: string
           enum:
           - actor
-        created:
-          type: string
-          format: date-time
         source:
           example: string
           description: Represents the source of the intelligence that led to the creation of the entity.
@@ -1425,9 +1449,6 @@ components:
           type: array
           items:
             type: string
-        modified:
-          type: string
-          format: date-time
         short_description:
           example: string
           description: A single line, short summary of the object.
@@ -1465,7 +1486,7 @@ components:
           type: string
         id:
           example: string
-          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
+          description: Globally unique URI identifying this object.
           type: string
         tlp:
           example: green
@@ -1482,16 +1503,10 @@ components:
           - green
           - red
           - amber
-        client_id:
-          type: string
         aliases:
           example:
           - string
           description: A list of other names that this Threat Actor is believed to use.
-          type: array
-          items:
-            type: string
-        groups:
           type: array
           items:
             type: string
@@ -1514,8 +1529,6 @@ components:
           - None
           - High
           - Low
-        owner:
-          type: string
         actor_types:
           example:
           - Cyber Espionage Operations
@@ -1523,55 +1536,19 @@ components:
           items:
             type: string
       additionalProperties: false
+    MetricResultFilters:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+      additionalProperties: {}
       required:
-      - description
-      - source
-      - short_description
-      - title
-    Identity:
-      example:
-        description: string
-        related_identities:
-        - identity: string
-          confidence: High
-          information_source: string
-          relationship: string
-      description: Can contain information such as the name of the attacker, the group or organization they belong to, or any other identifier that can help in the attribution process.
-      type: object
-      properties:
-        description:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        related_identities:
-          example:
-          - identity: string
-            confidence: High
-            information_source: string
-            relationship: string
-          description: Identifies other entity Identities related to this Identity.
-          type: array
-          items:
-            $ref: '#/components/schemas/RelatedIdentity'
-      additionalProperties: false
-    ValidTime:
-      example:
-        start_time: '2016-01-01T01:01:01.000Z'
-        end_time: '2016-01-01T01:01:01.000Z'
-      description: Period of time when a cyber observation is valid.
-      type: object
-      properties:
-        start_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: If not present, the valid time position of the indicator does not have an upper bound.
-          type: string
-          format: date-time
-        end_time:
-          example: '2016-01-01T01:01:01.000Z'
-          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
-          type: string
-          format: date-time
-      additionalProperties: false
+      - from
+      - to
     PartialActor:
       example:
         description: string
@@ -1775,43 +1752,6 @@ components:
           items:
             type: string
       additionalProperties: false
-    ExternalReference:
-      example:
-        source_name: string
-        description: string
-        url: string
-        hashes:
-        - string
-        external_id: string
-      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
-      type: object
-      properties:
-        source_name:
-          example: string
-          description: The source within which the external-reference is defined (system, registry, organization, etc.)
-          type: string
-        description:
-          example: string
-          description: Markdown string with at most 5000 characters.
-          type: string
-        url:
-          example: string
-          description: A URL reference to an external resource.
-          type: string
-        hashes:
-          example:
-          - string
-          description: Specifies a dictionary of hashes for the contents of the url.
-          type: array
-          items:
-            type: string
-        external_id:
-          example: string
-          description: An identifier for the external reference content.
-          type: string
-      additionalProperties: false
-      required:
-      - source_name
     MetricResult:
       type: object
       properties:
@@ -1831,71 +1771,18 @@ components:
       - data
       - type
       - filters
-    MetricResultData:
-      type: object
-      additionalProperties: {}
-    MetricResultFilters:
-      type: object
-      properties:
-        from:
-          type: string
-          format: date-time
-        to:
-          type: string
-          format: date-time
-      additionalProperties: {}
-      required:
-      - from
-      - to
-    Actor:
-      example:
-        description: string
-        motivation: Ego
-        valid_time:
-          start_time: '2016-01-01T01:01:01.000Z'
-          end_time: '2016-01-01T01:01:01.000Z'
-        identity:
-          description: string
-          related_identities:
-          - identity: string
-            confidence: High
-            information_source: string
-            relationship: string
-        sophistication: Aspirant
-        schema_version: 1.3.30
-        revision: 10
-        planning_and_operational_support: string
-        type: actor
-        source: string
-        external_ids:
-        - string
-        short_description: string
-        title: string
-        external_references:
-        - source_name: string
-          description: string
-          url: string
-          hashes:
-          - string
-          external_id: string
-        source_uri: string
-        intended_effect: Account Takeover
-        language: string
-        id: string
-        tlp: green
-        aliases:
-        - string
-        timestamp: '2016-01-01T01:01:01.000Z'
-        confidence: High
-        actor_types:
-        - Cyber Espionage Operations
-      description: Describes malicious actors or adversaries related to a cyber attack.
+    NewActor:
+      description: a new Actor
       type: object
       properties:
         description:
           example: string
           description: A description of object, which may be detailed.
           type: string
+        authorized_groups:
+          type: array
+          items:
+            type: string
         motivation:
           example: Ego
           description: The reason or purpose behind the malicious activity attributed to this Actor. By understanding a threat actor's motivation, analysts can better predict the attacker's behavior and anticipate future malicious actions.
@@ -1925,11 +1812,18 @@ components:
           example: string
           description: "Provides information about the resources and capabilities of the attacker that could be used to assist in planning and operations related to the threat.\n\n It can be used to describe Infrastructure, Tools, Techniques, and Capabilities used by the threat actor."
           type: string
+        authorized_users:
+          type: array
+          items:
+            type: string
         type:
           example: actor
           type: string
           enum:
           - actor
+        created:
+          type: string
+          format: date-time
         source:
           example: string
           description: Represents the source of the intelligence that led to the creation of the entity.
@@ -1941,6 +1835,9 @@ components:
           type: array
           items:
             type: string
+        modified:
+          type: string
+          format: date-time
         short_description:
           example: string
           description: A single line, short summary of the object.
@@ -1978,7 +1875,7 @@ components:
           type: string
         id:
           example: string
-          description: Globally unique URI identifying this object.
+          description: IDs are URIs, for example `https://www.domain.com/ctia/judgement/judgement-de305d54-75b4-431b-adb2-eb6b9e546014` for a [Judgement](judgement.md). This _ID_ type compares to the STIX _id_ field. The optional STIX _idref_ field is not used.
           type: string
         tlp:
           example: green
@@ -1995,10 +1892,16 @@ components:
           - green
           - red
           - amber
+        client_id:
+          type: string
         aliases:
           example:
           - string
           description: A list of other names that this Threat Actor is believed to use.
+          type: array
+          items:
+            type: string
+        groups:
           type: array
           items:
             type: string
@@ -2021,12 +1924,109 @@ components:
           - None
           - High
           - Low
+        owner:
+          type: string
         actor_types:
           example:
           - Cyber Espionage Operations
           type: array
           items:
             type: string
+      additionalProperties: false
+      required:
+      - description
+      - source
+      - short_description
+      - title
+    ValidTime:
+      example:
+        start_time: '2016-01-01T01:01:01.000Z'
+        end_time: '2016-01-01T01:01:01.000Z'
+      description: Period of time when a cyber observation is valid.
+      type: object
+      properties:
+        start_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If not present, the valid time position of the indicator does not have an upper bound.
+          type: string
+          format: date-time
+        end_time:
+          example: '2016-01-01T01:01:01.000Z'
+          description: If end_time is not present, then the valid time position of the object does not have an upper bound.
+          type: string
+          format: date-time
+      additionalProperties: false
+    MetricResultData:
+      type: object
+      additionalProperties: {}
+    ExternalReference:
+      example:
+        source_name: string
+        description: string
+        url: string
+        hashes:
+        - string
+        external_id: string
+      description: External references are used to describe pointers to information represented outside of CTIM. For example, a Malware object could use an external reference to indicate an ID for that malware in an external database or a report could use references to represent source material.
+      type: object
+      properties:
+        source_name:
+          example: string
+          description: The source within which the external-reference is defined (system, registry, organization, etc.)
+          type: string
+        description:
+          example: string
+          description: Markdown string with at most 5000 characters.
+          type: string
+        url:
+          example: string
+          description: A URL reference to an external resource.
+          type: string
+        hashes:
+          example:
+          - string
+          description: Specifies a dictionary of hashes for the contents of the url.
+          type: array
+          items:
+            type: string
+        external_id:
+          example: string
+          description: An identifier for the external reference content.
+          type: string
+      additionalProperties: false
+      required:
+      - source_name
+    RelatedIdentity:
+      example:
+        identity: string
+        confidence: High
+        information_source: string
+        relationship: string
+      description: Describes a related Identity
+      type: object
+      properties:
+        identity:
+          example: string
+          description: The reference (URI) of the related Identity object.
+          type: string
+        confidence:
+          example: High
+          description: Specifies the level of confidence in the assertion of the relationship between the two objects.
+          type: string
+          enum:
+          - Medium
+          - Info
+          - Unknown
+          - None
+          - High
+          - Low
+        information_source:
+          example: string
+          description: Specifies the source of the information about the relationship between the two components.
+          type: string
+        relationship:
+          example: string
+          type: string
       additionalProperties: false
   securitySchemes:
     JWT:
