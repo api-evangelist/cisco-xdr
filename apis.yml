@@ -1172,6 +1172,8 @@ apis:
   humanURL: https://developer.cisco.com/docs/cisco-xdr/
   baseURL: https://private.intel.amp.cisco.com
   tags:
+  - GraphQL
+  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI
